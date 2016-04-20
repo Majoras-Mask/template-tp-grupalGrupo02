@@ -17,5 +17,7 @@ hs_err_pid*
 build
 template.iml
 
-# IntelliJ files
-tp-tp-grupal.iml
+#Idea files
+.idea/
+*.iml
+
