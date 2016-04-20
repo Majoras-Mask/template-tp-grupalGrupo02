@@ -1,7 +1,18 @@
 package ar.fiuba.tdd.tp.motor;
 
-/**
- * Created by fdc on 20/4/2016.
- */
-public interface Motor {
+
+public class Motor {
+    //Game currentGame = null;
+
+    public Motor(/*String msgFromServer*/) {
+        /* Según lo que reciba del server crea el juego correspondiente?
+        getGame(msgFromServer);
+        */
+    }
+
+    public void doAction(String action) {
+        //Command commandToUse = parseCommand(action);
+        //currentGame.do(commandToUse);
+    }
+
 }
