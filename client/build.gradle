@@ -1,4 +1,4 @@
-group 'ar.fiuba.tdd.tp-tp-grupal'
+group 'ar.fiuba.tdd.tp-client'
 version '1.0'
 
 dependencies {
