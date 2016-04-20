@@ -1,5 +1,5 @@
 package motor;
 
-public interface GameCreatorInteraface {
+public interface GameCreator {
     public Game createGame(Game gameToCreate);
 }
