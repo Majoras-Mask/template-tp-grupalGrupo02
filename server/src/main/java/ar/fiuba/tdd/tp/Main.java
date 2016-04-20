@@ -2,7 +2,6 @@ package ar.fiuba.tdd.tp;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("This is just a tp project");
-        System.out.println(":D");
+        System.out.println("This is a Server");
     }
 }
