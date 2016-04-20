@@ -1,9 +1,9 @@
-package ar.fiuba.tdd.tp;
+package ar.fiuba.tdd.tp.ar.fiuba.tdd.tp.motor;
 
-import motor.Game;
-import motor.GameCreator;
-import motor.GameCreatorConcrete;
-import motor.GameFetchQuest;
+import ar.fiuba.tdd.tp.motor.Game;
+import ar.fiuba.tdd.tp.motor.GameCreator;
+import ar.fiuba.tdd.tp.motor.GameCreatorConcrete;
+import ar.fiuba.tdd.tp.motor.GameFetchQuest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
