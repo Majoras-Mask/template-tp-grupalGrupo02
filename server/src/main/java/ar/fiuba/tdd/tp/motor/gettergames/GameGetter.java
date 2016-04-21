@@ -14,6 +14,7 @@ public abstract class GameGetter {
     }
 
     public Game getGame(String stringOfGame) {
+        this.nameOfGame = game.getClass().getSimpleName();
         if (stringOfGame.equals(this.nameOfGame)) {
             return game;
         }
