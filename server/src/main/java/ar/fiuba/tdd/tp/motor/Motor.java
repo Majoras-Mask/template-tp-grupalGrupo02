@@ -1,22 +1,9 @@
 package ar.fiuba.tdd.tp.motor;
 
 
-public class Motor implements MotorFactory {
-    //Game currentGame = null;
+public class Motor {
 
-    public Motor(/*String msgFromServer*/) {
-        /* Según lo que reciba del server crea el juego correspondiente?
-        getGame(msgFromServer);
-        */
+    public Motor() {
+
     }
-
-    public void doAction(String action) {
-        //Command commandToUse = parseCommand(action);
-        //currentGame.do(commandToUse);
-    }
-
-    public Motor createMotor() {
-        return new Motor();
-    }
-
 }
