@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.gettergames;
+package ar.fiuba.tdd.tp.motor.games.getter;
 
 import ar.fiuba.tdd.tp.motor.games.GameFetchQuest;
 
