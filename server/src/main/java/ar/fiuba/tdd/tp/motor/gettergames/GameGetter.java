@@ -1,8 +1,8 @@
 package ar.fiuba.tdd.tp.motor.gettergames;
 
 
-import ar.fiuba.tdd.tp.motor.Game;
-import ar.fiuba.tdd.tp.motor.GameDefault;
+import ar.fiuba.tdd.tp.motor.games.Game;
+import ar.fiuba.tdd.tp.motor.games.GameDefault;
 
 public abstract class GameGetter {
     private GameGetter nextGame;

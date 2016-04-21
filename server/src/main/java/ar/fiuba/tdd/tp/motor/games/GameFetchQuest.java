@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor;
+package ar.fiuba.tdd.tp.motor.games;
 
 public class GameFetchQuest extends Game {
 
