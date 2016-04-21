@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.motor;
 
 
-public class Motor {
+public class Motor implements MotorFactory {
     //Game currentGame = null;
 
     public Motor(/*String msgFromServer*/) {
@@ -13,6 +13,10 @@ public class Motor {
     public void doAction(String action) {
         //Command commandToUse = parseCommand(action);
         //currentGame.do(commandToUse);
+    }
+
+    public Motor createMotor() {
+        return new Motor();
     }
 
 }

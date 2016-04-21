@@ -6,6 +6,7 @@ group 'ar.fiuba.tdd.tp-tp-grupal'
 version '1.0'
 
 allprojects {
+    apply plugin: 'java'
     repositories {
         jcenter()
         maven {
@@ -15,7 +16,6 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'eclipse'
     apply plugin: 'maven'
