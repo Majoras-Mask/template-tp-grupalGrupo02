@@ -3,9 +3,9 @@ package ar.fiuba.tdd.tp.motor.games.commands;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
 public class PickCommand implements GameCommand {
-    private Game game;
+    private Pick game;
 
-    public PickCommand(Game game) {
+    public PickCommand(Pick game) {
         this.game = game;
     }
 
