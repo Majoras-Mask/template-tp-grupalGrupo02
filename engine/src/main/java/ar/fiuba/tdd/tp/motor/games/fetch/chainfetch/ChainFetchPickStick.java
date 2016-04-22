@@ -1,23 +1,15 @@
 package ar.fiuba.tdd.tp.motor.games.fetch.chainfetch;
 
-import ar.fiuba.tdd.tp.motor.ChainCommandCreator;
 import ar.fiuba.tdd.tp.motor.GameCommand;
 import ar.fiuba.tdd.tp.motor.games.fetch.GameFetch;
 import ar.fiuba.tdd.tp.motor.games.fetch.commandfetch.FetchCommandPickStick;
 
-public class ChainFetchPickStick extends ChainCommandCreator {
-    private GameFetch game;
-
-    public ChainFetchPickStick(GameFetch gameFetch) {
-        this.game = gameFetch;
+public class ChainFetchPickStick extends ChainFetchCommonParse {
+    public ChainFetchPickStick(GameFetch gameFetch, String patternString) {
+        super(gameFetch, patternString);
     }
 
-    @Override
-    public GameCommand createCommand(String message) {
-        if ( message.toLowerCase().startsWith("pick stick") ) {
-            return new FetchCommandPickStick(this.game);
-        } else {
-            return super.createCommand(message);
-        }
+    public GameCommand factoryCommand(String message) {
+        return new FetchCommandPickStick(this.gameFetch);
     }
 }

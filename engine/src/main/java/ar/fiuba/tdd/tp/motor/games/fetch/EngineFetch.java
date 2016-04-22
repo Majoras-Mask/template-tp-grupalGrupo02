@@ -13,11 +13,12 @@ public class EngineFetch extends Engine {
 
     @Override
     public ChainCommandCreator getChainOfCommands(Game game) {
-        ChainCommandCreator lookAround = new ChainFetchLookAround((GameFetch)this.game);
-        ChainCommandCreator pickStick = new ChainFetchPickStick((GameFetch)this.game);
+        //ChainCommandCreator lookAround = new ChainFetchLookAround((GameFetch)this.game);
+        //ChainCommandCreator pickStick = new ChainFetchPickStick((GameFetch)this.game);
 
-        lookAround.setNextChain(pickStick);
+        //lookAround.setNextChain(pickStick);
 
-        return lookAround;
+        //return lookAround;
+        return null;
     }
 }
