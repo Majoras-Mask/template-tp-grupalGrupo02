@@ -1,7 +1,13 @@
 package ar.fiuba.tdd.tp.motor;
 
 
-public interface Engine {
-    String request(String message);
+public abstract class Engine {
+    protected Game game;
+
+    String request(String message) {
+        return getChainOfCommands(game).createCommand(message).execute();
+    }
+
+    protected abstract ChainCommandCreator getChainOfCommands(Game game);
 
 }

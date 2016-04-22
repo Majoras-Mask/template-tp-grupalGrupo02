@@ -64,7 +64,7 @@ public class GameHanoi implements Game {
         this.stacks.get(toStackIndex - 1).push(topFromStackIndex);
     }
 
-    public boolean isGameFinished() {
+    public boolean checkIfGameIsFinished() {
         return (this.getSize(2) == this.stackFloors);
     }
 }
