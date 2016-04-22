@@ -2,21 +2,21 @@ package ar.fiuba.tdd.tp.motor;
 
 
 public class EngineFactoryConcrete implements EngineFactory {
-    //Game currentGame = null;
+    private static EngineFactoryConcrete uniqueInstance = null;
 
-    public EngineFactoryConcrete(/*String msgFromServer*/) {
-        /* Según lo que reciba del server crea el juego correspondiente?
-        getGame(msgFromServer);
-        */
+    private EngineFactoryConcrete() {
+
     }
 
-    public void doAction(String action) {
-        //Command commandToUse = parseCommand(action);
-        //currentGame.do(commandToUse);
+    public static EngineFactoryConcrete getInstance() {
+        if ( uniqueInstance == null ) {
+            uniqueInstance = new EngineFactoryConcrete();
+        }
+        return uniqueInstance;
     }
 
-    public Engine createEngine() {
-        return new Engine();
+    public Engine createEngineHanoi() {
+        return null;
     }
 
 }

@@ -1,9 +1,8 @@
 package ar.fiuba.tdd.tp.motor;
 
 
-public class Engine {
+public interface Engine {
 
-    public Engine() {
+    String request(String message);
 
-    }
 }
