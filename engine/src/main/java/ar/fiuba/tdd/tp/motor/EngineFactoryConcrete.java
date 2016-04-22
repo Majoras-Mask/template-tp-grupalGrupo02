@@ -1,10 +1,10 @@
 package ar.fiuba.tdd.tp.motor;
 
 
-public class MotorFactoryConcrete implements MotorFactory {
+public class EngineFactoryConcrete implements EngineFactory {
     //Game currentGame = null;
 
-    public MotorFactoryConcrete(/*String msgFromServer*/) {
+    public EngineFactoryConcrete(/*String msgFromServer*/) {
         /* Según lo que reciba del server crea el juego correspondiente?
         getGame(msgFromServer);
         */
@@ -15,8 +15,8 @@ public class MotorFactoryConcrete implements MotorFactory {
         //currentGame.do(commandToUse);
     }
 
-    public Motor createMotor() {
-        return new Motor();
+    public Engine createEngine() {
+        return new Engine();
     }
 
 }
