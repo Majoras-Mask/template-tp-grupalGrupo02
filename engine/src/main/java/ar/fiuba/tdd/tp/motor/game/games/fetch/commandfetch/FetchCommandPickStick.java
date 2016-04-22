@@ -1,7 +1,7 @@
-package ar.fiuba.tdd.tp.motor.games.fetch.commandfetch;
+package ar.fiuba.tdd.tp.motor.game.games.fetch.commandfetch;
 
 import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.games.fetch.GameFetch;
+import ar.fiuba.tdd.tp.motor.game.games.fetch.GameFetch;
 
 public class FetchCommandPickStick implements GameCommand {
     private GameFetch game;
@@ -15,7 +15,7 @@ public class FetchCommandPickStick implements GameCommand {
         this.game.pickStick();
 
         if (this.game.checkIfGameIsFinished()) {
-            return "You won the game!";
+            return "You won the games!";
         } else {
             return "You picked the stick.";
         }

@@ -1,7 +1,7 @@
-package ar.fiuba.tdd.tp.motor.games.fetch.commandfetch;
+package ar.fiuba.tdd.tp.motor.game.games.fetch.commandfetch;
 
 import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.games.fetch.GameFetch;
+import ar.fiuba.tdd.tp.motor.game.games.fetch.GameFetch;
 
 public class FetchCommandLookAround implements GameCommand {
     private GameFetch game;

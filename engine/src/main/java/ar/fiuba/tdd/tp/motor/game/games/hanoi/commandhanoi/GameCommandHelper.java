@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.games.hanoi.commandhanoi;
+package ar.fiuba.tdd.tp.motor.game.games.hanoi.commandhanoi;
 
 import ar.fiuba.tdd.tp.motor.GameCommand;
 

@@ -1,10 +1,9 @@
-package ar.fiuba.tdd.tp.motor.games.fetch.chainfetch;
+package ar.fiuba.tdd.tp.motor.game.games.fetch.chainfetch;
 
 import ar.fiuba.tdd.tp.motor.ChainCommandCreator;
 import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.games.fetch.GameFetch;
+import ar.fiuba.tdd.tp.motor.game.games.fetch.GameFetch;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class ChainFetchCommonParse extends ChainCommandCreator {

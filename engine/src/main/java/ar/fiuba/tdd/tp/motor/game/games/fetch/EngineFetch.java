@@ -1,10 +1,8 @@
-package ar.fiuba.tdd.tp.motor.games.fetch;
+package ar.fiuba.tdd.tp.motor.game.games.fetch;
 
 import ar.fiuba.tdd.tp.motor.ChainCommandCreator;
 import ar.fiuba.tdd.tp.motor.Engine;
 import ar.fiuba.tdd.tp.motor.Game;
-import ar.fiuba.tdd.tp.motor.games.fetch.chainfetch.ChainFetchLookAround;
-import ar.fiuba.tdd.tp.motor.games.fetch.chainfetch.ChainFetchPickStick;
 
 public class EngineFetch extends Engine {
     public EngineFetch() {
@@ -13,8 +11,8 @@ public class EngineFetch extends Engine {
 
     @Override
     public ChainCommandCreator getChainOfCommands(Game game) {
-        //ChainCommandCreator lookAround = new ChainFetchLookAround((GameFetch)this.game);
-        //ChainCommandCreator pickStick = new ChainFetchPickStick((GameFetch)this.game);
+        //ChainCommandCreator lookAround = new ChainFetchLookAround((GameFetch)this.games);
+        //ChainCommandCreator pickStick = new ChainFetchPickStick((GameFetch)this.games);
 
         //lookAround.setNextChain(pickStick);
 

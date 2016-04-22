@@ -1,7 +1,5 @@
-package ar.fiuba.tdd.tp.motor.games.hanoi.chainhanoi;
+package ar.fiuba.tdd.tp.motor.game.games.hanoi.chainhanoi;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

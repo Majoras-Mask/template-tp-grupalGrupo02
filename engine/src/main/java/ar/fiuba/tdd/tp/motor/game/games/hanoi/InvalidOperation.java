@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.games.hanoi;
+package ar.fiuba.tdd.tp.motor.game.games.hanoi;
 
 public class InvalidOperation extends Exception {
     public InvalidOperation() {

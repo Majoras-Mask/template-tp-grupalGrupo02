@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.games.fetch;
+package ar.fiuba.tdd.tp.motor.game.games.fetch;
 
 import ar.fiuba.tdd.tp.motor.Game;
 
@@ -10,7 +10,7 @@ public class GameFetch implements Game {
     }
 
     public boolean checkIfGameIsFinished() {
-        //To win this game, you have to pick the stick
+        //To win this games, you have to pick the stick
         return stickInPlayer;
     }
 

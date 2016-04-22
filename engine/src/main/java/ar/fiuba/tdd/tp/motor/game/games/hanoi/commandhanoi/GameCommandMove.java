@@ -1,8 +1,8 @@
-package ar.fiuba.tdd.tp.motor.games.hanoi.commandhanoi;
+package ar.fiuba.tdd.tp.motor.game.games.hanoi.commandhanoi;
 
 import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.games.hanoi.GameHanoi;
-import ar.fiuba.tdd.tp.motor.games.hanoi.InvalidOperation;
+import ar.fiuba.tdd.tp.motor.game.games.hanoi.GameHanoi;
+import ar.fiuba.tdd.tp.motor.game.games.hanoi.InvalidOperation;
 
 /**
  * Created by kevin on 22/04/16.

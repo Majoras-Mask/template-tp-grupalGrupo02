@@ -1,10 +1,10 @@
-package ar.fiuba.tdd.tp.motor.games.hanoi;
+package ar.fiuba.tdd.tp.motor.game.games.hanoi;
 
 import ar.fiuba.tdd.tp.motor.ChainCommandCreator;
 import ar.fiuba.tdd.tp.motor.Engine;
 import ar.fiuba.tdd.tp.motor.Game;
-import ar.fiuba.tdd.tp.motor.games.hanoi.chainhanoi.ChainCheckSize;
-import ar.fiuba.tdd.tp.motor.games.hanoi.chainhanoi.ChainMove;
+import ar.fiuba.tdd.tp.motor.game.games.hanoi.chainhanoi.ChainCheckSize;
+import ar.fiuba.tdd.tp.motor.game.games.hanoi.chainhanoi.ChainMove;
 
 public class EngineHanoi extends Engine {
     private int defaultHanoiStack = 3;
