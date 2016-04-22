@@ -15,7 +15,7 @@ public class ChainHelper extends ChainCommandCreator{
     @Override
     public GameCommand createCommand(String message) {
         if ( message.toLowerCase().startsWith("what can i do with stack") ) {
-            // TODO sacar esto a un factory de comandos.
+            // TODO sacar esto a un factory de comandos. por que esta en el de hanoi?
             return new GameCommandHelper();
         } else {
             return super.createCommand(message);
