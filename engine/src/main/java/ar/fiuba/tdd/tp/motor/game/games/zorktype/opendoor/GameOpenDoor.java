@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.game.games.opendoor;
+package ar.fiuba.tdd.tp.motor.game.games.zorktype.opendoor;
 
 import ar.fiuba.tdd.tp.motor.Game;
 

@@ -1,12 +1,11 @@
-package ar.fiuba.tdd.tp.motor.game.games.fetch;
+package ar.fiuba.tdd.tp.motor.game.games.zorktype.fetch;
 
-import ar.fiuba.tdd.tp.motor.Game;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentStick;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkType;
 
-public class GameFetch implements Game {
+public class GameFetch extends ZorkType {
     private String stickName;
-    ComponentRoom currentRoom;
 
     public GameFetch() {
         ComponentRoom room = new ComponentRoom();
@@ -19,11 +18,5 @@ public class GameFetch implements Game {
     public boolean checkIfGameIsFinished() {
         //To win this game, you have to pick the stick
         return !this.currentRoom.hasComponent(this.stickName);
-    }
-
-    public void pickStick() {
-        if (this.currentRoom.hasComponent(this.stickName)) {
-            this.currentRoom.removeComponent(this.stickName);
-        }
     }
 }
