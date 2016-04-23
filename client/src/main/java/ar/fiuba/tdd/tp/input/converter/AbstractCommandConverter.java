@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.input.converter;
 
-import ar.fiuba.tdd.tp.ClientV2;
+import ar.fiuba.tdd.tp.Client;
 import ar.fiuba.tdd.tp.input.command.InputCommand;
 
 import java.util.List;
@@ -14,9 +14,9 @@ public abstract class AbstractCommandConverter implements InputConverter {
 
     protected InputConverter nextConverter;
     protected final List<Pattern> patterns;
-    protected final ClientV2 client;
+    protected final Client client;
 
-    public AbstractCommandConverter(ClientV2 client, List<String> regexList) {
+    public AbstractCommandConverter(Client client, List<String> regexList) {
         if (isNull(regexList) || regexList.isEmpty()) {
             throw new IllegalArgumentException("RegexList can't be null or empty");
         }

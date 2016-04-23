@@ -13,13 +13,13 @@ import java.util.List;
 
 import static ar.fiuba.tdd.tp.Constants.*;
 
-public class ClientV2 {
+public class Client {
 
     private final InputConverter converter;
     private final Connector connector;
     private final List<ClientConsumer> consumers;
 
-    public ClientV2(InputConverter converter, Connector connector, List<ClientConsumer> consumers) {
+    public Client(InputConverter converter, Connector connector, List<ClientConsumer> consumers) {
         this.converter = converter;
         this.connector = connector;
         this.consumers = consumers;

@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.input.converter.client;
 
-import ar.fiuba.tdd.tp.ClientV2;
+import ar.fiuba.tdd.tp.Client;
 import ar.fiuba.tdd.tp.input.command.client.HelpCommand;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +10,11 @@ import static org.mockito.Mockito.mock;
 public class HelpCommandConverterTest {
 
     private HelpCommandConverter helpCommandConverter;
-    private ClientV2 client;
+    private Client client;
 
     @Before
     public void setUp() {
-        this.client = mock(ClientV2.class);
+        this.client = mock(Client.class);
         this.helpCommandConverter = new HelpCommandConverter(this.client);
     }
 
@@ -37,7 +37,7 @@ public class HelpCommandConverterTest {
         this.helpCommandConverter.convert("hepl game");
     }
 
-    private HelpCommand newExpected(ClientV2 client, String game1) {
+    private HelpCommand newExpected(Client client, String game1) {
         return new HelpCommand(client, game1);
     }
 

@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.input.converter.client;
 
-import ar.fiuba.tdd.tp.ClientV2;
+import ar.fiuba.tdd.tp.Client;
 import ar.fiuba.tdd.tp.input.command.client.HelpCommand;
 import ar.fiuba.tdd.tp.input.converter.AbstractCommandConverter;
 
@@ -10,7 +10,7 @@ public class HelpCommandConverter extends AbstractCommandConverter {
 
     private static final String HELP = "help ";
 
-    public HelpCommandConverter(ClientV2 client) {
+    public HelpCommandConverter(Client client) {
         super(client, new ArrayList<String>() { {
                 add("^" + HELP);
             }

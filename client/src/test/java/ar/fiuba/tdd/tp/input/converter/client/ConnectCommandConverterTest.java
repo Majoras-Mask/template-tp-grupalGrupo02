@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.input.converter.client;
 
-import ar.fiuba.tdd.tp.ClientV2;
+import ar.fiuba.tdd.tp.Client;
 import ar.fiuba.tdd.tp.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.input.command.client.ConnectCommand;
 import org.junit.Before;
@@ -10,12 +10,12 @@ import static org.mockito.Mockito.mock;
 
 public class ConnectCommandConverterTest {
 
-    private ClientV2 client;
+    private Client client;
     private ConnectCommandConverter connectCommandConverter;
 
     @Before
     public void setUp() {
-        this.client = mock(ClientV2.class);
+        this.client = mock(Client.class);
         this.connectCommandConverter = new ConnectCommandConverter(this.client);
     }
 
@@ -46,7 +46,7 @@ public class ConnectCommandConverterTest {
         this.connectCommandConverter.convert("connect 192.23.1.3:403942");
     }
 
-    private ConnectCommand newExpected(ClientV2 client, String host, int port) {
+    private ConnectCommand newExpected(Client client, String host, int port) {
         return new ConnectCommand(client, new ConnectorSettings(host, port));
     }
 
