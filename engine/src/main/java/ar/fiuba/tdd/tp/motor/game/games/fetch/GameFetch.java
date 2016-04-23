@@ -5,13 +5,14 @@ import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentStick;
 
 public class GameFetch implements Game {
-    static final String stickName = "stick";
-    static final String roomName = "room";
+    private String stickName;
     ComponentRoom currentRoom;
 
     public GameFetch() {
-        ComponentRoom room = new ComponentRoom(this.roomName);
-        room.addComponent(new ComponentStick(this.stickName));
+        ComponentRoom room = new ComponentRoom();
+        ComponentStick stick = new ComponentStick();
+        this.stickName = stick.getDescription();
+        room.addComponent(stick);
         this.currentRoom = room;
     }
 

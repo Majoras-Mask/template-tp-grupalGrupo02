@@ -2,13 +2,15 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 
 public class ComponentStick implements GameComponents {
-    String id;
+    int id;
+    private volatile int idCounter = 0;
 
-    public ComponentStick(String id) {
-        this.id = id;
+    public ComponentStick() {
+        this.id = idCounter++;
     }
 
-    public String id() {
-        return this.id;
+    @Override
+    public String getDescription() {
+        return "Stick" + String.valueOf(this.id);
     }
 }

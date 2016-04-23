@@ -6,10 +6,11 @@ import java.util.List;
 
 public class ComponentRoom implements GameComponents {
     public List<GameComponents> components = new LinkedList<>();
-    String id;
+    int id;
+    private volatile int idCounter = 0;
 
-    public ComponentRoom(String id) {
-        this.id = id;
+    public ComponentRoom() {
+        this.id = idCounter++;
     }
 
     public void addComponent(GameComponents component) {
@@ -18,7 +19,7 @@ public class ComponentRoom implements GameComponents {
 
     public boolean hasComponent(String id) {
         for (GameComponents component : this.components) {
-            if (component.id().equals(id)) {
+            if (component.getDescription().equals(id)) {
                 return true;
             }
         }
@@ -27,14 +28,14 @@ public class ComponentRoom implements GameComponents {
 
     public void removeComponent(String id) {
         for (GameComponents component : this.components) {
-            if (component.id().equals(id)) {
+            if (component.getDescription().equals(id)) {
                 this.components.remove(component);
             }
         }
     }
 
     @Override
-    public String id() {
-        return this.id;
+    public String getDescription() {
+        return "Door" + String.valueOf(this.id);
     }
 }
