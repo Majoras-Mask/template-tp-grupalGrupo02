@@ -1,28 +1,26 @@
 package ar.fiuba.tdd.tp.config;
 
-import java.util.Objects;
-
 public class ConnectorSettings {
 
-    private static final long READ_TIMEOUT = 10000;
-    private static final long CONNECTION_TIMEOUT = 50000;
+    private static final Long READ_TIMEOUT = 10000L;
+    private static final Long CONNECTION_TIMEOUT = 50000L;
 
     private String host;
-    private int port;
-    private long readTimeout;
-    private long connectionTimeout;
+    private Integer port;
+    private Long readTimeout;
+    private Long connectionTimeout;
 
     public ConnectorSettings() {
     }
 
-    public ConnectorSettings(String host, int port, long readTimeout, long connectionTimeout) {
+    public ConnectorSettings(String host, Integer port, Long readTimeout, Long connectionTimeout) {
         this.host = host;
         this.port = port;
         this.readTimeout = readTimeout;
         this.connectionTimeout = connectionTimeout;
     }
 
-    public ConnectorSettings(String host, int port) {
+    public ConnectorSettings(String host, Integer port) {
         this(host, port, READ_TIMEOUT, CONNECTION_TIMEOUT);
     }
 
@@ -34,53 +32,28 @@ public class ConnectorSettings {
         this.host = host;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
-    public long getReadTimeout() {
+    public Long getReadTimeout() {
         return readTimeout;
     }
 
-    public void setReadTimeout(long readTimeout) {
+    public void setReadTimeout(Long readTimeout) {
         this.readTimeout = readTimeout;
     }
 
-    public long getConnectionTimeout() {
+    public Long getConnectionTimeout() {
         return connectionTimeout;
     }
 
-    public void setConnectionTimeout(long connectionTimeout) {
+    public void setConnectionTimeout(Long connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
     }
 
-    @Override
-    public String toString() {
-        return "ConnectorSettings{" +
-                "host='" + host + '\'' +
-                ", port=" + port +
-                ", readTimeout=" + readTimeout +
-                ", connectionTimeout=" + connectionTimeout +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ConnectorSettings that = (ConnectorSettings) o;
-        return port == that.port &&
-                readTimeout == that.readTimeout &&
-                connectionTimeout == that.connectionTimeout &&
-                Objects.equals(host, that.host);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(host, port, readTimeout, connectionTimeout);
-    }
 }

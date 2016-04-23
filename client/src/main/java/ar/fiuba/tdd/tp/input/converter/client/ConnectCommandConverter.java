@@ -42,7 +42,7 @@ public class ConnectCommandConverter extends AbstractCommandConverter {
         throw new IllegalStateException("Unable to parse host from " + input);
     }
 
-    private int getPort(String input) {
+    private Integer getPort(String input) {
         Pattern pattern = Pattern.compile(PORT);
         Matcher matcher = pattern.matcher(input);
         if (matcher.find()) {
