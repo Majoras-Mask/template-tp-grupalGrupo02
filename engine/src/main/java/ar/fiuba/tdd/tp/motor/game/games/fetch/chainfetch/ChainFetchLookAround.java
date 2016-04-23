@@ -10,6 +10,6 @@ public class ChainFetchLookAround extends ChainFetchCommonParse {
     }
 
     public GameCommand factoryCommand(String message) {
-        return new FetchCommandLookAround(this.gameFetch);
+        return new FetchCommandLookAround();
     }
 }
