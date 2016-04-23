@@ -7,7 +7,7 @@ public class ValidIpPort implements IpPort{
     String ip;
     String port;
 
-    public ValidIpPort(String ip, String port){
+    public ValidIpPort(String ip, String port) {
         this.ip = ip;
         this.port = port;
     }

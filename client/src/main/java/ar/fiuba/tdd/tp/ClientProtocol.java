@@ -47,7 +47,9 @@ public class ClientProtocol {
             return new ValidIpPort(input.substring(input.indexOf(' ') + 1,input.indexOf(':')), input.substring(input.indexOf(':') + 1));
         } else {
             System.out.println("Client> That's not the correct command! please type [connect [0-255].[0-255].[0-255].[0-255]:[0-65535]] to an opened port");
-            return new ValidIpPort("0.0.0.0", "0");
+            NullIpPort nullIpPort = new NullIpPort();
+            nullIpPort.validate();
+            return nullIpPort;
         }
     }
 
