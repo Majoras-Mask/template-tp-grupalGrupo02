@@ -2,11 +2,9 @@ package ar.fiuba.tdd.tp;
 
 import java.io.UnsupportedEncodingException;
 
-/**
- * Created by manuelcruz on 21/04/2016.
- */
 public class Main {
     public static void main(String[] args) {
+
         Client client = null;
         try {
             client = new Client();
@@ -15,7 +13,7 @@ public class Main {
             System.exit(1);
         }
         boolean successfulConnection = client.runDisconnected();
-        if(successfulConnection) {
+        if (successfulConnection) {
             client.runConnected();
         }
     }

@@ -2,9 +2,6 @@ package ar.fiuba.tdd.tp;
 
 import java.io.UnsupportedEncodingException;
 
-/**
- * Created by manuelcruz on 19/04/2016.
- */
 public class Client {
     private ClientProtocol clientProtocol;
 
