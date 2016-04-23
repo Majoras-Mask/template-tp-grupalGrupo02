@@ -19,55 +19,54 @@ public class ClientProtocol {
 
     public ClientProtocol() throws UnsupportedEncodingException {
         inputBuffer = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
-        pattern = Pattern.compile("connect localhost:[0-9]{4}");
+        pattern = Pattern.compile("connect ((([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5]))\\.){3}(([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5])):(([0-9])|([1-9][0-9])|([1-9][0-9]{2})|([1-9][0-9]{3})|([1-5][0-9]{4})|(6[0-4][0-9]{3})|(65[0-4][0-9]{2})|(655[0-2][0-9])|(6553[0-5]))");
         socket = null;
         connected = false;
-
     }
 
-    public int readEntry() {
+    public IpPort readEntry() {
         String input;
         try {
             input = inputBuffer.readLine();
         } catch (IOException e) {
             e.printStackTrace();
-            return 0;
+            return new NullIpPort();
         }
         if (input == null) {
-            return 0;
+            return new NullIpPort();
         }
         return readInput(input);
     }
 
-    private int readInput(String input) {
+    private IpPort readInput(String input) {
         Matcher matcher = pattern.matcher(input);
         if (input.equals("exit")) {
-            return 0;
+            return new NullIpPort();
         }
         if (matcher.find()) {
-            return Integer.parseInt(input.substring(18));
+            return new ValidIpPort(input.substring(input.indexOf(' ') + 1,input.indexOf(':')), input.substring(input.indexOf(':') + 1));
         } else {
-            System.out.println("Client> That's not the correct command! please type [connect localhost:port] to an opened port");
-            return -1;
+            System.out.println("Client> That's not the correct command! please type [connect [0-255].[0-255].[0-255].[0-255]:[0-65535]] to an opened port");
+            return new ValidIpPort("0.0.0.0", "0");
         }
     }
 
     public void init() {
-        System.out.println("Client> Welcome to Majora's Mask game service, please connect to the server typing [connect localhost:port] to an opened port");
+        System.out.println("Client> Welcome to Majora's Mask game service, please connect to the server typing 'connect [0-255].[0-255].[0-255].[0-255]:[0-65535]' (try 127.0.0.1:8000)");
     }
 
     public boolean connected() {
         return connected;
     }
 
-    public void tryConnect(int port) {
+    public void tryConnect(IpPort ipPort) {
         try {
-            socket = new Socket("localhost", port);
+            socket = new Socket(ipPort.getIp(), Integer.parseInt(ipPort.getPort()));
             connected = true;
             clientOutput = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8")), true);
             serverInput = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
         } catch (ConnectException e) {
-            System.out.println("Client> That port is closed! try another one");
+            System.out.println("Client> Connection refused, try with 127.0.0.1:8000");
         } catch (IOException e) {
             e.printStackTrace();
         }

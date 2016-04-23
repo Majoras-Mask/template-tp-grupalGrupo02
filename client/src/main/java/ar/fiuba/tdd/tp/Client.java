@@ -13,12 +13,10 @@ public class Client {
     }
 
     public boolean runDisconnected() {
-        int port = 0;
+        IpPort ipPort;
         clientProtocol.init();
-        while (!clientProtocol.connected() && (port = clientProtocol.readEntry()) != 0) {
-            if (port > 0) {
-                clientProtocol.tryConnect(port);
-            }
+        while (!clientProtocol.connected() && (ipPort = clientProtocol.readEntry()).isValid()) {
+            clientProtocol.tryConnect(ipPort);
         }
         return clientProtocol.connected();
     }
