@@ -14,4 +14,8 @@ public abstract class ZorkType implements Game {
             return "There is no such thing to pick.";
         }
     }
+
+    public String open(String nameOfOpenable) {
+        return "opening";
+    }
 }
