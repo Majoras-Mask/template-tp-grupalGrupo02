@@ -1,11 +1,18 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
-public interface GameComponents {
-    String getDescription();
+public abstract class GameComponents {
+    public int id;
+    private volatile int idCounter = 0;
 
-    Boolean pick();
+    public GameComponents() {
+        this.id = idCounter++;
+    }
 
-    Boolean close();
+    public abstract String getDescription();
 
-    Boolean open();
+    public abstract Boolean pick();
+
+    public abstract Boolean close();
+
+    public abstract Boolean open();
 }

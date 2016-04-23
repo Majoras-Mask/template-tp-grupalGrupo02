@@ -4,13 +4,11 @@ package ar.fiuba.tdd.tp.motor.game.components;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ComponentRoom implements GameComponents {
+public class ComponentRoom extends GameComponents {
     public List<GameComponents> components = new LinkedList<>();
-    int id;
-    private volatile int idCounter = 0;
 
     public ComponentRoom() {
-        this.id = idCounter++;
+        super();
     }
 
     public void addComponent(GameComponents component) {
@@ -45,7 +43,7 @@ public class ComponentRoom implements GameComponents {
 
     @Override
     public String getDescription() {
-        return "Door" + String.valueOf(this.id);
+        return "Room" + String.valueOf(this.id);
     }
 
     @Override

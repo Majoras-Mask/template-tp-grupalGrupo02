@@ -1,11 +1,9 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
-public abstract class GameComponentsSimple implements GameComponents {
-    int id;
-    private volatile int idCounter = 0;
+public abstract class GameComponentsSimple extends GameComponents {
 
     public GameComponentsSimple() {
-        this.id = idCounter++;
+        super();
     }
 
     @Override
