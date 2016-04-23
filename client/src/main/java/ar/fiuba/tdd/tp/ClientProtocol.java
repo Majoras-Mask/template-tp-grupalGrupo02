@@ -19,7 +19,11 @@ public class ClientProtocol {
 
     public ClientProtocol() throws UnsupportedEncodingException {
         inputBuffer = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
-        pattern = Pattern.compile("connect ((([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5]))\\.){3}(([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5])):(([0-9])|([1-9][0-9])|([1-9][0-9]{2})|([1-9][0-9]{3})|([1-5][0-9]{4})|(6[0-4][0-9]{3})|(65[0-4][0-9]{2})|(655[0-2][0-9])|(6553[0-5]))");
+        //TODO Esto es posta... ?
+        pattern = Pattern.compile("connect ((([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])"
+                + "|(25[0-5]))\\.){3}(([0-9])|([1-9][0-9])|(1[0-9]{2})|(2[0-4][0-9])|(25[0-5])):(([0-9])|([1-9][0-9])"
+                + "|([1-9][0-9]{2})|([1-9][0-9]{3})|([1-5][0-9]{4})|(6[0-4][0-9]{3})|(65[0-4][0-9]{2})"
+                + "|(655[0-2][0-9])|(6553[0-5]))");
         socket = null;
         connected = false;
     }
@@ -46,7 +50,8 @@ public class ClientProtocol {
         if (matcher.find()) {
             return new ValidIpPort(input.substring(input.indexOf(' ') + 1,input.indexOf(':')), input.substring(input.indexOf(':') + 1));
         } else {
-            System.out.println("Client> That's not the correct command! please type [connect [0-255].[0-255].[0-255].[0-255]:[0-65535]] to an opened port");
+            System.out.println("Client> That's not the correct command! please type [connect [0-255].[0-255].[0-255]."
+                    + "[0-255]:[0-65535]] to an opened port");
             NullIpPort nullIpPort = new NullIpPort();
             nullIpPort.validate();
             return nullIpPort;
@@ -54,7 +59,8 @@ public class ClientProtocol {
     }
 
     public void init() {
-        System.out.println("Client> Welcome to Majora's Mask game service, please connect to the server typing 'connect [0-255].[0-255].[0-255].[0-255]:[0-65535]' (try 127.0.0.1:8000)");
+        System.out.println("Client> Welcome to Majora's Mask game service, please connect to the server typing "
+                + "'connect [0-255].[0-255].[0-255].[0-255]:[0-65535]' (try 127.0.0.1:8000)");
     }
 
     public boolean connected() {
