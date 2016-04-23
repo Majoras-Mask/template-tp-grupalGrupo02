@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp;
 /**
  * Created by manuelcruz on 22/04/2016.
  */
-public class NullIpPort implements IpPort{
+public class NullIpPort implements IpPort {
     boolean valid;
 
     public NullIpPort() {

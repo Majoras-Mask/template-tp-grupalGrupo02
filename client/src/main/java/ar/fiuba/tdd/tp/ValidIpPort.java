@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp;
 /**
  * Created by manuelcruz on 22/04/2016.
  */
-public class ValidIpPort implements IpPort{
+public class ValidIpPort implements IpPort {
     String ip;
     String port;
 

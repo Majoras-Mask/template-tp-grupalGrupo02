@@ -5,6 +5,8 @@ package ar.fiuba.tdd.tp;
  */
 public interface IpPort {
     String getIp();
+
     String getPort();
+
     boolean isValid();
 }
