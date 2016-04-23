@@ -1,11 +1,11 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype.commands;
 
 import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkType;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class ZorkTypeCommandOpen extends ZorkTypeCommand implements GameCommand {
 
-    public ZorkTypeCommandOpen(ZorkType game, String whatToOpen) {
+    public ZorkTypeCommandOpen(ZorkTypeGame game, String whatToOpen) {
         super(game, whatToOpen);
     }
 

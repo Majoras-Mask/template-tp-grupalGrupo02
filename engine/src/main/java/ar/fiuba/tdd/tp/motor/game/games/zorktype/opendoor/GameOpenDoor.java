@@ -1,37 +1,21 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype.opendoor;
 
-import ar.fiuba.tdd.tp.motor.Game;
+import ar.fiuba.tdd.tp.motor.game.components.ComponentKey;
+import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public class GameOpenDoor implements Game {
-
-    private boolean doorOpen;
-    private boolean playerHasKey;
+public class GameOpenDoor extends ZorkTypeGame {
 
     public GameOpenDoor() {
-        this.doorOpen = false;
-        this.playerHasKey = false;
+        ComponentRoom room = new ComponentRoom();
+        ComponentKey key = new ComponentKey();
+        room.addComponent(key);
+        this.currentRoom = room;
     }
 
-    public void pickKey() {
-        this.playerHasKey = true;
-    }
 
-    public void openDoor() {
-        if (playerHasKey) {
-            this.doorOpen = true;
-        }
-    }
-
+    @Override
     public boolean checkIfGameIsFinished() {
-        //Game is won if door is opened
-        return this.doorOpen;
-    }
-
-    public boolean getPlayerHasKey() {
-        return this.playerHasKey;
-    }
-
-    public boolean getDoorOpen() {
-        return this.doorOpen;
+        return false;
     }
 }

@@ -2,9 +2,9 @@ package ar.fiuba.tdd.tp.motor.game.games.zorktype.fetch;
 
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentStick;
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkType;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public class GameFetch extends ZorkType {
+public class GameFetch extends ZorkTypeGame {
     private String stickName;
 
     public GameFetch() {

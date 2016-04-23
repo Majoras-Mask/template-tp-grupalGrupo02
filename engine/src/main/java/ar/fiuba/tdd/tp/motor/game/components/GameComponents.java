@@ -4,4 +4,8 @@ public interface GameComponents {
     String getDescription();
 
     Boolean pick();
+
+    Boolean close();
+
+    Boolean open();
 }

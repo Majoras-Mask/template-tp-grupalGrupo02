@@ -1,14 +1,13 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
+public class ComponentKey extends GameComponentsSimple {
 
-public class ComponentStick extends GameComponentsSimple {
-
-    public ComponentStick() {
+    public ComponentKey() {
         super();
     }
 
     @Override
     public String getBasicName() {
-        return null;
+        return "Key";
     }
 }

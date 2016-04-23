@@ -4,12 +4,17 @@ import ar.fiuba.tdd.tp.motor.Game;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.GameComponents;
 
-public abstract class ZorkType implements Game {
+public abstract class ZorkTypeGame implements Game {
     public ComponentRoom currentRoom;
+
+    public GameComponents getComponent(String nameOfComponent) {
+        return this.currentRoom.getComponent(nameOfComponent);
+    }
 
     public String pick(String nameOfPickable) {
 
-        GameComponents component = this.currentRoom.getComponent(nameOfPickable);
+        GameComponents component = getComponent(nameOfPickable);
+
         if (component == null) {
             return "There is no such thing to pick.";
         }

@@ -53,5 +53,15 @@ public class ComponentRoom implements GameComponents {
         return false;
     }
 
+    @Override
+    public Boolean close() {
+        return false;
+    }
+
+    @Override
+    public Boolean open() {
+        return false;
+    }
+
 
 }

@@ -1,13 +1,13 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype.commands;
 
 
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkType;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public abstract class ZorkTypeCommand {
-    public ZorkType game;
+    public ZorkTypeGame game;
     public String receiverOfAction;
 
-    public ZorkTypeCommand(ZorkType game, String whatToOpen) {
+    public ZorkTypeCommand(ZorkTypeGame game, String whatToOpen) {
         this.game = game;
         this.receiverOfAction = whatToOpen;
     }
