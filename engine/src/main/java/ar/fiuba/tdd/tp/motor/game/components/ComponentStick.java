@@ -13,4 +13,9 @@ public class ComponentStick implements GameComponents {
     public String getDescription() {
         return "Stick" + String.valueOf(this.id);
     }
+
+    @Override
+    public Boolean pick() {
+        return true;
+    }
 }

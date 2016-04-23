@@ -34,8 +34,24 @@ public class ComponentRoom implements GameComponents {
         }
     }
 
+    public GameComponents getComponent(String whatToGet) {
+        for (GameComponents component : this.components) {
+            if (component.getDescription().equals(whatToGet)) {
+                return this.components.get(this.components.indexOf(component));
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getDescription() {
         return "Door" + String.valueOf(this.id);
     }
+
+    @Override
+    public Boolean pick() {
+        return false;
+    }
+
+
 }
