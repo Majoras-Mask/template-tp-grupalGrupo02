@@ -19,7 +19,11 @@ public class ClientFactory {
     }
 
     public Client createStandardClient() {
-        return new Client(getSupplier(), getConsumer(), getConverter());
+        final CommandProcessor commandProcessor = new CommandProcessor();
+        final Client response = new Client(getSupplier(), getConsumer(), getConverter(commandProcessor));
+        commandProcessor.setClient(response);
+
+        return response;
     }
 
     public ClientSupplier getSupplier() {
@@ -30,8 +34,7 @@ public class ClientFactory {
         return this.clientConsumerFactory.createSysoutConsumer();
     }
 
-    public RequestConverter getConverter() {
-        final CommandProcessor commandProcessor = new CommandProcessor();
+    public RequestConverter getConverter(CommandProcessor commandProcessor) {
         return new CommandConverterFactory(commandProcessor).createConverters();
     }
 }

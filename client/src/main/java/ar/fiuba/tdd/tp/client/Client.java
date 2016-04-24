@@ -24,7 +24,7 @@ public class Client {
     }
 
     public void run() {
-        this.running = Boolean.TRUE;
+        this.start();
         this.callConsumer(Constants.WELCOME);
         this.doRun();
     }
@@ -54,4 +54,11 @@ public class Client {
         return running;
     }
 
+    public void stop(){
+        this.running = Boolean.FALSE;
+    }
+
+    public void start(){
+        this.running = Boolean.TRUE;
+    }
 }
