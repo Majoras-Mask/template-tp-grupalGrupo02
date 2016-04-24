@@ -6,21 +6,25 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 
 public class GameFetchTest {
 
+    private GameFetch game = new GameFetch();
+    private EngineZork engineZork = new EngineZork(this.game);
+
+    private String getResponseFromAction(String action) {
+        return this.engineZork.request(action);
+    }
+
     @Test
     public void onGameCreationNoWinning() {
-        GameFetch game = new GameFetch();
-
         assertFalse(game.checkIfGameIsFinished());
     }
 
     @Test
-    public void winningTheGame() {
-        GameFetch game = new GameFetch();
-        EngineZork engineZork = new EngineZork(game);
-
-        assertEquals(engineZork.request("pick stick0"), "You picked stick0.");
+    public void winningGame() {
+        getResponseFromAction("pick stick0");
+        assertTrue(this.game.checkIfGameIsFinished());
     }
 }

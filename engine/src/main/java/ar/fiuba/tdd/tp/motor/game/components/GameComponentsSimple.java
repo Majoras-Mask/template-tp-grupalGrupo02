@@ -16,6 +16,7 @@ public abstract class GameComponentsSimple extends GameComponents {
     @Override
     public Boolean pick() {
         this.game.addPlayerItem(this);
+        this.game.removeItemFromRoom(this);
         return true;
     }
 

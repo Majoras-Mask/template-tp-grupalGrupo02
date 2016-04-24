@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.motor.chains.ChainCommandCreator;
 
 public abstract class Engine {
 
-    private ChainCommandCreator chain;
+    protected ChainCommandCreator chain;
 
     public String request(String message) {
         if (this.chain == null) {

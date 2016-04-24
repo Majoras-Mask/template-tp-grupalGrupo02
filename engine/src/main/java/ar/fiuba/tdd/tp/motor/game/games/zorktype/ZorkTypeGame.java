@@ -31,4 +31,8 @@ public abstract class ZorkTypeGame implements Game {
     public void setCurrentRoom(ComponentRoom room) {
         this.currentRoom = room;
     }
+
+    public void removeItemFromRoom(GameComponents component) {
+        this.currentRoom.removeComponent(component.getDescription());
+    }
 }

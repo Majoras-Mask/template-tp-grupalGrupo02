@@ -21,6 +21,20 @@ public class EngineZork extends Engine {
 
 
     @Override
+    public String request(String message) {
+        if (this.chain == null) {
+            this.chain = this.createChain();
+        }
+        String response = this.chain.createCommand(message).execute();
+
+        if (this.gameZork.checkIfGameIsFinished()) {
+            return "You won the game";
+        }
+        return response;
+    }
+
+
+    @Override
     protected ChainCommandCreator createChain() {
 
         final ChainCommandCreator lookAround = new ChainZorkLookAround(this.gameZork, LOOKAROUND_PATTERN);
