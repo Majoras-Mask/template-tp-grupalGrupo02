@@ -22,7 +22,6 @@ public class EngineZork extends Engine {
 
     @Override
     protected ChainCommandCreator createChain() {
-        //TODO terminar
 
         final ChainCommandCreator lookAround = new ChainZorkLookAround(this.gameZork, LOOKAROUND_PATTERN);
         final ChainCommandCreator pick = new ChainZorkPick(this.gameZork, PICK_PATTERN);
@@ -36,6 +35,5 @@ public class EngineZork extends Engine {
         close.setNextChain(talk);
 
         return lookAround;
-
     }
 }
