@@ -1,21 +1,25 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
+
 public class ComponentDoor extends GameComponents {
 
     ComponentKey keyRequired = null;
     ComponentRoom roomItLeadsTo;
+    ZorkTypeGame game;
 
-    public ComponentDoor(ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
+    public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
         this.roomItLeadsTo = roomItLeadsTo;
         this.keyRequired = keyRequired;
+        this.game = game;
     }
 
-    public ComponentDoor(ComponentRoom roomItLeadsTo) {
-        this(roomItLeadsTo, null);
+    public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo) {
+        this(game, roomItLeadsTo, null);
     }
 
-    public Boolean matchingKey(ComponentKey key) {
-        return key.getDescription().equals(this.keyRequired.getDescription());
+    public Boolean matchingKey(GameComponentsSimple component) {
+        return component.getDescription().equals(this.keyRequired.getDescription());
     }
 
     public void unlockDoor() {
@@ -24,6 +28,10 @@ public class ComponentDoor extends GameComponents {
 
     public ComponentRoom getWhereItLeadsTo() {
         return this.roomItLeadsTo;
+    }
+
+    public Boolean isThisDoorUnlocked() {
+        return this.keyRequired == null;
     }
 
     @Override
@@ -43,6 +51,19 @@ public class ComponentDoor extends GameComponents {
 
     @Override
     public Boolean open() {
-        return true;
+        if (isThisDoorUnlocked()) {
+            return true;
+        }
+        for (GameComponentsSimple component: this.game.getPlayerItems()) {
+            if (matchingKey(component)) {
+                unlockDoor();
+                //TODO aca tendriamos que ponerle una funcion que diga setCurrentRoom al juego?
+                //goToRoom(ZorkTypeGame game) {
+                //  game.setCurrentRoom(getWhereItLeadsTo)
+                //}
+                return true;
+            }
+        }
+        return false;
     }
 }
