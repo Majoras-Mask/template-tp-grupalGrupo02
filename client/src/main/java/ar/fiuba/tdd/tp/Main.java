@@ -1,7 +1,11 @@
 package ar.fiuba.tdd.tp;
 
+import ar.fiuba.tdd.tp.client.Client;
+import ar.fiuba.tdd.tp.factory.ClientFactory;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("This is just a client!");
+        Client client = new ClientFactory().createStandardClient();
+        client.run();
     }
 }
