@@ -9,6 +9,6 @@ public class ComponentStick extends GameComponentsSimple {
 
     @Override
     public String getBasicName() {
-        return null;
+        return "stick";
     }
 }

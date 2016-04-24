@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype;
 
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
+import ar.fiuba.tdd.tp.motor.game.components.GameComponents;
 import ar.fiuba.tdd.tp.motor.game.components.GameComponentsSimple;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
@@ -9,14 +10,22 @@ import java.util.List;
 
 public abstract class ZorkTypeGame implements Game {
     public ComponentRoom currentRoom;
-    public List<GameComponentsSimple> playerItems = new LinkedList<>();
+    public List<GameComponents> playerItems = new LinkedList<>();
 
     public ComponentRoom getCurrentRoom() {
         return this.currentRoom;
     }
 
-    public List<GameComponentsSimple> getPlayerItems() {
+    public List<GameComponents> getPlayerItems() {
         return this.playerItems;
+    }
+
+    public void addPlayerItem(GameComponents component) {
+        this.playerItems.add(component);
+    }
+
+    public void removePlayerItem(GameComponents component) {
+        this.playerItems.remove(component);
     }
 
     public void setCurrentRoom(ComponentRoom room) {

@@ -4,11 +4,21 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class ComponentThief extends GameComponents {
 
-    ZorkTypeGame game;
+    GameComponents whatToSteal;
 
-    public ComponentThief(ZorkTypeGame game) {
+    public ComponentThief(ZorkTypeGame game, GameComponents whatToSteal) {
         this.game = game;
         this.componentName = "Thief";
+        this.whatToSteal = whatToSteal;
+    }
+
+    public boolean hasComponent(GameComponents whatToGet) {
+        for (GameComponents component : this.game.getPlayerItems()) {
+            if (component == whatToGet) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -29,7 +39,9 @@ public class ComponentThief extends GameComponents {
     @Override
     public Boolean talk() {
         //TODO robar cosas
-        this.game.getPlayerItems();
+        if (hasComponent(this.whatToSteal)) {
+            this.game.removePlayerItem(this.whatToSteal);
+        }
         return true;
     }
 }

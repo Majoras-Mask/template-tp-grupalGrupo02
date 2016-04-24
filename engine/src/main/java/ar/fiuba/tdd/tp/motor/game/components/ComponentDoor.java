@@ -6,7 +6,6 @@ public class ComponentDoor extends GameComponents {
 
     ComponentKey keyRequired = null;
     ComponentRoom roomItLeadsTo;
-    ZorkTypeGame game;
 
     public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
         this.roomItLeadsTo = roomItLeadsTo;
@@ -18,7 +17,7 @@ public class ComponentDoor extends GameComponents {
         this(game, roomItLeadsTo, null);
     }
 
-    public Boolean matchingKey(GameComponentsSimple component) {
+    public Boolean matchingKey(GameComponents component) {
         return component.getDescription().equals(this.keyRequired.getDescription());
     }
 
@@ -59,7 +58,7 @@ public class ComponentDoor extends GameComponents {
             goToRoom(this.game);
             return true;
         }
-        for (GameComponentsSimple component: this.game.getPlayerItems()) {
+        for (GameComponents component: this.game.getPlayerItems()) {
             if (matchingKey(component)) {
                 unlockDoor();
                 goToRoom(this.game);

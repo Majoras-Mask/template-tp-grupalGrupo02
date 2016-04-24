@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
+
 public abstract class GameComponentsSimple extends GameComponents {
 
     public GameComponentsSimple() {
@@ -13,6 +15,7 @@ public abstract class GameComponentsSimple extends GameComponents {
 
     @Override
     public Boolean pick() {
+        this.game.addPlayerItem(this);
         return true;
     }
 
@@ -33,4 +36,7 @@ public abstract class GameComponentsSimple extends GameComponents {
 
     public abstract String getBasicName();
 
+    public void setGame(ZorkTypeGame game) {
+        this.game = game;
+    }
 }

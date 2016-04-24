@@ -34,6 +34,7 @@ public abstract class ZorkCommandActionable extends ZorkCommand {
         if (component == null) {
             return noSuchThing();
         }
+        component.setGame(this.game);
         if (componentAction(component)) {
             return actionSuccess(component);
         } else {
