@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.factory;
 
 import ar.fiuba.tdd.tp.client.Client;
+import ar.fiuba.tdd.tp.client.connector.Connector;
 import ar.fiuba.tdd.tp.client.input.command.converter.RequestConverter;
 import ar.fiuba.tdd.tp.client.input.supplier.ClientSupplier;
 import ar.fiuba.tdd.tp.client.output.consumer.ClientConsumer;
@@ -19,7 +20,7 @@ public class ClientFactory {
     }
 
     public Client createStandardClient() {
-        final CommandProcessor commandProcessor = new CommandProcessor();
+        final CommandProcessor commandProcessor = new CommandProcessor(new Connector());
         final Client response = new Client(getSupplier(), getConsumer(), getConverter(commandProcessor));
         commandProcessor.setClient(response);
 

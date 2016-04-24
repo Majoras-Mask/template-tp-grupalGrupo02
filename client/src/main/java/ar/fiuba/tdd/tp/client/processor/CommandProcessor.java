@@ -16,8 +16,8 @@ public class CommandProcessor {
     private final Connector connector;
     private Client client;
 
-    public CommandProcessor() {
-        this.connector = new Connector();
+    public CommandProcessor(Connector connector) {
+        this.connector = connector;
     }
 
     public ClientResponse connect(ConnectorSettings connectorSettings) {

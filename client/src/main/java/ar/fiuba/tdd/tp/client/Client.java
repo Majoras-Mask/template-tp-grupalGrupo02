@@ -46,7 +46,7 @@ public class Client {
         }
     }
 
-    public void callConsumer(ClientResponse event) {
+    private void callConsumer(ClientResponse event) {
         this.consumer.consume(event);
     }
 
