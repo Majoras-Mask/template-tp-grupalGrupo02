@@ -18,8 +18,8 @@ public class ConnectCommandConverter extends AbstractCommandConverter {
             + BETWEEN_0_AND_255 + "\\."
             + BETWEEN_0_AND_255 + "\\."
             + BETWEEN_0_AND_255;
-    private static final String PORT = "(([0-9])|([1-9][0-9])|([1-9][0-9]{2})|([1-9][0-9]{3})|([1-5][0-9]{4})|"
-            + "(6[0-4][0-9]{3})|(65[0-4][0-9]{2})|(655[0-2][0-9])|(6553[0-5]))";
+    private static final String PORT = "((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})"
+            + "|([1-9][0-9]{3})|([1-9][0-9]{2})|([1-9][0-9])|([0-9]))";
 
     public ConnectCommandConverter(CommandProcessor commandProcessor, RequestConverter nextConverter) {
         super(commandProcessor, new ArrayList<String>() { {
