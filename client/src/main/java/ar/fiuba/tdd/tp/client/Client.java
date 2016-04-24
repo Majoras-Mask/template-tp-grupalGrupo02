@@ -54,11 +54,11 @@ public class Client {
         return running;
     }
 
-    public void stop(){
+    public void stop() {
         this.running = Boolean.FALSE;
     }
 
-    public void start(){
+    public void start() {
         this.running = Boolean.TRUE;
     }
 }
