@@ -28,7 +28,7 @@ public class GameHanoi implements Game {
     }
 
     public boolean isValidIndex(int stackIndex) {
-        return ( stackIndex >= 0  || stackIndex < 3 );
+        return ( stackIndex >= 0  && stackIndex < 3 );
     }
 
     public int getSize(int stackIndex) {

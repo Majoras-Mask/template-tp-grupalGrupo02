@@ -12,13 +12,13 @@ public class GameCommandCheckSize implements GameCommand {
 
     public GameCommandCheckSize(GameHanoi game, int stackIndex) {
         this.game = game;
-        this.stackIndex = stackIndex;
+        this.stackIndex = stackIndex - 1;
     }
 
     @Override
     public String execute() {
         int size = this.game.getTopElementFromStack(this.stackIndex);
-        String toReturn = "Size of top from stack " + this.stackIndex + "is " + size;
+        String toReturn = "Size of top from stack " + (this.stackIndex + 1) + " is " + size;
         return toReturn;
     }
 }

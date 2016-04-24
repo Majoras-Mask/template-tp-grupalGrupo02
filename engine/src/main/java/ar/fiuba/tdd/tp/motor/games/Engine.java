@@ -7,7 +7,7 @@ public abstract class Engine {
 
     private ChainCommandCreator chain;
 
-    String request(String message) {
+    public String request(String message) {
         if (this.chain == null) {
             this.chain = this.createChain();
         }

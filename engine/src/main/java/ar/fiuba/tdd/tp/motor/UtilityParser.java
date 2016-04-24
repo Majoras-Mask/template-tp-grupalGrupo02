@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  */
 public class UtilityParser {
     public static Matcher getMatcher(String patternString, String stringToCheck) {
-        Pattern pattern = Pattern.compile(patternString);
+        Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         return pattern.matcher(stringToCheck);
     }
 
@@ -18,7 +18,9 @@ public class UtilityParser {
     }
 
     public static String getGroup(String patternString, String stringToCheck, int groupIndex) {
+
         Matcher matcher = getMatcher(patternString, stringToCheck);
+        matcher.find();
         return matcher.group(groupIndex);
     }
 }

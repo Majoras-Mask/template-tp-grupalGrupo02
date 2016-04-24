@@ -21,6 +21,6 @@ public class GameCommandMove implements GameCommand {
             this.game.move(this.fromStack, this.toStack);
             return "moved!";
         }
-        return "Error: Movimiento invalido";
+        return "Movimiento invalido";
     }
 }
