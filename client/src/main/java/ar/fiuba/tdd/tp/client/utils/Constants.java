@@ -12,6 +12,10 @@ public class Constants {
     public static final ClientResponse UNEXPECTED_ERROR = new ClientResponse("Something really bad happened "
             + "while connecting with the server. I'm sorry, but you'll have to go and play somewhere else..");
 
-    public static final ClientResponse PROCESS_COMMAND_ERROR = new ClientResponse("An error occurred processing your "
-            + "command");
+    public static final ClientResponse WELCOME = new ClientResponse("Welcome!!");
+
+    public static final String PROCESS_COMMAND_ERROR = "Something bad occurred with your command: ";
+
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
 }

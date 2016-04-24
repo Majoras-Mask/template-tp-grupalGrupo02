@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.client.output.consumer;
 
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
+import ar.fiuba.tdd.tp.client.utils.Constants;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -20,6 +21,7 @@ public class SysoutPrinter implements ClientConsumer {
     public void consume(ClientResponse response) {
         try {
             this.outputBuffer.write(PREFIX + response.getEvent());
+            this.outputBuffer.write(Constants.LINE_SEPARATOR + PREFIX);
             this.outputBuffer.flush();
         } catch (Exception e) {
             throw new IllegalStateException("Unexpected error occurred while writing to output buffer: " + e);

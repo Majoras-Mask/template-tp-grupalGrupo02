@@ -38,12 +38,15 @@ public class CommandConverterFactory {
 
     private AbstractCommandConverter chainConverters(List<AbstractCommandConverter> allConverters) {
         final Iterator<AbstractCommandConverter> iterator = allConverters.iterator();
-        final AbstractCommandConverter response = iterator.next();
+        final AbstractCommandConverter first = iterator.next();
+        AbstractCommandConverter response = first;
 
         while (iterator.hasNext()) {
-            response.setNextConverter(iterator.next());
+            AbstractCommandConverter next = iterator.next();
+            response.setNextConverter(next);
+            response = next;
         }
 
-        return response;
+        return first;
     }
 }

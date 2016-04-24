@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.client.input.command.converter.RequestConverter;
 import ar.fiuba.tdd.tp.client.input.supplier.ClientSupplier;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 import ar.fiuba.tdd.tp.client.output.consumer.ClientConsumer;
-import ar.fiuba.tdd.tp.client.processor.CommandProcessorException;
+import ar.fiuba.tdd.tp.client.utils.Constants;
 
 import static ar.fiuba.tdd.tp.client.utils.Constants.PROCESS_COMMAND_ERROR;
 
@@ -25,6 +25,7 @@ public class Client {
 
     public void run() {
         this.running = Boolean.TRUE;
+        this.callConsumer(Constants.WELCOME);
         this.doRun();
     }
 
@@ -40,8 +41,8 @@ public class Client {
             final Command command = this.converter.convert(request);
 
             return command.execute();
-        } catch (CommandProcessorException e) {
-            return PROCESS_COMMAND_ERROR;
+        } catch (Exception e) {
+            return new ClientResponse(PROCESS_COMMAND_ERROR + e);
         }
     }
 

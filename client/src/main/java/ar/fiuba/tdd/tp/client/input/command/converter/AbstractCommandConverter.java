@@ -35,7 +35,7 @@ public abstract class AbstractCommandConverter implements RequestConverter {
             return doConvert(request.getInput());
         }
         if (this.getNextConverter() != null) {
-            this.getNextConverter().convert(request);
+            return this.getNextConverter().convert(request);
         }
         throw new IllegalStateException("Can not handle input " + request.getInput());
     }
