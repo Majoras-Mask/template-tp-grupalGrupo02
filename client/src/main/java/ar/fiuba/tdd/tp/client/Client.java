@@ -10,6 +10,11 @@ import ar.fiuba.tdd.tp.client.utils.Constants;
 
 import static ar.fiuba.tdd.tp.client.utils.Constants.PROCESS_COMMAND_ERROR;
 
+/**
+ * A Client that handles the communication for a Game. Consumes request from a {@link ClientSupplier}.
+ * Those requests are converted into a {@link Command} and then this command is executed.
+ * The result is communicated to the {@link ClientConsumer}.
+ */
 public class Client {
     private Boolean running;
     private final ClientSupplier supplier;
