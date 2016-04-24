@@ -21,5 +21,4 @@ public class UtilityParser {
         Matcher matcher = getMatcher(patternString, stringToCheck);
         return matcher.group(groupIndex);
     }
-
 }

@@ -2,12 +2,16 @@ package ar.fiuba.tdd.tp.motor;
 
 
 public abstract class Engine {
-    protected Game game;
+
+    private ChainCommandCreator chain;
 
     String request(String message) {
-        return getChainOfCommands(game).createCommand(message).execute();
+        if (this.chain == null) {
+            this.chain = this.createChain();
+        }
+        return this.chain.createCommand(message).execute();
     }
 
-    protected abstract ChainCommandCreator getChainOfCommands(Game game);
+    protected abstract ChainCommandCreator createChain();
 
 }

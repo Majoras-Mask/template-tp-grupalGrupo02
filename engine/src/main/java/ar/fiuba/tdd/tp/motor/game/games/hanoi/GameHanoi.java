@@ -28,15 +28,15 @@ public class GameHanoi implements Game {
     }
 
     public boolean isValidIndex(int stackIndex) {
-        return ( stackIndex >= 1  || stackIndex <= 3 );
+        return ( stackIndex >= 0  || stackIndex < 3 );
     }
 
     public int getSize(int stackIndex) {
-        return this.stacks.get(stackIndex - 1).size();
+        return this.stacks.get(stackIndex).size();
     }
 
     public int getTopElementFromStack(int stackIndex) {
-        return this.stacks.get(stackIndex - 1).peek();
+        return this.stacks.get(stackIndex).peek();
     }
 
     public boolean isValidMove(int fromStackIndex, int toStackIndex) {
@@ -49,22 +49,23 @@ public class GameHanoi implements Game {
             return true;
         }
 
-        int topFromStackIndex = this.stacks.get(fromStackIndex - 1).peek();
-        int topToStackIndex = this.stacks.get(toStackIndex - 1).peek();
+        int topFromStackIndex = this.stacks.get(fromStackIndex).peek();
+        int topToStackIndex = this.stacks.get(toStackIndex).peek();
 
         return topFromStackIndex < topToStackIndex;
     }
 
-    public void move(int fromStackIndex, int toStackIndex) throws InvalidOperation {
+    public void move(int fromStackIndex, int toStackIndex) {
         if (!isValidMove(fromStackIndex, toStackIndex)) {
-            throw new InvalidOperation();
+            return;
         }
 
-        int topFromStackIndex = this.stacks.get(fromStackIndex - 1).pop();
-        this.stacks.get(toStackIndex - 1).push(topFromStackIndex);
+        int topFromStackIndex = this.stacks.get(fromStackIndex).pop();
+        this.stacks.get(toStackIndex).push(topFromStackIndex);
     }
 
     public boolean checkIfGameIsFinished() {
         return (this.getSize(2) == this.stackFloors);
     }
+
 }

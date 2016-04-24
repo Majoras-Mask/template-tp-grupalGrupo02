@@ -2,11 +2,7 @@ package ar.fiuba.tdd.tp.motor.game.games.hanoi.commandhanoi;
 
 import ar.fiuba.tdd.tp.motor.GameCommand;
 import ar.fiuba.tdd.tp.motor.game.games.hanoi.GameHanoi;
-import ar.fiuba.tdd.tp.motor.game.games.hanoi.InvalidOperation;
 
-/**
- * Created by kevin on 22/04/16.
- */
 public class GameCommandMove implements GameCommand {
 
     private GameHanoi game;
@@ -15,17 +11,16 @@ public class GameCommandMove implements GameCommand {
 
     public GameCommandMove(GameHanoi game, int fromStack, int toStack) {
         this.game = game;
-        this.fromStack = fromStack;
-        this.toStack = toStack;
+        this.fromStack = fromStack - 1;
+        this.toStack = toStack - 1;
     }
 
     @Override
     public String execute() {
-        try {
+        if (this.game.isValidMove(this.fromStack, this.toStack)) {
             this.game.move(this.fromStack, this.toStack);
             return "moved!";
-        } catch (InvalidOperation e) {
-            return "Error: Movimiento invalido";
         }
+        return "Error: Movimiento invalido";
     }
 }
