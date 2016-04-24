@@ -16,7 +16,6 @@ public class EngineHanoi extends Engine {
     private static String MOVE_PATTERN = "move top stack (\\d) stack (\\d)";
 
     public EngineHanoi() {
-        super();
         this.gameHanoi = new GameHanoi(defaultHanoiStack);
     }
 
