@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.config;
+package ar.fiuba.tdd.tp.connector.config;
 
 public class ConnectorSettings {
 

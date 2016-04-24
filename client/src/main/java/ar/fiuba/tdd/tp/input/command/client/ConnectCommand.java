@@ -2,7 +2,7 @@
 package ar.fiuba.tdd.tp.input.command.client;
 
 import ar.fiuba.tdd.tp.Client;
-import ar.fiuba.tdd.tp.config.ConnectorSettings;
+import ar.fiuba.tdd.tp.connector.config.ConnectorSettings;
 
 public class ConnectCommand extends ClientCommand {
 

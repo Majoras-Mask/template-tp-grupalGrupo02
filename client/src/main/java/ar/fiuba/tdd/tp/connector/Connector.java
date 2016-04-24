@@ -2,7 +2,7 @@ package ar.fiuba.tdd.tp.connector;
 
 import ar.fiuba.tdd.tp.api.Request;
 import ar.fiuba.tdd.tp.api.Response;
-import ar.fiuba.tdd.tp.config.ConnectorSettings;
+import ar.fiuba.tdd.tp.connector.config.ConnectorSettings;
 
 import java.io.IOException;
 import java.net.Socket;

@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.input.converter.client;
 
 import ar.fiuba.tdd.tp.Client;
-import ar.fiuba.tdd.tp.config.ConnectorSettings;
+import ar.fiuba.tdd.tp.connector.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.input.command.client.ConnectCommand;
 import org.junit.Before;
 import org.junit.Test;

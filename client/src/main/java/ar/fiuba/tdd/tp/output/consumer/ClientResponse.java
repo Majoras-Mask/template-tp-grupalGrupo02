@@ -2,14 +2,14 @@ package ar.fiuba.tdd.tp.output.consumer;
 
 import ar.fiuba.tdd.tp.api.Response;
 
-public class ClientEvent {
+public class ClientResponse {
     private final String event;
 
-    public ClientEvent(Response response) {
+    public ClientResponse(Response response) {
         this.event = response.getSomething();
     }
 
-    public ClientEvent(String event) {
+    public ClientResponse(String event) {
         this.event = event;
     }
 
