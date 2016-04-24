@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.commands.zorktype;
+package ar.fiuba.tdd.tp.motor.chains.zorktype;
 
 import ar.fiuba.tdd.tp.motor.chains.zorktype.ChainZorkType;
 import ar.fiuba.tdd.tp.motor.commands.GameCommand;

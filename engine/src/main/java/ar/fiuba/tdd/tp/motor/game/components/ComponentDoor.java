@@ -39,8 +39,8 @@ public class ComponentDoor extends GameComponents {
     }
 
     @Override
-    public String getDescription() {
-        return "Door" + String.valueOf(this.id);
+    public String getBasicName() {
+        return "Door";
     }
 
     @Override
@@ -66,6 +66,11 @@ public class ComponentDoor extends GameComponents {
                 return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    public Boolean talk() {
         return false;
     }
 }

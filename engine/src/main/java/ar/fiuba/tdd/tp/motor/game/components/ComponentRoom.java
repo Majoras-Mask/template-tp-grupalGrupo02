@@ -8,7 +8,7 @@ public class ComponentRoom extends GameComponents {
     public List<GameComponents> components = new LinkedList<>();
 
     public ComponentRoom() {
-        super();
+        this.componentName = "Room";
     }
 
     public void addComponent(GameComponents component) {
@@ -42,11 +42,6 @@ public class ComponentRoom extends GameComponents {
     }
 
     @Override
-    public String getDescription() {
-        return "Room" + String.valueOf(this.id);
-    }
-
-    @Override
     public Boolean pick() {
         return false;
     }
@@ -58,6 +53,11 @@ public class ComponentRoom extends GameComponents {
 
     @Override
     public Boolean open() {
+        return false;
+    }
+
+    @Override
+    public Boolean talk() {
         return false;
     }
 

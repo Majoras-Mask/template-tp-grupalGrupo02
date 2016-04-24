@@ -26,6 +26,11 @@ public abstract class GameComponentsSimple extends GameComponents {
         return false;
     }
 
+    @Override
+    public Boolean talk() {
+        return false;
+    }
+
     public abstract String getBasicName();
 
 }

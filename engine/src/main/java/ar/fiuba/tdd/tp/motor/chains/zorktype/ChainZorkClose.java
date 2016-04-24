@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.motor.chains.zorktype;
 
 import ar.fiuba.tdd.tp.motor.commands.GameCommand;
-import ar.fiuba.tdd.tp.motor.commands.zorktype.ChainZorkActionable;
 import ar.fiuba.tdd.tp.motor.commands.zorktype.ZorkCommandClose;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
