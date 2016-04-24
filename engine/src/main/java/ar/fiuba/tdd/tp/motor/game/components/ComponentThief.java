@@ -8,7 +8,6 @@ public class ComponentThief extends GameComponents {
 
     public ComponentThief(ZorkTypeGame game, GameComponents whatToSteal) {
         this.game = game;
-        this.componentName = "Thief";
         this.whatToSteal = whatToSteal;
     }
 
@@ -19,6 +18,11 @@ public class ComponentThief extends GameComponents {
             }
         }
         return false;
+    }
+
+    @Override
+    public String getBasicName() {
+        return "thief";
     }
 
     @Override

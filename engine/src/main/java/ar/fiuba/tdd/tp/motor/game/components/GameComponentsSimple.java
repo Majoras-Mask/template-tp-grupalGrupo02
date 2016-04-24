@@ -35,8 +35,6 @@ public abstract class GameComponentsSimple extends GameComponents {
         return false;
     }
 
-    public abstract String getBasicName();
-
     public void setGame(ZorkTypeGame game) {
         this.game = game;
     }

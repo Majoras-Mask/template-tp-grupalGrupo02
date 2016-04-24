@@ -18,8 +18,13 @@ public class GameFetchTest {
     }
 
     @Test
-    public void onGameCreationNoWinning() {
+    public void onGameCreationNoWinningTest() {
         assertFalse(game.checkIfGameIsFinished());
+    }
+
+    @Test
+    public void lookAroundSeeItemsTest() {
+        assertEquals(getResponseFromAction("look around"), "room0 has: A stick0.");
     }
 
     @Test

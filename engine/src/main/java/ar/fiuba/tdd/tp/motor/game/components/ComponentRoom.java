@@ -5,10 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ComponentRoom extends GameComponents {
-    public List<GameComponents> components = new LinkedList<>();
+    protected List<GameComponents> components = new LinkedList<>();
 
     public ComponentRoom() {
-        this.componentName = "Room";
+        super();
+    }
+
+    @Override
+    public String getBasicName() {
+        return "room";
     }
 
     public void addComponent(GameComponents component) {
@@ -22,6 +27,10 @@ public class ComponentRoom extends GameComponents {
             }
         }
         return false;
+    }
+
+    public List<GameComponents> getListOfComponents() {
+        return this.components;
     }
 
     public void removeComponent(String id) {
