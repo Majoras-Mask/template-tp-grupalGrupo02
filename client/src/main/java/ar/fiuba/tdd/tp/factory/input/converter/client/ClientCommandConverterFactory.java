@@ -1,10 +1,13 @@
 package ar.fiuba.tdd.tp.factory.input.converter.client;
 
-import ar.fiuba.tdd.tp.CommandProcessor;
-import ar.fiuba.tdd.tp.input.converter.AbstractCommandConverter;
-import ar.fiuba.tdd.tp.input.converter.client.ConnectCommandConverter;
-import ar.fiuba.tdd.tp.input.converter.client.ExitCommandConverter;
-import ar.fiuba.tdd.tp.input.converter.client.HelpCommandConverter;
+import ar.fiuba.tdd.tp.client.input.command.converter.AbstractCommandConverter;
+import ar.fiuba.tdd.tp.client.input.command.converter.client.ConnectCommandConverter;
+import ar.fiuba.tdd.tp.client.input.command.converter.client.ExitCommandConverter;
+import ar.fiuba.tdd.tp.client.input.command.converter.client.HelpCommandConverter;
+import ar.fiuba.tdd.tp.client.processor.CommandProcessor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientCommandConverterFactory {
 
@@ -14,38 +17,29 @@ public class ClientCommandConverterFactory {
         this.commandProcessor = commandProcessor;
     }
 
-    public AbstractCommandConverter createClientConverters() {
-        return this.createExitCommandConverter(this.createConnectCommandConverter(this.createHelpCommandConverter()));
+    public List<AbstractCommandConverter> createClientConverters() {
+        final AbstractCommandConverter connectConverter = createConnectCommandConverter();
+        final AbstractCommandConverter exitConverter = createExitCommandConverter();
+        final AbstractCommandConverter helpConverter = createHelpCommandConverter();
+
+        return new ArrayList<AbstractCommandConverter>() { {
+                add(connectConverter);
+                add(exitConverter);
+                add(helpConverter);
+            }
+        };
     }
 
     public ConnectCommandConverter createConnectCommandConverter() {
-        return new ConnectCommandConverter(this.commandProcessor);
-    }
-
-    public ConnectCommandConverter createConnectCommandConverter(AbstractCommandConverter next) {
-        final ConnectCommandConverter response = this.createConnectCommandConverter();
-        response.setNextConverter(next);
-        return response;
+        return new ConnectCommandConverter(this.commandProcessor, null);
     }
 
     public ExitCommandConverter createExitCommandConverter() {
-        return new ExitCommandConverter(this.commandProcessor);
-    }
-
-    public ExitCommandConverter createExitCommandConverter(AbstractCommandConverter next) {
-        final ExitCommandConverter response = this.createExitCommandConverter();
-        response.setNextConverter(next);
-        return response;
+        return new ExitCommandConverter(this.commandProcessor, null);
     }
 
     public HelpCommandConverter createHelpCommandConverter() {
-        return new HelpCommandConverter(this.commandProcessor);
-    }
-
-    public HelpCommandConverter createHelpCommandConverter(AbstractCommandConverter next) {
-        final HelpCommandConverter response = createHelpCommandConverter();
-        response.setNextConverter(next);
-        return response;
+        return new HelpCommandConverter(this.commandProcessor, null);
     }
 
 }

@@ -1,8 +1,10 @@
 package ar.fiuba.tdd.tp.factory.input.converter.game;
 
-import ar.fiuba.tdd.tp.CommandProcessor;
-import ar.fiuba.tdd.tp.input.converter.InputConverter;
-import ar.fiuba.tdd.tp.input.converter.game.GameCommandConverter;
+import ar.fiuba.tdd.tp.client.input.command.converter.AbstractCommandConverter;
+import ar.fiuba.tdd.tp.client.processor.CommandProcessor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameCommandConverterFactory {
 
@@ -12,8 +14,8 @@ public class GameCommandConverterFactory {
         this.commandProcessor = commandProcessor;
     }
 
-    public InputConverter createGameConverters() {
-        return new GameCommandConverter(this.commandProcessor);
+    public List<AbstractCommandConverter> createGameConverters() {
+        return new ArrayList<>();
     }
 
 }

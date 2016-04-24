@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp;
 
+import ar.fiuba.tdd.tp.client.Client;
 import ar.fiuba.tdd.tp.factory.ClientFactory;
 
 public class Main {
