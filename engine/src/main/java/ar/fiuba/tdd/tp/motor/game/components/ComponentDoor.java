@@ -34,6 +34,10 @@ public class ComponentDoor extends GameComponents {
         return this.keyRequired == null;
     }
 
+    private void goToRoom(ZorkTypeGame game) {
+        game.setCurrentRoom(getWhereItLeadsTo());
+    }
+
     @Override
     public String getDescription() {
         return "Door" + String.valueOf(this.id);
@@ -52,15 +56,13 @@ public class ComponentDoor extends GameComponents {
     @Override
     public Boolean open() {
         if (isThisDoorUnlocked()) {
+            goToRoom(this.game);
             return true;
         }
         for (GameComponentsSimple component: this.game.getPlayerItems()) {
             if (matchingKey(component)) {
                 unlockDoor();
-                //TODO aca tendriamos que ponerle una funcion que diga setCurrentRoom al juego?
-                //goToRoom(ZorkTypeGame game) {
-                //  game.setCurrentRoom(getWhereItLeadsTo)
-                //}
+                goToRoom(this.game);
                 return true;
             }
         }

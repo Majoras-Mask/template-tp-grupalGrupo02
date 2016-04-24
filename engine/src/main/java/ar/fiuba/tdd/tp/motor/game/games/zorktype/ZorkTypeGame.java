@@ -18,4 +18,8 @@ public abstract class ZorkTypeGame implements Game {
     public List<GameComponentsSimple> getPlayerItems() {
         return this.playerItems;
     }
+
+    public void setCurrentRoom(ComponentRoom room) {
+        this.currentRoom = room;
+    }
 }
