@@ -1,7 +1,7 @@
-package ar.fiuba.tdd.tp.motor;
+package ar.fiuba.tdd.tp.motor.games;
 
 
-import ar.fiuba.tdd.tp.motor.game.games.hanoi.EngineHanoi;
+import ar.fiuba.tdd.tp.motor.games.hanoi.EngineHanoi;
 
 public class EngineFactoryConcrete implements EngineFactory {
     private static EngineFactoryConcrete uniqueInstance = null;

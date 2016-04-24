@@ -1,7 +1,7 @@
-package ar.fiuba.tdd.tp.motor.game.games.hanoi.commandhanoi;
+package ar.fiuba.tdd.tp.motor.commands.hanoi;
 
-import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.game.games.hanoi.GameHanoi;
+import ar.fiuba.tdd.tp.motor.commands.GameCommand;
+import ar.fiuba.tdd.tp.motor.games.hanoi.GameHanoi;
 
 public class GameCommandMove implements GameCommand {
 

@@ -1,9 +1,10 @@
-package ar.fiuba.tdd.tp.motor.game.games.hanoi.chainhanoi;
+package ar.fiuba.tdd.tp.motor.chains.hanoi;
 
-import ar.fiuba.tdd.tp.motor.ChainCommandCreator;
-import ar.fiuba.tdd.tp.motor.GameCommand;
-import ar.fiuba.tdd.tp.motor.game.games.hanoi.GameHanoi;
-import ar.fiuba.tdd.tp.motor.game.games.hanoi.commandhanoi.GameCommandMove;
+import ar.fiuba.tdd.tp.motor.UtilityParser;
+import ar.fiuba.tdd.tp.motor.commands.GameCommand;
+import ar.fiuba.tdd.tp.motor.commands.hanoi.GameCommandMove;
+import ar.fiuba.tdd.tp.motor.games.hanoi.GameHanoi;
+
 
 public class ChainMove extends ChainHanoi {
     public ChainMove(GameHanoi gameHanoi, String patternString) {

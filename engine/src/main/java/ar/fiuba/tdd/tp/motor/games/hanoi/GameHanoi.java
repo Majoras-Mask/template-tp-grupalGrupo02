@@ -1,6 +1,6 @@
-package ar.fiuba.tdd.tp.motor.game.games.hanoi;
+package ar.fiuba.tdd.tp.motor.games.hanoi;
 
-import ar.fiuba.tdd.tp.motor.Game;
+import ar.fiuba.tdd.tp.motor.games.Game;
 
 import java.util.ArrayList;
 import java.util.Stack;

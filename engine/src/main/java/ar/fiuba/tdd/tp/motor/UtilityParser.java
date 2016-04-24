@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.game.games.hanoi.chainhanoi;
+package ar.fiuba.tdd.tp.motor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

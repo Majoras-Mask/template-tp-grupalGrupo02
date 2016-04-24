@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor;
+package ar.fiuba.tdd.tp.motor.commands;
 
 public class GameCommandHelper implements GameCommand {
 

@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype.commands;
 
-import ar.fiuba.tdd.tp.motor.GameCommand;
+import ar.fiuba.tdd.tp.motor.commands.GameCommand;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class ZorkTypeCommandClose extends ZorkTypeCommand implements GameCommand {
