@@ -1,15 +1,15 @@
 
 package ar.fiuba.tdd.tp.input.command.client;
 
-import ar.fiuba.tdd.tp.Client;
+import ar.fiuba.tdd.tp.CommandProcessor;
 import ar.fiuba.tdd.tp.input.command.InputCommand;
 
 public abstract class ClientCommand implements InputCommand {
 
-    protected final Client client;
+    protected final CommandProcessor commandProcessor;
 
-    public ClientCommand(Client client) {
-        this.client = client;
+    public ClientCommand(CommandProcessor commandProcessor) {
+        this.commandProcessor = commandProcessor;
     }
 
 }

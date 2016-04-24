@@ -1,7 +1,6 @@
-package ar.fiuba.tdd.tp.output;
+package ar.fiuba.tdd.tp.output.consumer;
 
-import ar.fiuba.tdd.tp.output.consumer.ClientConsumer;
-import ar.fiuba.tdd.tp.output.consumer.ClientResponse;
+import ar.fiuba.tdd.tp.output.ClientResponse;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -9,11 +8,11 @@ import java.nio.charset.StandardCharsets;
 
 public class SysoutPrinter implements ClientConsumer {
 
-    private static final String PREFIX = "Client> ";
+    private static final String PREFIX = "CommandProcessor> ";
 
     private final BufferedWriter outputBuffer;
 
-    public SysoutPrinter(BufferedWriter outputBuffer) {
+    public SysoutPrinter() {
         this.outputBuffer = new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8));
     }
 

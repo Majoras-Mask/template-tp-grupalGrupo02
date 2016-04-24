@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.input;
+package ar.fiuba.tdd.tp.input.supplier;
 
 import ar.fiuba.tdd.tp.input.command.InputCommand;
 import ar.fiuba.tdd.tp.input.converter.InputConverter;
@@ -18,7 +18,7 @@ public class StdinSupplier implements CommandSupplier {
     }
 
     @Override
-    public InputCommand getNext() {
+    public InputCommand getCommand() {
         try {
             return this.converter.convert(this.inputBuffer.readLine());
         } catch (Exception e) {

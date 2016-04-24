@@ -1,7 +1,7 @@
-package ar.fiuba.tdd.tp.input;
+package ar.fiuba.tdd.tp.input.supplier;
 
 import ar.fiuba.tdd.tp.input.command.InputCommand;
 
 public interface CommandSupplier {
-    InputCommand getNext();
+    InputCommand getCommand();
 }

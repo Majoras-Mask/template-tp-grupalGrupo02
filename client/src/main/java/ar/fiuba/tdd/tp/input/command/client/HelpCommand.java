@@ -1,20 +1,21 @@
 
 package ar.fiuba.tdd.tp.input.command.client;
 
-import ar.fiuba.tdd.tp.Client;
+import ar.fiuba.tdd.tp.CommandProcessor;
+import ar.fiuba.tdd.tp.output.ClientResponse;
 
 public class HelpCommand extends ClientCommand {
 
     private final String gameName;
 
-    public HelpCommand(Client client, String gameName) {
-        super(client);
+    public HelpCommand(CommandProcessor commandProcessor, String gameName) {
+        super(commandProcessor);
         this.gameName = gameName;
     }
 
     @Override
-    public void execute() {
-        this.client.help(gameName);
+    public ClientResponse execute() {
+        return this.commandProcessor.help(gameName);
     }
 
 }

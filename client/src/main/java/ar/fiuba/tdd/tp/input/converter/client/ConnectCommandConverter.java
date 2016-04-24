@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.input.converter.client;
 
-import ar.fiuba.tdd.tp.Client;
+import ar.fiuba.tdd.tp.CommandProcessor;
 import ar.fiuba.tdd.tp.connector.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.input.command.client.ConnectCommand;
 import ar.fiuba.tdd.tp.input.converter.AbstractCommandConverter;
@@ -18,15 +18,15 @@ public class ConnectCommandConverter extends AbstractCommandConverter {
             + BETWEEN_0_AND_255;
     private static final String PORT = "(6553[0-5]|655[0-2]\\d|65[0-4]\\d{2}|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3})";
 
-    public ConnectCommandConverter(Client client) {
-        super(client, new ArrayList<String>() { {
+    public ConnectCommandConverter(CommandProcessor commandProcessor) {
+        super(commandProcessor, new ArrayList<String>() { {
                 add("^connect " + IP_ADDRESS + ":" + PORT + "$");
             }
         });
     }
 
     protected ConnectCommand doConvert(String input) {
-        return new ConnectCommand(this.client, getConnectionSettings(input.replaceFirst("connect", "")));
+        return new ConnectCommand(this.commandProcessor, getConnectionSettings(input.replaceFirst("connect", "")));
     }
 
     private ConnectorSettings getConnectionSettings(String input) {

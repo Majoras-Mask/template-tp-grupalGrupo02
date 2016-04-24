@@ -1,16 +1,17 @@
 
 package ar.fiuba.tdd.tp.input.command.client;
 
-import ar.fiuba.tdd.tp.Client;
+import ar.fiuba.tdd.tp.CommandProcessor;
+import ar.fiuba.tdd.tp.output.ClientResponse;
 
 public class ExitCommand extends ClientCommand {
 
-    public ExitCommand(Client client) {
-        super(client);
+    public ExitCommand(CommandProcessor commandProcessor) {
+        super(commandProcessor);
     }
 
     @Override
-    public void execute() {
-        this.client.close();
+    public ClientResponse execute() {
+        return this.commandProcessor.close();
     }
 }

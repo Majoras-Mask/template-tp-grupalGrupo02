@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.output.consumer;
+package ar.fiuba.tdd.tp.output;
 
 import ar.fiuba.tdd.tp.api.Response;
 
