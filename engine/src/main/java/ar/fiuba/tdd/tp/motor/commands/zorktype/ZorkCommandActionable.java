@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.motor.commands.zorktype;
 
 
-import ar.fiuba.tdd.tp.motor.game.components.GameComponents;
+import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public abstract class ZorkCommandActionable extends ZorkCommand {
@@ -13,13 +13,13 @@ public abstract class ZorkCommandActionable extends ZorkCommand {
         this.actionName = actionName;
     }
 
-    public abstract Boolean componentAction(GameComponents component);
+    public abstract Boolean componentAction(GameComponent component);
 
     public String noSuchThing() {
         return "There is no such thing to " + this.actionName + ".";
     }
 
-    public String actionSuccess(GameComponents component) {
+    public String actionSuccess(GameComponent component) {
         return "You " + this.actionName + "ed " + component.getDescription() + ".";
     }
 
@@ -29,7 +29,7 @@ public abstract class ZorkCommandActionable extends ZorkCommand {
 
     @Override
     public String execute() {
-        GameComponents component = this.game.getCurrentRoom().getComponent(this.whoToDoActionWith);
+        GameComponent component = this.game.getCurrentRoom().getComponent(this.whoToDoActionWith);
 
         if (component == null) {
             return noSuchThing();

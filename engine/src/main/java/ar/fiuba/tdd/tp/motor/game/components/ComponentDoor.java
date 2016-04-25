@@ -2,7 +2,7 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public class ComponentDoor extends GameComponents {
+public class ComponentDoor extends GameComponent {
 
     ComponentKey keyRequired = null;
     ComponentRoom roomItLeadsTo;
@@ -17,7 +17,7 @@ public class ComponentDoor extends GameComponents {
         this(game, roomItLeadsTo, null);
     }
 
-    public Boolean matchingKey(GameComponents component) {
+    public Boolean matchingKey(GameComponent component) {
         return component.getDescription().equals(this.keyRequired.getDescription());
     }
 
@@ -53,7 +53,7 @@ public class ComponentDoor extends GameComponents {
             goToRoom(this.game);
             return true;
         }
-        for (GameComponents component: this.game.getPlayerItems()) {
+        for (GameComponent component: this.game.getPlayerItems()) {
             if (matchingKey(component)) {
                 unlockDoor();
                 goToRoom(this.game);

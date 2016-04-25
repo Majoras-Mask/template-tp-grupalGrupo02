@@ -1,8 +1,7 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype;
 
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
-import ar.fiuba.tdd.tp.motor.game.components.GameComponents;
-import ar.fiuba.tdd.tp.motor.game.components.GameComponentsSimple;
+import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
 import java.util.LinkedList;
@@ -10,21 +9,21 @@ import java.util.List;
 
 public abstract class ZorkTypeGame implements Game {
     public ComponentRoom currentRoom;
-    public List<GameComponents> playerItems = new LinkedList<>();
+    public List<GameComponent> playerItems = new LinkedList<>();
 
     public ComponentRoom getCurrentRoom() {
         return this.currentRoom;
     }
 
-    public List<GameComponents> getPlayerItems() {
+    public List<GameComponent> getPlayerItems() {
         return this.playerItems;
     }
 
-    public void addPlayerItem(GameComponents component) {
+    public void addPlayerItem(GameComponent component) {
         this.playerItems.add(component);
     }
 
-    public void removePlayerItem(GameComponents component) {
+    public void removePlayerItem(GameComponent component) {
         this.playerItems.remove(component);
     }
 
@@ -32,7 +31,11 @@ public abstract class ZorkTypeGame implements Game {
         this.currentRoom = room;
     }
 
-    public void removeItemFromRoom(GameComponents component) {
+    public void removeItemFromRoom(GameComponent component) {
         this.currentRoom.removeComponent(component.getDescription());
+    }
+
+    public void addItemToRoom(GameComponent component) {
+        this.currentRoom.addComponent(component);
     }
 }

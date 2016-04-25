@@ -2,12 +2,12 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public abstract class GameComponents {
+public abstract class GameComponent {
     public int id;
     private volatile int idCounter = 0;
     public ZorkTypeGame game;
 
-    public GameComponents() {
+    public GameComponent() {
         this.id = idCounter++;
     }
 

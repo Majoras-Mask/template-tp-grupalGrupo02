@@ -2,9 +2,9 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public abstract class GameComponentsSimple extends GameComponents {
+public abstract class GameComponentSimple extends GameComponent {
 
-    public GameComponentsSimple() {
+    public GameComponentSimple() {
         super();
     }
 

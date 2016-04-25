@@ -2,17 +2,17 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public class ComponentThief extends GameComponents {
+public class ComponentThief extends GameComponent {
 
-    GameComponents whatToSteal;
+    GameComponent whatToSteal;
 
-    public ComponentThief(ZorkTypeGame game, GameComponents whatToSteal) {
+    public ComponentThief(ZorkTypeGame game, GameComponent whatToSteal) {
         this.game = game;
         this.whatToSteal = whatToSteal;
     }
 
-    public boolean hasComponent(GameComponents whatToGet) {
-        for (GameComponents component : this.game.getPlayerItems()) {
+    public boolean hasComponent(GameComponent whatToGet) {
+        for (GameComponent component : this.game.getPlayerItems()) {
             if (component == whatToGet) {
                 return true;
             }
