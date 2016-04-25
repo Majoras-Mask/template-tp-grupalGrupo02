@@ -1,7 +1,5 @@
 package ar.fiuba.tdd.tp.motor.games.riddle;
 
-import ar.fiuba.tdd.tp.motor.game.games.riddle.componentriddle.*;
-import ar.fiuba.tdd.tp.motor.games.componentriddle.*;
 import ar.fiuba.tdd.tp.motor.games.Game;
 import ar.fiuba.tdd.tp.motor.games.riddle.components.*;
 

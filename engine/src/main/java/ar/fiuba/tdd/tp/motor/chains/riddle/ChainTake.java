@@ -1,8 +1,8 @@
 package ar.fiuba.tdd.tp.motor.chains.riddle;
 
 import ar.fiuba.tdd.tp.motor.commands.GameCommand;
-import ar.fiuba.tdd.tp.motor.games.riddle.GameRiddle;
 import ar.fiuba.tdd.tp.motor.commands.riddle.RiddleCommandTake;
+import ar.fiuba.tdd.tp.motor.games.riddle.GameRiddle;
 
 public class ChainTake extends ChainRiddle {
 
