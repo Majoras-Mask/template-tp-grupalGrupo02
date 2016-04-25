@@ -14,8 +14,8 @@ public class RiddleCommandTake extends RiddleCommand {
             riddle.take(component);
             return "Ok.";
         } else if (riddle.boatFull()) {
-            return "You can’t do that! The boat is full.";
+            return "You can't do that! The boat is full.";
         }
-        return "You can’t do that! There's no " + component + " on the island.";
+        return "You can't do that! There's no " + component + " on the island.";
     }
 }

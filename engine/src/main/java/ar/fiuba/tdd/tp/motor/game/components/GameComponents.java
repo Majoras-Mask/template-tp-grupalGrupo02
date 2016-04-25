@@ -17,13 +17,21 @@ public abstract class GameComponents {
 
     public abstract String getBasicName();
 
-    public abstract Boolean pick();
+    public Boolean pick() {
+        return false;
+    }
 
-    public abstract Boolean close();
+    public Boolean close() {
+        return false;
+    }
 
-    public abstract Boolean open();
+    public Boolean open() {
+        return false;
+    }
 
-    public abstract Boolean talk();
+    public Boolean talk() {
+        return false;
+    }
 
     public void setGame(ZorkTypeGame game) {
         this.game = game;

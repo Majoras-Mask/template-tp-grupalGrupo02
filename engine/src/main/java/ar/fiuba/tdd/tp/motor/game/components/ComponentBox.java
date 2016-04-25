@@ -1,13 +1,13 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
-public class ComponentRoom extends GameComponentStoring {
+public class ComponentBox extends GameComponentStoring {
 
-    public ComponentRoom() {
+    public ComponentBox() {
         super();
     }
 
     @Override
     public String getBasicName() {
-        return "room";
+        return "box";
     }
 }

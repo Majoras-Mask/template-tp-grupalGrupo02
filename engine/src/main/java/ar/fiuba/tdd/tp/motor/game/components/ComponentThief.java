@@ -26,21 +26,6 @@ public class ComponentThief extends GameComponents {
     }
 
     @Override
-    public Boolean pick() {
-        return false;
-    }
-
-    @Override
-    public Boolean close() {
-        return false;
-    }
-
-    @Override
-    public Boolean open() {
-        return false;
-    }
-
-    @Override
     public Boolean talk() {
         //TODO robar cosas
         if (hasComponent(this.whatToSteal)) {

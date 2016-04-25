@@ -15,7 +15,7 @@ public class RiddleCommandLeave extends RiddleCommand {
             riddle.leaveAnimal();
             return "Ok.";
         } else {
-            return "You can’t do that! There's no " + component + " on the boat.";
+            return "You can't do that! There's no " + component + " on the boat.";
         }
     }
 }

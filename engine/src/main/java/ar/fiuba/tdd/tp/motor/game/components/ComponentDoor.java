@@ -39,12 +39,7 @@ public class ComponentDoor extends GameComponents {
 
     @Override
     public String getBasicName() {
-        return "Door";
-    }
-
-    @Override
-    public Boolean pick() {
-        return false;
+        return "door";
     }
 
     @Override
@@ -65,11 +60,6 @@ public class ComponentDoor extends GameComponents {
                 return true;
             }
         }
-        return false;
-    }
-
-    @Override
-    public Boolean talk() {
         return false;
     }
 }

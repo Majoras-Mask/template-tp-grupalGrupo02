@@ -8,6 +8,6 @@ public class ComponentKey extends GameComponentsSimple {
 
     @Override
     public String getBasicName() {
-        return "Key";
+        return "key";
     }
 }

@@ -20,21 +20,6 @@ public abstract class GameComponentsSimple extends GameComponents {
         return true;
     }
 
-    @Override
-    public Boolean close() {
-        return false;
-    }
-
-    @Override
-    public Boolean open() {
-        return false;
-    }
-
-    @Override
-    public Boolean talk() {
-        return false;
-    }
-
     public void setGame(ZorkTypeGame game) {
         this.game = game;
     }

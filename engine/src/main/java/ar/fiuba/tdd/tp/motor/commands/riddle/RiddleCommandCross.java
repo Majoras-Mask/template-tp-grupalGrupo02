@@ -18,11 +18,11 @@ public class RiddleCommandCross extends RiddleCommand {
             cross();
             return "You have crossed!";
         } else if (riddle.wolfAndSheepTogether()) {
-            return "You can’t do that! The wolf will eat the sheep!";
+            return "You can't do that! The wolf will eat the sheep!";
         } else if (riddle.sheepAndCabbageTogether()) {
-            return "You can’t do that! The sheep will eat the cabbage!";
+            return "You can't do that! The sheep will eat the cabbage!";
         }
-        return "You can’t do that! You are already on the " + component + " island.";
+        return "You can't do that! You are already on the " + component + " island.";
 
     }
 }

@@ -18,10 +18,7 @@ public class GameRiddleTest {
         engineRiddle.request("leave cabbage");
     }
 
-    @Test
-    public void fullRiddleTest() {
-        GameRiddle game = new GameRiddle();
-        EngineRiddle engine = new EngineRiddle(game);
+    private void winningMovements(EngineRiddle engine) {
         engine.request("take sheep");
         engine.request("cross north-shore");
         engine.request("leave sheep");
@@ -39,6 +36,13 @@ public class GameRiddleTest {
         engine.request("take sheep");
         engine.request("cross north-shore");
         engine.request("leave sheep");
+    }
+
+    @Test
+    public void fullRiddleTest() {
+        GameRiddle game = new GameRiddle();
+        EngineRiddle engine = new EngineRiddle(game);
+        winningMovements(engine);
         assertTrue(game.checkIfGameIsFinished());
     }
 
@@ -67,21 +71,21 @@ public class GameRiddleTest {
     public void cantCrossTest() {
         GameRiddle game = new GameRiddle();
         EngineRiddle engine = new EngineRiddle(game);
-        assertEquals(engine.request("cross south-shore"),"You can’t do that! You are already on the south island.");
+        assertEquals(engine.request("cross south-shore"),"You can't do that! You are already on the south island.");
     }
 
     @Test
     public void goEmptyTest() {
         GameRiddle game = new GameRiddle();
         EngineRiddle engine = new EngineRiddle(game);
-        assertEquals(engine.request("cross north-shore"),"You can’t do that! The wolf will eat the sheep!");
+        assertEquals(engine.request("cross north-shore"),"You can't do that! The wolf will eat the sheep!");
     }
 
     @Test
     public void leaveEmptyTest() {
         GameRiddle game = new GameRiddle();
         EngineRiddle engine = new EngineRiddle(game);
-        assertEquals(engine.request("leave wolf"),"You can’t do that! There's no wolf on the boat.");
+        assertEquals(engine.request("leave wolf"),"You can't do that! There's no wolf on the boat.");
     }
 
     @Test
@@ -99,7 +103,7 @@ public class GameRiddleTest {
         EngineRiddle engine = new EngineRiddle(game);
         engine.request("take sheep");
         engine.request("cross north-shore");
-        assertEquals(engine.request("leave wolf"),"You can’t do that! There's no wolf on the boat.");
+        assertEquals(engine.request("leave wolf"),"You can't do that! There's no wolf on the boat.");
     }
 
     @Test
@@ -115,7 +119,7 @@ public class GameRiddleTest {
         GameRiddle game = new GameRiddle();
         EngineRiddle engine = new EngineRiddle(game);
         engine.request("take wolf");
-        assertEquals(engine.request("cross north-shore"),"You can’t do that! The sheep will eat the cabbage!");
+        assertEquals(engine.request("cross north-shore"),"You can't do that! The sheep will eat the cabbage!");
     }
 
     @Test
@@ -135,7 +139,7 @@ public class GameRiddleTest {
         engine.request("take sheep");
         engine.request("cross north-shore");
         engine.request("leave sheep");
-        assertEquals(engine.request("cross north-shore"),"You can’t do that! You are already on the north island.");
+        assertEquals(engine.request("cross north-shore"),"You can't do that! You are already on the north island.");
     }
 
     @Test
@@ -170,7 +174,7 @@ public class GameRiddleTest {
         engine.request("take wolf");
         engine.request("cross north-shore");
         engine.request("leave wolf");
-        assertEquals(engine.request("cross south-shore"),"You can’t do that! The wolf will eat the sheep!");
+        assertEquals(engine.request("cross south-shore"),"You can't do that! The wolf will eat the sheep!");
     }
 
     @Test
@@ -178,7 +182,7 @@ public class GameRiddleTest {
         GameRiddle game = new GameRiddle();
         EngineRiddle engine = new EngineRiddle(game);
         moving(engine);
-        assertEquals(engine.request("cross south-shore"),"You can’t do that! The sheep will eat the cabbage!");
+        assertEquals(engine.request("cross south-shore"),"You can't do that! The sheep will eat the cabbage!");
     }
 
     @Test
@@ -193,7 +197,7 @@ public class GameRiddleTest {
         GameRiddle game = new GameRiddle();
         EngineRiddle engine = new EngineRiddle(game);
         engine.request("take sheep");
-        assertEquals(engine.request("take wolf"),"You can’t do that! The boat is full.");
+        assertEquals(engine.request("take wolf"),"You can't do that! The boat is full.");
     }
 
     @Test
@@ -204,7 +208,7 @@ public class GameRiddleTest {
         engine.request("cross north-shore");
         engine.request("leave sheep");
         engine.request("cross south-shore");
-        assertEquals(engine.request("take sheep"),"You can’t do that! There's no sheep on the island.");
+        assertEquals(engine.request("take sheep"),"You can't do that! There's no sheep on the island.");
     }
 
 
