@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.client.connector;
 
 import ar.fiuba.tdd.tp.api.Request;
 import ar.fiuba.tdd.tp.api.Response;
+import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,7 +28,7 @@ public class ConnectorIO {
 
     public void send(Request request) throws IOException {
         if (isNull(request)) {
-            throw new IllegalArgumentException("Request can't  be null!");
+            throw new ConnectorException("Null request!");
         }
 
         this.outputStream.writeObject(request);

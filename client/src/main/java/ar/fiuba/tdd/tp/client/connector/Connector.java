@@ -3,36 +3,31 @@ package ar.fiuba.tdd.tp.client.connector;
 import ar.fiuba.tdd.tp.api.Request;
 import ar.fiuba.tdd.tp.api.Response;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
+import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Objects;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
 public class Connector {
 
-    private Boolean started;
-    private Socket socket;
-    private ConnectorIO connectorIO;
+    private final Socket socket;
+    private final ConnectorIO connectorIO;
 
-    public Connector() {
-        this.started = Boolean.FALSE;
-    }
-
-    public void init(ConnectorSettings settings) throws IOException {
-        this.init(getNewSocket(settings));
-    }
-
-    public void init(Socket socket) throws IOException {
-        this.started = Boolean.TRUE;
-        this.socket = requireNonNull(socket);
-        this.connectorIO = initIO();
+    public Connector(ConnectorSettings settings) {
+        try {
+            this.socket = getNewSocket(settings);
+            this.connectorIO = getNewIO();
+        } catch (Exception e) {
+            throw new ConnectorException("Can't connect with server!");
+        }
     }
 
     private Socket getNewSocket(ConnectorSettings settings) throws IOException {
-        if (Objects.isNull(settings)) {
-            throw new IllegalArgumentException("Settings can't be null");
+        if (isNull(settings)) {
+            throw new ConnectorException("No connection settings!");
         }
 
         final String host = requireNonNull(settings.getHost());
@@ -41,47 +36,38 @@ public class Connector {
         return new Socket(host, port);
     }
 
-    private ConnectorIO initIO() throws IOException {
+    private ConnectorIO getNewIO() throws IOException {
         try {
             return new ConnectorIO(this.socket);
-        } catch (Exception e) {
-            this.started = Boolean.FALSE;
-            throw e;
-        } finally {
+        } catch (IOException e) {
             this.socket.close();
+            throw new IllegalStateException();
         }
     }
 
-    public Boolean isStarted() {
-        return this.started;
-    }
-
-    public void send(Request request) throws Exception {
-        if (isStarted()) {
-            doSend(request);
+    public void send(Request request) {
+        try {
+            this.connectorIO.send(request);
+        } catch (IOException e) {
+            throw new ConnectorException("Can't connect with server");
         }
-        throw new IllegalStateException("The connector was not started!!");
     }
 
-    public Response receive() throws Exception {
-        if (isStarted()) {
-            return this.doReceive();
+    public Response receive() {
+        try {
+            return this.connectorIO.receive();
+        } catch (Exception e) {
+            throw new ConnectorException("Can't connect with server");
         }
-        throw new IllegalStateException("The connector was not started!!");
     }
 
-    private Response doReceive() throws Exception {
-        return this.connectorIO.receive();
-    }
-
-    private void doSend(Request request) throws Exception {
-        this.connectorIO.send(request);
-    }
-
-    public void close() throws IOException {
-        this.started = Boolean.FALSE;
-        this.socket.close();
-        this.connectorIO.close();
+    public void close() {
+        try {
+            this.connectorIO.close();
+            this.socket.close();
+        } catch (IOException e) {
+            throw new ConnectorException("Can't close connection!");
+        }
     }
 }
 
