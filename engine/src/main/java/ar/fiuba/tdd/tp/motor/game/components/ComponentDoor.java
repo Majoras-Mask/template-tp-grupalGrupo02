@@ -2,14 +2,14 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public class ComponentDoor extends GameComponent {
+public abstract class ComponentDoor extends GameComponent {
 
-    ComponentKey keyRequired = null;
+    ComponentKey keyAssociated = null;
     ComponentRoom roomItLeadsTo;
 
-    public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
+    public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo, ComponentKey keyAssociated) {
         this.roomItLeadsTo = roomItLeadsTo;
-        this.keyRequired = keyRequired;
+        this.keyAssociated = keyAssociated;
         this.game = game;
     }
 
@@ -18,48 +18,20 @@ public class ComponentDoor extends GameComponent {
     }
 
     public Boolean matchingKey(GameComponent component) {
-        return component.getDescription().equals(this.keyRequired.getDescription());
-    }
-
-    public void unlockDoor() {
-        this.keyRequired = null;
+        return component.getDescription().equals(this.keyAssociated.getDescription());
     }
 
     public ComponentRoom getWhereItLeadsTo() {
         return this.roomItLeadsTo;
     }
 
-    public Boolean isThisDoorUnlocked() {
-        return this.keyRequired == null;
-    }
-
-    private void goToRoom(ZorkTypeGame game) {
+    protected void goToRoom(ZorkTypeGame game) {
         game.setCurrentRoom(getWhereItLeadsTo());
     }
 
-    @Override
-    public String getBasicName() {
-        return "door";
-    }
+    protected abstract Boolean isThisDoorUnlocked();
 
-    @Override
-    public Boolean close() {
-        return true;
-    }
-
-    @Override
-    public Boolean open() {
-        if (isThisDoorUnlocked()) {
-            goToRoom(this.game);
-            return true;
-        }
-        for (GameComponent component: this.game.getPlayerItems()) {
-            if (matchingKey(component)) {
-                unlockDoor();
-                goToRoom(this.game);
-                return true;
-            }
-        }
-        return false;
+    protected void unlockDoor() {
+        this.keyAssociated = null;
     }
 }

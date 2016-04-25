@@ -19,6 +19,15 @@ public abstract class ZorkTypeGame implements Game {
         return this.playerItems;
     }
 
+    public boolean hasPlayerComponent(String id) {
+        for (GameComponent component : this.playerItems) {
+            if (component.getDescription().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addPlayerItem(GameComponent component) {
         this.playerItems.add(component);
     }
