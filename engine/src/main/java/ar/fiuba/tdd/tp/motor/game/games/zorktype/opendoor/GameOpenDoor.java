@@ -22,4 +22,9 @@ public class GameOpenDoor extends ZorkTypeGame {
     public boolean checkIfGameIsFinished() {
         return (this.getCurrentRoom() == this.winningRoom) ;
     }
+
+    @Override
+    public String welcomeMessage() {
+        return "Welcome to Open Door Game, to win you have to open the door!";
+    }
 }

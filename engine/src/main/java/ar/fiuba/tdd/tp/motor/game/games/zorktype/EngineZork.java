@@ -53,4 +53,9 @@ public class EngineZork extends Engine {
 
         return lookAround;
     }
+
+    @Override
+    protected String getWelcoming() {
+        return this.gameZork.welcomeMessage();
+    }
 }

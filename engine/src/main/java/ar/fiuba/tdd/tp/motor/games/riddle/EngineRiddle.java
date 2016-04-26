@@ -35,4 +35,9 @@ public class EngineRiddle extends Engine{
 
         return chainTake;
     }
+
+    @Override
+    protected String getWelcoming() {
+        return this.gameRiddle.welcomeMessage();
+    }
 }

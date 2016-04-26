@@ -16,4 +16,5 @@ public abstract class Engine {
 
     protected abstract ChainCommandCreator createChain();
 
+    protected abstract String getWelcoming();
 }

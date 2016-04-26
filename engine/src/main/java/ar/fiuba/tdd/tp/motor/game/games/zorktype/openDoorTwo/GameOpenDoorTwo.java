@@ -27,4 +27,9 @@ public class GameOpenDoorTwo extends ZorkTypeGame {
     public boolean checkIfGameIsFinished() {
         return (getCurrentRoom() == this.winningRoom);
     }
+
+    @Override
+    public String welcomeMessage() {
+        return "Welcome to the sequel of Open Door, this door key is now hidden!";
+    }
 }

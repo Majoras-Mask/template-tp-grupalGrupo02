@@ -19,4 +19,9 @@ public class GameFetch extends ZorkTypeGame {
         //To win this game, you have to pick the stick
         return !this.currentRoom.hasComponent(this.stickName);
     }
+
+    @Override
+    public String welcomeMessage() {
+        return "Welcome to the Fetch Game, here you have to pick the stick in the room to win. Simple as that";
+    }
 }

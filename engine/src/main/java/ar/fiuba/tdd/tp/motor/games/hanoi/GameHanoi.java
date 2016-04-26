@@ -68,4 +68,8 @@ public class GameHanoi implements Game {
         return (this.getSize(2) == this.stackFloors);
     }
 
+    public String welcomeMessage() {
+        //TODO mejorar descripción
+        return "Welcome to the Hanoi game\n You see...";
+    }
 }

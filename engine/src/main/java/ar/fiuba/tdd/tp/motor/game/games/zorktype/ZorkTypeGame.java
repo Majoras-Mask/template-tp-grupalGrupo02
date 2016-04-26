@@ -137,4 +137,6 @@ public abstract class ZorkTypeGame implements Game {
         }
         return component.whatCanIDo();
     }
+
+    public abstract String welcomeMessage();
 }

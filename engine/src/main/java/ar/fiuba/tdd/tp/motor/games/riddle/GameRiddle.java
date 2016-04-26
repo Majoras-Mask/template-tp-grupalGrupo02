@@ -121,4 +121,9 @@ public class GameRiddle implements Game {
     public boolean checkIfGameIsFinished() {
         return (islandNorth.size() == 3);
     }
+
+    public String welcomeMessage() {
+        //TODO terminar la descripción y explicar el juego
+        return "Welcome to the Fox, Lamb and Cabbage riddle\n Here you need to cross these 3 to the other side...";
+    }
 }

@@ -28,4 +28,9 @@ public class GameCursedObject extends ZorkTypeGame {
     public boolean checkIfGameIsFinished() {
         return (getCurrentRoom() == this.winningRoom);
     }
+
+    @Override
+    public String welcomeMessage() {
+        return "Welcome to the Cursed Object game, here an item is cursed and won't let you go through a door.";
+    }
 }
