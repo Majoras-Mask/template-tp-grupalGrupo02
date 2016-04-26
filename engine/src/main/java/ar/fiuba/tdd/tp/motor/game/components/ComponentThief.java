@@ -18,4 +18,9 @@ public class ComponentThief extends GameComponent {
         game.removeAllPlayerItems();
         return true;
     }
+
+    @Override
+    public String whatCanIDo() {
+        return "You can talk to this.";
+    }
 }

@@ -38,4 +38,9 @@ public class ComponentBox extends GameComponentStoring {
         }
         return true;
     }
+    
+    @Override
+    public String whatCanIDo() {
+        return "You can open/close this.";
+    }
 }

@@ -31,4 +31,9 @@ public abstract class ComponentDoor extends GameComponent {
     protected void unlockDoor() {
         this.keyAssociated = null;
     }
+
+    @Override
+    public String whatCanIDo() {
+        return "You can open/close this.";
+    }
 }

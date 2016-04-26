@@ -31,4 +31,6 @@ public abstract class GameComponent {
     public Boolean talk(ZorkTypeGame game) {
         return false;
     }
+
+    public abstract String whatCanIDo();
 }

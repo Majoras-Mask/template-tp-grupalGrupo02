@@ -10,4 +10,9 @@ public class ComponentRoom extends GameComponentStoring {
     public String getBasicName() {
         return "room";
     }
+
+    @Override
+    public String whatCanIDo() {
+        return "You are currently in this room.";
+    }
 }

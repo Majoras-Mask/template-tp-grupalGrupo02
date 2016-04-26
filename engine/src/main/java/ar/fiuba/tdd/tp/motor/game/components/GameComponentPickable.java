@@ -20,4 +20,8 @@ public abstract class GameComponentPickable extends GameComponent {
         return true;
     }
 
+    @Override
+    public String whatCanIDo() {
+        return "You can pick this.";
+    }
 }

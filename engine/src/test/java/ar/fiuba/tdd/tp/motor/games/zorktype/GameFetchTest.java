@@ -1,6 +1,5 @@
 package ar.fiuba.tdd.tp.motor.games.zorktype;
 
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.EngineZork;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.fetch.GameFetch;
 import org.junit.Test;
 

@@ -128,4 +128,13 @@ public abstract class ZorkTypeGame implements Game {
             return "It doesn't answer back.";
         }
     }
+
+    public String whatCanIDoWith(String whoToDoActionWith) {
+        GameComponent component = getComponent(whoToDoActionWith);
+
+        if (component == null) {
+            return "There is no such thing in here.";
+        }
+        return component.whatCanIDo();
+    }
 }
