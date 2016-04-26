@@ -36,15 +36,6 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
         }
     }
 
-    public GameComponent getComponent(String whatToGet) {
-        for (GameComponent component : this.components) {
-            if (component.getDescription().equals(whatToGet)) {
-                return this.components.get(this.components.indexOf(component));
-            }
-        }
-        return null;
-    }
-
     @Override
     public Boolean open(ZorkTypeGame game) {
         this.itemsIhad = getListOfComponents();
@@ -64,5 +55,9 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
             }
         }
         return true;
+    }
+
+    public GameComponent getComponent(String componentName) {
+        return ComponentUtilities.getComponent(componentName, this.components);
     }
 }

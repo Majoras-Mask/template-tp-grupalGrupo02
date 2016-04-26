@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype;
 
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
+import ar.fiuba.tdd.tp.motor.game.components.ComponentUtilities;
 import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
@@ -32,6 +33,14 @@ public abstract class ZorkTypeGame implements Game {
         this.playerItems.add(component);
     }
 
+    public GameComponent getPlayerItem(GameComponent component) {
+        return this.playerItems.get(this.playerItems.indexOf(component));
+    }
+
+    public GameComponent getPlayerItem(String whatToGet) {
+        return ComponentUtilities.getComponent(whatToGet, this.playerItems);
+    }
+
     public void removePlayerItem(GameComponent component) {
         this.playerItems.remove(component);
     }
@@ -52,8 +61,12 @@ public abstract class ZorkTypeGame implements Game {
         this.currentRoom.addComponent(component);
     }
 
-    public GameComponent getComponent(String componentName) {
+    public GameComponent getComponentFromRoom(String componentName) {
         return getCurrentRoom().getComponent(componentName);
+    }
+
+    public boolean hasRoomComponent(String id) {
+        return this.getCurrentRoom().hasComponent(id);
     }
 
     public String lookAround() {
@@ -78,7 +91,7 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public String close(String whatToClose) {
-        GameComponent component = getComponent(whatToClose);
+        GameComponent component = getComponentFromRoom(whatToClose);
 
         if (component == null) {
             return noClose();
@@ -91,7 +104,7 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public String open(String whatToOpen) {
-        GameComponent component = getComponent(whatToOpen);
+        GameComponent component = getComponentFromRoom(whatToOpen);
 
         if (component == null) {
             return "There is no such thing to open.";
@@ -104,7 +117,7 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public String pick(String whatToPick) {
-        GameComponent component = getComponent(whatToPick);
+        GameComponent component = getComponentFromRoom(whatToPick);
 
         if (component == null) {
             return "There is no such thing to pick.";
@@ -117,7 +130,7 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public String talk(String whoToTalkTo) {
-        GameComponent component = getComponent(whoToTalkTo);
+        GameComponent component = getComponentFromRoom(whoToTalkTo);
 
         if (component == null) {
             return "There is no such thing to talk to.";
@@ -130,7 +143,7 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public String whatCanIDoWith(String whoToDoActionWith) {
-        GameComponent component = getComponent(whoToDoActionWith);
+        GameComponent component = getComponentFromRoom(whoToDoActionWith);
 
         if (component == null) {
             return "There is no such thing in here.";
@@ -141,6 +154,9 @@ public abstract class ZorkTypeGame implements Game {
 
     public String store(String whatToStore, String whereToStore) {
         //TODO terminar
+        if (hasPlayerComponent(whatToStore) && hasRoomComponent(whereToStore)) {
+            getComponentFromRoom(whereToStore).store(getPlayerItem(whatToStore));
+        }
         return whatToStore + whereToStore;
     }
 
