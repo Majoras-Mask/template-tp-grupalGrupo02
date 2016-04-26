@@ -45,4 +45,13 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
         }
         return true;
     }
+
+    @Override
+    public boolean store(GameComponent component) {
+        if (this.componentIHave == null) {
+            this.componentIHave = component;
+            return true;
+        }
+        return false;
+    }
 }

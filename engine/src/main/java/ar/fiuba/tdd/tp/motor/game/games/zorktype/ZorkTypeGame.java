@@ -153,11 +153,16 @@ public abstract class ZorkTypeGame implements Game {
 
 
     public String store(String whatToStore, String whereToStore) {
-        //TODO terminar
         if (hasPlayerComponent(whatToStore) && hasRoomComponent(whereToStore)) {
-            getComponentFromRoom(whereToStore).store(getPlayerItem(whatToStore));
+            GameComponent playerItem = getPlayerItem(whatToStore);
+            GameComponent itemDestination = getComponentFromRoom(whereToStore);
+            if (itemDestination.store(getPlayerItem(whatToStore))) {
+                removePlayerItem(playerItem);
+                return "Stored " + whatToStore + "in " + whereToStore + ".";
+            }
+            return "Can't store in " + whereToStore + ".";
         }
-        return whatToStore + whereToStore;
+        return "Either you don't have that item, or there is no such thing as a " + whereToStore + ".";
     }
 
     public abstract String welcomeMessage();

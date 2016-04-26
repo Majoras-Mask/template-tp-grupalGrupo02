@@ -28,6 +28,10 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
         return this.components;
     }
 
+    public GameComponent getComponent(String componentName) {
+        return ComponentUtilities.getComponent(componentName, this.components);
+    }
+
     public void removeComponent(String id) {
         for (GameComponent component : this.components) {
             if (component.getDescription().equals(id)) {
@@ -57,7 +61,9 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
         return true;
     }
 
-    public GameComponent getComponent(String componentName) {
-        return ComponentUtilities.getComponent(componentName, this.components);
+    @Override
+    public boolean store(GameComponent component) {
+        addComponent(component);
+        return true;
     }
 }

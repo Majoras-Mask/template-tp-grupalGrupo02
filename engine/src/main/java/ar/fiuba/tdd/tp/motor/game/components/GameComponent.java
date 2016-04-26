@@ -34,7 +34,7 @@ public abstract class GameComponent {
 
     public abstract String whatCanIDo();
 
-    public void store(GameComponent playerItem) {
-
+    public boolean store(GameComponent playerItem) {
+        return false;
     }
 }
