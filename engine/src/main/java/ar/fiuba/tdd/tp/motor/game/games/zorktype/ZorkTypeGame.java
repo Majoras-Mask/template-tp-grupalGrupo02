@@ -138,5 +138,11 @@ public abstract class ZorkTypeGame implements Game {
         return component.whatCanIDo();
     }
 
+
+    public String store(String whatToStore, String whereToStore) {
+        //TODO terminar
+        return whatToStore + whereToStore;
+    }
+
     public abstract String welcomeMessage();
 }

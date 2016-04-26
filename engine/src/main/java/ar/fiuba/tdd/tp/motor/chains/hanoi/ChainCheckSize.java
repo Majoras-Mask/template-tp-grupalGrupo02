@@ -12,13 +12,15 @@ public class ChainCheckSize extends ChainHanoi{
         super(gameHanoi, patternString);
     }
 
+    private int getIndexFromMessage(String message) {
+        String group1 = UtilityParser.getGroup(this.getPatternString(), message, 1);
+        return Integer.parseInt(group1);
+    }
+
     @Override
     protected GameCommand factoryCommand(String message) {
         // pattern style ".* (\\d)"
-        String group1 = UtilityParser.getGroup(this.getPatternString(), message, 1);
-        int stackIndex = Integer.parseInt(group1);
-        return new GameCommandCheckSize(gameHanoi,stackIndex);
-
+        return new GameCommandCheckSize(gameHanoi,getIndexFromMessage(message));
     }
 
 }
