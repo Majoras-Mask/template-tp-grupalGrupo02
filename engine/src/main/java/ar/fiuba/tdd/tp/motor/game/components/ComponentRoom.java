@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
-public class ComponentRoom extends GameComponentStoring {
+public class ComponentRoom extends GameComponentStoringMultiple {
 
     public ComponentRoom() {
         super();
