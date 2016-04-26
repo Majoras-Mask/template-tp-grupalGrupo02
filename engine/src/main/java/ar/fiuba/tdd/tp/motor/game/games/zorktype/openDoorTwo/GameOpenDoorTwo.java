@@ -16,7 +16,7 @@ public class GameOpenDoorTwo extends ZorkTypeGame {
         this.winningRoom = new ComponentRoom();
         ComponentBox box = new ComponentBox();
         ComponentKey key = new ComponentKey();
-        box.addComponent(key);
+        box.setComponent(key);
         roomOne.addComponent(box);
         ComponentNormalDoor door = new ComponentNormalDoor(this.winningRoom, key);
         roomOne.addComponent(door);
