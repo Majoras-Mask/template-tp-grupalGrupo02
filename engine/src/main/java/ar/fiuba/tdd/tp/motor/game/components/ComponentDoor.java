@@ -7,14 +7,13 @@ public abstract class ComponentDoor extends GameComponent {
     ComponentKey keyAssociated = null;
     ComponentRoom roomItLeadsTo;
 
-    public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo, ComponentKey keyAssociated) {
+    public ComponentDoor(ComponentRoom roomItLeadsTo, ComponentKey keyAssociated) {
         this.roomItLeadsTo = roomItLeadsTo;
         this.keyAssociated = keyAssociated;
-        this.game = game;
     }
 
-    public ComponentDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo) {
-        this(game, roomItLeadsTo, null);
+    public ComponentDoor(ComponentRoom roomItLeadsTo) {
+        this(roomItLeadsTo, null);
     }
 
     public Boolean matchingKey(GameComponent component) {
@@ -28,8 +27,6 @@ public abstract class ComponentDoor extends GameComponent {
     protected void goToRoom(ZorkTypeGame game) {
         game.setCurrentRoom(getWhereItLeadsTo());
     }
-
-    protected abstract Boolean isThisDoorUnlocked();
 
     protected void unlockDoor() {
         this.keyAssociated = null;

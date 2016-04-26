@@ -4,15 +4,14 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class ComponentNormalDoor extends ComponentDoor {
 
-    public ComponentNormalDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
-        super(game,roomItLeadsTo,keyRequired);
+    public ComponentNormalDoor(ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
+        super(roomItLeadsTo,keyRequired);
     }
 
-    public ComponentNormalDoor(ZorkTypeGame game, ComponentRoom roomItLeadsTo) {
-        super(game, roomItLeadsTo, null);
+    public ComponentNormalDoor(ComponentRoom roomItLeadsTo) {
+        super(roomItLeadsTo, null);
     }
 
-    @Override
     public Boolean isThisDoorUnlocked() {
         return this.keyAssociated == null;
     }
@@ -23,20 +22,20 @@ public class ComponentNormalDoor extends ComponentDoor {
     }
 
     @Override
-    public Boolean close() {
+    public Boolean close(ZorkTypeGame game) {
         return true;
     }
 
     @Override
-    public Boolean open() {
+    public Boolean open(ZorkTypeGame game) {
         if (isThisDoorUnlocked()) {
-            goToRoom(this.game);
+            goToRoom(game);
             return true;
         }
-        for (GameComponent component: this.game.getPlayerItems()) {
+        for (GameComponent component: game.getPlayerItems()) {
             if (matchingKey(component)) {
                 unlockDoor();
-                goToRoom(this.game);
+                goToRoom(game);
                 return true;
             }
         }

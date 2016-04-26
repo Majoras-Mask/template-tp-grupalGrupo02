@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
 
-public class ComponentStick extends GameComponentSimple {
+public class ComponentStick extends GameComponentPickable {
 
     public ComponentStick() {
         super();

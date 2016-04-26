@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
-public class ComponentKey extends GameComponentSimple {
+public class ComponentKey extends GameComponentPickable {
 
     public ComponentKey() {
         super();

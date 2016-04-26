@@ -6,11 +6,5 @@ import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public abstract class ZorkCommand implements GameCommand {
-
     protected ZorkTypeGame game;
-    public String actionName;
-
-    public GameComponent getComponent(String nameOfComponent) {
-        return this.game.getCurrentRoom().getComponent(nameOfComponent);
-    }
 }

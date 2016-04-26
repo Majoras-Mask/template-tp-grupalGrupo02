@@ -5,7 +5,6 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 public abstract class GameComponent {
     public int id;
     private volatile int idCounter = 0;
-    public ZorkTypeGame game;
 
     public GameComponent() {
         this.id = idCounter++;
@@ -17,23 +16,19 @@ public abstract class GameComponent {
 
     public abstract String getBasicName();
 
-    public Boolean pick() {
+    public Boolean pick(ZorkTypeGame game) {
         return false;
     }
 
-    public Boolean close() {
+    public Boolean close(ZorkTypeGame game) {
         return false;
     }
 
-    public Boolean open() {
+    public Boolean open(ZorkTypeGame game) {
         return false;
     }
 
-    public Boolean talk() {
+    public Boolean talk(ZorkTypeGame game) {
         return false;
-    }
-
-    public void setGame(ZorkTypeGame game) {
-        this.game = game;
     }
 }

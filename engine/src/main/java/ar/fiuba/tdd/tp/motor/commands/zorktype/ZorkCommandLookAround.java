@@ -13,11 +13,6 @@ public class ZorkCommandLookAround implements GameCommand {
 
     @Override
     public String execute() {
-        StringBuffer message = new StringBuffer();
-        message.append(this.game.getCurrentRoom().getDescription() + " has:");
-        for (GameComponent component : this.game.getCurrentRoom().getListOfComponents()) {
-            message.append(" A " + component.getDescription() + ".");
-        }
-        return message.toString();
+        return this.game.lookAround();
     }
 }

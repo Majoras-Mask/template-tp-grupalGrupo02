@@ -6,11 +6,11 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 public class ZorkCommandClose extends ZorkCommandActionable {
 
     public ZorkCommandClose(ZorkTypeGame game, String whatToClose) {
-        super(game, whatToClose, "close");
+        super(game, whatToClose);
     }
 
     @Override
-    public Boolean componentAction(GameComponent component) {
-        return component.close();
+    public String execute() {
+        return this.game.close(this.whoToDoActionWith);
     }
 }

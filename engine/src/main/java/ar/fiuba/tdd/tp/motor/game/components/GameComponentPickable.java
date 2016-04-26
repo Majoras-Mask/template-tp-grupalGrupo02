@@ -2,9 +2,9 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public abstract class GameComponentSimple extends GameComponent {
+public abstract class GameComponentPickable extends GameComponent {
 
-    public GameComponentSimple() {
+    public GameComponentPickable() {
         super();
     }
 
@@ -14,13 +14,10 @@ public abstract class GameComponentSimple extends GameComponent {
     }
 
     @Override
-    public Boolean pick() {
-        this.game.addPlayerItem(this);
-        this.game.removeItemFromRoom(this);
+    public Boolean pick(ZorkTypeGame game) {
+        game.addPlayerItem(this);
+        game.removeItemFromRoom(this);
         return true;
     }
 
-    public void setGame(ZorkTypeGame game) {
-        this.game = game;
-    }
 }

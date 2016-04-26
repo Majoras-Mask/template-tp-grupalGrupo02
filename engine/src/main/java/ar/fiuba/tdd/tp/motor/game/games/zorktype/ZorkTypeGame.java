@@ -36,6 +36,10 @@ public abstract class ZorkTypeGame implements Game {
         this.playerItems.remove(component);
     }
 
+    public void removeAllPlayerItems() {
+        this.playerItems = null;
+    }
+
     public void setCurrentRoom(ComponentRoom room) {
         this.currentRoom = room;
     }
@@ -46,5 +50,82 @@ public abstract class ZorkTypeGame implements Game {
 
     public void addItemToRoom(GameComponent component) {
         this.currentRoom.addComponent(component);
+    }
+
+    public GameComponent getComponent(String componentName) {
+        return getCurrentRoom().getComponent(componentName);
+    }
+
+    public String lookAround() {
+        StringBuffer message = new StringBuffer();
+        message.append(getCurrentRoom().getDescription() + " has:");
+        for (GameComponent component : getCurrentRoom().getListOfComponents()) {
+            message.append(" A " + component.getDescription() + ".");
+        }
+        return message.toString();
+    }
+
+    private String noClose() {
+        return "There is no such thing to close.";
+    }
+
+    private String closeSuccess(GameComponent component) {
+        return "You closed " + component.getDescription() + ".";
+    }
+
+    private String closeFail(GameComponent component) {
+        return "Can't close " + component.getDescription() + ".";
+    }
+
+    public String close(String whatToClose) {
+        GameComponent component = getComponent(whatToClose);
+
+        if (component == null) {
+            return noClose();
+        }
+        if (component.close(this)) {
+            return closeSuccess(component);
+        } else {
+            return closeFail(component);
+        }
+    }
+
+    public String open(String whatToOpen) {
+        GameComponent component = getComponent(whatToOpen);
+
+        if (component == null) {
+            return "There is no such thing to open.";
+        }
+        if (component.open(this)) {
+            return "Opened it.";
+        } else {
+            return "Can't open " + component.getDescription() + ".";
+        }
+    }
+
+    public String pick(String whatToPick) {
+        GameComponent component = getComponent(whatToPick);
+
+        if (component == null) {
+            return "There is no such thing to pick.";
+        }
+        if (component.pick(this)) {
+            return "You picked " + component.getDescription() + ".";
+        } else {
+            return "Can't pick " + component.getDescription() + ".";
+        }
+    }
+
+    public String talk(String whoToTalkTo) {
+        GameComponent component = getComponent(whoToTalkTo);
+
+        if (component == null) {
+            return "There is no such thing to talk to.";
+        }
+        if (component.talk(this)) {
+            return "You talked to " + component.getDescription() + ".";
+        } else {
+            return "It doesn't answer back.";
+        }
     }
 }
