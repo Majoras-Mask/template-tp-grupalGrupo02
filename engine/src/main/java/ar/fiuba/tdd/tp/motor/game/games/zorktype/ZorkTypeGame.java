@@ -18,6 +18,14 @@ public abstract class ZorkTypeGame implements Game {
         return this.currentRoom;
     }
 
+    protected void setGamePlayer(GamePlayer gamePlayer) {
+        this.gamePlayer = gamePlayer;
+    }
+
+    public GamePlayer getGamePlayer() {
+        return gamePlayer;
+    }
+
     public List<GameComponent> getPlayerItems() {
         return this.playerItems;
     }
