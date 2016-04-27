@@ -9,6 +9,6 @@ public class ServerIO {
     }
 
     public static void clientDisconnected(int localPort) {
-        System.out.println("Offline client on port " + localPort)
+        System.out.println("Offline client on port " + localPort);
     }
 }
