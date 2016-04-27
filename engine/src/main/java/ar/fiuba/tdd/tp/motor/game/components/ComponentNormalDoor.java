@@ -4,12 +4,12 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class ComponentNormalDoor extends ComponentDoor {
 
-    public ComponentNormalDoor(ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
-        super(roomItLeadsTo,keyRequired);
+    public ComponentNormalDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo, ComponentKey keyRequired) {
+        super(fromRoom, roomItLeadsTo,keyRequired);
     }
 
-    public ComponentNormalDoor(ComponentRoom roomItLeadsTo) {
-        super(roomItLeadsTo, null);
+    public ComponentNormalDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo) {
+        super(fromRoom, roomItLeadsTo, null);
     }
 
     public Boolean isThisDoorUnlocked() {

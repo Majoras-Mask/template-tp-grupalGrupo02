@@ -12,11 +12,11 @@ public class GameCursedObject extends ZorkTypeGame {
         ComponentKey key = new ComponentKey();
         roomOne.addComponent(key);
         ComponentRoom roomTwo = new ComponentRoom();
-        ComponentDoor doorZero = new ComponentNormalDoor(roomTwo, key);
+        ComponentDoor doorZero = new ComponentNormalDoor(roomOne, roomTwo, key);
         roomOne.addComponent(doorZero);
 
         this.winningRoom = new ComponentRoom();
-        ComponentDoor doorOne = new ComponentCursedDoor(this.winningRoom, key);
+        ComponentDoor doorOne = new ComponentCursedDoor(roomTwo, this.winningRoom, key);
         roomTwo.addComponent(doorOne);
         ComponentThief thief = new ComponentThief();
         roomTwo.addComponent(thief);

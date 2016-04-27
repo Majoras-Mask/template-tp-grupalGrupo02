@@ -4,12 +4,12 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class ComponentCursedDoor extends ComponentDoor {
 
-    public ComponentCursedDoor(ComponentRoom roomItLeadsTo, ComponentKey keyNotRequired) {
-        super(roomItLeadsTo,keyNotRequired);
+    public ComponentCursedDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo, ComponentKey keyNotRequired) {
+        super(fromRoom, roomItLeadsTo,keyNotRequired);
     }
 
-    public ComponentCursedDoor(ComponentRoom roomItLeadsTo) {
-        super(roomItLeadsTo, null);
+    public ComponentCursedDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo) {
+        super(fromRoom, roomItLeadsTo, null);
     }
 
     protected Boolean isThisDoorUnlocked(ZorkTypeGame game) {
