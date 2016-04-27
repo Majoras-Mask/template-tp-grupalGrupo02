@@ -30,7 +30,7 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
     public Boolean open(ZorkTypeGame game) {
         this.componentIHad = this.componentIHave;
         if (this.componentIHave != null) {
-            game.addItemToRoom(this.componentIHave);
+            componentIHave.addedToRoom(game);
             removeComponent();
         }
         return true;

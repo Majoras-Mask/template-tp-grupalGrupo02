@@ -41,4 +41,8 @@ public abstract class GameComponent {
     public boolean store(GameComponent playerItem) {
         return false;
     }
+
+    public void addedToRoom(ZorkTypeGame game) {
+        game.addItemToRoom(this);
+    }
 }

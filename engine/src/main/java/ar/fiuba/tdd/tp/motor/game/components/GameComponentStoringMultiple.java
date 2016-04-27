@@ -36,6 +36,7 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
         for (GameComponent component : this.components) {
             if (component.getDescription().equals(id)) {
                 this.components.remove(component);
+                return;
             }
         }
     }
@@ -44,7 +45,7 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
     public Boolean open(ZorkTypeGame game) {
         this.itemsIhad = getListOfComponents();
         for (GameComponent component: this.itemsIhad) {
-            game.addItemToRoom(component);
+            component.addedToRoom(game);
             removeComponent(component.getDescription());
         }
         return true;
