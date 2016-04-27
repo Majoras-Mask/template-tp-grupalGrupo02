@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.factory.input.handler.game;
 
 import ar.fiuba.tdd.tp.client.ClientCore;
-import ar.fiuba.tdd.tp.client.input.handler.AbstractRequestHandler;
+import ar.fiuba.tdd.tp.client.input.handler.RequestHandler;
 import ar.fiuba.tdd.tp.client.input.handler.game.GameRequestHandler;
 
 import java.util.ArrayList;
@@ -15,16 +15,16 @@ public class GameCommandConverterFactory {
         this.core = core;
     }
 
-    public List<AbstractRequestHandler> createGameConverters() {
-        final AbstractRequestHandler exitHandler = createExitHandler();
+    public List<RequestHandler> createGameHandlers() {
+        final RequestHandler exitHandler = createGameHandler();
 
-        return new ArrayList<AbstractRequestHandler>() { {
+        return new ArrayList<RequestHandler>() { {
                 add(exitHandler);
             }
         };
     }
 
-    private AbstractRequestHandler createExitHandler() {
+    private RequestHandler createGameHandler() {
         return new GameRequestHandler(this.core);
     }
 
