@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.client.input.supplier;
 
+import ar.fiuba.tdd.tp.client.exception.InputException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
 
 import java.io.BufferedReader;
@@ -19,7 +20,7 @@ public class StdinSupplier implements ClientSupplier {
         try {
             return new ClientRequest(this.inputBuffer.readLine());
         } catch (Exception e) {
-            throw new IllegalStateException("Unexpected error while reading from input buffer: " + e);
+            throw new InputException("Can't read from the standard input stream: " + e.getLocalizedMessage());
         }
     }
 

@@ -1,64 +1,71 @@
 package ar.fiuba.tdd.tp.client;
 
+import ar.fiuba.tdd.tp.client.exception.ClientException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
-import ar.fiuba.tdd.tp.client.input.command.Command;
-import ar.fiuba.tdd.tp.client.input.command.converter.RequestConverter;
+import ar.fiuba.tdd.tp.client.input.handler.RequestHandler;
+import ar.fiuba.tdd.tp.client.input.handler.RequestHandlerResolver;
 import ar.fiuba.tdd.tp.client.input.supplier.ClientSupplier;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 import ar.fiuba.tdd.tp.client.output.consumer.ClientConsumer;
-import ar.fiuba.tdd.tp.client.utils.Constants;
+
+import java.util.Optional;
 
 import static ar.fiuba.tdd.tp.client.utils.Constants.PROCESS_COMMAND_ERROR;
+import static ar.fiuba.tdd.tp.client.utils.Constants.WELCOME;
 
+/**
+ * A Client that handles the communication for a Game. Consumes requests from a {@link ClientSupplier}.
+ * Those requests are handled by one {@link RequestHandler} and then this result is communicated
+ * to the {@link ClientConsumer}.
+ */
 public class Client {
-    private Boolean running;
+
+    private final ClientCore core;
+    private final RequestHandlerResolver resolver;
     private final ClientSupplier supplier;
     private final ClientConsumer consumer;
-    private final RequestConverter converter;
 
-    public Client(ClientSupplier supplier, ClientConsumer consumer, RequestConverter converter) {
+    public Client(ClientCore core, ClientSupplier supplier, ClientConsumer consumer,
+                  RequestHandlerResolver requestHandlerResolver) {
+        this.core = core;
         this.supplier = supplier;
         this.consumer = consumer;
-        this.converter = converter;
-        this.running = Boolean.FALSE;
+        this.resolver = requestHandlerResolver;
     }
 
     public void run() {
-        this.start();
-        this.callConsumer(Constants.WELCOME);
+        this.core.start();
+        this.callConsumer(WELCOME);
         this.doRun();
     }
 
     private void doRun() {
-        while (this.isRunning()) {
-            this.callConsumer(this.processCommand());
+        while (this.core.isRunning()) {
+            this.processRequest();
         }
     }
 
-    private ClientResponse processCommand() {
+    private void processRequest() {
+        Optional<ClientResponse> response = this.processRequest(this.callSupplier());
+        if (response.isPresent()) {
+            callConsumer(response.get());
+        }
+    }
+
+    private Optional<ClientResponse> processRequest(ClientRequest request) {
         try {
-            final ClientRequest request = this.supplier.getRequest();
-            final Command command = this.converter.convert(request);
-
-            return command.execute();
-        } catch (Exception e) {
-            return new ClientResponse(PROCESS_COMMAND_ERROR + e);
+            return this.resolver.resolve(request).handle(request);
+        } catch (ClientException e) {
+            return Optional.of(new ClientResponse(PROCESS_COMMAND_ERROR + e.getMessage()));
         }
     }
 
-    public void callConsumer(ClientResponse event) {
+    private ClientRequest callSupplier() {
+        return this.supplier.getRequest();
+    }
+
+    private void callConsumer(ClientResponse event) {
         this.consumer.consume(event);
     }
 
-    public Boolean isRunning() {
-        return running;
-    }
-
-    public void stop() {
-        this.running = Boolean.FALSE;
-    }
-
-    public void start() {
-        this.running = Boolean.TRUE;
-    }
 }
