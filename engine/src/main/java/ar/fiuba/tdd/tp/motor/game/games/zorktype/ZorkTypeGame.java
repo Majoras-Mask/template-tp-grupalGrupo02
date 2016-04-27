@@ -4,6 +4,8 @@ import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentUtilities;
 import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
 import ar.fiuba.tdd.tp.motor.game.components.GamePlayer;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatus;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusPlaying;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public abstract class ZorkTypeGame implements Game {
     protected ComponentRoom currentRoom;
     protected List<GameComponent> playerItems = new ArrayList<>();
     protected GamePlayer gamePlayer = new GamePlayer(this);
+    protected GameStatus gameStatus = new GameStatusPlaying();
 
     public ComponentRoom getCurrentRoom() {
         return this.currentRoom;
@@ -188,4 +191,8 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public abstract String welcomeMessage();
+
+    public String finishedMessage() {
+        return this.gameStatus.statusMessage();
+    }
 }

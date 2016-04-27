@@ -31,7 +31,7 @@ public class EngineZork extends Engine {
         String response = this.chain.createCommand(message).execute();
 
         if (this.gameZork.checkIfGameIsFinished()) {
-            return "You won the game";
+            return this.gameZork.finishedMessage();
         }
         return response;
     }
