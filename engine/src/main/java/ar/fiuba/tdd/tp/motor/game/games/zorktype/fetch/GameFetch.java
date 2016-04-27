@@ -3,6 +3,7 @@ package ar.fiuba.tdd.tp.motor.game.games.zorktype.fetch;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentStick;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusWon;
 
 public class GameFetch extends ZorkTypeGame {
     private String stickName;
@@ -17,7 +18,11 @@ public class GameFetch extends ZorkTypeGame {
 
     public boolean checkIfGameIsFinished() {
         //To win this game, you have to pick the stick
-        return !this.currentRoom.hasComponent(this.stickName);
+        if (!this.currentRoom.hasComponent(this.stickName)) {
+            this.gameStatus = new GameStatusWon();
+            return true;
+        }
+        return false;
     }
 
     @Override

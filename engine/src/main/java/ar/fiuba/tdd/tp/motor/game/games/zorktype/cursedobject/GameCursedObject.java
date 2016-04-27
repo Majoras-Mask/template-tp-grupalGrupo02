@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.motor.game.games.zorktype.cursedobject;
 
 import ar.fiuba.tdd.tp.motor.game.components.*;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusWon;
 
 public class GameCursedObject extends ZorkTypeGame {
 
@@ -28,7 +29,11 @@ public class GameCursedObject extends ZorkTypeGame {
 
     @Override
     public boolean checkIfGameIsFinished() {
-        return (getCurrentRoom() == this.winningRoom);
+        if (getCurrentRoom() == this.winningRoom) {
+            this.gameStatus = new GameStatusWon();
+            return true;
+        }
+        return false;
     }
 
     @Override

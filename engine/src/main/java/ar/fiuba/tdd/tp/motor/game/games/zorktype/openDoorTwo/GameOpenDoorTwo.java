@@ -3,6 +3,7 @@ package ar.fiuba.tdd.tp.motor.game.games.zorktype.opendoortwo;
 import ar.fiuba.tdd.tp.motor.game.components.*;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusWon;
 
 public class GameOpenDoorTwo extends ZorkTypeGame {
 
@@ -23,7 +24,11 @@ public class GameOpenDoorTwo extends ZorkTypeGame {
 
     @Override
     public boolean checkIfGameIsFinished() {
-        return (getCurrentRoom() == this.winningRoom);
+        if ((getCurrentRoom() == this.winningRoom)) {
+            this.gameStatus = new GameStatusWon();
+            return true;
+        }
+        return false;
     }
 
     @Override

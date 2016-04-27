@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.motor.game.components.ComponentKey;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.OpenConditionObject;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusWon;
 
 public class GameOpenDoor extends ZorkTypeGame {
 
@@ -22,7 +23,11 @@ public class GameOpenDoor extends ZorkTypeGame {
     }
 
     public boolean checkIfGameIsFinished() {
-        return (this.getCurrentRoom() == this.winningRoom) ;
+        if (this.getCurrentRoom() == this.winningRoom) {
+            this.gameStatus = new GameStatusWon();
+            return true;
+        }
+        return false;
     }
 
     @Override
