@@ -151,6 +151,17 @@ public abstract class ZorkTypeGame implements Game {
         return component.whatCanIDo();
     }
 
+    public String consume(String whatToConsume) {
+        if (!hasPlayerComponent(whatToConsume)) {
+            return "There is no such thing to consume.";
+        }
+        GameComponent component = getPlayerItem(whatToConsume);
+        if (component.consume(this)) {
+            return "Consumed it.";
+        } else {
+            return "Can't consume " + component.getDescription() + ".";
+        }
+    }
 
     public String store(String whatToStore, String whereToStore) {
         if (hasPlayerComponent(whatToStore) && hasRoomComponent(whereToStore)) {

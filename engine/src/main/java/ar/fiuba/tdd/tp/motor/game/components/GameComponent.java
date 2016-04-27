@@ -32,6 +32,10 @@ public abstract class GameComponent {
         return false;
     }
 
+    public Boolean consume(ZorkTypeGame game) {
+        return false;
+    }
+
     public abstract String whatCanIDo();
 
     public boolean store(GameComponent playerItem) {
