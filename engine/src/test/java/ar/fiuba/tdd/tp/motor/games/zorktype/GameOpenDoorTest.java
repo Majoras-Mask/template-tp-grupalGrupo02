@@ -8,6 +8,7 @@ import static junit.framework.TestCase.assertTrue;
 
 public class GameOpenDoorTest extends ZorkTypeGameTest {
 
+
     @Test
     public void cantGoThroughLockedDoor() {
         setup(new GameOpenDoor());
@@ -21,4 +22,5 @@ public class GameOpenDoorTest extends ZorkTypeGameTest {
         this.engineZork.request("open door0");
         assertTrue(this.game.checkIfGameIsFinished());
     }
+
 }

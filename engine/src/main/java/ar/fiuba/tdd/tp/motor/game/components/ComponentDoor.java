@@ -2,24 +2,25 @@ package ar.fiuba.tdd.tp.motor.game.components;
 
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
-public abstract class ComponentDoor extends GameComponent {
+public class ComponentDoor extends GameComponent {
 
-    ComponentKey keyAssociated = null;
-    ComponentRoom fromRoom;
-    ComponentRoom roomItLeadsTo;
+    private ComponentRoom fromRoom;
+    private ComponentRoom roomItLeadsTo;
+    private boolean locked = false;
+    private OpenCondition openCondition;
 
-    public ComponentDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo, ComponentKey keyAssociated) {
+    public ComponentDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo,
+                         OpenCondition openCondition) {
         this.fromRoom = fromRoom;
         this.roomItLeadsTo = roomItLeadsTo;
-        this.keyAssociated = keyAssociated;
+        this.openCondition = openCondition;
+        if (openCondition != null) {
+            this.locked = true;
+        }
     }
 
     public ComponentDoor(ComponentRoom fromRoom, ComponentRoom roomItLeadsTo) {
         this(fromRoom, roomItLeadsTo, null);
-    }
-
-    public Boolean matchingKey(GameComponent component) {
-        return component == this.keyAssociated;
     }
 
     public ComponentRoom getWhereItLeadsTo(ZorkTypeGame game) {
@@ -31,11 +32,40 @@ public abstract class ComponentDoor extends GameComponent {
     }
 
     protected void unlockDoor() {
-        this.keyAssociated = null;
+        this.locked = false;
     }
 
     @Override
     public String whatCanIDo() {
         return "You can open/close this.";
+    }
+
+    public Boolean isThisDoorUnlocked() {
+        return !this.locked;
+    }
+
+    @Override
+    public Boolean open(ZorkTypeGame game) {
+        if (isThisDoorUnlocked()) {
+            goToRoom(game);
+            return true;
+        }
+        if (openCondition.mustOpen(game)) {
+            unlockDoor();
+            goToRoom(game);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String getBasicName() {
+        return "door";
+    }
+
+    @Override
+    public Boolean close(ZorkTypeGame game) {
+        return true;
     }
 }

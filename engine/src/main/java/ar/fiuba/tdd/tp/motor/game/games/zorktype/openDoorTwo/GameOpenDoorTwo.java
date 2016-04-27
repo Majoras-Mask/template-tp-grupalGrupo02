@@ -1,10 +1,7 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype.opendoortwo;
 
-import ar.fiuba.tdd.tp.motor.game.components.ComponentBox;
-import ar.fiuba.tdd.tp.motor.game.components.ComponentKey;
-import ar.fiuba.tdd.tp.motor.game.components.ComponentNormalDoor;
+import ar.fiuba.tdd.tp.motor.game.components.*;
 
-import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public class GameOpenDoorTwo extends ZorkTypeGame {
@@ -18,7 +15,8 @@ public class GameOpenDoorTwo extends ZorkTypeGame {
         ComponentKey key = new ComponentKey();
         box.setComponent(key);
         roomOne.addComponent(box);
-        ComponentNormalDoor door = new ComponentNormalDoor(roomOne, this.winningRoom, key);
+        ComponentDoor door = new ComponentDoor(roomOne, this.winningRoom,
+                new OpenConditionObject(key, true));
         roomOne.addComponent(door);
         this.currentRoom = roomOne;
     }

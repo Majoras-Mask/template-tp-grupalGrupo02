@@ -16,5 +16,5 @@ public class GameCursedObjectTest extends ZorkTypeGameTest {
         System.out.println(getResponseFromAction("look around"));
         assertTrue(this.game.checkIfGameIsFinished());
     }
-    */
+*/
 }

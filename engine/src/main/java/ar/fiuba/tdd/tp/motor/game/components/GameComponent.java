@@ -3,11 +3,14 @@ package ar.fiuba.tdd.tp.motor.game.components;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 
 public abstract class GameComponent {
-    public int id;
-    private volatile int idCounter = 0;
+    protected int id;
 
     public GameComponent() {
-        this.id = idCounter++;
+        this.id = 0;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
