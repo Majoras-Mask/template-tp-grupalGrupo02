@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.factory.input.handler.client;
 
-import ar.fiuba.tdd.tp.client.Client;
+import ar.fiuba.tdd.tp.client.ClientCore;
 import ar.fiuba.tdd.tp.client.input.handler.AbstractRequestHandler;
 import ar.fiuba.tdd.tp.client.input.handler.client.ConnectRequestHandler;
 import ar.fiuba.tdd.tp.client.input.handler.client.ExitRequestHandler;
@@ -11,10 +11,10 @@ import java.util.List;
 
 public class ClientRequestHandlerFactory {
 
-    private final Client client;
+    private final ClientCore core;
 
-    public ClientRequestHandlerFactory(Client client) {
-        this.client = client;
+    public ClientRequestHandlerFactory(ClientCore core) {
+        this.core = core;
     }
 
     public List<AbstractRequestHandler> createClientHandlers() {
@@ -31,15 +31,15 @@ public class ClientRequestHandlerFactory {
     }
 
     public ConnectRequestHandler createConnectHandler() {
-        return new ConnectRequestHandler(this.client, null);
+        return new ConnectRequestHandler(this.core);
     }
 
     public ExitRequestHandler createExitHandler() {
-        return new ExitRequestHandler(this.client, null);
+        return new ExitRequestHandler(this.core);
     }
 
     public HelpRequestHandler createHelpHandler() {
-        return new HelpRequestHandler(this.client, null);
+        return new HelpRequestHandler(this.core);
     }
 
 }

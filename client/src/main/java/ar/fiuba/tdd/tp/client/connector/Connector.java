@@ -8,9 +8,6 @@ import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 import java.io.IOException;
 import java.net.Socket;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.requireNonNull;
-
 public class Connector {
 
     private final Socket socket;
@@ -18,7 +15,7 @@ public class Connector {
 
     public Connector(ConnectorSettings settings) {
         try {
-            this.socket = getNewSocket(settings);
+            this.socket = this.getNewSocket(settings);
             this.connectorIO = getNewIO();
         } catch (Exception e) {
             throw new ConnectorException("Can't connect with server!");
@@ -26,14 +23,7 @@ public class Connector {
     }
 
     private Socket getNewSocket(ConnectorSettings settings) throws IOException {
-        if (isNull(settings)) {
-            throw new ConnectorException("No connection settings!");
-        }
-
-        final String host = requireNonNull(settings.getHost());
-        final int port = requireNonNull(settings.getPort());
-
-        return new Socket(host, port);
+        return new Socket(settings.getHost(), settings.getPort());
     }
 
     private ConnectorIO getNewIO() throws IOException {

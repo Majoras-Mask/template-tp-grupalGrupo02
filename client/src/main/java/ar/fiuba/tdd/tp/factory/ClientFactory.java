@@ -16,7 +16,7 @@ public class ClientFactory {
     }
 
     public Client createStandardClient() {
-        return new Client(getSupplier(), getConsumer());
+        return new Client(null, null, null, null);
     }
 
     public ClientSupplier getSupplier() {

@@ -1,11 +1,10 @@
 package ar.fiuba.tdd.tp.client.input.handler.client;
 
-import ar.fiuba.tdd.tp.client.Client;
+import ar.fiuba.tdd.tp.client.ClientCore;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.client.exception.ConverterException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
 import ar.fiuba.tdd.tp.client.input.handler.AbstractRequestHandler;
-import ar.fiuba.tdd.tp.client.input.handler.RequestHandler;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 
 import java.util.ArrayList;
@@ -24,16 +23,15 @@ public class ConnectRequestHandler extends AbstractRequestHandler {
     private static final String PORT = "((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})"
             + "|([1-9][0-9]{3})|([1-9][0-9]{2})|([1-9][0-9])|([0-9]))";
 
-    public ConnectRequestHandler(Client client, RequestHandler nextConverter) {
-        super(client, new ArrayList<String>() { {
+    public ConnectRequestHandler(ClientCore core) {
+        super(core, new ArrayList<String>() { {
                 add("(?i)^" + CONNECT + " " + IP_ADDRESS + ":" + PORT + "$");
             }
-        }, nextConverter);
+        });
     }
 
-    @Override
-    protected Optional<ClientResponse> doHandle(ClientRequest request) {
-        return Optional.of(this.client.connect(getConnectionSettings(request.getInput())));
+    public Optional<ClientResponse> handle(ClientRequest request) {
+        return Optional.of(this.core.connect(getConnectionSettings(request.getInput())));
     }
 
     private ConnectorSettings getConnectionSettings(String input) {
