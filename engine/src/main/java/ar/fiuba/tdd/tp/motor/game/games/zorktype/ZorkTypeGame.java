@@ -3,14 +3,16 @@ package ar.fiuba.tdd.tp.motor.game.games.zorktype;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentUtilities;
 import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
+import ar.fiuba.tdd.tp.motor.game.components.GamePlayer;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ZorkTypeGame implements Game {
-    public ComponentRoom currentRoom;
-    public List<GameComponent> playerItems = new LinkedList<>();
+    protected ComponentRoom currentRoom;
+    protected List<GameComponent> playerItems = new ArrayList<>();
+    protected GamePlayer gamePlayer = new GamePlayer(this);
 
     public ComponentRoom getCurrentRoom() {
         return this.currentRoom;
@@ -51,6 +53,7 @@ public abstract class ZorkTypeGame implements Game {
 
     public void setCurrentRoom(ComponentRoom room) {
         this.currentRoom = room;
+
     }
 
     public void removeItemFromRoom(GameComponent component) {
@@ -122,7 +125,7 @@ public abstract class ZorkTypeGame implements Game {
         if (component == null) {
             return "There is no such thing to pick.";
         }
-        if (component.pick(this)) {
+        if (gamePlayer.canPick(component) && component.pick(this)) {
             return "You picked " + component.getDescription() + ".";
         } else {
             return "Can't pick " + component.getDescription() + ".";
