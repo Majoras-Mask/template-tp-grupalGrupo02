@@ -40,7 +40,7 @@ public class Connection extends Thread {
         welcome();
         boolean exit = false;
         while (!exit && !isNull(request = (Request) inputStream.readObject())) {
-            if (request.getSomething().equals("exit game")) {
+            if (request.isExit()) {
                 //TODO: send closure to client
                 exit = true;
             }
@@ -50,7 +50,7 @@ public class Connection extends Thread {
     }
 
     private void welcome() throws IOException {
-        response = new Response("Welcome");
+        response = new Response("Welcome"/*game.getWelcome()*/);
         outputStream.writeObject(response);
         outputStream.flush();
     }
@@ -58,11 +58,11 @@ public class Connection extends Thread {
     public void run() {
         try {
             while (!serverSocket.isClosed() && !isNull(clientSocket = serverSocket.accept())) {
-                //TODO: inform that new connection was established
+                ServerIO.clientConnected(serverSocket.getLocalPort());
                 getStream(clientSocket);
                 speak();
                 clientSocket.close();
-                //TODO: inform that client was disconnected
+                ServerIO.clientDisconnected(serverSocket.getLocalPort());
             }
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
