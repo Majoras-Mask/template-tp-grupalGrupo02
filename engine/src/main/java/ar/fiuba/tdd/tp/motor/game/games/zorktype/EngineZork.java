@@ -15,6 +15,7 @@ public class EngineZork extends Engine {
     private static String TALK_PATTERN = "talk";
     private static String WHATCANIDO_PATTERN = "what can i do with";
     private static String STOREITEM_PATTERN = "store (.*) in (.*)";
+    private static String CONSUME_PATTERN = "consume";
 
 
     public EngineZork(ZorkTypeGame game) {
@@ -53,6 +54,8 @@ public class EngineZork extends Engine {
         close.setNextChain(talk);
         talk.setNextChain(whatCanIDoWith);
         whatCanIDoWith.setNextChain(store);
+        final ChainCommandCreator consume = new ChainZorkConsume(this.gameZork, CONSUME_PATTERN);
+        store.setNextChain(consume);
 
         return lookAround;
     }
