@@ -47,12 +47,12 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
         for (GameComponent component: this.components) {
             component.addedToRoom(game);
             this.itemsIhad.add(component);
-            itemsDropped.append("; dropped " + component.getDescription());
+            itemsDropped.append(" Dropped " + component.getDescription() + ".");
         }
 
         this.components.clear();
         //TODO agregar que es lo que se tira y avisar si ya estaba abierto
-        setResponse("You opened " + getDescription() + "." + itemsDropped.toString() + ".");
+        setResponse("You opened " + getDescription() + "." + itemsDropped.toString());
         return true;
     }
 

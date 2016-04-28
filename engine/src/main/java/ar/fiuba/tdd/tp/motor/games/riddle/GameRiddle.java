@@ -134,6 +134,6 @@ public class GameRiddle implements Game {
 
     @Override
     public String help() {
-        return "GAME COMMANDS\n take wolf/sheep/cabbage, leave wolf/sheep/cabbage, cross north-shore/south-shore";
+        return "GAME COMMANDS\ntake wolf/sheep/cabbage, leave wolf/sheep/cabbage, cross north-shore/south-shore";
     }
 }
