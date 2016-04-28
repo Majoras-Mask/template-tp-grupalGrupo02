@@ -27,25 +27,28 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
     }
 
     @Override
-    public String open(ZorkTypeGame game) {
+    public Boolean open(ZorkTypeGame game) {
         this.componentIHad = this.componentIHave;
         if (this.componentIHave != null) {
             componentIHave.addedToRoom(game);
             String descriptionOfComponent = componentIHave.getDescription();
             removeComponent();
-            return "You opened " + getDescription() + ". There is a " + descriptionOfComponent + ".";
+            setResponse("You opened " + getDescription() + ". There is a " + descriptionOfComponent + ".");
+            return true;
         }
-        return "You opened " + getDescription() + ".";
+        setResponse("You opened " + getDescription() + ".");
+        return true;
     }
 
     @Override
-    public String close(ZorkTypeGame game) {
+    public Boolean close(ZorkTypeGame game) {
         if (this.componentIHad != null && game.getCurrentRoom().hasComponent(this.componentIHad.getDescription())) {
             game.removeItemFromRoom(this.componentIHad);
             setComponent(this.componentIHad);
             this.componentIHad = null;
         }
-        return "You closed " + getDescription() + ".";
+        setResponse("You closed " + getDescription() + ".");
+        return true;
     }
 
     @Override

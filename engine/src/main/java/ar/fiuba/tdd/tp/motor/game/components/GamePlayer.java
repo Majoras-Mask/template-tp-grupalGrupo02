@@ -8,14 +8,14 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 public class GamePlayer extends GameComponent {
 
     private ZorkTypeGame game;
-    private boolean isPoissoned;
-    private ComponentRoom roomWhereIWasPoissoned;
+    private boolean isPoisoned;
+    private ComponentRoom roomWhereIWasPoisoned;
     private PickCondition pickCondition = new PickConditionAlwaysTrue();
 
     public GamePlayer(ZorkTypeGame game) {
         this.game = game;
-        this.isPoissoned = false;
-        this.roomWhereIWasPoissoned = null;
+        this.isPoisoned = false;
+        this.roomWhereIWasPoisoned = null;
     }
 
 
@@ -38,27 +38,27 @@ public class GamePlayer extends GameComponent {
     }
 
     public void setPoisson() {
-        this.isPoissoned = true;
-        this.roomWhereIWasPoissoned = game.getCurrentRoom();
+        this.isPoisoned = true;
+        this.roomWhereIWasPoisoned = game.getCurrentRoom();
     }
 
-    public void setAntidoto() {
-        clearPoisson();
+    public void setAntidote() {
+        clearPoison();
     }
 
     public boolean isDead() {
-        if (isPoissoned() && game.getCurrentRoom() != roomWhereIWasPoissoned) {
+        if (isPoissoned() && game.getCurrentRoom() != roomWhereIWasPoisoned) {
             return true;
         }
         return false;
     }
 
     public boolean isPoissoned() {
-        return this.isPoissoned;
+        return this.isPoisoned;
     }
 
-    void clearPoisson() {
-        isPoissoned = false;
-        roomWhereIWasPoissoned = null;
+    void clearPoison() {
+        isPoisoned = false;
+        roomWhereIWasPoisoned = null;
     }
 }
