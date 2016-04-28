@@ -28,6 +28,11 @@ public class GameRequestHandler extends AbstractRequestHandler {
         return Optional.of(response);
     }
 
+    @Override
+    public Boolean supports(ClientRequest request) {
+        return this.match(request);
+    }
+
     private Boolean isFinish(ClientResponse response) {
         return response.getEvent().equals(EXIT);
     }

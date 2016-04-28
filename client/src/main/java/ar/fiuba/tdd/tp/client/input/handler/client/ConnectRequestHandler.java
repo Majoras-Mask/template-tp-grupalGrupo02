@@ -4,7 +4,6 @@ import ar.fiuba.tdd.tp.client.ClientCore;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.client.exception.ConverterException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
-import ar.fiuba.tdd.tp.client.input.handler.AbstractRequestHandler;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConnectRequestHandler extends AbstractRequestHandler {
+public class ConnectRequestHandler extends AbstractClientRequestHandler {
 
     private static final String CONNECT = "connect";
     private static final String BETWEEN_0_AND_255 = "([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
