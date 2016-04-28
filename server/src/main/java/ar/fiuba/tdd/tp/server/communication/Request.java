@@ -1,12 +1,12 @@
-package ar.fiuba.tdd.tp.api;
+package ar.fiuba.tdd.tp.server.communication;
 
 import java.io.Serializable;
 
-public class Response implements Serializable {
+public class Request implements Serializable {
 
     private String something;
 
-    public Response(String something) {
+    public Request(String something) {
         this.something = something;
     }
 
@@ -16,5 +16,9 @@ public class Response implements Serializable {
 
     public void setSomething(String something) {
         this.something = something;
+    }
+
+    public boolean isExit() {
+        return something.equals("exit game");
     }
 }

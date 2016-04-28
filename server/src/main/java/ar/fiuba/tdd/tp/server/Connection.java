@@ -1,6 +1,9 @@
-package ar.fiuba.tdd.tp.api;
+package ar.fiuba.tdd.tp.server;
 
 import ar.fiuba.tdd.tp.motor.games.Engine;
+import ar.fiuba.tdd.tp.server.communication.Request;
+import ar.fiuba.tdd.tp.server.communication.Response;
+import ar.fiuba.tdd.tp.server.io.ServerOutput;
 
 import java.io.*;
 import java.net.ServerSocket;

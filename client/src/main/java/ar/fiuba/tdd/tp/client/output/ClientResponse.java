@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.client.output;
 
-import ar.fiuba.tdd.tp.api.Response;
+import ar.fiuba.tdd.tp.server.communication.Response;
 
 public class ClientResponse {
     private final String event;

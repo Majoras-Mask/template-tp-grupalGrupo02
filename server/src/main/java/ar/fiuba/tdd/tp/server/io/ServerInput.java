@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.api;
+package ar.fiuba.tdd.tp.server.io;
 
 import ar.fiuba.tdd.tp.server.utils.Command;
 

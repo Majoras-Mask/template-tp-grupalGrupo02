@@ -1,6 +1,8 @@
-package ar.fiuba.tdd.tp.api;
+package ar.fiuba.tdd.tp.server;
 
 import ar.fiuba.tdd.tp.motor.games.EngineFactoryConcrete;
+import ar.fiuba.tdd.tp.server.io.ServerInput;
+import ar.fiuba.tdd.tp.server.io.ServerOutput;
 import ar.fiuba.tdd.tp.server.utils.Command;
 
 import java.io.IOException;

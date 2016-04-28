@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp;
 
-import ar.fiuba.tdd.tp.api.Server;
+import ar.fiuba.tdd.tp.server.Server;
 
 import java.io.*;
 
