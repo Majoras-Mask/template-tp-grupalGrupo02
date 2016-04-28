@@ -1,8 +1,9 @@
 package ar.fiuba.tdd.tp.motor.game.games.zorktype.cursedobject;
 
 import ar.fiuba.tdd.tp.motor.game.components.*;
+import ar.fiuba.tdd.tp.motor.game.components.gamestatus.GameStatusWon;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusWon;
+
 
 public class GameCursedObject extends ZorkTypeGame {
 

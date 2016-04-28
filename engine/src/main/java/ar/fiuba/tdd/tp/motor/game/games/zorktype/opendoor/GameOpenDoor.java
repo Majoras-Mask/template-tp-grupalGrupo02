@@ -4,8 +4,9 @@ import ar.fiuba.tdd.tp.motor.game.components.ComponentDoor;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentKey;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.OpenConditionObject;
+import ar.fiuba.tdd.tp.motor.game.components.gamestatus.GameStatusWon;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusWon;
+
 
 public class GameOpenDoor extends ZorkTypeGame {
 

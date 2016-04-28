@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.motor.games;
 
 public interface EngineFactory {
-    Engine createGameFetch();
+    Engine createEngineFetch();
 
     Engine createEngineHanoi();
 

@@ -73,6 +73,7 @@ public class ComponentDoor extends GameComponent {
     @Override
     public Boolean close(ZorkTypeGame game) {
         setResponse("You closed the door.");
+        this.locked = true;
         return true;
     }
 }

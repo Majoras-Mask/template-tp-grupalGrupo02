@@ -4,8 +4,8 @@ import ar.fiuba.tdd.tp.motor.game.components.ComponentRoom;
 import ar.fiuba.tdd.tp.motor.game.components.ComponentUtilities;
 import ar.fiuba.tdd.tp.motor.game.components.GameComponent;
 import ar.fiuba.tdd.tp.motor.game.components.GamePlayer;
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatus;
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus.GameStatusPlaying;
+import ar.fiuba.tdd.tp.motor.game.components.gamestatus.GameStatus;
+import ar.fiuba.tdd.tp.motor.game.components.gamestatus.GameStatusPlaying;
 import ar.fiuba.tdd.tp.motor.games.Game;
 
 import java.util.ArrayList;

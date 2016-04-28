@@ -9,61 +9,74 @@ public class BuilderZork {
     private int roomCout = 0;
     private int poissonCount = 0;
     private int thiefCount = 0;
+    private int antidoteCount;
 
     public BuilderZork() {
 
     }
 
-    ComponentBox createBox() {
+    private void setID(GameComponent component, int id) {
+        component.setId(id);
+    }
+
+    public ComponentBox createBox() {
         ComponentBox box = new ComponentBox();
-        box.setId(boxCount++);
+        setID(box,boxCount++);
         return box;
     }
 
-    ComponentCloset createCloset() {
+    public ComponentCloset createCloset() {
         ComponentCloset closet = new ComponentCloset();
-        closet.setId(closetCount++);
+        setID(closet, closetCount++);
         return closet;
     }
 
-    ComponentDoor createDoorWithOpenCondition(ComponentRoom roomFrom, ComponentRoom toRoom,
+    public ComponentDoor createDoorWithOpenCondition(ComponentRoom roomFrom, ComponentRoom toRoom,
                                               OpenCondition openCondition) {
         ComponentDoor door = new ComponentDoor(roomFrom, toRoom, openCondition);
-        door.setId(doorCount++);
+        setID(door, doorCount++);
+        roomFrom.addComponent(door);
+        toRoom.addComponent(door);
         return door;
     }
 
-    ComponentDoor createCursedDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
+    public ComponentDoor createCursedDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
         return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, true));
     }
 
-    ComponentDoor createNormalDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
+    public ComponentDoor createNormalDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
         return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, true));
     }
 
-    ComponentKey createKey() {
+    public ComponentKey createKey() {
         ComponentKey key = new ComponentKey();
-        key.setId(keyCount++);
+        setID(key,keyCount++);
         return key;
     }
 
-    ComponentRoom createRoom() {
+    public ComponentRoom createRoom() {
         ComponentRoom room = new ComponentRoom();
         room.setId(roomCout++);
         return room;
     }
 
 
-    ComponentPoison createPoisson() {
+    public ComponentPoison createPoisson() {
         ComponentPoison poisson = new ComponentPoison();
         poisson.setId(poissonCount++);
         return poisson;
     }
 
-    ComponentThief createThief() {
+    public ComponentThief createThief() {
         ComponentThief thief = new ComponentThief();
         thief.setId(thiefCount++);
         return thief;
+    }
+
+    public ComponentAntidote createAntidote() {
+        ComponentAntidote antidote = new ComponentAntidote();
+        antidote.setId(antidoteCount++);
+        return antidote;
     }
 
 

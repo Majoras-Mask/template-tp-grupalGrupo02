@@ -6,15 +6,12 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.cursedobject.GameCursedObject;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.fetch.GameFetch;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.opendoor.GameOpenDoor;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.opendoortwo.GameOpenDoorTwo;
+import ar.fiuba.tdd.tp.motor.game.games.zorktype.treasurehunt.GameTreasureHunt;
 import ar.fiuba.tdd.tp.motor.games.hanoi.EngineHanoi;
 import ar.fiuba.tdd.tp.motor.games.hanoi.GameHanoi;
 import ar.fiuba.tdd.tp.motor.games.riddle.EngineRiddle;
 import ar.fiuba.tdd.tp.motor.games.riddle.GameRiddle;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 public class EngineFactoryConcrete implements EngineFactory {
 
@@ -31,7 +28,7 @@ public class EngineFactoryConcrete implements EngineFactory {
         return uniqueInstance;
     }
 
-    public Engine createGameFetch() {
+    public Engine createEngineFetch() {
         return new EngineZork(new GameFetch());
     }
 
@@ -56,8 +53,7 @@ public class EngineFactoryConcrete implements EngineFactory {
     }
 
     public Engine createEngineTreasureHunt() {
-        // TODO
-        return null;
+        return new EngineZork(new GameTreasureHunt());
     }
 
 

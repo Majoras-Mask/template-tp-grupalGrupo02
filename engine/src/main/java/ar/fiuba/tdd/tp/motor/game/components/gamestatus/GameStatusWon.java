@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.motor.game.games.zorktype.gamestatus;
+package ar.fiuba.tdd.tp.motor.game.components.gamestatus;
 
 public class GameStatusWon implements GameStatus {
     @Override
