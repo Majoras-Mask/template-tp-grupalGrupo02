@@ -4,6 +4,7 @@ package ar.fiuba.tdd.tp.motor.games;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.EngineZork;
 import ar.fiuba.tdd.tp.motor.game.games.zorktype.fetch.GameFetch;
 import ar.fiuba.tdd.tp.motor.games.hanoi.EngineHanoi;
+import ar.fiuba.tdd.tp.motor.games.hanoi.GameHanoi;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -42,7 +43,8 @@ public class EngineFactoryConcrete implements EngineFactory {
     }
 
     public Engine createEngineHanoi() {
-        return new EngineHanoi();
+
+        return new EngineHanoi(new GameHanoi(3));
     }
 
 }

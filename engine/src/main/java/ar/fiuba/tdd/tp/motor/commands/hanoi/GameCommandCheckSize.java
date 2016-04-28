@@ -17,8 +17,13 @@ public class GameCommandCheckSize implements GameCommand {
 
     @Override
     public String execute() {
-        int size = this.game.getTopElementFromStack(this.stackIndex);
-        String toReturn = "Size of top from stack " + (this.stackIndex + 1) + " is " + size;
+        String toReturn;
+        if (this.game.isValidIndex(stackIndex) && this.game.getSize(stackIndex) > 0) {
+            int size = this.game.getTopElementFromStack(this.stackIndex);
+            toReturn = "Size of top from stack " + (this.stackIndex + 1) + " is " + size;
+        } else {
+            return "There isn't element in this stack";
+        }
         return toReturn;
     }
 }

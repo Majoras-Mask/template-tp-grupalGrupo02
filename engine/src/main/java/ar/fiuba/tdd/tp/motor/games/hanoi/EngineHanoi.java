@@ -5,18 +5,18 @@ import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainCheckSize;
 import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainHanoiHelper;
 import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainMove;
 import ar.fiuba.tdd.tp.motor.games.Engine;
+import ar.fiuba.tdd.tp.motor.games.Game;
 
 public class EngineHanoi extends Engine {
-    private int defaultHanoiStack = 3;
-
     private GameHanoi gameHanoi;
 
     private static String HELPER_PATTERN = "what can i do with stack";
     private static String CHECKSIZE_PATTERN = "check top stack (\\d)";
     private static String MOVE_PATTERN = "move top stack (\\d) stack (\\d)";
 
-    public EngineHanoi() {
-        this.gameHanoi = new GameHanoi(defaultHanoiStack);
+    public EngineHanoi(GameHanoi gameHanoi) {
+        super(gameHanoi);
+        this.gameHanoi = gameHanoi;
     }
 
     @Override

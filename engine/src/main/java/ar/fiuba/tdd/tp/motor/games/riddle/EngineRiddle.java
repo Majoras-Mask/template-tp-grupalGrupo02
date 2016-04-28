@@ -17,6 +17,7 @@ public class EngineRiddle extends Engine{
     private static String CROSS = "cross (south|north)-shore";
 
     public EngineRiddle(GameRiddle game) {
+        super(game);
         gameRiddle = game;
     }
 
