@@ -27,6 +27,6 @@ public class GameFetch extends ZorkTypeGame {
 
     @Override
     public String welcomeMessage() {
-        return "Welcome to the Fetch Game, here you have to pick the stick in the room to win. Simple as that";
+        return "Welcome to the Fetch Game, here you have to pick the stick in the room to win.";
     }
 }
