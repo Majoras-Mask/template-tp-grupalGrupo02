@@ -7,7 +7,7 @@ public class ServerOutput {
     private static final String PREFIX = "Server> ";
 
     private static void print(String string) {
-        System.out.println(PREFIX + string);
+        System.out.print(PREFIX + string + '\n');
     }
 
     public static void clientConnected(Integer localPort) {
@@ -48,6 +48,10 @@ public class ServerOutput {
 
     public static void help() {
         print("The available commands are 'connect ip:port', 'exit', 'close port' and 'load game'");
+    }
+
+    public static void unreachedPort(Integer port) {
+        print("Could not close port " + port);
     }
 
     public static void threadFinished() {
