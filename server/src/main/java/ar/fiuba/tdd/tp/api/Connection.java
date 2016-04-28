@@ -55,7 +55,8 @@ public class Connection extends Thread {
 
     public void run() {
         try {
-            while (!serverSocket.isClosed() && nonNull(clientSocket = serverSocket.accept())) {
+            while (!serverSocket.isClosed()) {
+                clientSocket = serverSocket.accept();
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
                 getStream(clientSocket);
                 speak();
@@ -63,7 +64,7 @@ public class Connection extends Thread {
                 ServerOutput.clientDisconnected(serverSocket.getLocalPort());
             }
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+
         }
     }
 }
