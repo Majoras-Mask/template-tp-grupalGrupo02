@@ -10,12 +10,14 @@ public class GamePlayer extends GameComponent {
     private ZorkTypeGame game;
     private boolean isPoissoned;
     private ComponentRoom roomWhereIWasPoissoned;
+    private PickCondition pickCondition = new PickConditionAlwaysTrue();
 
     public GamePlayer(ZorkTypeGame game) {
         this.game = game;
         this.isPoissoned = false;
         this.roomWhereIWasPoissoned = null;
     }
+
 
     @Override
     public String getBasicName() {
@@ -27,8 +29,12 @@ public class GamePlayer extends GameComponent {
         return "Im the one";
     }
 
-    public Boolean canPick(GameComponent component) {
-        return true;
+    public void setPickCondition(PickCondition pickCondition) {
+        this.pickCondition = pickCondition;
+    }
+
+    public Boolean canPick() {
+        return pickCondition.canPick(game);
     }
 
     public void setPoisson() {

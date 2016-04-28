@@ -136,7 +136,7 @@ public abstract class ZorkTypeGame implements Game {
         if (component == null) {
             return "There is no such thing to pick.";
         }
-        if (gamePlayer.canPick(component) && component.pick(this)) {
+        if (gamePlayer.canPick() && component.pick(this)) {
             return "You picked " + component.getDescription() + ".";
         } else {
             return "Can't pick " + component.getDescription() + ".";

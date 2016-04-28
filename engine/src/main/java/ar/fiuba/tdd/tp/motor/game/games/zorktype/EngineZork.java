@@ -19,6 +19,7 @@ public class EngineZork extends Engine {
 
 
     public EngineZork(ZorkTypeGame game) {
+        super(game);
         this.gameZork = game;
     }
 
