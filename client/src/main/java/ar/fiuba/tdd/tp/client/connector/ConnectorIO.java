@@ -4,24 +4,17 @@ import ar.fiuba.tdd.tp.api.Request;
 import ar.fiuba.tdd.tp.api.Response;
 import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.io.*;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
 public class ConnectorIO {
 
-    private final ObjectOutputStream outputStream;
-    private final ObjectInputStream inputStream;
+    private final ObjectOutput outputStream;
+    private final ObjectInput inputStream;
 
-    public ConnectorIO(Socket socket) throws IOException {
-        this(new ObjectOutputStream(socket.getOutputStream()), new ObjectInputStream(socket.getInputStream()));
-    }
-
-    public ConnectorIO(ObjectOutputStream outputStream, ObjectInputStream inputStream) {
+    public ConnectorIO(ObjectOutput outputStream, ObjectInput inputStream) {
         this.outputStream = requireNonNull(outputStream, "OutputStream can't be null!");
         this.inputStream = requireNonNull(inputStream, "InputStream can't be null!");
     }

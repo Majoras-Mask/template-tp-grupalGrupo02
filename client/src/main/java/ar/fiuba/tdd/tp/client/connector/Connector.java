@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.api.Response;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class Connector {
@@ -28,7 +28,10 @@ public class Connector {
 
     private ConnectorIO getNewIO() throws IOException {
         try {
-            return new ConnectorIO(this.socket);
+            final ObjectOutput output = new ObjectOutputStream(socket.getOutputStream());
+            final ObjectInput input = new ObjectInputStream(socket.getInputStream());
+
+            return new ConnectorIO(output, input);
         } catch (IOException e) {
             this.socket.close();
             throw new IllegalStateException();
