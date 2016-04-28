@@ -55,27 +55,27 @@ public class EngineFactoryConcrete implements EngineFactory {
         return null;
     }
 
-    private Engine createGameFetch() {
+    public Engine createGameFetch() {
         return new EngineZork(new GameFetch());
     }
 
-    private Engine createEngineHanoi() {
+    public Engine createEngineHanoi() {
         return new EngineHanoi(new GameHanoi(this.defaultHanoiStacks));
     }
 
-    private Engine createEngineRiddle() {
+    public Engine createEngineRiddle() {
         return new EngineRiddle(new GameRiddle());
     }
 
-    private Engine createEngineOpenDoor() {
+    public Engine createEngineOpenDoor() {
         return new EngineZork(new GameOpenDoor());
     }
 
-    private Engine createEngineOpenDoorTwo() {
+    public Engine createEngineOpenDoorTwo() {
         return new EngineZork(new GameOpenDoorTwo());
     }
 
-    private Engine createEngineCursedObject() {
+    public Engine createEngineCursedObject() {
         return new EngineZork(new GameCursedObject());
     }
 }
