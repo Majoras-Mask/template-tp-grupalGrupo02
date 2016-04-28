@@ -49,4 +49,8 @@ public class ServerOutput {
     public static void help() {
         print("The available commands are 'connect ip:port', 'exit', 'close port' and 'load game'");
     }
+
+    public static void threadFinished() {
+        print("Thread finished");
+    }
 }

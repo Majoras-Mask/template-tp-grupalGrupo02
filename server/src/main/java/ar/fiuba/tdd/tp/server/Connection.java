@@ -67,7 +67,7 @@ public class Connection extends Thread {
                 ServerOutput.clientDisconnected(serverSocket.getLocalPort());
             }
         } catch (ClassNotFoundException | IOException e) {
-
+            ServerOutput.threadFinished();
         }
     }
 }
