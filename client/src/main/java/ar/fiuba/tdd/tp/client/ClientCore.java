@@ -40,9 +40,9 @@ public class ClientCore {
 
     public ClientResponse connect(ConnectorSettings settings) {
         if (!this.isConnected()) {
-            this.connected = Boolean.TRUE;
             this.connector = createConnector(settings);
-            Response response = this.connector.receive();
+            final Response response = this.connector.receive();
+            this.connected = Boolean.TRUE;
             return new ClientResponse(CONNECTION_SUCCESSFUL + response.getSomething());
         }
         throw new ClientException(ANOTHER_OPEN_CONNECTION);
