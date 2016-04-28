@@ -30,7 +30,6 @@ public class HelpHandlerTest {
     @Test
     public void shouldNotMatch() {
         Assert.assertFalse(this.handler.match(newRequest("hepl game")));
-        Assert.assertFalse(this.handler.match(newRequest("help")));
     }
 
     private ClientRequest newRequest(String input) {
