@@ -81,14 +81,15 @@ public class ClientCore {
         try {
             final Socket socket = createSocket(settings);
             return new Connector(socket, createIO(socket));
-        } catch (IOException e)  {
+        } catch (Exception e)  {
             throw new ConnectorException(OPEN_ERROR);
         }
     }
 
     private Socket createSocket(ConnectorSettings settings) throws IOException {
         final Socket socket = new Socket();
-        socket.connect(new InetSocketAddress(settings.getHost(), settings.getPort()), 2000);
+        socket.connect(new InetSocketAddress(settings.getHost(), settings.getPort()), settings.getConnectionTimeout());
+        socket.setSoTimeout(settings.getReadTimeout());
 
         return socket;
     }
