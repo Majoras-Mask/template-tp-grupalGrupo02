@@ -48,6 +48,8 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
             component.addedToRoom(game);
             removeComponent(component.getDescription());
         }
+        //TODO agregar que es lo que se tira y avisar si ya estaba abierto
+        setResponse("You picked " + getDescription() + "up.");
         return true;
     }
 
@@ -59,6 +61,8 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
                 addComponent(component);
             }
         }
+        //TODO avisar si ya estaba cerrado
+        setResponse("You closed " + getDescription() + ".");
         return true;
     }
 

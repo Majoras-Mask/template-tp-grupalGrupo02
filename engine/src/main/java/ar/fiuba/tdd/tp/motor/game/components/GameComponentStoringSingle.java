@@ -31,8 +31,12 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
         this.componentIHad = this.componentIHave;
         if (this.componentIHave != null) {
             componentIHave.addedToRoom(game);
+            String descriptionOfComponent = componentIHave.getDescription();
             removeComponent();
+            setResponse("You opened " + getDescription() + ". There is a " + descriptionOfComponent + ".");
+            return true;
         }
+        setResponse("You opened " + getDescription() + ".");
         return true;
     }
 
@@ -43,6 +47,7 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
             setComponent(this.componentIHad);
             this.componentIHad = null;
         }
+        setResponse("You closed " + getDescription() + ".");
         return true;
     }
 
