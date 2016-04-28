@@ -17,4 +17,9 @@ public class Request implements Serializable {
     public void setSomething(String something) {
         this.something = something;
     }
+
+    public boolean isExit() {
+        return "exit game".equals(something);
+    }
+
 }

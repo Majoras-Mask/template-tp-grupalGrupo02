@@ -49,10 +49,19 @@ public class ClientCore {
     }
 
     public ClientResponse sendAndReceive(ClientRequest request) {
+
         if (this.isConnected()) {
+
             this.connector.send(new Request(request.getInput()));
-            return new ClientResponse(this.connector.receive().getSomething());
+            final Response response = this.connector.receive();
+
+            if (response.isExit()) {
+                this.stopConnector();
+            }
+
+            return new ClientResponse(response.getSomething());
         }
+
         throw new ClientException(OPEN_CONNECTION_FIRST);
     }
 
