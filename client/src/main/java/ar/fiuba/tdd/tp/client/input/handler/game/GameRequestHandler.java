@@ -11,7 +11,6 @@ import java.util.Optional;
 public class GameRequestHandler extends AbstractRequestHandler {
 
     private static final String ANYTHING = ".*";
-    private static final String EXIT = "exit";
 
     public GameRequestHandler(ClientCore core) {
         super(core, new ArrayList<String>() { {
@@ -21,11 +20,7 @@ public class GameRequestHandler extends AbstractRequestHandler {
     }
 
     public Optional<ClientResponse> handle(ClientRequest request) {
-        ClientResponse response = this.core.sendAndReceive(request);
-        if (isFinish(response)) {
-            this.core.stopConnector();
-        }
-        return Optional.of(response);
+        return Optional.of(this.core.sendAndReceive(request));
     }
 
     @Override
@@ -33,7 +28,4 @@ public class GameRequestHandler extends AbstractRequestHandler {
         return this.match(request);
     }
 
-    private Boolean isFinish(ClientResponse response) {
-        return response.getEvent().equals(EXIT);
-    }
 }

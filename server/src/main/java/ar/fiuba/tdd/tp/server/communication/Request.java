@@ -19,6 +19,7 @@ public class Request implements Serializable {
     }
 
     public boolean isExit() {
-        return something.equals("exit game");
+        return "exit game".equals(something);
     }
+
 }
