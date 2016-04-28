@@ -17,4 +17,8 @@ public class Response implements Serializable {
     public void setSomething(String something) {
         this.something = something;
     }
+
+    public Boolean isExit() {
+        return "exit".equals(this.something);
+    }
 }
