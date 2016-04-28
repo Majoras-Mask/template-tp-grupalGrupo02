@@ -32,6 +32,6 @@ public class GameOpenDoorTwo extends ZorkTypeGame {
 
     @Override
     public String welcomeMessage() {
-        return "Welcome to the sequel of Open Door.\\n Your mission is to open the door to win this game.";
+        return "Welcome to the sequel of Open Door.\n Your mission is to open the door to win this game.";
     }
 }

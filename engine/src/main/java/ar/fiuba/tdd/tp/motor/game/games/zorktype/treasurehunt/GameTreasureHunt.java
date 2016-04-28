@@ -86,7 +86,7 @@ public class GameTreasureHunt extends ZorkTypeGame {
 
     @Override
     public String welcomeMessage() {
-        return "La busqueda del tesoro perdido";
+        return "Welcome to the Treasure Quest.\n Your mission, should you accept it, is to find the hidden treasure.";
     }
 
     @Override

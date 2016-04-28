@@ -123,7 +123,7 @@ public class GameRiddle implements Game {
     }
 
     public String welcomeMessage() {
-        return "Welcome to the Wolf, Sheep and Cabbage riddle.\\n"
+        return "Welcome to the Wolf, Sheep and Cabbage riddle.\n"
                 + "Your goal is to bring the wolf, the sheep, and the head of cabbage to the other side of the river in the man's boat.";
     }
 
@@ -134,6 +134,6 @@ public class GameRiddle implements Game {
 
     @Override
     public String help() {
-        return "GAME COMMANDS\\n take wolf/sheep/cabbage, leave wolf/sheep/cabbage, cross north-shore/south-shore";
+        return "GAME COMMANDS\n take wolf/sheep/cabbage, leave wolf/sheep/cabbage, cross north-shore/south-shore";
     }
 }

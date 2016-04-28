@@ -175,6 +175,6 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public String help() {
-        return "GAME COMMANDS:\\n open X, close X, look around, consume X, store X in Y, what can i do with X, talk X, pick X";
+        return "GAME COMMANDS:\n open X, close X, look around, consume X, store X in Y, what can i do with X, talk X, pick X";
     }
 }

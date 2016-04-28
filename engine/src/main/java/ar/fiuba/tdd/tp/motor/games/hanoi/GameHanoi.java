@@ -80,8 +80,8 @@ public class GameHanoi implements Game {
 
     public String welcomeMessage() {
         //TODO mejorar descripción
-        return "Welcome to the Hanoi game.\\n"
-                + "The oject of this game is to move all the disks over to Tower 3.\\n"
+        return "Welcome to the Hanoi game.\n"
+                + "The object of this game is to move all the disks over to Tower 3.\n"
                 + "But you cannot place a larger disk onto a smaller disk.";
     }
 }
