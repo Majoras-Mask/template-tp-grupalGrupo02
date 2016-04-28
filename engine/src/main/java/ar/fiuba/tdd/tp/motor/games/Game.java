@@ -4,4 +4,6 @@ public interface Game {
     boolean checkIfGameIsFinished();
 
     String finishedMessage();
+
+    String help();
 }

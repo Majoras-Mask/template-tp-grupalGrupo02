@@ -131,4 +131,9 @@ public class GameRiddle implements Game {
     public String finishedMessage() {
         return "You win the game.";
     }
+
+    @Override
+    public String help() {
+        return "GAME COMMANDS\\n take wolf/sheep/cabbage, leave wolf/sheep/cabbage, cross north-shore/south-shore";
+    }
 }

@@ -73,6 +73,11 @@ public class GameHanoi implements Game {
         return "You win the game.";
     }
 
+    @Override
+    public String help() {
+        return null;
+    }
+
     public String welcomeMessage() {
         //TODO mejorar descripción
         return "Welcome to the Hanoi game.\\n"

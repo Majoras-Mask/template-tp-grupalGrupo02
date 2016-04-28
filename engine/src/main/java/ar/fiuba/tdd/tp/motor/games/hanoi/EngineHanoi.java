@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.motor.games.hanoi;
 
 import ar.fiuba.tdd.tp.motor.chains.ChainCommandCreator;
 import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainCheckSize;
+import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainHanoiHelp;
 import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainHanoiHelper;
 import ar.fiuba.tdd.tp.motor.chains.hanoi.ChainMove;
 import ar.fiuba.tdd.tp.motor.games.Engine;
@@ -13,6 +14,7 @@ public class EngineHanoi extends Engine {
     private static String HELPER_PATTERN = "what can i do with stack";
     private static String CHECKSIZE_PATTERN = "check top stack (\\d)";
     private static String MOVE_PATTERN = "move top stack (\\d) stack (\\d)";
+    private static String HELP_PATTERN = "help";
 
     public EngineHanoi(GameHanoi gameHanoi) {
         super(gameHanoi);
@@ -21,12 +23,14 @@ public class EngineHanoi extends Engine {
 
     @Override
     protected ChainCommandCreator createChain() {
-        ChainCommandCreator helper = new ChainHanoiHelper(gameHanoi, HELPER_PATTERN);
-        ChainCommandCreator checkSize = new ChainCheckSize(gameHanoi, CHECKSIZE_PATTERN);
-        ChainCommandCreator move = new ChainMove(gameHanoi, MOVE_PATTERN);
+        final ChainCommandCreator helper = new ChainHanoiHelper(gameHanoi, HELPER_PATTERN);
+        final ChainCommandCreator checkSize = new ChainCheckSize(gameHanoi, CHECKSIZE_PATTERN);
+        final ChainCommandCreator move = new ChainMove(gameHanoi, MOVE_PATTERN);
+        final ChainCommandCreator help = new ChainHanoiHelp(gameHanoi,HELP_PATTERN);
 
         helper.setNextChain(checkSize);
         checkSize.setNextChain(move);
+        move.setNextChain(help);
 
         return helper;
     }
