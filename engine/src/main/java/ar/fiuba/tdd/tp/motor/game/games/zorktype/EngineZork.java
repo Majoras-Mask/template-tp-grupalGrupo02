@@ -9,13 +9,13 @@ public class EngineZork extends Engine {
     private ZorkTypeGame gameZork;
 
     private static String LOOKAROUND_PATTERN = "look around";
-    private static String PICK_PATTERN = "pick";
-    private static String OPEN_PATTERN = "open";
-    private static String CLOSE_PATTERN = "close";
-    private static String TALK_PATTERN = "talk";
+    private static String PICK_PATTERN = "pick (.*)";
+    private static String OPEN_PATTERN = "open (.*)";
+    private static String CLOSE_PATTERN = "close (.*)";
+    private static String TALK_PATTERN = "talk (.*)";
     private static String WHATCANIDO_PATTERN = "what can i do with";
     private static String STOREITEM_PATTERN = "store (.*) in (.*)";
-    private static String CONSUME_PATTERN = "consume";
+    private static String CONSUME_PATTERN = "consume (.*)";
     private static String HELP_PATTERN = "help";
 
 

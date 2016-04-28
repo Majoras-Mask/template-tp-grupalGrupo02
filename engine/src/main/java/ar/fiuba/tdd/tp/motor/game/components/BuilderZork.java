@@ -41,10 +41,16 @@ public class BuilderZork {
     }
 
     public ComponentDoor createCursedDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
-        return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, true));
+        if (key == null) {
+            return createDoorWithOpenCondition(roomFrom, toRoom, null);
+        }
+        return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, false));
     }
 
     public ComponentDoor createNormalDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
+        if (key == null) {
+            return createDoorWithOpenCondition(roomFrom, toRoom, null);
+        }
         return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, true));
     }
 

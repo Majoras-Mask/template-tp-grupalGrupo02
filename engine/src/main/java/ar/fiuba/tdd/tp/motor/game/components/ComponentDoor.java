@@ -41,7 +41,7 @@ public class ComponentDoor extends GameComponent {
     }
 
     public Boolean isThisDoorUnlocked() {
-        return !this.locked;
+        return (openCondition == null || !this.locked);
     }
 
     private String goToRoomResponse() {

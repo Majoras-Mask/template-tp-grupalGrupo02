@@ -15,6 +15,7 @@ public class ComponentAntidote extends GameComponentPickable {
     @Override
     public Boolean consume(ZorkTypeGame game) {
         game.getGamePlayer().setAntidote();
+        game.getPlayerItems().remove(this);
         setResponse("You consumed the " + getDescription() + ". You are no longer poisoned.");
         return true;
     }

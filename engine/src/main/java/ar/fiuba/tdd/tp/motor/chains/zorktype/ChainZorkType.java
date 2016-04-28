@@ -13,6 +13,6 @@ public abstract class ChainZorkType extends ChainCommandCreator {
     }
 
     public String getWhoToDoActionWith(String message) {
-        return UtilityParser.getGroup(this.getPatternString() + " (.*)", message, 1);
+        return UtilityParser.getGroup(this.getPatternString(), message, 1);
     }
 }
