@@ -17,7 +17,7 @@ public abstract class GameComponentPickable extends GameComponent {
     public Boolean pick(ZorkTypeGame game) {
         game.addPlayerItem(this);
         game.removeItemFromRoom(this);
-        setResponse("You picked " + getDescription() + "up.");
+        setResponse("You picked " + getDescription() + " up.");
         return true;
     }
 

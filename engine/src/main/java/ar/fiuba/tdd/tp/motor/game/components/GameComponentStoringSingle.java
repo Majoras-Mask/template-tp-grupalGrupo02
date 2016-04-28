@@ -8,6 +8,7 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
 
     public void setComponent(GameComponent component) {
         this.componentIHave = component;
+        this.componentIHad = this.componentIHave;
     }
 
     public boolean hasComponent(String id) {
@@ -28,8 +29,8 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
 
     @Override
     public Boolean open(ZorkTypeGame game) {
-        this.componentIHad = this.componentIHave;
         if (this.componentIHave != null) {
+            this.componentIHad = this.componentIHave;
             componentIHave.addedToRoom(game);
             String descriptionOfComponent = componentIHave.getDescription();
             removeComponent();
