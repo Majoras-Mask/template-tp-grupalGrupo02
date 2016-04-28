@@ -3,12 +3,11 @@ package ar.fiuba.tdd.tp.api;
 import ar.fiuba.tdd.tp.motor.games.EngineFactoryConcrete;
 import ar.fiuba.tdd.tp.server.utils.Command;
 
-import java.io.*;
-
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class Server {
     interface Process {
@@ -18,8 +17,8 @@ public class Server {
     private ServerInput serverInput;
     private Map<Integer,Connection> connections;
     private Map<Command,Process> commands;
-    private static final int BASE_PORT = 8000;
-    private static final int END_PORT = 8100;
+    private static final int FIRST_PORT = 8000;
+    private static final int LAST_PORT = 8100;
 
     public Server() throws UnsupportedEncodingException {
         connections = new HashMap<>();
@@ -40,9 +39,9 @@ public class Server {
         commands.get(Command.EXIT).exec();
     }
 
-    private int getFreePort() {
-        Integer port = BASE_PORT;
-        while (connections.containsKey(port) && port < END_PORT) {
+    private Integer getFreePort() {
+        Integer port = FIRST_PORT;
+        while (connections.containsKey(port) && port < LAST_PORT) {
             port++;
         }
         return port;
@@ -50,8 +49,8 @@ public class Server {
 
     private void loadGame() {
         Integer port = getFreePort();
-        if (port == END_PORT) {
-            ServerOutput.noPortsAvailable(BASE_PORT, END_PORT);
+        if (port == LAST_PORT) {
+            ServerOutput.noPortsAvailable();
             return;
         }
         Connection connection;
@@ -65,15 +64,16 @@ public class Server {
         }
     }
 
-    private void exit() {
-
-    }
-
     private void closeConnections() {
         connections.forEach((port,connection)->connection.closeConnection());
     }
 
     private void closeConnection() {
-
+        Integer port = serverInput.getPort();
+        if (port >= FIRST_PORT && port <= LAST_PORT && connections.containsKey(port)) {
+            connections.get(port).closeConnection();
+        }
+        connections.remove(port);
+        ServerOutput.closedPort(port);
     }
 }
