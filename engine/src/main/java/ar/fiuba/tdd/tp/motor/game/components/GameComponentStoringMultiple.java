@@ -43,16 +43,16 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
 
     @Override
     public Boolean open(ZorkTypeGame game) {
-        this.itemsIhad = new LinkedList<>(getListOfComponents());
         StringBuffer itemsDropped = new StringBuffer();
-        for (GameComponent component: this.itemsIhad) {
+        for (GameComponent component: this.components) {
             component.addedToRoom(game);
-            itemsDropped.append("; " + component.getDescription());
+            this.itemsIhad.add(component);
+            itemsDropped.append("; dropped " + component.getDescription());
         }
 
         this.components.clear();
         //TODO agregar que es lo que se tira y avisar si ya estaba abierto
-        setResponse("You opened " + getDescription() + "." + itemsDropped.toString() + "dropped.");
+        setResponse("You opened " + getDescription() + "." + itemsDropped.toString() + ".");
         return true;
     }
 
