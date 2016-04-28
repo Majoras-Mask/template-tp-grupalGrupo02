@@ -2,18 +2,18 @@ package ar.fiuba.tdd.tp.client.connector.config;
 
 public class ConnectorSettings {
 
-    private static final Long READ_TIMEOUT = 10000L;
-    private static final Long CONNECTION_TIMEOUT = 50000L;
+    private static final int READ_TIMEOUT = 2000;
+    private static final int CONNECTION_TIMEOUT = 3000;
 
     private String host;
-    private Integer port;
-    private Long readTimeout;
-    private Long connectionTimeout;
+    private int port;
+    private int readTimeout;
+    private int connectionTimeout;
 
     public ConnectorSettings() {
     }
 
-    public ConnectorSettings(String host, Integer port, Long readTimeout, Long connectionTimeout) {
+    public ConnectorSettings(String host, Integer port, int readTimeout, int connectionTimeout) {
         this.host = host;
         this.port = port;
         this.readTimeout = readTimeout;
@@ -40,19 +40,19 @@ public class ConnectorSettings {
         this.port = port;
     }
 
-    public Long getReadTimeout() {
+    public int getReadTimeout() {
         return readTimeout;
     }
 
-    public void setReadTimeout(Long readTimeout) {
+    public void setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
     }
 
-    public Long getConnectionTimeout() {
+    public int getConnectionTimeout() {
         return connectionTimeout;
     }
 
-    public void setConnectionTimeout(Long connectionTimeout) {
+    public void setConnectionTimeout(int connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
     }
 

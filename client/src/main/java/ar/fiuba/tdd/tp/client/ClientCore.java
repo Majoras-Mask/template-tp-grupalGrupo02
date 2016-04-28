@@ -11,6 +11,7 @@ import ar.fiuba.tdd.tp.server.communication.Request;
 import ar.fiuba.tdd.tp.server.communication.Response;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import static ar.fiuba.tdd.tp.client.utils.Constants.*;
@@ -80,13 +81,17 @@ public class ClientCore {
         try {
             final Socket socket = createSocket(settings);
             return new Connector(socket, createIO(socket));
-        } catch (IOException e) {
+        } catch (Exception e)  {
             throw new ConnectorException(OPEN_ERROR);
         }
     }
 
     private Socket createSocket(ConnectorSettings settings) throws IOException {
-        return new Socket(settings.getHost(), settings.getPort());
+        final Socket socket = new Socket();
+        socket.connect(new InetSocketAddress(settings.getHost(), settings.getPort()), settings.getConnectionTimeout());
+        socket.setSoTimeout(settings.getReadTimeout());
+
+        return socket;
     }
 
     private ConnectorIO createIO(Socket socket) throws IOException {
