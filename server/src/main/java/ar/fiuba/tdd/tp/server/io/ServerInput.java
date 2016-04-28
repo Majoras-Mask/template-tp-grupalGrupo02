@@ -20,6 +20,7 @@ public class ServerInput {
         commands.put("load game", Command.LOAD);
         commands.put("close port", Command.CLOSE);
         commands.put("exit", Command.EXIT);
+        commands.put("help", Command.HELP);
     }
 
     public ServerInput() throws UnsupportedEncodingException {

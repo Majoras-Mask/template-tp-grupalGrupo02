@@ -30,6 +30,7 @@ public class Server {
         commands.put(Command.EXIT, this::closeConnections);
         commands.put(Command.NONE, ServerOutput::unknownCommand);
         commands.put(Command.CLOSE, this::closeConnection);
+        commands.put(Command.HELP, ServerOutput::help);
     }
 
     public void run() {

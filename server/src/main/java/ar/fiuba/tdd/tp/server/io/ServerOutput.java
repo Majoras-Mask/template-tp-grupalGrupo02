@@ -31,7 +31,7 @@ public class ServerOutput {
     }
 
     public static void unknownCommand() {
-        print("Unknown command, try with 'close' 'exit' or 'connect'");
+        print("Unknown command, try with 'help'");
     }
 
     public static void unopenedConnection(Integer port) {
@@ -44,5 +44,9 @@ public class ServerOutput {
 
     public static void closedPort(Integer port) {
         print("The port " + port + " is now closed");
+    }
+
+    public static void help() {
+        print("The available commands are 'connect ip:port', 'exit', 'close port' and 'load game'");
     }
 }
