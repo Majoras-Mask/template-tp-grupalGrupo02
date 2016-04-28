@@ -74,8 +74,11 @@ public class Server {
         Integer port = serverInput.getPort();
         if (port >= FIRST_PORT && port <= LAST_PORT && connections.containsKey(port)) {
             connections.get(port).closeConnection();
+            connections.remove(port);
+            ServerOutput.closedPort(port);
+        } else {
+            ServerOutput.unreachedPort(port);
         }
-        connections.remove(port);
-        ServerOutput.closedPort(port);
+
     }
 }
