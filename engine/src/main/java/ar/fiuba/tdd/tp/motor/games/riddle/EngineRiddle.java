@@ -43,7 +43,7 @@ public class EngineRiddle extends Engine{
     }
 
     @Override
-    public String getWelcoming() {
+    public String getWelcomeMessage() {
         return this.gameRiddle.welcomeMessage();
     }
 }

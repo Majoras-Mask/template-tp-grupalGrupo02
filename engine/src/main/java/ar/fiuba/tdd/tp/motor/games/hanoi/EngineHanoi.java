@@ -36,7 +36,7 @@ public class EngineHanoi extends Engine {
     }
 
     @Override
-    public String getWelcoming() {
+    public String getWelcomeMessage() {
         return this.gameHanoi.welcomeMessage();
     }
 }

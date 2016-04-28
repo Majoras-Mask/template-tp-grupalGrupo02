@@ -40,5 +40,5 @@ public abstract class Engine {
 
     protected abstract ChainCommandCreator createChain();
 
-    public abstract String getWelcoming();
+    public abstract String getWelcomeMessage();
 }
