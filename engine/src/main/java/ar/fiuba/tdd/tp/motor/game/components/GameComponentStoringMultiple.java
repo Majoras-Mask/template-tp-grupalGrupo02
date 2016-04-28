@@ -70,6 +70,7 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
     @Override
     public boolean store(GameComponent component) {
         addComponent(component);
+        setResponse("Stored " + component.getDescription() + "in " + getDescription() + ".");
         return true;
     }
 }
