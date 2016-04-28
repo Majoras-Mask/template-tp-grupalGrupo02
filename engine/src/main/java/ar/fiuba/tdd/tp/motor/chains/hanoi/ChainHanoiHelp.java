@@ -12,7 +12,6 @@ public class ChainHanoiHelp extends ChainHanoi {
 
     @Override
     protected GameCommand factoryCommand(String message) {
-        //TODO mejorar esto
-        return new GameCommandHelper("GAME COMMANDS\n check X, move X");
+        return new GameCommandHelper("GAME COMMANDS\n What can i do with stack X, check top stack X, move top stack X stack Y");
     }
 }
