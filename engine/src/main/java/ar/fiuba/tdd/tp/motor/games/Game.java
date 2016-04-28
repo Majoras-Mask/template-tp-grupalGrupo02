@@ -1,5 +1,5 @@
 package ar.fiuba.tdd.tp.motor.games;
 
-public abstract class Game {
-
+public interface Game {
+    boolean checkIfGameIsFinished();
 }
