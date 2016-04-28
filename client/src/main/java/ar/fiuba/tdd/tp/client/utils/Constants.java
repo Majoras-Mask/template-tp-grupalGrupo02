@@ -17,4 +17,6 @@ public class Constants {
     public static final String ANOTHER_OPEN_CONNECTION = "Another connection is open!!";
 
     public static final String OPEN_CONNECTION_FIRST = "Open a connection first!";
+
+    public static final String OPEN_ERROR = "Can't open connection!";
 }
