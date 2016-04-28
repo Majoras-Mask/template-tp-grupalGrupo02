@@ -43,6 +43,7 @@ public class Connection extends Thread {
     }
 
     private void speak() throws IOException, ClassNotFoundException {
+        welcome();
         boolean exit = false;
         while (!exit && nonNull(request = (Request) inputStream.readObject())) {
             if (request.isExit()) {
@@ -54,6 +55,12 @@ public class Connection extends Thread {
             outputStream.writeObject(response);
             outputStream.flush();
         }
+    }
+
+    private void welcome() {
+        response = new Response(engine.getWelcomeMessage());
+        outputStream.writeObject(response);
+        outputStream.flush();
     }
 
     public void run() {
