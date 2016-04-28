@@ -35,7 +35,7 @@ public class Client {
 
     public void run() {
         this.core.start();
-        this.callConsumer(WELCOME);
+        this.callConsumer(new ClientResponse(WELCOME));
         this.doRun();
     }
 

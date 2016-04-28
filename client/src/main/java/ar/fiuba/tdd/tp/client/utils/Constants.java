@@ -6,7 +6,7 @@ public class Constants {
 
     public static final ClientResponse CLOSE_SUCCESSFUL = new ClientResponse("CYA!");
 
-    public static final ClientResponse WELCOME = new ClientResponse("Welcome!!");
+    public static final String WELCOME = "Welcome to the client!!";
 
     public static final String PROCESS_COMMAND_ERROR = "Something bad occurred with your command: ";
 
@@ -17,4 +17,6 @@ public class Constants {
     public static final String ANOTHER_OPEN_CONNECTION = "Another connection is open!!";
 
     public static final String OPEN_CONNECTION_FIRST = "Open a connection first!";
+
+    public static final String OPEN_ERROR = "Can't open connection!";
 }
