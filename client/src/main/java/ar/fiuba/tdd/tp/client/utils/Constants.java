@@ -10,7 +10,7 @@ public class Constants {
 
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
-    public static final String CONNECTION_SUCCESSFUL = "Connected!";
+    public static final String CONNECTION_SUCCESSFUL = "Connected! \n";
 
     public static final String ANOTHER_OPEN_CONNECTION = "Another connection is open!!";
 
