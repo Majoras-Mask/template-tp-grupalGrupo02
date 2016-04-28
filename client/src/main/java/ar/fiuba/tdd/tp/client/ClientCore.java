@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.client;
 
 import ar.fiuba.tdd.tp.api.Request;
+import ar.fiuba.tdd.tp.api.Response;
 import ar.fiuba.tdd.tp.client.connector.Connector;
 import ar.fiuba.tdd.tp.client.connector.ConnectorIO;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
@@ -41,7 +42,8 @@ public class ClientCore {
         if (!this.isConnected()) {
             this.connected = Boolean.TRUE;
             this.connector = createConnector(settings);
-            return new ClientResponse(CONNECTION_SUCCESSFUL);
+            Response response = this.connector.receive();
+            return new ClientResponse(CONNECTION_SUCCESSFUL + response.getSomething());
         }
         throw new ClientException(ANOTHER_OPEN_CONNECTION);
     }
