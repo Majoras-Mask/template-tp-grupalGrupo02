@@ -1,15 +1,12 @@
 package ar.fiuba.tdd.tp.api;
 
-import ar.fiuba.tdd.tp.api.Connection;
-import ar.fiuba.tdd.tp.api.ServerProtocol;
+import ar.fiuba.tdd.tp.motor.games.EngineFactoryConcrete;
 
 import java.io.*;
 
 import java.net.ServerSocket;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.zip.ZipEntry;
 
 
 public class Server {
@@ -52,7 +49,7 @@ public class Server {
 
     private void loadGame() throws IOException {
         Integer port = getFreePort();
-        Connection connection = new Connection(new ServerSocket(port));
+        Connection connection = new Connection(new ServerSocket(port), EngineFactoryConcrete.getInstance().createEngineHanoi());
         connection.start();
         connections.put(port, connection);
     }
