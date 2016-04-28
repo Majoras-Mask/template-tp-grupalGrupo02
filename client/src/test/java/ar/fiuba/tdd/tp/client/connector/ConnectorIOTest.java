@@ -12,8 +12,8 @@ import static org.mockito.Mockito.verify;
 
 public class ConnectorIOTest {
 
-    private final static ObjectOutput OUTPUT_STREAM = Mockito.mock(ObjectOutput.class);
-    private final static ObjectInput INPUT_STREAM = Mockito.mock(ObjectInput.class);
+    private static final ObjectOutput OUTPUT_STREAM = Mockito.mock(ObjectOutput.class);
+    private static final ObjectInput INPUT_STREAM = Mockito.mock(ObjectInput.class);
     private ConnectorIO connectorIO;
 
     @Before
