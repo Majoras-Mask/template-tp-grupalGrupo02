@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp.motor.games;
 
+import java.util.Optional;
+
 public interface EngineFactory {
-    Engine createEngineHanoi();
+    public Engine createGame(String name);
 }

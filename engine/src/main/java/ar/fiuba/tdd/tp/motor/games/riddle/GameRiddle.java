@@ -123,7 +123,8 @@ public class GameRiddle implements Game {
     }
 
     public String welcomeMessage() {
-        return "Welcome to the Fox, Lamb and Cabbage riddle\n Here you need to cross these 3 to the other side...";
+        return "Welcome to the Wolf, Sheep and Cabbage riddle.\\n"
+                + "Your goal is to bring the wolf, the sheep, and the head of cabbage to the other side of the river in the man's boat.";
     }
 
     @Override

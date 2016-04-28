@@ -6,15 +6,14 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
 
 public class GameCursedObjectTest extends ZorkTypeGameTest {
-/*
     @Test
     public void winningGameTest() {
         setup(new GameCursedObject());
-        System.out.println(getResponseFromAction("pick key0"));
-        System.out.println(getResponseFromAction("open door0"));
-        System.out.println(getResponseFromAction("talk thief0"));
-        System.out.println(getResponseFromAction("look around"));
+        getResponseFromAction("pick key0");
+        getResponseFromAction("open door0");
+        getResponseFromAction("talk thief0");
+        getResponseFromAction("look around");
+        getResponseFromAction("open door0");
         assertTrue(this.game.checkIfGameIsFinished());
     }
-*/
 }

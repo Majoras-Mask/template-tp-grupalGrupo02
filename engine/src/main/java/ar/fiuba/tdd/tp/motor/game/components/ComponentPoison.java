@@ -5,15 +5,15 @@ import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
 /**
  * Created by kevin on 27/04/16.
  */
-public class ComponentPoisson extends GameComponent {
+public class ComponentPoison extends GameComponent {
     @Override
     public String getBasicName() {
-        return "Poisson";
+        return "Poison";
     }
 
     @Override
     public String whatCanIDo() {
-        return "I pollute people";
+        return "I pollute people.";
     }
 
     @Override
