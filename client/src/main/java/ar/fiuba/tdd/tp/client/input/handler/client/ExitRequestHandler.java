@@ -20,7 +20,7 @@ public class ExitRequestHandler extends AbstractClientRequestHandler {
 
     public Optional<ClientResponse> handle(ClientRequest request) {
         this.core.stop();
-        return Optional.of(CLOSE_SUCCESSFUL);
+        return Optional.of(new ClientResponse(CLOSE_SUCCESSFUL));
     }
 
 }

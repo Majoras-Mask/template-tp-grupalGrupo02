@@ -1,10 +1,8 @@
 package ar.fiuba.tdd.tp.client.utils;
 
-import ar.fiuba.tdd.tp.client.output.ClientResponse;
-
 public class Constants {
 
-    public static final ClientResponse CLOSE_SUCCESSFUL = new ClientResponse("CYA!");
+    public static final String CLOSE_SUCCESSFUL = "CYA!";
 
     public static final String WELCOME = "Welcome to the client!!";
 
@@ -19,4 +17,6 @@ public class Constants {
     public static final String OPEN_CONNECTION_FIRST = "Open a connection first!";
 
     public static final String OPEN_ERROR = "Can't open connection!";
+
+    public static final String HELP = "Client commands: \n -help\n -connect host:port\n -exit\n";
 }
