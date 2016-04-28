@@ -65,7 +65,7 @@ public class EngineZork extends Engine {
     }
 
     @Override
-    protected String getWelcoming() {
+    public String getWelcoming() {
         return this.gameZork.welcomeMessage();
     }
 }
