@@ -12,7 +12,7 @@ public class GameOpenDoorTest extends ZorkTypeGameTest {
     @Test
     public void cantGoThroughLockedDoor() {
         setup(new GameOpenDoor());
-        assertEquals(getResponseFromAction("open door0"),"Can't open door0.");
+        assertEquals(getResponseFromAction("open door0"),"It's locked.");
     }
 
     @Test

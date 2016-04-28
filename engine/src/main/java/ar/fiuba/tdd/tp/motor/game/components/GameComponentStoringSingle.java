@@ -55,8 +55,10 @@ public abstract class GameComponentStoringSingle extends GameComponentStoring {
     public boolean store(GameComponent component) {
         if (this.componentIHave == null) {
             this.componentIHave = component;
+            setResponse("Stored " + component.getDescription() + "in " + getDescription() + ".");
             return true;
         }
+        setResponse("It's full, can't store any more items.");
         return false;
     }
 }
