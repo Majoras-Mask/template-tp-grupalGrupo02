@@ -43,7 +43,7 @@ public class ServerOutputTest {
     public void welcomeMessageTest() {
         ServerOutput.welcomeMessage();
 
-        assertEquals("Server> Welcome to Majora's Mask game service, open a new game typing 'load game'" + '\n',outContent.toString());
+        assertEquals("Server> Welcome to Majora's Mask game service, type 'help' to know the commands" + '\n',outContent.toString());
     }
 
     @Test

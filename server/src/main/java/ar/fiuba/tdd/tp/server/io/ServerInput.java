@@ -70,4 +70,16 @@ public class ServerInput {
         }
         return port;
     }
+
+    public String readGame() {
+        ServerOutput.chooseGame();
+        String input = "";
+        try {
+            input = inputBuffer.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return input;
+        }
+        return input;
+    }
 }

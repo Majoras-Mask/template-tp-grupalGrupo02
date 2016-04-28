@@ -5,6 +5,8 @@ package ar.fiuba.tdd.tp.server.io;
  */
 public class ServerOutput {
     private static final String PREFIX = "Server> ";
+    private static final String GAMES = "'fetch', 'hanoi', 'riddle', 'open door1', 'open door2', 'cursed object' and 'treasure hunt'";
+    private static final String COMMANDS = "'load game', 'close port', 'exit' and 'help'";
 
     private static void print(String string) {
         System.out.print(PREFIX + string + '\n');
@@ -19,7 +21,7 @@ public class ServerOutput {
     }
 
     public static void welcomeMessage() {
-        print("Welcome to Majora's Mask game service, open a new game typing 'load game'");
+        print("Welcome to Majora's Mask game service, type 'help' to know the commands");
     }
 
     public static void newGame(Integer port) {
@@ -47,7 +49,7 @@ public class ServerOutput {
     }
 
     public static void help() {
-        print("The available commands are 'connect ip:port', 'exit', 'close port' and 'load game'");
+        print("The available commands are " + COMMANDS);
     }
 
     public static void unreachedPort(Integer port) {
@@ -56,5 +58,13 @@ public class ServerOutput {
 
     public static void threadFinished() {
         print("Thread finished");
+    }
+
+    public static void unvalidGame() {
+        print("That's not a valid game, choose between " + GAMES);
+    }
+
+    public static void chooseGame() {
+        print("The posible games are " + GAMES);
     }
 }

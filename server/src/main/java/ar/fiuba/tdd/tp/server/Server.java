@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.server;
 
+import ar.fiuba.tdd.tp.motor.games.Engine;
 import ar.fiuba.tdd.tp.motor.games.EngineFactoryConcrete;
 import ar.fiuba.tdd.tp.server.io.ServerInput;
 import ar.fiuba.tdd.tp.server.io.ServerOutput;
@@ -16,21 +17,43 @@ public class Server {
         void exec();
     }
 
+    interface EngineGetter {
+        Engine create();
+    }
+
     private ServerInput serverInput;
     private Map<Integer,Connection> connections;
     private Map<Command,Process> commands;
+    private Map<String,EngineGetter> gamesCreator;
+    private static final EngineFactoryConcrete engineFactory = EngineFactoryConcrete.getInstance();
     private static final int FIRST_PORT = 8000;
     private static final int LAST_PORT = 8100;
 
     public Server() throws UnsupportedEncodingException {
         connections = new HashMap<>();
         serverInput = new ServerInput();
+        setCommands();
+        setGames();
+    }
+
+    private void setCommands() {
         commands = new HashMap<>();
         commands.put(Command.LOAD, this::loadGame);
         commands.put(Command.EXIT, this::closeConnections);
         commands.put(Command.NONE, ServerOutput::unknownCommand);
         commands.put(Command.CLOSE, this::closeConnection);
         commands.put(Command.HELP, ServerOutput::help);
+    }
+
+    private void setGames() {
+        gamesCreator = new HashMap<>();
+        gamesCreator.put("fetch", () -> engineFactory.createEngineFetch());
+        gamesCreator.put("hanoi", () -> engineFactory.createEngineHanoi());
+        gamesCreator.put("riddle", () -> engineFactory.createEngineRiddle());
+        gamesCreator.put("open door1", () -> engineFactory.createEngineOpenDoor());
+        gamesCreator.put("open door2", () -> engineFactory.createEngineOpenDoorTwo());
+        gamesCreator.put("cursed object", () -> engineFactory.createEngineCursedObject());
+        gamesCreator.put("treasure hunt", () -> engineFactory.createEngineTreasureHunt());
     }
 
     public void run() {
@@ -54,16 +77,21 @@ public class Server {
         Integer port = getFreePort();
         if (port == LAST_PORT) {
             ServerOutput.noPortsAvailable();
-            return;
-        }
-        Connection connection;
-        try {
-            connection = new Connection(new ServerSocket(port), EngineFactoryConcrete.getInstance().createEngineHanoi());
-            connection.start();
-            connections.put(port, connection);
-            ServerOutput.newGame(port);
-        } catch (IOException e) {
-            ServerOutput.unopenedConnection(port);
+        } else {
+            String gameName = serverInput.readGame();
+            if (!gamesCreator.containsKey(gameName)) {
+                ServerOutput.unvalidGame();
+            } else {
+                Connection connection;
+                try {
+                    connection = new Connection(new ServerSocket(port), gamesCreator.get(gameName).create());
+                    connection.start();
+                    connections.put(port, connection);
+                    ServerOutput.newGame(port);
+                } catch (IOException e) {
+                    ServerOutput.unopenedConnection(port);
+                }
+            }
         }
     }
 
