@@ -13,7 +13,7 @@ public class GameCursedObjectTest extends ZorkTypeGameTest {
         getResponseFromAction("open door0");
         getResponseFromAction("talk thief0");
         getResponseFromAction("look around");
-        getResponseFromAction("open door0");
+        getResponseFromAction("open door1");
         assertTrue(this.game.checkIfGameIsFinished());
     }
 }
