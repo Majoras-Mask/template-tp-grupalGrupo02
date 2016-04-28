@@ -44,6 +44,7 @@ public class GameTreasureHunt extends ZorkTypeGame {
         createEscenary3();
         createEscenary4();
         createEscenary5();
+        setCurrentRoom(room1);
     }
 
     private void createEscenary1() {
