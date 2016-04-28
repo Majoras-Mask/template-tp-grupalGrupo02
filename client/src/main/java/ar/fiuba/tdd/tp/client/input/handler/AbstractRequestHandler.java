@@ -28,9 +28,4 @@ public abstract class AbstractRequestHandler implements RequestHandler {
         return this.patterns.stream().anyMatch(pattern -> pattern.matcher(request.getInput()).find());
     }
 
-    @Override
-    public Boolean supports(ClientRequest request) {
-        return this.match(request);
-    }
-
 }

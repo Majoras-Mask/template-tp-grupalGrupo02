@@ -19,10 +19,10 @@ public abstract class AbstractClientRequestHandler extends AbstractRequestHandle
 
     @Override
     public Boolean supports(ClientRequest request) {
-        if (this.core.isRunning()) {
+        if (this.core.isConnected()) {
             return Boolean.FALSE;
         }
-        return super.supports(request);
+        return super.match(request);
     }
 
 }

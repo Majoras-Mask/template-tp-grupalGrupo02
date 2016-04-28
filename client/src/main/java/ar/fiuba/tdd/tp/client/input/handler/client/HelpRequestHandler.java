@@ -2,13 +2,12 @@ package ar.fiuba.tdd.tp.client.input.handler.client;
 
 import ar.fiuba.tdd.tp.client.ClientCore;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
-import ar.fiuba.tdd.tp.client.input.handler.AbstractRequestHandler;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class HelpRequestHandler extends AbstractRequestHandler {
+public class HelpRequestHandler extends AbstractClientRequestHandler {
 
     private static final String HELP = "help ";
 
