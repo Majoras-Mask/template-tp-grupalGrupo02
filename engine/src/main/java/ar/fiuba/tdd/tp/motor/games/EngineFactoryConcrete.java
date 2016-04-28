@@ -47,12 +47,12 @@ public class EngineFactoryConcrete implements EngineFactory {
         return uniqueInstance;
     }
 
-    public Optional<Engine> createGame(String name) {
+    public Engine createGame(String name) {
         Supplier<Engine> supplier = engineCreator.get(name.toLowerCase());
         if (Objects.nonNull(supplier)) {
-            return Optional.of(supplier.get());
+            return supplier.get();
         }
-        return Optional.empty();
+        return null;
     }
 
     private Engine createGameFetch() {
