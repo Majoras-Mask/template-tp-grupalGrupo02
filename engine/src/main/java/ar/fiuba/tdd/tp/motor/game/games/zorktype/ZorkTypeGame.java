@@ -59,7 +59,7 @@ public abstract class ZorkTypeGame implements Game {
     }
 
     public void removeAllPlayerItems() {
-        this.playerItems = null;
+        this.playerItems.clear();
     }
 
     public void setCurrentRoom(ComponentRoom room) {

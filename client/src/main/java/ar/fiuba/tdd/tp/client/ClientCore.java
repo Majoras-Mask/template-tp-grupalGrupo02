@@ -1,6 +1,5 @@
 package ar.fiuba.tdd.tp.client;
 
-import ar.fiuba.tdd.tp.server.communication.Request;
 import ar.fiuba.tdd.tp.client.connector.Connector;
 import ar.fiuba.tdd.tp.client.connector.ConnectorIO;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
@@ -8,6 +7,7 @@ import ar.fiuba.tdd.tp.client.exception.ClientException;
 import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
+import ar.fiuba.tdd.tp.server.communication.Request;
 
 import java.io.*;
 import java.net.Socket;

@@ -32,6 +32,6 @@ public class GameOpenDoor extends ZorkTypeGame {
 
     @Override
     public String welcomeMessage() {
-        return "Welcome to Open Door Game, to win you have to open the door!";
+        return "Welcome to Open Door Game, to win you have to open the door!\\n Simple as that, right?";
     }
 }
