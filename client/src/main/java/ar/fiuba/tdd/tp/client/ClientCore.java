@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 import ar.fiuba.tdd.tp.server.communication.Request;
+import ar.fiuba.tdd.tp.server.communication.Response;
 
 import java.io.*;
 import java.net.Socket;
@@ -41,7 +42,8 @@ public class ClientCore {
         if (!this.isConnected()) {
             this.connected = Boolean.TRUE;
             this.connector = createConnector(settings);
-            return new ClientResponse(CONNECTION_SUCCESSFUL);
+            Response response = this.connector.receive();
+            return new ClientResponse(CONNECTION_SUCCESSFUL + response.getSomething());
         }
         throw new ClientException(ANOTHER_OPEN_CONNECTION);
     }
