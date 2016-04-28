@@ -92,68 +92,49 @@ public abstract class ZorkTypeGame implements Game {
         return message.toString();
     }
 
-    private String noClose() {
-        return "There is no such thing to close.";
-    }
-
-    private String closeSuccess(GameComponent component) {
-        return "You closed " + component.getDescription() + ".";
-    }
-
-    private String closeFail(GameComponent component) {
-        return "Can't close " + component.getDescription() + ".";
+    private String noAction(String action) {
+        return "There is no such thing to " + action + ".";
     }
 
     public String close(String whatToClose) {
         GameComponent component = getComponentFromRoom(whatToClose);
 
-        if (component == null) {
-            return noClose();
+        if (component != null) {
+            return component.close(this);
         }
-        if (component.close(this)) {
-            return closeSuccess(component);
-        } else {
-            return closeFail(component);
-        }
-    }
-
-    public String open(String whatToOpen) {
-        GameComponent component = getComponentFromRoom(whatToOpen);
-
-        if (component == null) {
-            return "There is no such thing to open.";
-        }
-        if (component.open(this)) {
-            return "Opened it.";
-        } else {
-            return "Can't open " + component.getDescription() + ".";
-        }
+        return noAction("close");
     }
 
     public String pick(String whatToPick) {
         GameComponent component = getComponentFromRoom(whatToPick);
 
         if (component == null) {
-            return "There is no such thing to pick.";
+            return noAction("pick");
         }
-        if (gamePlayer.canPick() && component.pick(this)) {
-            return "You picked " + component.getDescription() + ".";
-        } else {
-            return "Can't pick " + component.getDescription() + ".";
+        if (gamePlayer.canPick()) {
+            return component.pick(this);
         }
+
+        return "Can't carry anymore, inventory full. Store items in chests.";
+    }
+
+
+    public String open(String whatToOpen) {
+        GameComponent component = getComponentFromRoom(whatToOpen);
+
+        if (component == null) {
+            return noAction("open");
+        }
+        return component.open(this);
     }
 
     public String talk(String whoToTalkTo) {
         GameComponent component = getComponentFromRoom(whoToTalkTo);
 
         if (component == null) {
-            return "There is no such thing to talk to.";
+            return noAction("talk to");
         }
-        if (component.talk(this)) {
-            return "You talked to " + component.getDescription() + ".";
-        } else {
-            return "It doesn't answer back.";
-        }
+        return component.talk(this);
     }
 
     public String whatCanIDoWith(String whoToDoActionWith) {
@@ -170,11 +151,7 @@ public abstract class ZorkTypeGame implements Game {
             return "There is no such thing to consume.";
         }
         GameComponent component = getPlayerItem(whatToConsume);
-        if (component.consume(this)) {
-            return "Consumed it.";
-        } else {
-            return "Can't consume " + component.getDescription() + ".";
-        }
+        return component.consume(this);
     }
 
     public String store(String whatToStore, String whereToStore) {

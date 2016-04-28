@@ -14,10 +14,10 @@ public abstract class GameComponentPickable extends GameComponent {
     }
 
     @Override
-    public Boolean pick(ZorkTypeGame game) {
+    public String pick(ZorkTypeGame game) {
         game.addPlayerItem(this);
         game.removeItemFromRoom(this);
-        return true;
+        return "You picked " + getDescription() + "up.";
     }
 
     @Override

@@ -19,24 +19,24 @@ public abstract class GameComponent {
 
     public abstract String getBasicName();
 
-    public Boolean pick(ZorkTypeGame game) {
-        return false;
+    public String pick(ZorkTypeGame game) {
+        return "Can't pick " + getDescription() + ".";
     }
 
-    public Boolean close(ZorkTypeGame game) {
-        return false;
+    public String close(ZorkTypeGame game) {
+        return "Can't close " + getDescription() + ".";
     }
 
-    public Boolean open(ZorkTypeGame game) {
-        return false;
+    public String open(ZorkTypeGame game) {
+        return "Can't open " + getDescription() + ".";
     }
 
-    public Boolean talk(ZorkTypeGame game) {
-        return false;
+    public String talk(ZorkTypeGame game) {
+        return "It doesn't answer back. Maybe " + getDescription() + " is not the talkative type.";
     }
 
-    public Boolean consume(ZorkTypeGame game) {
-        return false;
+    public String consume(ZorkTypeGame game) {
+        return "Can't consume " + getDescription() + ".";
     }
 
     public abstract String whatCanIDo();

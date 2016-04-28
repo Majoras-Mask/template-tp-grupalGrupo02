@@ -42,24 +42,25 @@ public abstract class GameComponentStoringMultiple extends GameComponentStoring 
     }
 
     @Override
-    public Boolean open(ZorkTypeGame game) {
+    public String open(ZorkTypeGame game) {
         this.itemsIhad = getListOfComponents();
         for (GameComponent component: this.itemsIhad) {
             component.addedToRoom(game);
             removeComponent(component.getDescription());
         }
-        return true;
+        //TODO agregar que tiro si es que tiro algo
+        return "You opened it";
     }
 
     @Override
-    public Boolean close(ZorkTypeGame game) {
+    public String close(ZorkTypeGame game) {
         for (GameComponent component: this.itemsIhad) {
             if (game.getCurrentRoom().hasComponent(component.getDescription())) {
                 game.removeItemFromRoom(component);
                 addComponent(component);
             }
         }
-        return true;
+        return "You closed " + getDescription() + ".";
     }
 
     @Override

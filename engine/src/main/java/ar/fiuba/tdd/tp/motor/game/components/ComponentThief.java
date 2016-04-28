@@ -14,9 +14,9 @@ public class ComponentThief extends GameComponent {
     }
 
     @Override
-    public Boolean talk(ZorkTypeGame game) {
+    public String talk(ZorkTypeGame game) {
         game.removeAllPlayerItems();
-        return true;
+        return "*YOINK* The thief stole all your items!!!";
     }
 
     @Override

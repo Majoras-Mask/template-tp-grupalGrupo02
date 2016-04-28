@@ -44,19 +44,26 @@ public class ComponentDoor extends GameComponent {
         return !this.locked;
     }
 
+
+    //TODO agregarle mensaje copado
+
+    private String goToRoomResponse() {
+        return "You go to the other room.";
+    }
+
     @Override
-    public Boolean open(ZorkTypeGame game) {
+    public String open(ZorkTypeGame game) {
         if (isThisDoorUnlocked()) {
             goToRoom(game);
-            return true;
+            return goToRoomResponse();
         }
         if (openCondition.mustOpen(game)) {
             unlockDoor();
             goToRoom(game);
-            return true;
+            return goToRoomResponse();
         }
 
-        return false;
+        return "It's locked.";
     }
 
     @Override
@@ -65,7 +72,7 @@ public class ComponentDoor extends GameComponent {
     }
 
     @Override
-    public Boolean close(ZorkTypeGame game) {
-        return true;
+    public String close(ZorkTypeGame game) {
+        return "You closed the door.";
     }
 }

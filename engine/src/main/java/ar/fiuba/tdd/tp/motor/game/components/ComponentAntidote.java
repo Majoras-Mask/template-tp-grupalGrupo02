@@ -15,6 +15,6 @@ public class ComponentAntidote extends GameComponentPickable {
     @Override
     public String consume(ZorkTypeGame game) {
         game.getGamePlayer().setAntidoto();
-        return true;
+        return "You consumed the " + getDescription() + ". You are no longer poisoned.";
     }
 }
