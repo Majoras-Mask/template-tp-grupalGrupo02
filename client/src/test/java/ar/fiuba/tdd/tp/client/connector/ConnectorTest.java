@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.client.connector;
 
-import ar.fiuba.tdd.tp.server.communication.Request;
 import ar.fiuba.tdd.tp.client.exception.ConnectorException;
+import ar.fiuba.tdd.tp.server.communication.Request;
 import org.junit.Before;
 import org.junit.Test;
 
