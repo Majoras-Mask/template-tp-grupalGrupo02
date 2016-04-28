@@ -57,7 +57,7 @@ public class Connection extends Thread {
         }
     }
 
-    private void welcome() {
+    private void welcome() throws IOException {
         response = new Response(engine.getWelcomeMessage());
         outputStream.writeObject(response);
         outputStream.flush();
