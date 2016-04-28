@@ -7,15 +7,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-public class ServerProtocol {
+public class ServerInput {
     private BufferedReader inputBuffer;
 
-    public ServerProtocol() throws UnsupportedEncodingException {
+    public ServerInput() throws UnsupportedEncodingException {
         inputBuffer = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
     }
 
     public void init() {
-        ServerIO.welcomeMessage();
+        ServerOutput.welcomeMessage();
     }
 
     public Command readEntry() {

@@ -15,7 +15,7 @@ public class Server {
         void exec();
     }
 
-    private ServerProtocol serverProtocol;
+    private ServerInput serverInput;
     private Map<Integer,Connection> connections;
     private Map<Command,Process> commands;
     private static final int BASE_PORT = 8000;
@@ -23,18 +23,18 @@ public class Server {
 
     public Server() throws UnsupportedEncodingException {
         connections = new HashMap<>();
-        serverProtocol = new ServerProtocol();
+        serverInput = new ServerInput();
         commands = new HashMap<>();
         commands.put(Command.LOAD, this::loadGame);
         commands.put(Command.EXIT, this::closeConnections);
-        commands.put(Command.NONE, ServerIO::unknownCommand);
+        commands.put(Command.NONE, ServerOutput::unknownCommand);
         commands.put(Command.CLOSE, this::closeConnection);
     }
 
     public void run() {
         Command entry;
-        serverProtocol.init();
-        while ((entry = serverProtocol.readEntry()) != Command.EXIT) {
+        serverInput.init();
+        while ((entry = serverInput.readEntry()) != Command.EXIT) {
             commands.get(entry).exec();
         }
         commands.get(Command.EXIT).exec();
@@ -51,7 +51,7 @@ public class Server {
     private void loadGame() {
         Integer port = getFreePort();
         if (port == END_PORT) {
-            ServerIO.noPortsAvailable(BASE_PORT, END_PORT);
+            ServerOutput.noPortsAvailable(BASE_PORT, END_PORT);
             return;
         }
         Connection connection;
@@ -59,9 +59,9 @@ public class Server {
             connection = new Connection(new ServerSocket(port), EngineFactoryConcrete.getInstance().createEngineHanoi());
             connection.start();
             connections.put(port, connection);
-            ServerIO.newGame(port);
+            ServerOutput.newGame(port);
         } catch (IOException e) {
-            ServerIO.unopenedConnection(port);
+            ServerOutput.unopenedConnection(port);
         }
     }
 

@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.api;
 /**
  * Created by manuelcruz on 26/04/2016.
  */
-public class ServerIO {
+public class ServerOutput {
     private static final String PREFIX = "Server> ";
 
     public static void clientConnected(int localPort) {

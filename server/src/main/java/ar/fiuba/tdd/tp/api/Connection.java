@@ -56,11 +56,11 @@ public class Connection extends Thread {
     public void run() {
         try {
             while (!serverSocket.isClosed() && nonNull(clientSocket = serverSocket.accept())) {
-                ServerIO.clientConnected(serverSocket.getLocalPort());
+                ServerOutput.clientConnected(serverSocket.getLocalPort());
                 getStream(clientSocket);
                 speak();
                 clientSocket.close();
-                ServerIO.clientDisconnected(serverSocket.getLocalPort());
+                ServerOutput.clientDisconnected(serverSocket.getLocalPort());
             }
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
