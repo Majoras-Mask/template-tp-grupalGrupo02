@@ -7,19 +7,18 @@ import ar.fiuba.tdd.tp.client.exception.ClientException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 
-import static ar.fiuba.tdd.tp.client.utils.Constants.ANOTHER_OPEN_CONNECTION;
-import static ar.fiuba.tdd.tp.client.utils.Constants.CONNECTION_SUCCESSFUL;
-import static ar.fiuba.tdd.tp.client.utils.Constants.OPEN_CONNECTION_FIRST;
-import static java.util.Objects.isNull;
+import static ar.fiuba.tdd.tp.client.utils.Constants.*;
 import static java.util.Objects.nonNull;
 
 public class ClientCore {
 
     private Boolean running;
+    private Boolean connected;
     private Connector connector;
 
     public ClientCore() {
         this.running = Boolean.FALSE;
+        this.connected = Boolean.FALSE;
     }
 
     public Boolean isRunning() {
@@ -35,7 +34,8 @@ public class ClientCore {
     }
 
     public ClientResponse connect(ConnectorSettings settings) {
-        if (isNull(this.connector)) {
+        if (!isConnected()) {
+            this.connected = Boolean.TRUE;
             this.connector = new Connector(settings);
             return new ClientResponse(CONNECTION_SUCCESSFUL);
         }
@@ -53,7 +53,11 @@ public class ClientCore {
     public void stopConnector() {
         if (nonNull(this.connector)) {
             this.connector.close();
-            this.connector = null;
+            this.connected = Boolean.FALSE;
         }
+    }
+
+    public Boolean isConnected() {
+        return this.connected;
     }
 }
