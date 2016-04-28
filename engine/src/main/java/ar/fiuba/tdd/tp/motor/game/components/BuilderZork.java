@@ -1,34 +1,17 @@
 package ar.fiuba.tdd.tp.motor.game.components;
 
-import ar.fiuba.tdd.tp.motor.game.games.zorktype.ZorkTypeGame;
-
-/**
- * Created by kevin on 27/04/16.
- */
 public class BuilderZork {
-    /*
-    private ZorkTypeGame game;
 
-    private int antidotoCount = 0;
     private int boxCount = 0;
-    private int chestCount = 0;
     private int closetCount = 0;
-    private int normalDoorCount = 0;
-    private int cursedDoorCount = 0;
+    private int doorCount = 0;
     private int keyCount = 0;
-    private int poissonCount = 0;
     private int roomCout = 0;
+    private int poissonCount = 0;
     private int thiefCount = 0;
 
+    public BuilderZork() {
 
-    public BuilderZork(ZorkTypeGame game) {
-        this.game = game;
-    }
-
-    ComponentAntidoto createAntidoto() {
-        ComponentAntidoto antidoto = new ComponentAntidoto();
-        antidoto.setId(antidotoCount++);
-        return antidoto;
     }
 
     ComponentBox createBox() {
@@ -37,25 +20,51 @@ public class BuilderZork {
         return box;
     }
 
-    ComponentChest createChest() {
-        ComponentChest chest = new ComponentChest();
-        chest.setId(chestCount++);
-        return chest;
-    }
-
     ComponentCloset createCloset() {
         ComponentCloset closet = new ComponentCloset();
-        closet.setId(closetCount++*);
+        closet.setId(closetCount++);
         return closet;
     }
 
-    ComponentDoor createCursedDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
-        ComponentCursedDoor door = new ComponentCursedDoor(roomFrom, toRoom, key);
-        door.setId(cursedDoorCount++);
+    ComponentDoor createDoorWithOpenCondition(ComponentRoom roomFrom, ComponentRoom toRoom,
+                                              OpenCondition openCondition) {
+        ComponentDoor door = new ComponentDoor(roomFrom, toRoom, openCondition);
+        door.setId(doorCount++);
         return door;
     }
 
-    ComponentDoor createNormalDoor()
+    ComponentDoor createCursedDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
+        return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, true));
+    }
 
-    */
+    ComponentDoor createNormalDoor(ComponentRoom roomFrom, ComponentRoom toRoom, ComponentKey key) {
+        return createDoorWithOpenCondition(roomFrom, toRoom, new OpenConditionObject(key, true));
+    }
+
+    ComponentKey createKey() {
+        ComponentKey key = new ComponentKey();
+        key.setId(keyCount++);
+        return key;
+    }
+
+    ComponentRoom createRoom() {
+        ComponentRoom room = new ComponentRoom();
+        room.setId(roomCout++);
+        return room;
+    }
+
+
+    ComponentPoisson createPoisson() {
+        ComponentPoisson poisson = new ComponentPoisson();
+        poisson.setId(poissonCount++);
+        return poisson;
+    }
+
+    ComponentThief createThief() {
+        ComponentThief thief = new ComponentThief();
+        thief.setId(thiefCount++);
+        return thief;
+    }
+
+
 }
