@@ -54,8 +54,8 @@ public class BuilderZork {
     }
 
 
-    ComponentPoisson createPoisson() {
-        ComponentPoisson poisson = new ComponentPoisson();
+    ComponentPoison createPoisson() {
+        ComponentPoison poisson = new ComponentPoison();
         poisson.setId(poissonCount++);
         return poisson;
     }
