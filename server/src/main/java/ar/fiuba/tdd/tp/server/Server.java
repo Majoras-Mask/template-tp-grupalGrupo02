@@ -17,14 +17,14 @@ public class Server {
         void exec();
     }
 
-    interface EngineGetter {
+    interface GameGenerator {
         Engine create();
     }
 
     private ServerInput serverInput;
     private Map<Integer,Connection> connections;
     private Map<Command,Process> commands;
-    private Map<String,EngineGetter> gamesCreator;
+    private Map<String,GameGenerator> gamesGenerator;
     private static final EngineFactoryConcrete engineFactory = EngineFactoryConcrete.getInstance();
     private static final int FIRST_PORT = 8000;
     private static final int LAST_PORT = 8100;
@@ -33,7 +33,7 @@ public class Server {
         connections = new HashMap<>();
         serverInput = new ServerInput();
         setCommands();
-        setGames();
+        setEngines();
     }
 
     private void setCommands() {
@@ -45,22 +45,22 @@ public class Server {
         commands.put(Command.HELP, ServerOutput::help);
     }
 
-    private void setGames() {
-        gamesCreator = new HashMap<>();
-        gamesCreator.put("fetch", () -> engineFactory.createEngineFetch());
-        gamesCreator.put("hanoi", () -> engineFactory.createEngineHanoi());
-        gamesCreator.put("riddle", () -> engineFactory.createEngineRiddle());
-        gamesCreator.put("open door1", () -> engineFactory.createEngineOpenDoor());
-        gamesCreator.put("open door2", () -> engineFactory.createEngineOpenDoorTwo());
-        gamesCreator.put("cursed object", () -> engineFactory.createEngineCursedObject());
-        gamesCreator.put("treasure hunt", () -> engineFactory.createEngineTreasureHunt());
+    private void setEngines() {
+        gamesGenerator = new HashMap<>();
+        gamesGenerator.put("fetch", engineFactory::createEngineFetch);
+        gamesGenerator.put("hanoi", engineFactory::createEngineHanoi);
+        gamesGenerator.put("riddle", engineFactory::createEngineRiddle);
+        gamesGenerator.put("open door1", engineFactory::createEngineOpenDoor);
+        gamesGenerator.put("open door2", engineFactory::createEngineOpenDoorTwo);
+        gamesGenerator.put("cursed object", engineFactory::createEngineCursedObject);
+        gamesGenerator.put("treasure hunt", engineFactory::createEngineTreasureHunt);
     }
 
     public void run() {
-        Command entry;
-        serverInput.init();
-        while ((entry = serverInput.readEntry()) != Command.EXIT) {
-            commands.get(entry).exec();
+        Command command;
+        ServerOutput.welcomeMessage();
+        while ((command = serverInput.readCommand()) != Command.EXIT) {
+            commands.get(command).exec();
         }
         commands.get(Command.EXIT).exec();
     }
@@ -78,13 +78,14 @@ public class Server {
         if (port == LAST_PORT) {
             ServerOutput.noPortsAvailable();
         } else {
+            ServerOutput.chooseGame();
             String gameName = serverInput.readGame();
-            if (!gamesCreator.containsKey(gameName)) {
-                ServerOutput.unvalidGame();
+            if (!gamesGenerator.containsKey(gameName)) {
+                ServerOutput.invalidGame();
             } else {
                 Connection connection;
                 try {
-                    connection = new Connection(new ServerSocket(port), gamesCreator.get(gameName).create());
+                    connection = new Connection(new ServerSocket(port), gamesGenerator.get(gameName).create());
                     connection.start();
                     connections.put(port, connection);
                     ServerOutput.newGame(port);
@@ -100,7 +101,8 @@ public class Server {
     }
 
     private void closeConnection() {
-        Integer port = serverInput.getPort();
+        ServerOutput.choosePort();
+        Integer port = serverInput.readPort();
         if (port >= FIRST_PORT && port <= LAST_PORT && connections.containsKey(port)) {
             connections.get(port).closeConnection();
             connections.remove(port);
