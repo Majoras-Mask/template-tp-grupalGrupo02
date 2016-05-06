@@ -10,11 +10,9 @@ import java.util.regex.Pattern;
  */
 public class Player {
     private List<Item> items;
-    private String name;
     private Room room;
 
-    public Player(String name) {
-        this.name = name;
+    public Player() {
         items = new LinkedList<>();
     }
 
