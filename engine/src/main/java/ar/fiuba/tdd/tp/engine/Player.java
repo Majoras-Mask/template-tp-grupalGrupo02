@@ -46,19 +46,21 @@ public class Player {
         return room.equals(this.room);
     }
 
-    public String doCommand(String command) {
+    public String doCommand(String message) {
         Pattern pickPattern = Pattern.compile("pick .*");
-        Matcher pickMatcher = pickPattern.matcher(command);
+        Matcher pickMatcher = pickPattern.matcher(message);
         Pattern openPattern = Pattern.compile("open .*");
-        Matcher openMatcher = openPattern.matcher(command);
+        Matcher openMatcher = openPattern.matcher(message);
         if (pickMatcher.find()) {
-            return pick(command.substring(5));
+            return pick(message.substring(5));
         } else if (openMatcher.find()) {
-            return open(command.substring(5));
-        } else if ("look around".equals(command)) {
+            return open(message.substring(5));
+        } else if ("look around".equals(message)) {
             return lookAround();
         } else {
             return "invalid command";
         }
     }
+
+
 }
