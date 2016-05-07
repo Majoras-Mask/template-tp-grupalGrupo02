@@ -1,44 +1,26 @@
 package ar.fiuba.tdd.tp.engine;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by manuelcruz on 02/05/2016.
- */
-public class Player {
-    private List<Item> items;
+public class Player implements PlayerInterface {
+    private List<ComponentInterface> items = new LinkedList<>();
     private Room room;
-
-    public Player() {
-        items = new LinkedList<>();
-    }
-
-    private String pick(String string) {
-        if (room.hasItem(string)) {
-            items.add(room.getItem(string));
-            return "Picked " + string;
-        } else {
-            return "Can't pick " + string;
-        }
-    }
-
-    private String open(String string) {
-        this.room = this.room.doTransaction();
-        return "Entered room2";
-    }
-
-    private String lookAround() {
-        return "In " + room.getName() + " there is" + room.getItemList();
-    }
+    //Esta lista va a ser necesaria para poder saber que comandos son soportados
+    protected List<String> possibleCommands;
+    private Map<String, Behavior> actions = new HashMap<>();
+    private static final String CANT_DO_ACTION = "Can't do that action.";
+    private static final String NO_ITEM_IN_ROOM = "There is no such thing in this room.";
 
     public void setRoom(Room room) {
         this.room = room;
     }
 
-    public boolean hasItem(Item item) {
+    public boolean hasItem(ComponentInterface item) {
         return items.contains(item);
     }
 
@@ -46,20 +28,48 @@ public class Player {
         return room.equals(this.room);
     }
 
-    public String doCommand(String message) {
-        Pattern pickPattern = Pattern.compile("pick .*");
-        Matcher pickMatcher = pickPattern.matcher(message);
-        Pattern openPattern = Pattern.compile("open .*");
-        Matcher openMatcher = openPattern.matcher(message);
-        if (pickMatcher.find()) {
-            return pick(message.substring(5));
-        } else if (openMatcher.find()) {
-            return open(message.substring(5));
-        } else if ("look around".equals(message)) {
-            return lookAround();
-        } else {
-            return "invalid command";
+    public void setListOfPossibleCommands(List<String> list) {
+        possibleCommands = list;
+    }
+
+    public void addBehavior(String actionString, Behavior behavior) {
+        actions.put(actionString, behavior);
+    }
+
+    private boolean haveThatCommand(String command) {
+        return actions.containsKey(command);
+    }
+
+    private String makeComponentDoAction(String command, String whereToApply) {
+        if (room.hasItem(whereToApply)) {
+            ComponentInterface item = room.getItem(whereToApply);
+            return item.doAction(command);
         }
+        return NO_ITEM_IN_ROOM;
+    }
+
+    private String playerActionOrComponent(String command, String whereToApply) {
+        if (haveThatCommand(command)) {
+            return actions.get(command).execute();
+        }
+        //If I can't do it, it's something that I have to do with a component(item)
+        return makeComponentDoAction(command, whereToApply);
+    }
+
+    public String doCommand(String message) {
+        //Lo que se va a tener que hacer aca es lo siguiente, le llega un mensaje, ver si ese
+        //mensaje empieza con algun comando. Nosotros tenemos nuestros posibles comandos en la lista
+        //possibleCommands. Si matchea, entonces vamos a tener que buscar ese objeto y si esta a la vista
+        //decirle que realice esa accion
+        for (String command : possibleCommands) {
+            Pattern commandPattern = Pattern.compile(command + ".*");
+            Matcher commandMatcher = commandPattern.matcher(message);
+            if (commandMatcher.find()) {
+                //TODO revisar si esto da lo esperado que es todo menos el comando
+                return playerActionOrComponent(command, commandMatcher.group(1));
+            }
+        }
+        return CANT_DO_ACTION;
     }
 
 

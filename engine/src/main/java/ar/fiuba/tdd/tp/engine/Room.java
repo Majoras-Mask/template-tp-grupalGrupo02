@@ -6,7 +6,7 @@ import java.util.*;
  * Created by manuelcruz on 02/05/2016.
  */
 public class Room {
-    private Map<String,Item> items;
+    private Map<String,ComponentInterface> items;
     private String name;
     private Door door;
 
@@ -19,7 +19,7 @@ public class Room {
         this.door = door;
     }
 
-    public void putItem(Item item) {
+    public void putItem(ComponentInterface item) {
         items.put(item.getName(), item);
     }
 
@@ -27,8 +27,8 @@ public class Room {
         return items.containsKey(itemName);
     }
 
-    public Item getItem(String itemName) {
-        Item item = items.get(itemName);
+    public ComponentInterface getItem(String itemName) {
+        ComponentInterface item = items.get(itemName);
         items.remove(itemName);
         return item;
     }

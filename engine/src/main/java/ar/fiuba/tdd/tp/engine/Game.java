@@ -1,11 +1,5 @@
 package ar.fiuba.tdd.tp.engine;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by manuelcruz on 05/05/2016.
- */
 public abstract class Game {
     protected Player player;
 

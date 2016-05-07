@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.engine;
 
-public interface ComponentGeneric {
+public interface ComponentInterface {
     //Maybe add remove behavior?
     void addBehavior(String actionString, Behavior behavior);
 

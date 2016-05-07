@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.engine;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ComponentSimple implements ComponentGeneric {
+public class ComponentSimple implements ComponentInterface {
 
     private String name;
 
