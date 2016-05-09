@@ -1,5 +1,8 @@
 package ar.fiuba.tdd.tp.engine;
 
+import ar.fiuba.tdd.tp.engine.behavior.Behavior;
+import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,8 +23,24 @@ public class Player implements PlayerInterface {
         this.room = room;
     }
 
-    public boolean hasItem(ComponentInterface item) {
+    public boolean playerHasItem(ComponentInterface item) {
         return items.contains(item);
+    }
+
+    public void addItemToInventory(ComponentInterface item) {
+        items.add(item);
+    }
+
+    public boolean seesItemInRoom(ComponentInterface item) {
+        return room.hasItem(item);
+    }
+
+    public boolean removeItem(ComponentInterface item) {
+        if (seesItemInRoom(item)) {
+            room.removeItem(item);
+            return true;
+        }
+        return false;
     }
 
     public boolean isInRoom(Room room) {
@@ -42,17 +61,18 @@ public class Player implements PlayerInterface {
 
     private String makeComponentDoAction(String command, String whereToApply) {
         if (room.hasItem(whereToApply)) {
-            ComponentInterface item = room.getItem(whereToApply);
-            return item.doAction(command);
+            ComponentInterface item = room.removeItem(whereToApply);
+            return item.doAction(command, null);
         }
         return NO_ITEM_IN_ROOM;
     }
 
-    private String playerActionOrComponent(String command, String whereToApply) {
+    private String playerOrComponentAction(String command, String whereToApply) {
         if (haveThatCommand(command)) {
-            return actions.get(command).execute();
+            return actions.get(command).execute(null);
         }
         //If I can't do it, it's something that I have to do with a component(item)
+        //TODO ojo que whereToApply tiene todo lo que le sigue al command (puede tener mas que un item)
         return makeComponentDoAction(command, whereToApply);
     }
 
@@ -66,7 +86,7 @@ public class Player implements PlayerInterface {
             Matcher commandMatcher = commandPattern.matcher(message);
             if (commandMatcher.find()) {
                 //TODO revisar si esto da lo esperado que es todo menos el comando
-                return playerActionOrComponent(command, commandMatcher.group(1));
+                return playerOrComponentAction(command, commandMatcher.group(1));
             }
         }
         return CANT_DO_ACTION;

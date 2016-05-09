@@ -1,12 +1,11 @@
 package ar.fiuba.tdd.tp.engine;
 
+import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
+
 import java.util.*;
 
-/**
- * Created by manuelcruz on 02/05/2016.
- */
 public class Room {
-    private Map<String,ComponentInterface> items;
+    private Map<String, ComponentInterface> items;
     private String name;
     private Door door;
 
@@ -19,18 +18,33 @@ public class Room {
         this.door = door;
     }
 
-    public void putItem(ComponentInterface item) {
+    public void addItem(ComponentInterface item) {
         items.put(item.getName(), item);
+    }
+
+
+    public boolean hasItem(ComponentInterface item) {
+        return items.containsKey(item.getName());
     }
 
     public boolean hasItem(String itemName) {
         return items.containsKey(itemName);
     }
 
-    public ComponentInterface getItem(String itemName) {
-        ComponentInterface item = items.get(itemName);
-        items.remove(itemName);
-        return item;
+    public ComponentInterface removeItem(String itemName) {
+        if (hasItem(itemName)) {
+            ComponentInterface itemToReturn = items.get(itemName);
+            items.remove(itemName);
+            return itemToReturn;
+        }
+        return null;
+    }
+
+    public ComponentInterface removeItem(ComponentInterface item) {
+        if (hasItem(item.getName())) {
+            return removeItem(item.getName());
+        }
+        return null;
     }
 
     public String getName() {

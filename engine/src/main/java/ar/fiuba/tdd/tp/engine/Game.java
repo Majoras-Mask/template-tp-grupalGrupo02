@@ -9,6 +9,10 @@ public abstract class Game {
 
     abstract boolean winCondition();
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public String command(String clientMessage) {
         if (winCondition()) {
             return "You won the game!";

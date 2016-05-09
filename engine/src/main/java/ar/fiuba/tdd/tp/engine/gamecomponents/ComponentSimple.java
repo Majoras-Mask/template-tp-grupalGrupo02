@@ -1,4 +1,6 @@
-package ar.fiuba.tdd.tp.engine;
+package ar.fiuba.tdd.tp.engine.gamecomponents;
+
+import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,16 +11,20 @@ public class ComponentSimple implements ComponentInterface {
 
     private Map<String, Behavior> actions = new HashMap<>();
 
+    public ComponentSimple(String name) {
+        setName(name);
+    }
+
     @Override
     public void addBehavior(String actionMsg, Behavior behavior) {
         actions.put(actionMsg, behavior);
     }
 
     @Override
-    public String doAction(String message) {
-        Behavior behavior = actions.get(message);
+    public String doAction(String command, String commandModifier) {
+        Behavior behavior = actions.get(command);
         if (behavior != null) {
-            return behavior.execute();
+            return behavior.execute(commandModifier);
         }
         return null;
     }
