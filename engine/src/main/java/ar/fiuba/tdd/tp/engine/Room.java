@@ -22,6 +22,12 @@ public class Room {
         items.put(item.getName(), item);
     }
 
+    public ComponentInterface getItem(String itemName) {
+        if (hasItem(itemName)) {
+            return items.get(itemName);
+        }
+        return null;
+    }
 
     public boolean hasItem(ComponentInterface item) {
         return items.containsKey(item.getName());

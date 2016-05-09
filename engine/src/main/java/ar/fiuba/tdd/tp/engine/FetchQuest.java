@@ -4,12 +4,24 @@ import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class FetchQuest extends Game {
+
+    private ComponentInterface winningCondition;
+    private ArrayList<String> possibleCommands = new ArrayList<String>(
+            Arrays.asList("pick"));
 
     public FetchQuest() {
         super();
         ComponentInterface stick = new ComponentSimple("stick");
         stick.addBehavior("pick", new NormalPick(this, stick));
+        winningCondition = stick;
+        player.setListOfPossibleCommands(possibleCommands);
+        Room room = new Room("primerCuarto");
+        room.addItem(stick);
+        player.setRoom(room);
     }
 
 
@@ -34,6 +46,6 @@ public class FetchQuest extends Game {
 
     @Override
     boolean winCondition() {
-        return false;
+        return this.getPlayer().playerHasItem(winningCondition);
     }
 }

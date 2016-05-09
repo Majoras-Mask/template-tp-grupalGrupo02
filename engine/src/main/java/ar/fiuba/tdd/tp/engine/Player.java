@@ -14,7 +14,7 @@ public class Player implements PlayerInterface {
     private List<ComponentInterface> items = new LinkedList<>();
     private Room room;
     //Esta lista va a ser necesaria para poder saber que comandos son soportados
-    protected List<String> possibleCommands;
+    protected List<String> possibleCommands = new LinkedList<>();
     private Map<String, Behavior> actions = new HashMap<>();
     private static final String CANT_DO_ACTION = "Can't do that action.";
     private static final String NO_ITEM_IN_ROOM = "There is no such thing in this room.";
@@ -61,7 +61,7 @@ public class Player implements PlayerInterface {
 
     private String makeComponentDoAction(String command, String whereToApply) {
         if (room.hasItem(whereToApply)) {
-            ComponentInterface item = room.removeItem(whereToApply);
+            ComponentInterface item = room.getItem(whereToApply);
             return item.doAction(command, null);
         }
         return NO_ITEM_IN_ROOM;
@@ -82,7 +82,7 @@ public class Player implements PlayerInterface {
         //possibleCommands. Si matchea, entonces vamos a tener que buscar ese objeto y si esta a la vista
         //decirle que realice esa accion
         for (String command : possibleCommands) {
-            Pattern commandPattern = Pattern.compile(command + ".*");
+            Pattern commandPattern = Pattern.compile("^" + command + " (.*)");
             Matcher commandMatcher = commandPattern.matcher(message);
             if (commandMatcher.find()) {
                 //TODO revisar si esto da lo esperado que es todo menos el comando
