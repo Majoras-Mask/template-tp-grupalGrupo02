@@ -1,12 +1,9 @@
 package ar.fiuba.tdd.tp.engine;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Created by manuelcruz on 02/05/2016.
  */
-public class Fetch extends Game {
+public class Fetch extends Game{
     private final Room room;
     private final Item stick;
 
