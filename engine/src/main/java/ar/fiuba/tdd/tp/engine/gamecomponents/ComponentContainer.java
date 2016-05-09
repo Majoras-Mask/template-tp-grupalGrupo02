@@ -1,21 +1,14 @@
-package ar.fiuba.tdd.tp.engine;
+package ar.fiuba.tdd.tp.engine.gamecomponents;
 
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.*;
+public class ComponentContainer extends ComponentSimple {
 
-public class Room {
-    private Map<String, ComponentInterface> items;
-    private String name;
-    private Door door;
+    private Map<String, ComponentInterface> items = new HashMap<>();
 
-    public Room(String name) {
-        this.name = name;
-        items = new HashMap<>();
-    }
-
-    public void setDoor(Door door) {
-        this.door = door;
+    public ComponentContainer(String name) {
+        super(name);
     }
 
     public void addItem(ComponentInterface item) {
@@ -51,19 +44,5 @@ public class Room {
             return removeItem(item.getName());
         }
         return null;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getItemList() {
-        StringBuilder stringBuilder = new StringBuilder();
-        items.forEach((itemName, item) -> stringBuilder.append(" a " + itemName));
-        return stringBuilder.toString();
-    }
-
-    public Room doTransaction() {
-        return this.door.getOtherRoom(this);
     }
 }

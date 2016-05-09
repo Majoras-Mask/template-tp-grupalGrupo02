@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.engine;
 
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
+import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 
@@ -19,7 +20,8 @@ public class FetchQuest extends Game {
         stick.addBehavior("pick", new NormalPick(this, stick));
         winningCondition = stick;
         player.setListOfPossibleCommands(possibleCommands);
-        Room room = new Room("primerCuarto");
+        ComponentContainer room = new ComponentContainer("primerCuarto");
+        //Room room = new Room("primerCuarto");
         room.addItem(stick);
         player.setRoom(room);
     }

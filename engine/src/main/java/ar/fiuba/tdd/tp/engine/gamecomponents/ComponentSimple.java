@@ -6,21 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ComponentSimple implements ComponentInterface {
+    protected String name;
 
-    private String name;
-
-    private Map<String, Behavior> actions = new HashMap<>();
+    protected Map<String, Behavior> actions = new HashMap<>();
 
     public ComponentSimple(String name) {
         setName(name);
     }
 
-    @Override
     public void addBehavior(String actionMsg, Behavior behavior) {
         actions.put(actionMsg, behavior);
     }
 
-    @Override
     public String doAction(String command, String commandModifier) {
         Behavior behavior = actions.get(command);
         if (behavior != null) {
@@ -29,12 +26,10 @@ public class ComponentSimple implements ComponentInterface {
         return null;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public String getName() {
         return name;
     }

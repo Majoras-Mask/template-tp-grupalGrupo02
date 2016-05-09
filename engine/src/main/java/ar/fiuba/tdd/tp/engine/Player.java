@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.engine;
 
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
+import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 
 import java.util.HashMap;
@@ -12,14 +13,14 @@ import java.util.regex.Pattern;
 
 public class Player implements PlayerInterface {
     private List<ComponentInterface> items = new LinkedList<>();
-    private Room room;
+    private ComponentContainer room;
     //Esta lista va a ser necesaria para poder saber que comandos son soportados
     protected List<String> possibleCommands = new LinkedList<>();
     private Map<String, Behavior> actions = new HashMap<>();
     private static final String CANT_DO_ACTION = "Can't do that action.";
     private static final String NO_ITEM_IN_ROOM = "There is no such thing in this room.";
 
-    public void setRoom(Room room) {
+    public void setRoom(ComponentContainer room) {
         this.room = room;
     }
 
@@ -43,7 +44,7 @@ public class Player implements PlayerInterface {
         return false;
     }
 
-    public boolean isInRoom(Room room) {
+    public boolean isInRoom(ComponentContainer room) {
         return room.equals(this.room);
     }
 
