@@ -1,6 +1,8 @@
 package ar.fiuba.tdd.tp.engine.gamecomponents;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ComponentContainer extends ComponentSimple {
@@ -44,5 +46,13 @@ public class ComponentContainer extends ComponentSimple {
             return removeItem(item.getName());
         }
         return null;
+    }
+
+    public List<String> listOfComponents() {
+        List<String> list = new LinkedList<>();
+        for (String component : items.keySet()) {
+            list.add(component);
+        }
+        return list;
     }
 }
