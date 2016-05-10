@@ -19,7 +19,7 @@ public class OpenDoor1 extends Game {
         room1 = new Room("room1");
         room2 = new Room("room2");
         key = new Content("key");
-        door = new Transaction("door");
+        door = new Transaction();
         door.setContainers(room1, room2);
         door.hasContentCondition("key");
         room1.put(key);
@@ -35,7 +35,7 @@ public class OpenDoor1 extends Game {
         if (pickMatcher.find()) {
             return pick(command.substring(5));
         } else if (openMatcher.find()) {
-            return open(command.substring(5));
+            return open();
         } else if ("look around".equals(command)) {
             return lookAround();
         } else {
@@ -50,7 +50,7 @@ public class OpenDoor1 extends Game {
 
     private String pick(String itemName) {
         Container room = player.getContainer();
-        if(room.has(itemName)) {
+        if (room.has(itemName)) {
             player.put(room.take(itemName));
             return "You picked " + itemName;
         } else {
@@ -58,7 +58,7 @@ public class OpenDoor1 extends Game {
         }
     }
 
-    private String open(String transactionName) {
+    private String open() {
         return door.doTransactionWith("player");
     }
 

@@ -40,7 +40,7 @@ public class Fetch extends Game {
 
     private String pick(String itemName) {
         Container room = player.getContainer();
-        if(room.has(itemName)) {
+        if (room.has(itemName)) {
             player.put(room.take(itemName));
             return "You picked " + itemName;
         } else {

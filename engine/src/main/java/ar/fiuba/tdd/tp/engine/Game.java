@@ -11,6 +11,7 @@ public abstract class Game {
     }
 
     protected abstract String doCommand(String string);
+
     protected abstract boolean winCondition();
 
     public String command(String string) {

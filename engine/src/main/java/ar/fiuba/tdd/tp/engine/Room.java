@@ -12,12 +12,13 @@ public class Room extends Container{
         StringBuilder stringBuilder = new StringBuilder();
         final String[] prefix = {""};
         contents.forEach((contentName, content) -> {
-            if (contentName != "player") {
-                stringBuilder.append(prefix[0]);
-                prefix[0] = "-";
-                stringBuilder.append(contentName);
+                if (contentName != "player") {
+                    stringBuilder.append(prefix[0]);
+                    prefix[0] = "-";
+                    stringBuilder.append(contentName);
+                }
             }
-        });
+        );
         return stringBuilder.toString();
     }
 }

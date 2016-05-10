@@ -4,12 +4,10 @@ package ar.fiuba.tdd.tp.engine;
  * Created by manuelcruz on 09/05/2016.
  */
 public class Transaction {
-    private String name;
     private Container[] containers;
     private String hasContentConditionName;
 
-    public Transaction(String name) {
-        this.name = name;
+    public Transaction() {
         containers = new Container[2];
         hasContentConditionName = "";
     }
@@ -30,7 +28,7 @@ public class Transaction {
 
     private String move(String contentName, int from, int to) {
         Content content = containers[from].take(contentName);
-        if (hasContentConditionName == "" || content.has(hasContentConditionName)) {
+        if (hasContentConditionName.equals("") || content.has(hasContentConditionName)) {
             containers[to].put(content);
             return contentName + " go from " + containers[from].getName() + " to " + containers[to].getName();
         } else {
