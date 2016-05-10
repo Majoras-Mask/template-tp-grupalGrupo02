@@ -41,7 +41,7 @@ public class FetchTest {
 
     @Test
     public void lookAround() {
-        assertEquals("In room there is a stick", fetch.command("look around"));
+        assertEquals("room has stick", fetch.command("look around"));
     }
 
     @Test

@@ -7,16 +7,17 @@ public abstract class Game {
     protected Player player;
 
     public Game() {
-        player = new Player();
+        player = new Player("player");
     }
 
-    abstract boolean winCondition();
+    protected abstract String doCommand(String string);
+    protected abstract boolean winCondition();
 
     public String command(String string) {
         if (winCondition()) {
             return "You won the game!";
         } else {
-            String response = player.doCommand(string);
+            String response = doCommand(string);
             if (winCondition()) {
                 response = "You won the game!";
             }

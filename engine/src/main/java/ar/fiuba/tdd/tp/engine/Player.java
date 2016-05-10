@@ -1,22 +1,14 @@
 package ar.fiuba.tdd.tp.engine;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Created by manuelcruz on 02/05/2016.
  */
-public class Player {
-    private List<Item> items;
-    private Room room;
+public class Player extends Content{
 
-    public Player() {
-        items = new LinkedList<>();
+    public Player(String name) {
+        super(name);
     }
-
-    private String pick(String string) {
+    /*public String pick(String string) {
         if (room.hasItem(string)) {
             items.add(room.getItem(string));
             return "Picked " + string;
@@ -30,7 +22,7 @@ public class Player {
         return "Entered room2";
     }
 
-    private String lookAround() {
+    public String lookAround() {
         return "In " + room.getName() + " there is" + room.getItemList();
     }
 
@@ -60,5 +52,5 @@ public class Player {
         } else {
             return "invalid command";
         }
-    }
+    }*/
 }
