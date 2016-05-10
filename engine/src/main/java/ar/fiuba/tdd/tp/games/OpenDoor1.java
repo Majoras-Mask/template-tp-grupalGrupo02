@@ -12,13 +12,13 @@ public class OpenDoor1 extends Game {
     private final Room room1;
     private final Room room2;
     private final Transaction door;
-    private final Item key;
+    private final Content key;
 
     public OpenDoor1() {
         super();
         room1 = new Room("room1");
         room2 = new Room("room2");
-        key = new Item("key");
+        key = new Content("key");
         door = new Transaction("door");
         door.setContainers(room1, room2);
         door.hasContentCondition("key");

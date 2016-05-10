@@ -1,9 +1,6 @@
 package ar.fiuba.tdd.tp.games;
 
-import ar.fiuba.tdd.tp.engine.Container;
-import ar.fiuba.tdd.tp.engine.Game;
-import ar.fiuba.tdd.tp.engine.Item;
-import ar.fiuba.tdd.tp.engine.Room;
+import ar.fiuba.tdd.tp.engine.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,12 +10,12 @@ import java.util.regex.Pattern;
  */
 public class Fetch extends Game {
     private final Room room;
-    private final Item stick;
+    private final Content stick;
 
     public Fetch() {
         super();
         room = new Room("room");
-        stick = new Item("stick");
+        stick = new Content("stick");
         room.put(stick);
         room.put(player);
     }

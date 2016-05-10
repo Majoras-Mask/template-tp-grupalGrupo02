@@ -10,12 +10,7 @@ public abstract class Container {
     protected Map<String,Content> contents;
     protected String name;
 
-    Container() {
-        this.name = "";
-        this.contents = new HashMap<>();
-    }
-
-    Container(String name) {
+    protected Container(String name) {
         this.name = name;
         this.contents = new HashMap<>();
     }
