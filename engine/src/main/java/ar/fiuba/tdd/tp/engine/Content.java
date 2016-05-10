@@ -24,7 +24,7 @@ public abstract class Content extends Container {
         return container != null;
     }
 
-    protected Container getContainer() {
+    public Container getContainer() {
         return container;
     }
 }

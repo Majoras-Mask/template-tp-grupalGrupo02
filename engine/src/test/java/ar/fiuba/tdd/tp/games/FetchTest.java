@@ -1,5 +1,6 @@
-package ar.fiuba.tdd.tp.engine;
+package ar.fiuba.tdd.tp.games;
 
+import ar.fiuba.tdd.tp.games.Fetch;
 import org.junit.Before;
 import org.junit.Test;
 

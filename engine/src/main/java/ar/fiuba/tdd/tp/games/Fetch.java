@@ -1,39 +1,34 @@
-package ar.fiuba.tdd.tp.engine;
+package ar.fiuba.tdd.tp.games;
+
+import ar.fiuba.tdd.tp.engine.Container;
+import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.Item;
+import ar.fiuba.tdd.tp.engine.Room;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by manuelcruz on 09/05/2016.
+ * Created by manuelcruz on 02/05/2016.
  */
-public class OpenDoor1 extends Game {
-    private final Room room1;
-    private final Room room2;
-    private final Transaction door;
-    private final Item key;
+public class Fetch extends Game {
+    private final Room room;
+    private final Item stick;
 
-    public OpenDoor1() {
+    public Fetch() {
         super();
-        room1 = new Room("room1");
-        room2 = new Room("room2");
-        key = new Item("key");
-        door = new Transaction("door");
-        door.setContainers(room1, room2);
-        door.hasContentCondition("key");
-        room1.put(key);
-        room1.put(player);
+        room = new Room("room");
+        stick = new Item("stick");
+        room.put(stick);
+        room.put(player);
     }
 
     @Override
     protected String doCommand(String command) {
         Pattern pickPattern = Pattern.compile("pick .*");
         Matcher pickMatcher = pickPattern.matcher(command);
-        Pattern openPattern = Pattern.compile("open .*");
-        Matcher openMatcher = openPattern.matcher(command);
         if (pickMatcher.find()) {
             return pick(command.substring(5));
-        } else if (openMatcher.find()) {
-            return open(command.substring(5));
         } else if ("look around".equals(command)) {
             return lookAround();
         } else {
@@ -43,7 +38,7 @@ public class OpenDoor1 extends Game {
 
     @Override
     protected boolean winCondition() {
-        return room2.has("player");
+        return player.has("stick");
     }
 
     private String pick(String itemName) {
@@ -56,12 +51,7 @@ public class OpenDoor1 extends Game {
         }
     }
 
-    private String open(String transactionName) {
-        return door.doTransactionWith("player");
-    }
-
     private String lookAround() {
-        Room room = (Room) player.getContainer();
         return room.getName() + " has " + room.getItemList();
     }
 }

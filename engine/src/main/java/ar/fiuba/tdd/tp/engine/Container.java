@@ -20,23 +20,23 @@ public abstract class Container {
         this.contents = new HashMap<>();
     }
 
-    protected void put(Content content) {
+    public void put(Content content) {
         content.setContainer(this);
         contents.put(content.getName(), content);
     }
 
-    protected boolean has(String contentName) {
+    public boolean has(String contentName) {
         return contents.containsKey(contentName);
     }
 
-    protected Content take(String contentName) {
+    public Content take(String contentName) {
         Content content = contents.get(contentName);
         contents.remove(contentName);
         content.setContainer(null);
         return content;
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 }
