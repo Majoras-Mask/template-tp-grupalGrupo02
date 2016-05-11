@@ -24,4 +24,6 @@ public abstract class Game {
             return response;
         }
     }
+
+    public abstract String noItemInRoom();
 }
