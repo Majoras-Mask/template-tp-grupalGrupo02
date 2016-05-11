@@ -1,13 +1,10 @@
-package ar.fiuba.tdd.tp.games;
+/*package ar.fiuba.tdd.tp.games;
 
 import ar.fiuba.tdd.tp.engine.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by manuelcruz on 09/05/2016.
- */
 public class OpenDoor1 extends Game {
     private final Room room1;
     private final Room room2;
@@ -67,3 +64,4 @@ public class OpenDoor1 extends Game {
         return room.getName() + " has " + room.getItemList();
     }
 }
+*/
