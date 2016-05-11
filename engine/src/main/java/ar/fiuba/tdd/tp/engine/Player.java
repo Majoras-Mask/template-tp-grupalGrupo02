@@ -57,8 +57,8 @@ public class Player implements PlayerInterface {
         return false;
     }
 
-    public boolean isInRoom(ComponentContainer room) {
-        return room.equals(this.room);
+    public String currentRoomName() {
+        return room.getName();
     }
 
     public void addBehavior(String actionString, Behavior behavior) {
@@ -71,7 +71,7 @@ public class Player implements PlayerInterface {
         //possibleCommands. Si matchea, entonces vamos a tener que buscar ese objeto y si esta a la vista
         //decirle que realice esa accion
         for (String command : actions.keySet()) {
-            Pattern commandPattern = Pattern.compile(command);
+            Pattern commandPattern = Pattern.compile("^" + command);
             Matcher commandMatcher = commandPattern.matcher(message);
             if (commandMatcher.find()) {
                 return actions.get(command).execute(message);

@@ -7,7 +7,7 @@ public abstract class Game {
         player = new Player();
     }
 
-    abstract boolean winCondition();
+    public abstract boolean winCondition();
 
     public Player getPlayer() {
         return player;
