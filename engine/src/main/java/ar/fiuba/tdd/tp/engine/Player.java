@@ -49,7 +49,7 @@ public class Player implements PlayerInterface {
         return null;
     }
 
-    public boolean removeItem(ComponentInterface item) {
+    public boolean removeItemFromRoom(ComponentInterface item) {
         if (seesItemInRoom(item)) {
             room.removeItem(item);
             return true;
@@ -65,19 +65,15 @@ public class Player implements PlayerInterface {
         actions.put(actionString, behavior);
     }
 
-    private boolean haveThatCommand(String command) {
-        return actions.containsKey(command);
-    }
-
     public String doCommand(String message) {
         //Lo que se va a tener que hacer aca es lo siguiente, le llega un mensaje, ver si ese
         //mensaje empieza con algun comando. Nosotros tenemos nuestros posibles comandos en la lista
         //possibleCommands. Si matchea, entonces vamos a tener que buscar ese objeto y si esta a la vista
         //decirle que realice esa accion
         for (String command : actions.keySet()) {
-            Pattern commandPattern = Pattern.compile("^" + command);
+            Pattern commandPattern = Pattern.compile(command);
             Matcher commandMatcher = commandPattern.matcher(message);
-            if (commandMatcher.matches()) {
+            if (commandMatcher.find()) {
                 return actions.get(command).execute(message);
             }
         }

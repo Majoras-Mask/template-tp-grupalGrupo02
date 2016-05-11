@@ -5,27 +5,33 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FetchQuest extends Game {
 
     private ComponentInterface winningCondition;
+    private static final String STICK_NAME = "stick";
+    private static final String ROOM_NAME = "room";
     private static final String NO_ITEM_IN_ROOM = "There is no such thing in this room.";
-    private static String pickCommand = "pick";
+    private static final String PICK = "pick";
+    private static final String PICK_REGEX = "pick (.*)";
+    private static final String LOOK_AROUND = "look around";
 
 
     public FetchQuest() {
         super();
-        player.addBehavior("look around", new LookAround(this));
-        player.addBehavior(pickCommand, new Pickable(this));
+        player.addBehavior(LOOK_AROUND, new LookAround(this));
+        player.addBehavior(PICK, new Pickable(this));
 
-        ComponentInterface stick = new ComponentSimple("stick");
-        stick.addBehavior(pickCommand, new NormalPick(this, stick));
-        winningCondition = stick;
-        ComponentContainer room = new ComponentContainer("primerCuarto");
+        ComponentInterface stick = new ComponentSimple(STICK_NAME);
+        stick.addBehavior(PICK, new NormalPick(this, stick));
+
+        ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(stick);
         player.setRoom(room);
+
+        winningCondition = stick;
     }
 
 
@@ -37,13 +43,15 @@ public class FetchQuest extends Game {
         }
 
         @Override
-        public String execute(String modifier) {
-            //TODO aca deberia tener en el string el mensaje completo, busco el item con alguna regex particular
-            //a todos los picks, agarro el item y le digo execute y fin
-            String regexParaEsto = "stick";
-            ComponentInterface component = game.getPlayer().obtainItemRoom(regexParaEsto);
+        public String execute(String completeMessage) {
+            Pattern commandPattern = Pattern.compile(PICK_REGEX);
+            Matcher commandMatcher = commandPattern.matcher(completeMessage);
+            ComponentInterface component = null;
+            if (commandMatcher.find()) {
+                component = game.getPlayer().obtainItemRoom(commandMatcher.group(1));
+            }
             if (component != null) {
-                return component.doAction(pickCommand, modifier);
+                return component.doAction(PICK, completeMessage);
             }
             return NO_ITEM_IN_ROOM;
         }
@@ -75,7 +83,7 @@ public class FetchQuest extends Game {
 
         @Override
         public String execute(String modifier) {
-            if (this.game.getPlayer().removeItem(item)) {
+            if (this.game.getPlayer().removeItemFromRoom(item)) {
                 this.game.getPlayer().addItemToInventory(item);
                 return "Picked the item";
             }
