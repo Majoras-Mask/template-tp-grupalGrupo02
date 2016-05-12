@@ -2,10 +2,12 @@ import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.Player;
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
-import ar.fiuba.tdd.tp.engine.behavior.DirectAction;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FetchQuestBuilder implements GameBuilder {
 
@@ -21,7 +23,7 @@ public class FetchQuestBuilder implements GameBuilder {
 
     private static final String CANT_PICK = "Can't pick.";
     private static final String PICK_SUCCESS = "You have picked ";
-    private static final String NO_ITEM = "There is no such item in this room.";
+    private static final String NO_ITEM_ROOM = "There is no such item in this room.";
     private static final String WON_GAME = "You picked the stick and won the game!";
 
     public Game build() {
@@ -31,11 +33,6 @@ public class FetchQuestBuilder implements GameBuilder {
             @Override
             public boolean winCondition() {
                 return this.getPlayer().playerHasItem(winningCondition);
-            }
-
-            @Override
-            public String noItemInRoom() {
-                return NO_ITEM;
             }
 
             @Override
@@ -74,6 +71,29 @@ public class FetchQuestBuilder implements GameBuilder {
     }
 
     //Behaviors
+    public static class DirectAction implements Behavior {
+        private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
+        Game game;
+
+        public DirectAction(Game game) {
+            this.game = game;
+        }
+
+        public String execute(String completeMessage) {
+            Pattern commandPattern = Pattern.compile(DIRECT_ACTION_REGEX);
+            Matcher commandMatcher = commandPattern.matcher(completeMessage);
+            ComponentInterface component = null;
+            if (commandMatcher.find()) {
+                component = game.getPlayer().obtainItemRoom(commandMatcher.group(2));
+            }
+            if (component != null) {
+                return component.doAction(commandMatcher.group(1), completeMessage);
+            }
+
+            return NO_ITEM_ROOM;
+        }
+    }
+
     private static class LookAround implements Behavior {
         Game game;
 

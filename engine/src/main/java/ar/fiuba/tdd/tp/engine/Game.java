@@ -6,8 +6,6 @@ public abstract class Game {
 
     public abstract String command(String clientMessage);
 
-    public abstract String noItemInRoom();
-
     public abstract Player getPlayer();
 
     public abstract String getName();

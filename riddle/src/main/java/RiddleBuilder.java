@@ -2,10 +2,12 @@ import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.Player;
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
-import ar.fiuba.tdd.tp.engine.behavior.DirectAction;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RiddleBuilder implements GameBuilder {
 
@@ -31,7 +33,8 @@ public class RiddleBuilder implements GameBuilder {
     private static final String LEAVE_SUCCESS = "You leave ";
     private static final String LEAVE_FAIL_BEGINNING = "There is no ";
     private static final String LEAVE_FAIL_END = " in the boat.";
-    private static final String NO_ITEM = "There is no such item in this room.";
+    private static final String NO_ITEM_ROOM = "There is no such item in this room.";
+    private static final String NO_ITEM_BOAT = "There is no such item in this boat.";
     private static final String WON_GAME = "You picked the stick and won the game!";
 
     private static final int BOAT_CARRY_LIMIT = 1;
@@ -44,11 +47,6 @@ public class RiddleBuilder implements GameBuilder {
             public boolean winCondition() {
                 //TODO ver como comprobar
                 return false;
-            }
-
-            @Override
-            public String noItemInRoom() {
-                return NO_ITEM;
             }
 
             @Override
@@ -74,7 +72,7 @@ public class RiddleBuilder implements GameBuilder {
         riddle.getPlayer().addBehavior(CROSS, new Cross(riddle));
         riddle.getPlayer().addBehavior(LOOK_AROUND, new LookAround(riddle));
         riddle.getPlayer().addBehavior(TAKE, new DirectAction(riddle));
-        riddle.getPlayer().addBehavior(LEAVE, new DirectAction(riddle));
+        riddle.getPlayer().addBehavior(LEAVE, new BoatAction(riddle));
 
         ComponentInterface wolf = new ComponentSimple(WOLF_NAME);
         wolf.addBehavior(TAKE, new Take(riddle, wolf));
@@ -102,6 +100,29 @@ public class RiddleBuilder implements GameBuilder {
     }
 
     //Behaviors
+    public static class DirectAction implements Behavior {
+        private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
+        Game game;
+
+        public DirectAction(Game game) {
+            this.game = game;
+        }
+
+        public String execute(String completeMessage) {
+            Pattern commandPattern = Pattern.compile(DIRECT_ACTION_REGEX);
+            Matcher commandMatcher = commandPattern.matcher(completeMessage);
+            ComponentInterface component = null;
+            if (commandMatcher.find()) {
+                component = game.getPlayer().obtainItemRoom(commandMatcher.group(2));
+            }
+            if (component != null) {
+                return component.doAction(commandMatcher.group(1), completeMessage);
+            }
+
+            return NO_ITEM_ROOM;
+        }
+    }
+
     private static class LookAround implements Behavior {
         Game game;
 
@@ -170,6 +191,30 @@ public class RiddleBuilder implements GameBuilder {
                 return BOAT_FULL;
             }
             return CANT_TAKE;
+        }
+    }
+
+    private static class BoatAction implements Behavior {
+        private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
+        Game game;
+
+        public BoatAction(Game game) {
+            this.game = game;
+        }
+
+
+        public String execute(String completeMessage) {
+            Pattern commandPattern = Pattern.compile(DIRECT_ACTION_REGEX);
+            Matcher commandMatcher = commandPattern.matcher(completeMessage);
+            ComponentInterface component = null;
+            if (commandMatcher.find()) {
+                component = boat.getItem(commandMatcher.group(2));
+            }
+            if (component != null) {
+                return component.doAction(commandMatcher.group(1), completeMessage);
+            }
+
+            return NO_ITEM_BOAT;
         }
     }
 }
