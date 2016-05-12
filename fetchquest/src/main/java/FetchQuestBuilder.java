@@ -1,13 +1,18 @@
 import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.GameBuilder;
+import ar.fiuba.tdd.tp.engine.Player;
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 import ar.fiuba.tdd.tp.engine.behavior.DirectAction;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 
-public class FetchQuest extends Game {
+
+public class FetchQuestBuilder implements GameBuilder {
 
     private ComponentInterface winningCondition;
+
+    private static final String GAME_NAME = "Fetch Quest";
     private static final String STICK_NAME = "stick";
     private static final String ROOM_NAME = "room";
 
@@ -17,20 +22,56 @@ public class FetchQuest extends Game {
     private static final String CANT_PICK = "Can't pick.";
     private static final String PICK_SUCCESS = "You have picked ";
     private static final String NO_ITEM = "There is no such item in this room.";
+    private static final String WON_GAME = "You picked the stick and won the game!";
 
-    public FetchQuest() {
-        super();
-        player.addBehavior(LOOK_AROUND, new LookAround(this));
-        player.addBehavior(PICK, new DirectAction(this));
+    @Override
+    public Game build() {
+        Game fetchQuest = new Game() {
+            public Player player = new Player();
+
+            @Override
+            public boolean winCondition() {
+                return this.getPlayer().playerHasItem(winningCondition);
+            }
+
+            @Override
+            public String noItemInRoom() {
+                return NO_ITEM;
+            }
+
+            @Override
+            public Player getPlayer() {
+                return player;
+            }
+
+            @Override
+            public String getName() {
+                return GAME_NAME;
+            }
+
+            @Override
+            public String command(String clientMessage) {
+                String response = player.doCommand(clientMessage);
+                if (winCondition()) {
+                    response = WON_GAME;
+                }
+                return response;
+            }
+        };
+
+        fetchQuest.getPlayer().addBehavior(LOOK_AROUND, new LookAround(fetchQuest));
+        fetchQuest.getPlayer().addBehavior(PICK, new DirectAction(fetchQuest));
 
         ComponentInterface stick = new ComponentSimple(STICK_NAME);
-        stick.addBehavior(PICK, new NormalPick(this, stick));
+        stick.addBehavior(PICK, new NormalPick(fetchQuest, stick));
 
         ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(stick);
-        player.setRoom(room);
+        fetchQuest.getPlayer().setRoom(room);
 
         winningCondition = stick;
+
+        return fetchQuest;
     }
 
     private static class LookAround implements Behavior {
@@ -67,15 +108,5 @@ public class FetchQuest extends Game {
             }
             return CANT_PICK;
         }
-    }
-
-    @Override
-    public boolean winCondition() {
-        return this.getPlayer().playerHasItem(winningCondition);
-    }
-
-    @Override
-    public String noItemInRoom() {
-        return NO_ITEM;
     }
 }
