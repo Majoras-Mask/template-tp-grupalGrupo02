@@ -5,9 +5,7 @@ import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
-import com.sun.org.apache.bcel.internal.generic.SWAP;
 
-import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
