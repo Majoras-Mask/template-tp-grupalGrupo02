@@ -132,7 +132,7 @@ public class RiddleBuilder implements GameBuilder {
         }
 
         public abstract ComponentInterface findComponent(String whatToFind);
-        
+
         public abstract String noItem();
 
         public String execute(String completeMessage) {

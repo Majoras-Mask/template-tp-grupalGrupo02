@@ -7,14 +7,21 @@ import java.util.Map;
 
 public class ComponentContainer extends ComponentSimple {
 
+    private boolean hasStoringLimit = false;
+    private int storingLimit;
+
     private Map<String, ComponentInterface> items = new HashMap<>();
 
     public ComponentContainer(String name) {
         super(name);
     }
 
-    public void addItem(ComponentInterface item) {
+    public boolean addItem(ComponentInterface item) {
+        if (hasStoringLimit && itemCount() > storingLimit) {
+            return false;
+        }
         items.put(item.getName(), item);
+        return true;
     }
 
     public ComponentInterface getItem(String itemName) {
@@ -22,6 +29,14 @@ public class ComponentContainer extends ComponentSimple {
             return items.get(itemName);
         }
         return null;
+    }
+
+    public void setStoringLimit(int number) {
+        if (number > 0) {
+            hasStoringLimit = true;
+            storingLimit = number;
+        }
+        return;
     }
 
     public int itemCount() {
