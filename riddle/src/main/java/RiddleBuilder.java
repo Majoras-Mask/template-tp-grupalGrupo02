@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
+import com.sun.org.apache.bcel.internal.generic.SWAP;
 
 import java.awt.*;
 import java.util.regex.Matcher;
@@ -13,6 +14,11 @@ import java.util.regex.Pattern;
 public class RiddleBuilder implements GameBuilder {
 
     private static ComponentContainer boat;
+    ComponentInterface wolf;
+    ComponentInterface sheep;
+    ComponentInterface cabbage;
+    ComponentContainer southRiver;
+    ComponentContainer northRiver;
 
     //Names of items, commands and responses
     private static final String GAME_NAME = "Riddle";
@@ -30,6 +36,7 @@ public class RiddleBuilder implements GameBuilder {
     private static final String WHAT_CAN_I_DO_WITH = "what can i do with";
 
     private static final String CANT_TAKE = "You can't see what you are trying to take.";
+    private static final String CROSS_SUCCESS = "Crossed to the other side.";
     private static final String TAKE_SUCCESS = "You have taken ";
     private static final String BOAT_FULL = "Can't take it, the boat is full.";
     private static final String LEAVE_SUCCESS = "You leave ";
@@ -37,8 +44,11 @@ public class RiddleBuilder implements GameBuilder {
     private static final String LEAVE_FAIL_END = " in the boat.";
     private static final String NO_ITEM_ROOM = "There is no such item in this room.";
     private static final String NO_ITEM_BOAT = "There is no such item in this boat.";
-    private static final String WON_GAME = "You picked the stick and won the game!";
+    private static final String WON_GAME = "You delivered all the items to the other side, you won!";
     private static final String HELP_MESSAGE = "help!!!";
+    private static final String SHEEP_CABBAGE_TOGETHER = "You can't the sheep would eat that delicious cabbage.";
+    private static final String WOLF_SHEEP_TOGETHER = "You can't, the wolf is looking hungrily at the sheep";
+    private static final String ERROR = "This shouldn't be happening";
 
     private static final int BOAT_CARRY_LIMIT = 1;
 
@@ -49,7 +59,7 @@ public class RiddleBuilder implements GameBuilder {
             @Override
             public boolean winCondition() {
                 //TODO ver como comprobar
-                return false;
+                return animalsOnTheOtherSide();
             }
 
             @Override
@@ -82,30 +92,33 @@ public class RiddleBuilder implements GameBuilder {
         riddle.getPlayer().addBehavior(TAKE, new DirectAction(riddle));
         riddle.getPlayer().addBehavior(LEAVE, new BoatAction(riddle));
 
-        ComponentInterface wolf = new ComponentSimple(WOLF_NAME);
+        wolf = new ComponentSimple(WOLF_NAME);
         wolf.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(riddle, wolf));
         wolf.addBehavior(TAKE, new Take(riddle, wolf));
         wolf.addBehavior(LEAVE, new Leave(riddle, wolf));
 
-        ComponentInterface sheep = new ComponentSimple(WOLF_NAME);
+        sheep = new ComponentSimple(SHEEP_NAME);
         sheep.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(riddle, sheep));
         sheep.addBehavior(TAKE, new Take(riddle, sheep));
         sheep.addBehavior(LEAVE, new Leave(riddle, sheep));
 
-        ComponentInterface cabbage = new ComponentSimple(WOLF_NAME);
+        cabbage = new ComponentSimple(CABBAGE_NAME);
         cabbage.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(riddle, cabbage));
-        cabbage.addBehavior(TAKE, new Take(riddle, wolf));
-        cabbage.addBehavior(LEAVE, new Leave(riddle, wolf));
+        cabbage.addBehavior(TAKE, new Take(riddle, cabbage));
+        cabbage.addBehavior(LEAVE, new Leave(riddle, cabbage));
 
-        boat = new ComponentContainer(BOAT_NAME);
 
-        ComponentContainer southRiver = new ComponentContainer(SOUTH_RIVER_NAME);
+
+        southRiver = new ComponentContainer(SOUTH_RIVER_NAME);
         southRiver.addItem(wolf);
         southRiver.addItem(sheep);
         southRiver.addItem(cabbage);
         riddle.getPlayer().setRoom(southRiver);
 
-        ComponentContainer northRiver = new ComponentContainer(NORTH_RIVER_NAME);
+        northRiver = new ComponentContainer(NORTH_RIVER_NAME);
+
+        boat = new ComponentContainer(BOAT_NAME);
+        boat.addBehavior(CROSS, new CrossBoat(riddle, southRiver, northRiver));
 
         return riddle;
     }
@@ -171,19 +184,6 @@ public class RiddleBuilder implements GameBuilder {
         }
     }
 
-    private static class Cross implements Behavior {
-        Game game;
-
-        Cross(Game game) {
-            this.game = game;
-        }
-
-        public String execute(String modifier) {
-            return "Terminar esto que es la logica del juego casi";
-        }
-    }
-
-
     private static class Leave implements Behavior {
         Game game;
         ComponentInterface item;
@@ -196,9 +196,81 @@ public class RiddleBuilder implements GameBuilder {
         public String execute(String modifier) {
             if (boat.hasItem(item)) {
                 game.getPlayer().putItemInRoom(item);
+                boat.removeItem(item);
                 return LEAVE_SUCCESS + item.getName() + ".";
             }
             return LEAVE_FAIL_BEGINNING + item.getName() + LEAVE_FAIL_END;
+        }
+    }
+
+    private class Cross implements Behavior {
+        Game game;
+
+        Cross(Game game) {
+            this.game = game;
+        }
+
+        public String execute(String modifier) {
+            if (isSafetoGo()) {
+                return boat.doAction(CROSS, null);
+            }
+            return whyNotSafeToGo();
+        }
+
+        private String whyNotSafeToGo() {
+            if (sheepAndCabbageTogether()) {
+                return SHEEP_CABBAGE_TOGETHER;
+            }
+            if (wolfAndSheepTogether()) {
+                return WOLF_SHEEP_TOGETHER;
+            }
+            return ERROR;
+        }
+
+        private boolean isSafetoGo() {
+            if (sheepAndCabbageTogether() || wolfAndSheepTogether()) {
+                return false;
+            }
+            return true;
+        }
+
+        private boolean sheepAndCabbageTogether() {
+            return (game.getPlayer().seesItemInRoom(sheep) && game.getPlayer().seesItemInRoom(cabbage));
+        }
+
+        private boolean wolfAndSheepTogether() {
+            return (game.getPlayer().seesItemInRoom(wolf) && game.getPlayer().seesItemInRoom(sheep));
+        }
+    }
+
+    private boolean animalsOnTheOtherSide() {
+        if (northRiver.hasItem(wolf) && northRiver.hasItem(sheep) && northRiver.hasItem(cabbage)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static class CrossBoat implements Behavior {
+        Game game;
+        ComponentContainer from;
+        ComponentContainer to;
+
+        CrossBoat(Game game, ComponentContainer from, ComponentContainer to) {
+            this.game = game;
+            this.from = from;
+            this.to = to;
+        }
+
+        public void swapFromTo() {
+            ComponentContainer temp = this.from;
+            this.from = this.to;
+            this.to = temp;
+        }
+
+        public String execute(String modifier) {
+            game.getPlayer().setRoom(to);
+            swapFromTo();
+            return CROSS_SUCCESS;
         }
     }
 
