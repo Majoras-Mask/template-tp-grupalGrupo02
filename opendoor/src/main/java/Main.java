@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        GameBuilder fetchQuestBuilder = new FetchQuestBuilder();
-        Game game = fetchQuestBuilder.build();
+        GameBuilder openDoorBuilder = new OpenDoorBuilder();
+        Game game = openDoorBuilder.build();
 
         Scanner input = new Scanner(System.in);
 
