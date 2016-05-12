@@ -1,16 +1,13 @@
-package ar.fiuba.tdd.tp.engine;
+package ar.fiuba.tdd.tp.engine.elements;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by manuelcruz on 09/05/2016.
- */
-public abstract class Container {
+public class Container {
     protected Map<String,Content> contents;
     protected String name;
 
-    protected Container(String name) {
+    public Container(String name) {
         this.name = name;
         this.contents = new HashMap<>();
     }
@@ -33,5 +30,17 @@ public abstract class Container {
 
     public String getName() {
         return name;
+    }
+
+    public String getContentsList() {
+        StringBuilder stringBuilder = new StringBuilder();
+        final String[] prefix = {""};
+        contents.forEach((contentName, content) -> {
+                stringBuilder.append(prefix[0]);
+                prefix[0] = "-";
+                stringBuilder.append(contentName);
+            }
+        );
+        return stringBuilder.toString();
     }
 }

@@ -1,28 +1,51 @@
 package ar.fiuba.tdd.tp.engine;
 
-/**
- * Created by manuelcruz on 05/05/2016.
- */
-public abstract class Game {
-    protected Content player;
+import ar.fiuba.tdd.tp.engine.commands.GameCommand;
+import ar.fiuba.tdd.tp.engine.commands.WinCondition;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class Game {
+    private WinCondition winCondition;
+    private List<GameCommand> commands;
 
     public Game() {
-        player = new Content("player");
+        commands = new ArrayList<>();
     }
 
-    protected abstract String doCommand(String string);
+    private String doCommand(String command) {
+        String response = command;
+        Iterator iterator = commands.iterator();
+        while (iterator.hasNext() && response.equals(command)) {
+            GameCommand gameCommand = (GameCommand) iterator.next();
+            String parameter;
+            if (!command.equals(parameter = gameCommand.checkCommand(command))) {
+                response = gameCommand.doCommand(parameter);
+            }
+        }
+        return response.equals(command) ? "invalid command" : response;
+    }
 
-    protected abstract boolean winCondition();
+    public void setWinCondition(WinCondition winCondition) {
+        this.winCondition = winCondition;
+    }
 
     public String command(String string) {
-        if (winCondition()) {
+        if (winCondition.check()) {
             return "You won the game!";
         } else {
             String response = doCommand(string);
-            if (winCondition()) {
+            if (winCondition.check()) {
                 response = "You won the game!";
             }
             return response;
         }
     }
+
+    public void setCommand(GameCommand command) {
+        commands.add(command);
+    }
+
 }
