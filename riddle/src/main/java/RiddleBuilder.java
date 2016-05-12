@@ -122,26 +122,60 @@ public class RiddleBuilder implements GameBuilder {
     }
 
     //Behaviors
-    public static class DirectAction implements Behavior {
+
+    public abstract static class DirectActionAbstract implements Behavior {
         private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
         Game game;
 
-        public DirectAction(Game game) {
+        public DirectActionAbstract(Game game) {
             this.game = game;
         }
+
+        public abstract ComponentInterface findComponent(String whatToFind);
+        
+        public abstract String noItem();
 
         public String execute(String completeMessage) {
             Pattern commandPattern = Pattern.compile(DIRECT_ACTION_REGEX);
             Matcher commandMatcher = commandPattern.matcher(completeMessage);
             ComponentInterface component = null;
             if (commandMatcher.find()) {
-                component = game.getPlayer().obtainItemRoom(commandMatcher.group(2));
+                component = findComponent(commandMatcher.group(2));
             }
             if (component != null) {
                 return component.doAction(commandMatcher.group(1), completeMessage);
             }
 
+            return noItem();
+        }
+    }
+
+    public static class DirectAction extends DirectActionAbstract {
+        public DirectAction(Game game) {
+            super(game);
+        }
+
+        public ComponentInterface findComponent(String whatToFind) {
+            return game.getPlayer().obtainItemRoom(whatToFind);
+        }
+
+        public String noItem() {
             return NO_ITEM_ROOM;
+        }
+
+    }
+
+    private static class BoatAction extends DirectActionAbstract {
+        public BoatAction(Game game) {
+            super(game);
+        }
+
+        public ComponentInterface findComponent(String whatToFind) {
+            return boat.getItem(whatToFind);
+        }
+
+        public String noItem() {
+            return NO_ITEM_BOAT;
         }
     }
 
@@ -291,30 +325,6 @@ public class RiddleBuilder implements GameBuilder {
                 return BOAT_FULL;
             }
             return CANT_TAKE;
-        }
-    }
-
-    private static class BoatAction implements Behavior {
-        private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
-        Game game;
-
-        public BoatAction(Game game) {
-            this.game = game;
-        }
-
-
-        public String execute(String completeMessage) {
-            Pattern commandPattern = Pattern.compile(DIRECT_ACTION_REGEX);
-            Matcher commandMatcher = commandPattern.matcher(completeMessage);
-            ComponentInterface component = null;
-            if (commandMatcher.find()) {
-                component = boat.getItem(commandMatcher.group(2));
-            }
-            if (component != null) {
-                return component.doAction(commandMatcher.group(1), completeMessage);
-            }
-
-            return NO_ITEM_BOAT;
         }
     }
 }

@@ -69,7 +69,7 @@ public class FetchQuestBuilder implements GameBuilder {
 
         ComponentInterface stick = new ComponentSimple(STICK_NAME);
         stick.addBehavior(PICK, new NormalPick(fetchQuest, stick));
-        stick.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(fetchQuest, stick));
+        stick.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(stick));
 
         ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(stick);
@@ -105,11 +105,9 @@ public class FetchQuestBuilder implements GameBuilder {
     }
 
     private static class WhatCanIDo implements Behavior {
-        Game game;
         ComponentInterface item;
 
-        WhatCanIDo(Game game, ComponentInterface item) {
-            this.game = game;
+        WhatCanIDo(ComponentInterface item) {
             this.item = item;
         }
 
