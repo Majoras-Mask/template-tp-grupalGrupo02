@@ -24,6 +24,10 @@ public class ComponentContainer extends ComponentSimple {
         return null;
     }
 
+    public int itemCount() {
+        return items.size();
+    }
+
     public boolean hasItem(ComponentInterface item) {
         return items.containsKey(item.getName());
     }

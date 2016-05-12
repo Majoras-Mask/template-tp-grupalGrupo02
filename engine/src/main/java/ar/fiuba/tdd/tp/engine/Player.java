@@ -42,6 +42,10 @@ public class Player implements PlayerInterface {
         return room.hasItem(itemName);
     }
 
+    public void putItemInRoom(ComponentInterface item) {
+        room.addItem(item);
+    }
+
     public ComponentInterface obtainItemRoom(String itemName) {
         if (seesItemInRoom(itemName)) {
             return room.getItem(itemName);
