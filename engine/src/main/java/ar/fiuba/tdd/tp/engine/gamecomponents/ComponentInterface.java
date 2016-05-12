@@ -2,6 +2,8 @@ package ar.fiuba.tdd.tp.engine.gamecomponents;
 
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 
+import java.util.List;
+
 public interface ComponentInterface {
     void addBehavior(String actionString, Behavior behavior);
 
@@ -10,4 +12,6 @@ public interface ComponentInterface {
     void setName(String name);
 
     String getName();
+
+    List<String> getListOfActions();
 }

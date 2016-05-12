@@ -2,7 +2,9 @@ package ar.fiuba.tdd.tp.engine.gamecomponents;
 
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ComponentSimple implements ComponentInterface {
@@ -32,5 +34,10 @@ public class ComponentSimple implements ComponentInterface {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public List<String> getListOfActions() {
+        return  new ArrayList<String>(actions.keySet());
     }
 }

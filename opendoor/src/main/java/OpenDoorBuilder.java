@@ -20,6 +20,7 @@ public class OpenDoorBuilder implements GameBuilder {
     private static final String PICK = "pick";
     private static final String OPEN = "open";
     private static final String LOOK_AROUND = "look around";
+    private static final String WHAT_CAN_I_DO = "what can i do with";
 
     private static final String CANT_PICK = "Can't pick.";
     private static final String PICK_SUCCESS = "You have picked ";
@@ -28,6 +29,8 @@ public class OpenDoorBuilder implements GameBuilder {
 
     private static final String NO_ITEM_ROOM = "There is no such item in this room.";
     private static final String WON_GAME = "You won the game by opening the door!";
+    private static final String HELP_MESSAGE = "help!!!";
+
 
     public Game build() {
         Game openDoor = new Game() {
@@ -49,6 +52,11 @@ public class OpenDoorBuilder implements GameBuilder {
             }
 
             @Override
+            public String help() {
+                return HELP_MESSAGE;
+            }
+
+            @Override
             public String command(String clientMessage) {
                 String response = player.doCommand(clientMessage);
                 if (winCondition()) {
@@ -61,13 +69,16 @@ public class OpenDoorBuilder implements GameBuilder {
         openDoor.getPlayer().addBehavior(LOOK_AROUND, new LookAround(openDoor));
         openDoor.getPlayer().addBehavior(PICK, new DirectAction(openDoor));
         openDoor.getPlayer().addBehavior(OPEN, new DirectAction(openDoor));
+        openDoor.getPlayer().addBehavior(WHAT_CAN_I_DO, new DirectAction(openDoor));
 
         ComponentInterface key = new ComponentSimple(KEY_NAME);
         key.addBehavior(PICK, new NormalPick(openDoor, key));
+        key.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(openDoor, key));
 
         ComponentInterface door = new ComponentSimple(DOOR_NAME);
         ComponentContainer winningRoom = new ComponentContainer(WINNING_ROOM_NAME);
         door.addBehavior(OPEN, new LockedDoorOpen(openDoor, key, winningRoom));
+        door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(openDoor, door));
 
         ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(key);
@@ -98,6 +109,25 @@ public class OpenDoorBuilder implements GameBuilder {
             }
 
             return NO_ITEM_ROOM;
+        }
+    }
+
+    private static class WhatCanIDo implements Behavior {
+        Game game;
+        ComponentInterface item;
+
+        WhatCanIDo(Game game, ComponentInterface item) {
+            this.game = game;
+            this.item = item;
+        }
+
+        public String execute(String modifier) {
+            StringBuffer message = new StringBuffer();
+            message.append("You can: ");
+            for (String action : item.getListOfActions()) {
+                message.append(action + ". ");
+            }
+            return message.toString();
         }
     }
 

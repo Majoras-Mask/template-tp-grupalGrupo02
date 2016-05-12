@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +27,7 @@ public class RiddleBuilder implements GameBuilder {
     private static final String LEAVE = "leave";
     private static final String TAKE = "take";
     private static final String LOOK_AROUND = "look around";
+    private static final String WHAT_CAN_I_DO_WITH = "what can i do with";
 
     private static final String CANT_TAKE = "You can't see what you are trying to take.";
     private static final String TAKE_SUCCESS = "You have taken ";
@@ -36,6 +38,7 @@ public class RiddleBuilder implements GameBuilder {
     private static final String NO_ITEM_ROOM = "There is no such item in this room.";
     private static final String NO_ITEM_BOAT = "There is no such item in this boat.";
     private static final String WON_GAME = "You picked the stick and won the game!";
+    private static final String HELP_MESSAGE = "help!!!";
 
     private static final int BOAT_CARRY_LIMIT = 1;
 
@@ -59,6 +62,10 @@ public class RiddleBuilder implements GameBuilder {
                 return GAME_NAME;
             }
 
+            public String help() {
+                return HELP_MESSAGE;
+            }
+
             @Override
             public String command(String clientMessage) {
                 String response = player.doCommand(clientMessage);
@@ -71,18 +78,22 @@ public class RiddleBuilder implements GameBuilder {
 
         riddle.getPlayer().addBehavior(CROSS, new Cross(riddle));
         riddle.getPlayer().addBehavior(LOOK_AROUND, new LookAround(riddle));
+        riddle.getPlayer().addBehavior(WHAT_CAN_I_DO_WITH, new DirectAction(riddle));
         riddle.getPlayer().addBehavior(TAKE, new DirectAction(riddle));
         riddle.getPlayer().addBehavior(LEAVE, new BoatAction(riddle));
 
         ComponentInterface wolf = new ComponentSimple(WOLF_NAME);
+        wolf.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(riddle, wolf));
         wolf.addBehavior(TAKE, new Take(riddle, wolf));
         wolf.addBehavior(LEAVE, new Leave(riddle, wolf));
 
         ComponentInterface sheep = new ComponentSimple(WOLF_NAME);
+        sheep.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(riddle, sheep));
         sheep.addBehavior(TAKE, new Take(riddle, sheep));
         sheep.addBehavior(LEAVE, new Leave(riddle, sheep));
 
         ComponentInterface cabbage = new ComponentSimple(WOLF_NAME);
+        cabbage.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(riddle, cabbage));
         cabbage.addBehavior(TAKE, new Take(riddle, wolf));
         cabbage.addBehavior(LEAVE, new Leave(riddle, wolf));
 
@@ -120,6 +131,25 @@ public class RiddleBuilder implements GameBuilder {
             }
 
             return NO_ITEM_ROOM;
+        }
+    }
+
+    private static class WhatCanIDo implements Behavior {
+        Game game;
+        ComponentInterface item;
+
+        WhatCanIDo(Game game, ComponentInterface item) {
+            this.game = game;
+            this.item = item;
+        }
+
+        public String execute(String modifier) {
+            StringBuffer message = new StringBuffer();
+            message.append("You can: ");
+            for (String action : item.getListOfActions()) {
+                message.append(action + ". ");
+            }
+            return message.toString();
         }
     }
 

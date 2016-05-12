@@ -9,4 +9,6 @@ public abstract class Game {
     public abstract Player getPlayer();
 
     public abstract String getName();
+
+    public abstract String help();
 }

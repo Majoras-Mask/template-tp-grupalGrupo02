@@ -20,11 +20,14 @@ public class FetchQuestBuilder implements GameBuilder {
 
     private static final String PICK = "pick";
     private static final String LOOK_AROUND = "look around";
+    private static final String WHAT_CAN_I_DO_WITH = "what can i do with";
+
 
     private static final String CANT_PICK = "Can't pick.";
     private static final String PICK_SUCCESS = "You have picked ";
     private static final String NO_ITEM_ROOM = "There is no such item in this room.";
     private static final String WON_GAME = "You picked the stick and won the game!";
+    private static final String HELP_MESSAGE = "help!!!";
 
     public Game build() {
         Game fetchQuest = new Game() {
@@ -46,6 +49,11 @@ public class FetchQuestBuilder implements GameBuilder {
             }
 
             @Override
+            public String help() {
+                return HELP_MESSAGE;
+            }
+
+            @Override
             public String command(String clientMessage) {
                 String response = player.doCommand(clientMessage);
                 if (winCondition()) {
@@ -57,9 +65,11 @@ public class FetchQuestBuilder implements GameBuilder {
 
         fetchQuest.getPlayer().addBehavior(LOOK_AROUND, new LookAround(fetchQuest));
         fetchQuest.getPlayer().addBehavior(PICK, new DirectAction(fetchQuest));
+        fetchQuest.getPlayer().addBehavior(WHAT_CAN_I_DO_WITH, new DirectAction(fetchQuest));
 
         ComponentInterface stick = new ComponentSimple(STICK_NAME);
         stick.addBehavior(PICK, new NormalPick(fetchQuest, stick));
+        stick.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(fetchQuest, stick));
 
         ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(stick);
@@ -91,6 +101,25 @@ public class FetchQuestBuilder implements GameBuilder {
             }
 
             return NO_ITEM_ROOM;
+        }
+    }
+
+    private static class WhatCanIDo implements Behavior {
+        Game game;
+        ComponentInterface item;
+
+        WhatCanIDo(Game game, ComponentInterface item) {
+            this.game = game;
+            this.item = item;
+        }
+
+        public String execute(String modifier) {
+            StringBuffer message = new StringBuffer();
+            message.append("You can: ");
+            for (String action : item.getListOfActions()) {
+                message.append(action + ". ");
+            }
+            return message.toString();
         }
     }
 
