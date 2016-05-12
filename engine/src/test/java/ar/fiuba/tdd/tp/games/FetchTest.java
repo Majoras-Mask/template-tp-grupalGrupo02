@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by manuelcruz on 05/05/2016.
- */
 public class FetchTest {
     private final FetchBuilder builder = new FetchBuilder();
     private Game game;
@@ -44,6 +41,11 @@ public class FetchTest {
     @Test
     public void lookAround() {
         assertEquals("room has stick-player", game.command("look around"));
+    }
+
+    @Test
+    public void invalidPick() {
+        assertEquals("Can't pick something", game.command("pick something"));
     }
 
     @Test
