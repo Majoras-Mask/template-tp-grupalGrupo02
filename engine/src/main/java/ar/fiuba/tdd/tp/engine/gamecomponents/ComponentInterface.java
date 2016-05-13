@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.engine.gamecomponents;
 
-import ar.fiuba.tdd.tp.engine.behavior.Behavior;
+import ar.fiuba.tdd.tp.game.player.behavior.Behavior;
 
 import java.util.List;
 
