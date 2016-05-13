@@ -7,7 +7,7 @@ import ar.fiuba.tdd.tp.game.context.GameContext;
 
 import java.util.Optional;
 
-/**
+/*
  * This behavior executes the pick operation on the given component
  */
 public class Pick extends OneObjectBehaviorImpl {

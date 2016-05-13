@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.game.player;
 
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.game.component.Component;
 
 import java.util.List;
@@ -28,56 +27,56 @@ public class PlayerImpl implements Player {
     }
 
 
-    public List<String> listOfWhatISee() {
-        return room.listOfComponents();
-    }
-
-//    public void setRoom(ComponentContainer room) {
-//        this.room = room;
+//    public List<String> listOfWhatISee() {
+//        return room.listOfComponents();
 //    }
-
-    public boolean playerHasItem(ComponentInterface item) {
-        return inventory.contains(item);
-    }
-
-//    public void addItemToInventory(ComponentInterface item) {
-//        inventory.add(item);
+//
+////    public void setRoom(ComponentContainer room) {
+////        this.room = room;
+////    }
+//
+//    public boolean playerHasItem(ComponentInterface item) {
+//        return inventory.contains(item);
 //    }
-
-    public boolean seesItemInRoom(ComponentInterface item) {
-        return room.hasItem(item);
-    }
-
-    public boolean seesItemInRoom(String itemName) {
-        return room.hasItem(itemName);
-    }
-
-    public void putItemInRoom(ComponentInterface item) {
-        room.addItem(item);
-    }
-
-    public ComponentInterface obtainItemRoom(String itemName) {
-        if (seesItemInRoom(itemName)) {
-            return room.getItem(itemName);
-        }
-        return null;
-    }
-
-    public boolean removeItemFromRoom(ComponentInterface item) {
-        if (seesItemInRoom(item)) {
-            room.removeItem(item);
-            return true;
-        }
-        return false;
-    }
-
-    public String currentRoomName() {
-        return room.getName();
-    }
-
-//    public void addBehavior(String actionString, Behavior behavior) {
-//        actions.put(actionString, behavior);
+//
+////    public void addItemToInventory(ComponentInterface item) {
+////        inventory.add(item);
+////    }
+//
+//    public boolean seesItemInRoom(ComponentInterface item) {
+//        return room.hasItem(item);
 //    }
+//
+//    public boolean seesItemInRoom(String itemName) {
+//        return room.hasItem(itemName);
+//    }
+//
+//    public void putItemInRoom(ComponentInterface item) {
+//        room.addItem(item);
+//    }
+//
+//    public ComponentInterface obtainItemRoom(String itemName) {
+//        if (seesItemInRoom(itemName)) {
+//            return room.getItem(itemName);
+//        }
+//        return null;
+//    }
+//
+//    public boolean removeItemFromRoom(ComponentInterface item) {
+//        if (seesItemInRoom(item)) {
+//            room.removeItem(item);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public String currentRoomName() {
+//        return room.getName();
+//    }
+//
+////    public void addBehavior(String actionString, Behavior behavior) {
+////        actions.put(actionString, behavior);
+////    }
 
 
 }

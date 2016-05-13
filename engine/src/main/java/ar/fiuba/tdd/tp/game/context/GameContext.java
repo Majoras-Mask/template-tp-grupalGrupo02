@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.game.context;
 
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.player.Player;
 
@@ -25,7 +24,7 @@ public class GameContext {
 
     public Component findComponentByName(String name) {
         //TODO usar una sola interfaz Component
-        ComponentInterface item = this.currentRoom.getItem(name);
+//        ComponentInterface item = this.currentRoom.getItem(name);
 
         return null;
     }

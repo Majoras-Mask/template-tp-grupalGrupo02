@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * This behavior can be used when no other behavior can interpret the command
- * received
+/*
+ *
+ * This behavior can be used when no other behavior can interpret the command received
  */
 public class FallBackBehavior implements Behavior {
 

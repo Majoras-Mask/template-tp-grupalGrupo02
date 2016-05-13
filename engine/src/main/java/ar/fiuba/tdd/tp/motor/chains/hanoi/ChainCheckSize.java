@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.motor.commands.hanoi.GameCommandCheckSize;
 import ar.fiuba.tdd.tp.motor.games.hanoi.GameHanoi;
 
 
-public class ChainCheckSize extends ChainHanoi{
+public class ChainCheckSize extends ChainHanoi {
 
     public ChainCheckSize(GameHanoi gameHanoi, String patternString) {
         super(gameHanoi, patternString);

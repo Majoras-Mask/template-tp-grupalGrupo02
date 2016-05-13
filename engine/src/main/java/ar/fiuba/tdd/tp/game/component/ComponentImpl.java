@@ -41,12 +41,16 @@ public class ComponentImpl implements Component {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComponentImpl component = (ComponentImpl) o;
-        return Objects.equals(name, component.name) &&
-                Objects.equals(attributes, component.attributes);
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        ComponentImpl component = (ComponentImpl) obj;
+        return Objects.equals(name, component.name)
+                && Objects.equals(attributes, component.attributes);
     }
 
     @Override

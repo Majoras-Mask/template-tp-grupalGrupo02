@@ -1,10 +1,10 @@
 package ar.fiuba.tdd.tp.game.player.behavior.impl;
 
+import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
 import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
 import ar.fiuba.tdd.tp.game.context.GameContext;
 import ar.fiuba.tdd.tp.game.player.behavior.OneObjectBehavior;
-import ar.fiuba.tdd.tp.game.component.Component;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
