@@ -7,7 +7,9 @@ public interface Game {
 
     String getName();
 
-    Boolean checkIfGameIsFinished();
+    Boolean isWon();
+
+    Boolean isLost();
 
     String help();
 

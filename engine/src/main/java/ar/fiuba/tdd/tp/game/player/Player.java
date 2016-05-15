@@ -4,4 +4,6 @@ public interface Player {
 
     String doCommand(String message);
 
+    Boolean has(String componentName);
+
 }

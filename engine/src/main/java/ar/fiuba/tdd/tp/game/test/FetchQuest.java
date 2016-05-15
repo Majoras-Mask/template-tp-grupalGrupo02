@@ -4,8 +4,15 @@ import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.component.ComponentImpl;
 import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
+import ar.fiuba.tdd.tp.game.component.attribute.open.OpenableImpl;
 import ar.fiuba.tdd.tp.game.component.attribute.pick.PickableImpl;
 import ar.fiuba.tdd.tp.game.context.GameContext;
+import ar.fiuba.tdd.tp.game.context.GameContextImpl;
+import ar.fiuba.tdd.tp.game.mission.Mission;
+import ar.fiuba.tdd.tp.game.mission.MissionImpl;
+import ar.fiuba.tdd.tp.game.mission.condition.Condition;
+import ar.fiuba.tdd.tp.game.mission.condition.ConditionType;
+import ar.fiuba.tdd.tp.game.mission.condition.PlayerHas;
 import ar.fiuba.tdd.tp.game.player.Inventory;
 import ar.fiuba.tdd.tp.game.player.PlayerImpl;
 import ar.fiuba.tdd.tp.game.player.action.Action;
@@ -22,15 +29,31 @@ import java.util.Set;
 public class FetchQuest implements Game {
 
     private final PlayerImpl player;
+    private final GameContext gameContext;
+    private final Mission mission;
 
     public FetchQuest() {
-        final GameContext gameContext = createGameContext();
+        this.gameContext = createGameContext();
         this.player = getPlayer(gameContext);
+        this.mission = createMission();
+    }
+
+    private Mission createMission() {
+        List<Condition> winConditions = new ArrayList<>();
+        List<Condition> loseConditions = new ArrayList<>();
+
+        Condition winCondition = new PlayerHas(this.player, "stick1", ConditionType.HAVE);
+        Condition loseCondition = new PlayerHas(this.player, "stick2", ConditionType.NOT_HAVE);
+
+        winConditions.add(winCondition);
+        loseConditions.add(loseCondition);
+
+        return new MissionImpl(winConditions, loseConditions);
     }
 
     private static PlayerImpl getPlayer(GameContext gameContext) {
         final Inventory inventory = new Inventory(new ArrayList<>(), 10);
-        return new PlayerImpl(createActionResolver(inventory, gameContext));
+        return new PlayerImpl(createActionResolver(inventory, gameContext), inventory);
     }
 
     private static ActionResolver createActionResolver(Inventory inventory, GameContext gameContext) {
@@ -59,7 +82,16 @@ public class FetchQuest implements Game {
         List<Component> roomComponents = new ArrayList<>();
         roomComponents.add(createStick("stick1"));
         roomComponents.add(createStick("stick2"));
-        return new GameContext("room", roomComponents);
+        roomComponents.add(createAirplane());
+        return new GameContextImpl("room", roomComponents);
+    }
+
+    private static Component createAirplane() {
+
+        List<Attribute> attributes = new ArrayList<>();
+        attributes.add(new OpenableImpl());
+
+        return new ComponentImpl("airplane", attributes);
     }
 
     @Override
@@ -73,8 +105,13 @@ public class FetchQuest implements Game {
     }
 
     @Override
-    public Boolean checkIfGameIsFinished() {
-        return Boolean.FALSE;
+    public Boolean isWon() {
+        return this.mission.isAccomplished();
+    }
+
+    @Override
+    public Boolean isLost() {
+        return this.mission.isFailed();
     }
 
     @Override

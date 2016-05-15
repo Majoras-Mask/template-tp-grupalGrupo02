@@ -5,39 +5,16 @@ import ar.fiuba.tdd.tp.game.component.Component;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * A {@link GameContext} represents the components for a certain character in a certain moment.
- * It can be a boat, a room, a custom scenario, etc...
- */
-public class GameContext {
+public interface GameContext {
 
-    private final String name;
-    private final List<Component> components;
+    Optional<Component> findComponentByName(String name);
 
-    public GameContext(String name, List<Component> components) {
-        this.name = name;
-        this.components = components;
-    }
+    String getName();
 
-    public Optional<Component> findComponentByName(String name) {
-        return this.components.stream().filter(component -> component.getName().equals(name)).findFirst();
-    }
+    List<Component> getComponents();
 
-    public String getName() {
-        return name;
-    }
+    void add(Component component);
 
-    public List<Component> getComponents() {
-        return components;
-    }
-
-
-    public void add(Component component) {
-        this.components.add(component);
-    }
-
-    public void remove(Component component) {
-        this.components.remove(component);
-    }
+    void remove(Component component);
 
 }

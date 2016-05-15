@@ -29,7 +29,7 @@ public class Inventory {
     }
 
     public void add(Component component) {
-        if (this.limitReached()) {
+        if (!this.limitReached()) {
             this.components.add(component);
         }
     }

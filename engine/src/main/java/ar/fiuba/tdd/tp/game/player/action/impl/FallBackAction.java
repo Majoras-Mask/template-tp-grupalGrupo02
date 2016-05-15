@@ -22,10 +22,10 @@ public class FallBackAction implements Action {
 
     public FallBackAction() {
         this.responses = new ArrayList<>();
-        this.responses.add("I'm not going to do that!");
+        this.responses.add("I do not know what you tell me to do!");
         this.responses.add("mmm I think i don't get it.. what?");
-        this.responses.add("Can't do that action!");
-        this.responses.add("Go to hell, tell me something I can do!");
+        this.responses.add("I Can't do that!");
+        this.responses.add("What the heck? I can't do that...");
     }
 
     @Override
