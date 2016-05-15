@@ -1,39 +1,43 @@
 package ar.fiuba.tdd.tp.game.context;
 
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.game.component.Component;
-import ar.fiuba.tdd.tp.game.player.Player;
 
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * A {@link GameContext} represents the components for a certain character in a certain moment.
+ * It can be a boat, a room, a custom scenario, etc...
+ */
 public class GameContext {
 
-    private final Player player;
-    private final ComponentContainer currentRoom;
+    private final String name;
+    private final List<Component> components;
 
-    public GameContext(Player player, ComponentContainer currentRoom) {
-        this.player = player;
-        this.currentRoom = currentRoom;
+    public GameContext(String name, List<Component> components) {
+        this.name = name;
+        this.components = components;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Optional<Component> findComponentByName(String name) {
+        return this.components.stream().filter(component -> component.getName().equals(name)).findFirst();
     }
 
-    public ComponentContainer getCurrentRoom() {
-        return currentRoom;
+    public String getName() {
+        return name;
     }
 
-    public Component findComponentByName(String name) {
-        //TODO usar una sola interfaz Component
-//        ComponentInterface item = this.currentRoom.getItem(name);
-
-        return null;
+    public List<Component> getComponents() {
+        return components;
     }
 
-    public void addItemToPlayer(Component component) {
-        this.player.addItem(component);
+
+    public void add(Component component) {
+        this.components.add(component);
     }
 
-    public void removeComponent(Component component) {
-        this.currentRoom.removeComponent(component);
+    public void remove(Component component) {
+        this.components.remove(component);
     }
+
 }

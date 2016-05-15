@@ -6,7 +6,12 @@ public class PickableImpl implements PickableAttribute {
 
     @Override
     public AttributeType getType() {
-        return AttributeType.OPENABLE;
+        return AttributeType.PICKABLE;
+    }
+
+    @Override
+    public String getDescription() {
+        return "pick";
     }
 
     @Override

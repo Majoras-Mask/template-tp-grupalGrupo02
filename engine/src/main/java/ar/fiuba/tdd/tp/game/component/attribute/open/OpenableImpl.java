@@ -20,6 +20,11 @@ public class OpenableImpl implements OpenableAttribute {
     }
 
     @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
     public Boolean isOpen() {
         return this.isOpen;
     }

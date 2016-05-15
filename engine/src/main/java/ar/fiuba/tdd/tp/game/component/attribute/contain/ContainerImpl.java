@@ -48,4 +48,9 @@ public class ContainerImpl implements ContainerAttribute {
     public AttributeType getType() {
         return AttributeType.CONTAINER;
     }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
 }
