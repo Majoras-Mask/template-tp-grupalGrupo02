@@ -50,6 +50,6 @@ public abstract class OneObjectAction implements Action {
         return component.getAttribute(type);
     }
 
-    abstract protected String execute(Component component);
+    protected abstract String execute(Component component);
 
 }

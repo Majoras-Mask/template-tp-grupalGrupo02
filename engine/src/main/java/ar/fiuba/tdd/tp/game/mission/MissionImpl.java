@@ -4,8 +4,9 @@ import ar.fiuba.tdd.tp.game.mission.condition.Condition;
 
 import java.util.List;
 
-/*
- * An implementation of a {@link Mission} that is accomplished when all the winConditions are accomplished
+/**
+ * An implementation of a {@link Mission} that is accomplished when all the winConditions are accomplished.
+ * It also fails whenever any loseCondition is true
  */
 public class MissionImpl implements Mission {
 

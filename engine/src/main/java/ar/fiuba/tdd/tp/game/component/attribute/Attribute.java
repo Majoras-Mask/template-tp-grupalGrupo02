@@ -4,6 +4,4 @@ public interface Attribute {
 
     AttributeType getType();
 
-    String getDescription();
-
 }

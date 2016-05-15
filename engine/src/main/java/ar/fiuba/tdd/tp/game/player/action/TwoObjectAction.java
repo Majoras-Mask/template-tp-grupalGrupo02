@@ -11,8 +11,8 @@ import ar.fiuba.tdd.tp.game.component.Component;
  * The key is called the "indirect object," because it's being used in the course of performing the action but
  * isn't the main focus of the action.
  */
-public interface TwoObjectAction extends Action {
+public abstract class TwoObjectAction implements Action {
 
-    String execute(Component directComponent, Component indirectComponent);
+    protected abstract String execute(Component directComponent, Component indirectComponent);
 
 }

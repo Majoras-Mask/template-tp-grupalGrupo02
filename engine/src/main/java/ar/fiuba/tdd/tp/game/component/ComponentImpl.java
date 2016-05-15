@@ -35,9 +35,9 @@ public class ComponentImpl implements Component {
     }
 
     @Override
-    public Boolean hasAttribute(Attribute anotherAttribute) {
+    public Boolean hasAttribute(AttributeType type) {
         return this.attributes.stream()
-                .anyMatch(attribute -> attribute.getType().equals(anotherAttribute.getType()));
+                .anyMatch(attribute -> attribute.getType().equals(type));
     }
 
     @Override

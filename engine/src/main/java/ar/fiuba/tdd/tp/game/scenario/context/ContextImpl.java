@@ -5,10 +5,6 @@ import ar.fiuba.tdd.tp.game.component.Component;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * A {@link ContextImpl} represents the components for a certain character in a certain moment.
- * It can be a boat, a room, a custom scenario, etc...
- */
 public class ContextImpl implements Context {
 
     private final String name;

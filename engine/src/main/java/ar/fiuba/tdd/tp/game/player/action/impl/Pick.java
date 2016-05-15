@@ -3,10 +3,10 @@ package ar.fiuba.tdd.tp.game.player.action.impl;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
 import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
-import ar.fiuba.tdd.tp.game.context.GameContext;
 import ar.fiuba.tdd.tp.game.player.Inventory;
 import ar.fiuba.tdd.tp.game.player.action.Constrain;
-import ar.fiuba.tdd.tp.game.player.action.OneObjectActionImpl;
+import ar.fiuba.tdd.tp.game.player.action.OneObjectAction;
+import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,11 @@ import java.util.Optional;
 /*
  * This behavior executes the pick operation on the given component
  */
-public class Pick extends OneObjectActionImpl {
+public class Pick extends OneObjectAction {
 
     private final Inventory inventory;
 
-    public Pick(Inventory inventory, GameContext context) {
+    public Pick(Inventory inventory, Context context) {
         super(context, "^pick ");
         this.inventory = inventory;
     }

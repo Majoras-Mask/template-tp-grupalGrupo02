@@ -4,22 +4,23 @@ import ar.fiuba.tdd.tp.game.Game;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.component.ComponentImpl;
 import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
-import ar.fiuba.tdd.tp.game.component.attribute.open.OpenableImpl;
-import ar.fiuba.tdd.tp.game.component.attribute.pick.PickableImpl;
-import ar.fiuba.tdd.tp.game.context.GameContext;
-import ar.fiuba.tdd.tp.game.context.GameContextImpl;
+import ar.fiuba.tdd.tp.game.component.attribute.impl.OpenableImpl;
+import ar.fiuba.tdd.tp.game.component.attribute.impl.PickableImpl;
 import ar.fiuba.tdd.tp.game.mission.Mission;
 import ar.fiuba.tdd.tp.game.mission.MissionImpl;
 import ar.fiuba.tdd.tp.game.mission.condition.Condition;
 import ar.fiuba.tdd.tp.game.mission.condition.ConditionType;
 import ar.fiuba.tdd.tp.game.mission.condition.PlayerHas;
 import ar.fiuba.tdd.tp.game.player.Inventory;
+import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.PlayerImpl;
 import ar.fiuba.tdd.tp.game.player.action.Action;
 import ar.fiuba.tdd.tp.game.player.action.impl.LookAround;
 import ar.fiuba.tdd.tp.game.player.action.impl.Pick;
 import ar.fiuba.tdd.tp.game.player.action.impl.WhatToDoWith;
 import ar.fiuba.tdd.tp.game.player.action.resolver.ActionResolver;
+import ar.fiuba.tdd.tp.game.scenario.context.Context;
+import ar.fiuba.tdd.tp.game.scenario.context.ContextImpl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,13 +29,14 @@ import java.util.Set;
 
 public class FetchQuest implements Game {
 
-    private final PlayerImpl player;
-    private final GameContext gameContext;
+    private final Player player;
     private final Mission mission;
 
     public FetchQuest() {
-        this.gameContext = createGameContext();
-        this.player = getPlayer(gameContext);
+        final List<Component> roomComponents = createRoomComponents();
+        final Context playerContext = new ContextImpl("room", roomComponents);
+
+        this.player = getPlayer(playerContext);
         this.mission = createMission();
     }
 
@@ -51,17 +53,17 @@ public class FetchQuest implements Game {
         return new MissionImpl(winConditions, loseConditions);
     }
 
-    private static PlayerImpl getPlayer(GameContext gameContext) {
+    private static PlayerImpl getPlayer(Context context) {
         final Inventory inventory = new Inventory(new ArrayList<>(), 10);
-        return new PlayerImpl(createActionResolver(inventory, gameContext), inventory);
+        return new PlayerImpl(createActionResolver(inventory, context), inventory);
     }
 
-    private static ActionResolver createActionResolver(Inventory inventory, GameContext gameContext) {
+    private static ActionResolver createActionResolver(Inventory inventory, Context context) {
         final Set<Action> actions = new HashSet<>();
 
-        final LookAround lookAround = new LookAround(gameContext);
-        final WhatToDoWith whatToDoWith = new WhatToDoWith(gameContext);
-        final Pick pick = new Pick(inventory, gameContext);
+        final LookAround lookAround = new LookAround(context);
+        final WhatToDoWith whatToDoWith = new WhatToDoWith(context);
+        final Pick pick = new Pick(inventory, context);
 
         actions.add(lookAround);
         actions.add(whatToDoWith);
@@ -78,12 +80,12 @@ public class FetchQuest implements Game {
         return new ComponentImpl(name, attributes);
     }
 
-    private static GameContext createGameContext() {
+    private static List<Component> createRoomComponents() {
         List<Component> roomComponents = new ArrayList<>();
         roomComponents.add(createStick("stick1"));
         roomComponents.add(createStick("stick2"));
         roomComponents.add(createAirplane());
-        return new GameContextImpl("room", roomComponents);
+        return roomComponents;
     }
 
     private static Component createAirplane() {

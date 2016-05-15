@@ -2,9 +2,10 @@ package ar.fiuba.tdd.tp.game.player.action.impl;
 
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
-import ar.fiuba.tdd.tp.game.context.GameContext;
+import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
 import ar.fiuba.tdd.tp.game.player.action.Constrain;
-import ar.fiuba.tdd.tp.game.player.action.OneObjectActionImpl;
+import ar.fiuba.tdd.tp.game.player.action.OneObjectAction;
+import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ import java.util.Optional;
 /*
  * This behavior executes the open operation on the given component
  */
-public class WhatToDoWith extends OneObjectActionImpl {
+public class WhatToDoWith extends OneObjectAction {
 
-    public WhatToDoWith(GameContext context) {
+    public WhatToDoWith(Context context) {
         super(context, "^what to do with ");
     }
 
@@ -29,7 +30,10 @@ public class WhatToDoWith extends OneObjectActionImpl {
     }
 
     private Optional<String> getAttributes(Component component) {
-        return component.getAttributes().stream().map(Attribute::getDescription).reduce(this::combine);
+        return component.getAttributes().stream()
+                .map(Attribute::getType)
+                .map(AttributeType::getTriggerAction)
+                .reduce(this::combine);
     }
 
     private String combine(String attribute1, String attribute2) {

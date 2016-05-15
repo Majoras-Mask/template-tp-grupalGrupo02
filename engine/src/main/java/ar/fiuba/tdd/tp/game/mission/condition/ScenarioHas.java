@@ -1,24 +1,27 @@
 package ar.fiuba.tdd.tp.game.mission.condition;
 
-import ar.fiuba.tdd.tp.game.component.Component;
-import ar.fiuba.tdd.tp.game.scenario.context.Context;
+import ar.fiuba.tdd.tp.game.player.Player;
+import ar.fiuba.tdd.tp.game.scenario.Scenario;
 
 /**
- * True if a {@link Context} has (or not) some {@link Component}.
+ * True if a {@link ar.fiuba.tdd.tp.game.scenario.Scenario} has (or not)
+ * some {@link ar.fiuba.tdd.tp.game.player.Player}.
  */
 public class ScenarioHas extends HasCondition {
 
-    private final Context context;
-    private final String name;
+    //TODO This was set protected because CPD fails comparing against ContextHas (although is impossible)
+    protected final Player player;
+    protected final Scenario scenario;
 
-    public ScenarioHas(Context context, String name, ConditionType type) {
+    public ScenarioHas(ConditionType type, Scenario scenario, Player player) {
         super(type);
-        this.context = context;
-        this.name = name;
+        this.player = player;
+        this.scenario = scenario;
     }
 
     protected Boolean isPresent() {
-        return this.context.findComponentByName(name).isPresent();
+        return this.scenario.getPlayers().stream()
+                .anyMatch(onePlayer -> onePlayer.equals(this.player));
     }
 
 }

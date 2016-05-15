@@ -1,7 +1,13 @@
 package ar.fiuba.tdd.tp.game.component.attribute;
 
-public interface Lockable extends Attribute {
+import ar.fiuba.tdd.tp.game.component.Component;
 
-    Integer getWeight();
+public interface Lockable extends Openable {
+
+    Boolean isLocked();
+
+    Boolean canUnlock(Component component);
+
+    Boolean unlock(Component component);
 
 }

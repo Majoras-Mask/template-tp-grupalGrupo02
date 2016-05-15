@@ -19,6 +19,6 @@ public interface Component {
 
     List<Attribute> getAttributes();
 
-    Boolean hasAttribute(Attribute attribute);
+    Boolean hasAttribute(AttributeType attribute);
 
 }
