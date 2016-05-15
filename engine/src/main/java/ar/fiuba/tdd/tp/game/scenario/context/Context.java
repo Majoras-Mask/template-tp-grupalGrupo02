@@ -1,11 +1,11 @@
-package ar.fiuba.tdd.tp.game.context;
+package ar.fiuba.tdd.tp.game.scenario.context;
 
 import ar.fiuba.tdd.tp.game.component.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface GameContext {
+public interface Context {
 
     Optional<Component> findComponentByName(String name);
 

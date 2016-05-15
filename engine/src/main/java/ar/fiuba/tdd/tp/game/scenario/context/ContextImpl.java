@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.game.context;
+package ar.fiuba.tdd.tp.game.scenario.context;
 
 import ar.fiuba.tdd.tp.game.component.Component;
 
@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A {@link GameContextImpl} represents the components for a certain character in a certain moment.
+ * A {@link ContextImpl} represents the components for a certain character in a certain moment.
  * It can be a boat, a room, a custom scenario, etc...
  */
-public class GameContextImpl implements GameContext {
+public class ContextImpl implements Context {
 
     private final String name;
     private final List<Component> components;
 
-    public GameContextImpl(String name, List<Component> components) {
+    public ContextImpl(String name, List<Component> components) {
         this.name = name;
         this.components = components;
     }

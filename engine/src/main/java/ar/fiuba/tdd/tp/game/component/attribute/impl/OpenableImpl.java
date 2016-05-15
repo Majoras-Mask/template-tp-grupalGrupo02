@@ -1,6 +1,7 @@
-package ar.fiuba.tdd.tp.game.component.attribute.open;
+package ar.fiuba.tdd.tp.game.component.attribute.impl;
 
 import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
+import ar.fiuba.tdd.tp.game.component.attribute.OpenableAttribute;
 
 public class OpenableImpl implements OpenableAttribute {
 
@@ -17,11 +18,6 @@ public class OpenableImpl implements OpenableAttribute {
     @Override
     public AttributeType getType() {
         return AttributeType.OPENABLE;
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
     }
 
     @Override
