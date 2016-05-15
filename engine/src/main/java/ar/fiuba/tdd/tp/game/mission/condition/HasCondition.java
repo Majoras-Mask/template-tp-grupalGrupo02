@@ -16,7 +16,7 @@ abstract class HasCondition implements Condition {
 
     @Override
     public Boolean accomplished() {
-        return this.convertType() == this.isPresent();
+        return this.convertType().equals(this.isPresent());
     }
 
     private Boolean convertType() {
