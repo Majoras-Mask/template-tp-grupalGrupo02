@@ -1,8 +1,41 @@
 package ar.fiuba.tdd.tp.game.test;
-
+//
+//import ar.fiuba.tdd.tp.game.Game;
+//import ar.fiuba.tdd.tp.game.commons.condition.Condition;
+//import ar.fiuba.tdd.tp.game.commons.condition.have.HaveType;
+//import ar.fiuba.tdd.tp.game.commons.condition.have.PlayerHave;
+//import ar.fiuba.tdd.tp.game.commons.condition.have.ScenarioHave;
+//import ar.fiuba.tdd.tp.game.commons.condition.lock.LockCondition;
+//import ar.fiuba.tdd.tp.game.commons.condition.lock.LockType;
+//import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
+//import ar.fiuba.tdd.tp.game.commons.constraint.ConstraintImpl;
+//import ar.fiuba.tdd.tp.game.component.Component;
+//import ar.fiuba.tdd.tp.game.component.ComponentImpl;
+//import ar.fiuba.tdd.tp.game.component.state.ComponentState;
+//import ar.fiuba.tdd.tp.game.component.state.LockState;
+//import ar.fiuba.tdd.tp.game.component.state.OpenState;
+//import ar.fiuba.tdd.tp.game.component.state.PickState;
+//import ar.fiuba.tdd.tp.game.mission.Mission;
+//import ar.fiuba.tdd.tp.game.mission.MissionImpl;
+//import ar.fiuba.tdd.tp.game.player.Inventory;
+//import ar.fiuba.tdd.tp.game.player.Player;
+//import ar.fiuba.tdd.tp.game.player.PlayerImpl;
+//import ar.fiuba.tdd.tp.game.player.action.Action;
+//import ar.fiuba.tdd.tp.game.player.action.ActionType;
+//import ar.fiuba.tdd.tp.game.player.action.impl.LookAround;
+//import ar.fiuba.tdd.tp.game.player.action.impl.Open;
+//import ar.fiuba.tdd.tp.game.player.action.impl.Pick;
+//import ar.fiuba.tdd.tp.game.player.action.impl.WhatToDoWith;
+//import ar.fiuba.tdd.tp.game.player.action.resolver.ActionResolver;
+//import ar.fiuba.tdd.tp.game.scenario.Scenario;
+//import ar.fiuba.tdd.tp.game.scenario.context.Context;
+//import ar.fiuba.tdd.tp.game.scenario.context.ContextImpl;
+//
+//import java.util.*;
+//
 //public class OpenDoor implements Game {
 //
-//    private final PlayerImpl player;
+//    private final Player player;
 //    private final Mission mission;
 //
 //    public OpenDoor() {
@@ -20,19 +53,29 @@ package ar.fiuba.tdd.tp.game.test;
 //
 //    }
 //
+//    private static List<Component> createRoom1Components() {
+//        final Component key = createKey();
+//
+//        return new ArrayList<Component>() {
+//            {
+//                add(key);
+//                add(createDoor(key));
+//            }
+//        };
+//    }
+//
+//    private static List<Component> createRoom2Components() {
+//        return new ArrayList<>();
+//    }
+//
 //    private Mission createMission(Scenario scenario1, Scenario scenario2) {
 //        List<Condition> winConditions = new ArrayList<>();
-//        List<Condition> loseConditions = new ArrayList<>();
 //
-//        Condition winCondition = new PlayerHave(this.player, "key", HaveType.HAVE);
-//        Condition winCondition2 = new ScenarioHave(HaveType.NOT_HAVE, scenario1, this.player);
-//        Condition winCondition3 = new ScenarioHave(HaveType.HAVE, scenario2, this.player);
+//        winConditions.add(new PlayerHave(this.player, "key", HaveType.HAVE));
+//        winConditions.add(new ScenarioHave(HaveType.NOT_HAVE, scenario1, this.player));
+//        winConditions.add(new ScenarioHave(HaveType.HAVE, scenario2, this.player));
 //
-//        winConditions.add(winCondition);
-//        winConditions.add(winCondition2);
-//        winConditions.add(winCondition3);
-//
-//        return new MissionImpl(winConditions, loseConditions);
+//        return new MissionImpl(winConditions, new ArrayList<>());
 //    }
 //
 //    private static PlayerImpl getPlayer(Context context) {
@@ -40,55 +83,63 @@ package ar.fiuba.tdd.tp.game.test;
 //        return new PlayerImpl(createActionResolver(inventory, context), inventory);
 //    }
 //
+//    @Override
+//    public Boolean isWon() {
+//        return this.mission.isAccomplished();
+//    }
+//
 //    private static ActionResolver createActionResolver(Inventory inventory, Context context) {
 //        final Set<Action> actions = new HashSet<>();
 //
-//        final Action lookAround = new LookAround(context);
-//        final Action whatToDoWith = new WhatToDoWith(context);
-//        final Action pick = new Pick(inventory, context);
-//        final Action open = new Open(context);
-//
-//
-//        actions.add(lookAround);
-//        actions.add(whatToDoWith);
-//        actions.add(pick);
-//        actions.add(open);
+//        actions.add(new LookAround(context));
+//        actions.add(new WhatToDoWith(context));
+//        actions.add(new Pick(inventory, context));
+//        actions.add(new Open(context));
 //
 //        return new ActionResolver(actions);
 //    }
 //
 //    private static Component createKey() {
-//        List<Attribute> attributes = new ArrayList<>();
-//        Attribute pickable = new PickableImpl();
-//        attributes.add(pickable);
-//
-//        return new ComponentImpl("key", attributes, states);
+//        return new ComponentImpl("key", new ArrayList<ComponentState>() {
+//            {
+//                add(new PickState(Boolean.FALSE, new HashMap<>()));
+//            }
+//        });
 //    }
 //
+//    /**
+//     * This door has to states that compose it.
+//     * -Lock state controls the lock of the door
+//     * -Open state controls if the door is open or no.
+//     * It also has a constraint (It can not be opened if was not unlocked first)
+//     */
 //    private static Component createDoor(Component key) {
-//        List<Attribute> attributes = new ArrayList<>();
-//        Attribute lockable = new LockableImpl(key);
-//        attributes.add(lockable);
+//        final LockState lockState = createLockState(key);
+//        final OpenState openState = createOpenState(lockState);
 //
-//        return new ComponentImpl("door", attributes, states);
+//        return new ComponentImpl("door", new ArrayList<ComponentState>() {
+//            {
+//                add(openState);
+//                add(lockState);
+//            }
+//        });
 //    }
 //
-//    private static List<Component> createRoom1Components() {
-//        List<Component> roomComponents = new ArrayList<>();
-//        Component key = createKey();
-//        roomComponents.add(key);
-//        roomComponents.add(createDoor(key));
-//
-//        return roomComponents;
-//    }
-//
-//    private static List<Component> createRoom2Components() {
-//        return new ArrayList<>();
+//    private static OpenState createOpenState(LockState lockState) {
+//        return new OpenState(Boolean.FALSE, new HashMap<ActionType, Constraint>() {
+//            {
+//                put(ActionType.OPEN, createLockConstraint(lockState));
+//            }
+//        });
 //    }
 //
 //    @Override
-//    public String doCommand(String command) {
-//        return this.player.doCommand(command);
+//    public Boolean isLost() {
+//        return this.mission.isFailed();
+//    }
+//
+//    private static LockState createLockState(Component key) {
+//        return new LockState(key, Boolean.TRUE, new HashMap<>());
 //    }
 //
 //    @Override
@@ -96,14 +147,17 @@ package ar.fiuba.tdd.tp.game.test;
 //        return "Open Door";
 //    }
 //
-//    @Override
-//    public Boolean isWon() {
-//        return this.mission.isAccomplished();
+//    private static Constraint createLockConstraint(LockState lockState) {
+//        return new ConstraintImpl(new ArrayList<Condition>() {
+//            {
+//                add(new LockCondition(LockType.UNLOCK, lockState));
+//            }
+//        });
 //    }
 //
 //    @Override
-//    public Boolean isLost() {
-//        return this.mission.isFailed();
+//    public String doCommand(String command) {
+//        return this.player.doCommand(command);
 //    }
 //
 //    @Override

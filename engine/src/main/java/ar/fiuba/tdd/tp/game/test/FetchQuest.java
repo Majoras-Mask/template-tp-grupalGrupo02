@@ -32,7 +32,8 @@ public class FetchQuest implements Game {
         final List<Component> roomComponents = createRoomComponents();
         final Context playerContext = new ContextImpl("room", roomComponents);
 
-        this.player = getPlayer(playerContext);
+        final Inventory inventory = new Inventory(new ArrayList<>(), 10);
+        this.player = new PlayerImpl(createActionResolver(new Inventory(new ArrayList<>(), 10), playerContext), inventory);
         this.mission = createMission();
     }
 
@@ -47,11 +48,6 @@ public class FetchQuest implements Game {
         loseConditions.add(loseCondition);
 
         return new MissionImpl(winConditions, loseConditions);
-    }
-
-    private static PlayerImpl getPlayer(Context context) {
-        final Inventory inventory = new Inventory(new ArrayList<>(), 10);
-        return new PlayerImpl(createActionResolver(inventory, context), inventory);
     }
 
     private static ActionResolver createActionResolver(Inventory inventory, Context context) {

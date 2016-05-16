@@ -4,8 +4,9 @@ import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
 
-import java.util.Objects;
 import java.util.function.Function;
+
+import static java.util.Objects.isNull;
 
 
 /*
@@ -27,7 +28,7 @@ public class ComponentAction {
     }
 
     public Boolean canBeExecuted() {
-        return (Objects.isNull(this.constraint)) ? Boolean.TRUE : this.constraint.isSatisfied();
+        return (isNull(this.constraint)) ? Boolean.TRUE : this.constraint.isSatisfied();
     }
 
     public ActionResponse execute(ActionRequest request) {

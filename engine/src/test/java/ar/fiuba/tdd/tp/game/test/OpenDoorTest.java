@@ -1,10 +1,12 @@
 package ar.fiuba.tdd.tp.game.test;
 
+import org.junit.Test;
+
 public class OpenDoorTest {
 
-//
-//    @Test
-//    public void dummyTest() {
+
+    @Test
+    public void dummyTest() {
 //        OpenDoor fetchQuest = new OpenDoor();
 //        String s;
 //        Boolean b;
@@ -27,9 +29,10 @@ public class OpenDoorTest {
 //        b = fetchQuest.isWon();
 //
 //        s = fetchQuest.doCommand("look around");
-//        s = fetchQuest.doCommand("what to do with stick1");
-//        s = fetchQuest.doCommand("pick stick1");
+//        s = fetchQuest.doCommand("open doow");
+//        s = fetchQuest.doCommand("open door");
 //
+//        s = fetchQuest.doCommand("unlock door with key");
 //
 //        b = fetchQuest.isLost();
 //        b = fetchQuest.isWon();
@@ -37,6 +40,6 @@ public class OpenDoorTest {
 //        s = fetchQuest.doCommand("look around");
 //
 //        s.equals("");
-//    }
+    }
 
 }

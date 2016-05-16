@@ -18,7 +18,7 @@ import static ar.fiuba.tdd.tp.game.player.action.ActionType.OPEN;
 public class Open extends OneObjectAction {
 
     public Open(Context context) {
-        super(context, "^open .*");
+        super(context, "^open ");
     }
 
     @Override
