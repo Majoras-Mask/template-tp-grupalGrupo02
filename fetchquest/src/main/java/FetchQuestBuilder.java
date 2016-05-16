@@ -18,10 +18,10 @@ public class FetchQuestBuilder implements GameBuilder {
 
             @Override
             public String doCommand(String command) {
-                String message = this.player.doCommand(command);
+                String message = player.doCommand(command);
 
                 if (isFinished()) {
-                    return "msg";
+                    return mission.finishedMessage();
                 }
                 return message;
             }
@@ -33,7 +33,7 @@ public class FetchQuestBuilder implements GameBuilder {
 
             @Override
             public Boolean isFinished() {
-                return (this.mission.isAccomplished() || this.mission.isFailed());
+                return (mission.isAccomplished() || mission.isFailed());
             }
 
             @Override

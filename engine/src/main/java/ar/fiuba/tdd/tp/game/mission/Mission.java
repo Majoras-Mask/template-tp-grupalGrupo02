@@ -6,4 +6,5 @@ public interface Mission {
 
     Boolean isFailed();
 
+    String finishedMessage();
 }

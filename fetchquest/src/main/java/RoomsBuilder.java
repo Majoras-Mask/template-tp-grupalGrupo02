@@ -19,6 +19,8 @@ public class RoomsBuilder {
     private static final String WINNING_STICK_NAME = "stick1";
     private static final String ROOM_NAME = "room";
     private static final String LOSING_STICK_NAME = "stick2";
+    private static final String WON_MESSAGE = "You picked the right stick, you have won the game!!!";
+    private static final String LOST_MESSAGE = "You picked the wrong stick, so you lost the game.";
 
     public static final Context roomContext() {
         final List<Component> roomComponents = new ArrayList<>();
@@ -37,12 +39,20 @@ public class RoomsBuilder {
         List<Condition> winConditions = new ArrayList<>();
         List<Condition> loseConditions = new ArrayList<>();
 
-        Condition winCondition = new PlayerHave(player, "stick1", HaveType.HAVE);
-        Condition loseCondition = new PlayerHave(player, "stick2", HaveType.NOT_HAVE);
+        Condition winCondition = new PlayerHave(player, WINNING_STICK_NAME, HaveType.HAVE);
+        Condition loseCondition = new PlayerHave(player, LOSING_STICK_NAME, HaveType.HAVE);
 
         winConditions.add(winCondition);
         loseConditions.add(loseCondition);
 
-        return new MissionImpl(winConditions, loseConditions);
+        return new MissionImpl(winConditions, loseConditions) {
+            @Override
+            public String finishedMessage() {
+                if (isFailed()) {
+                    return LOST_MESSAGE;
+                }
+                return WON_MESSAGE;
+            }
+        };
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * An implementation of a {@link Mission} that is accomplished when all the winConditions are accomplished.
  * It also fails whenever any loseCondition is true
  */
-public class MissionImpl implements Mission {
+public abstract class MissionImpl implements Mission {
 
     private final List<Condition> winConditions;
     private final List<Condition> loseConditions;
