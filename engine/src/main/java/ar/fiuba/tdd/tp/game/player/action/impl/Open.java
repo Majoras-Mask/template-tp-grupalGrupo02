@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.player.action.impl;
 
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
+import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.action.OneObjectAction;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
@@ -17,8 +18,8 @@ import static ar.fiuba.tdd.tp.game.player.action.ActionType.OPEN;
  */
 public class Open extends OneObjectAction {
 
-    public Open(Context context) {
-        super(context, "^open ");
+    public Open(Player player) {
+        super(player, "^open ");
     }
 
     @Override

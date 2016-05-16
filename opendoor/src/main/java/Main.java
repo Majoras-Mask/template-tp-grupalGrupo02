@@ -1,5 +1,5 @@
-import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
+import ar.fiuba.tdd.tp.game.Game;
 
 import java.util.Scanner;
 
@@ -8,10 +8,10 @@ public class Main {
         GameBuilder openDoorBuilder = new OpenDoorBuilder();
         Game game = openDoorBuilder.build();
 
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in, "UTF-8");
 
         while (input.hasNext()) {
-            System.out.print(game.command(input.nextLine()));
+            System.out.print(game.doCommand(input.nextLine()));
         }
         System.out.println();
     }

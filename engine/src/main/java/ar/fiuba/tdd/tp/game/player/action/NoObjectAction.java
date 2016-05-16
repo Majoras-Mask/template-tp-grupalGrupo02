@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
+import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 import java.util.regex.Pattern;
@@ -11,11 +12,11 @@ import java.util.regex.Pattern;
  */
 public abstract class NoObjectAction implements Action {
 
-    protected final Context context;
+    protected final Player player;
     private final Pattern commandPattern;
 
-    protected NoObjectAction(Context context, String pattern) {
-        this.context = context;
+    protected NoObjectAction(Player player, String pattern) {
+        this.player = player;
         this.commandPattern = Pattern.compile(pattern);
     }
 

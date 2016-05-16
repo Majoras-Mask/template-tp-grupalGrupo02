@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
 import ar.fiuba.tdd.tp.game.component.Component;
+import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 import java.util.Optional;
@@ -13,12 +14,12 @@ import java.util.regex.Pattern;
  */
 public abstract class OneObjectAction implements Action {
 
-    protected final Context context;
+    protected final Player player;
     private final Pattern commandPattern;
     private final String pattern;
 
-    protected OneObjectAction(Context context, String pattern) {
-        this.context = context;
+    protected OneObjectAction(Player player, String pattern) {
+        this.player = player;
         this.pattern = pattern;
         this.commandPattern = Pattern.compile(pattern);
     }
@@ -29,14 +30,14 @@ public abstract class OneObjectAction implements Action {
         final Optional<Component> component = this.getDirectObject(directObject);
 
         if (!component.isPresent()) {
-            return "There is no " + directObject + " in the " + this.context.getName();
+            return "There is no " + directObject + " in the " + this.player.getCurrentContext().getName();
         }
 
         return this.doExecute(component.get());
     }
 
     private Optional<Component> getDirectObject(String directObject) {
-        return this.context.findComponentByName(directObject);
+        return this.player.getCurrentContext().findComponentByName(directObject);
     }
 
     @Override

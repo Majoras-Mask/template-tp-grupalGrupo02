@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.player.action.impl;
 
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
+import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.action.NoObjectAction;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
@@ -11,8 +12,8 @@ import java.util.Optional;
 
 public class LookAround extends NoObjectAction {
 
-    public LookAround(Context context) {
-        super(context, "^look around$");
+    public LookAround(Player player) {
+        super(player, "^look around$");
     }
 
     @Override
@@ -31,7 +32,7 @@ public class LookAround extends NoObjectAction {
     }
 
     private Optional<String> getDescriptions() {
-        return this.context.getComponents().stream().map(Component::getName).reduce(this::combine);
+        return this.player.getCurrentContext().getComponents().stream().map(Component::getName).reduce(this::combine);
     }
 
     private String combine(String name1, String name2) {

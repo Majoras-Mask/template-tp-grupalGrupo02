@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.game.player.action.impl;
 
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
+import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.action.OneObjectAction;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
@@ -14,8 +15,8 @@ import java.util.Optional;
  */
 public class WhatToDoWith extends OneObjectAction {
 
-    public WhatToDoWith(Context context) {
-        super(context, "^what to do with ");
+    public WhatToDoWith(Player player) {
+        super(player, "^what to do with ");
     }
 
     @Override
