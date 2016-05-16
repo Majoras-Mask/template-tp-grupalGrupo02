@@ -1,8 +1,6 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
 import ar.fiuba.tdd.tp.game.component.Component;
-import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
-import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 import java.util.Optional;
@@ -26,15 +24,15 @@ public abstract class OneObjectAction implements Action {
     }
 
     @Override
-    public String doExecute(String command) {
-        final String directObject = command.replaceFirst(pattern, "");
+    public String execute(String action) {
+        final String directObject = action.replaceFirst(pattern, "");
         final Optional<Component> component = this.getDirectObject(directObject);
 
         if (!component.isPresent()) {
             return "There is no " + directObject + " in the " + this.context.getName();
         }
 
-        return this.execute(component.get());
+        return this.doExecute(component.get());
     }
 
     private Optional<Component> getDirectObject(String directObject) {
@@ -46,10 +44,6 @@ public abstract class OneObjectAction implements Action {
         return this.commandPattern.matcher(action).find();
     }
 
-    protected Optional<Attribute> getAttributeByType(Component component, AttributeType type) {
-        return component.getAttribute(type);
-    }
-
-    protected abstract String execute(Component component);
+    protected abstract String doExecute(Component component);
 
 }

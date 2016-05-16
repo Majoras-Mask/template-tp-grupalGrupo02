@@ -26,8 +26,8 @@ public class ActionResolver {
     public String execute(String command) {
         final Action action = this.findAction(command);
         //TODO implement constrains for action
-//        List<Constrain> constrains = action.getConstrains();
-        return action.doExecute(command);
+//        List<Constraint> constrains = action.getConstrains();
+        return action.execute(command);
     }
 
     private Action findAction(String command) {

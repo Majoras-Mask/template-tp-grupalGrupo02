@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.game.player.action.impl;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.player.action.Action;
-import ar.fiuba.tdd.tp.game.player.action.Constrain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +34,12 @@ public class FallBackAction implements Action {
     }
 
     @Override
-    public String doExecute(String action) {
+    public String execute(String action) {
         return this.responses.get(random.nextInt(this.responses.size()));
     }
 
     @Override
-    public List<Constrain> getConstrains() {
+    public List<Constraint> getConstrains() {
         return new ArrayList<>();
     }
 }

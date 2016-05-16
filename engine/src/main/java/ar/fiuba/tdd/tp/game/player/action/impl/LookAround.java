@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.game.player.action.impl;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
-import ar.fiuba.tdd.tp.game.player.action.Constrain;
 import ar.fiuba.tdd.tp.game.player.action.NoObjectAction;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
@@ -12,11 +12,11 @@ import java.util.Optional;
 public class LookAround extends NoObjectAction {
 
     public LookAround(Context context) {
-        super(context, "^look around ");
+        super(context, "^look around$");
     }
 
     @Override
-    public String execute() {
+    public String doExecute() {
         Optional<String> descriptions = getDescriptions();
         if (descriptions.isPresent()) {
             return "There's a " + descriptions.get() + " in the room";
@@ -26,7 +26,7 @@ public class LookAround extends NoObjectAction {
     }
 
     @Override
-    public List<Constrain> getConstrains() {
+    public List<Constraint> getConstrains() {
         return new ArrayList<>();
     }
 

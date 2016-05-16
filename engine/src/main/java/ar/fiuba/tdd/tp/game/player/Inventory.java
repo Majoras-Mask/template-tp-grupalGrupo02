@@ -28,6 +28,10 @@ public class Inventory {
         return limit;
     }
 
+    public Integer getSize() {
+        return this.components.size();
+    }
+
     public void add(Component component) {
         if (!this.limitReached()) {
             this.components.add(component);
@@ -39,6 +43,6 @@ public class Inventory {
     }
 
     private Boolean limitReached() {
-        return this.components.size() >= this. limit;
+        return this.getSize() >= this.getLimit();
     }
 }

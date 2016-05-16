@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
 
 import java.util.List;
@@ -12,8 +13,8 @@ public interface Action {
 
     Boolean canExecute(String action);
 
-    String doExecute(String action);
+    String execute(String action);
 
-    List<Constrain> getConstrains();
+    List<Constraint> getConstrains();
 
 }

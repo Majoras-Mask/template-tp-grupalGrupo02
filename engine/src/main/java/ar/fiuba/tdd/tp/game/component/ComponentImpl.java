@@ -1,20 +1,23 @@
 package ar.fiuba.tdd.tp.game.component;
 
-import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
-import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
+import ar.fiuba.tdd.tp.game.component.state.ComponentState;
+import ar.fiuba.tdd.tp.game.player.action.ActionType;
+import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
+import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 public class ComponentImpl implements Component {
 
     private final String name;
-    private final List<Attribute> attributes;
+    private final List<ComponentState> states;
 
-    public ComponentImpl(String name, List<Attribute> attributes) {
+    public ComponentImpl(String name, List<ComponentState> states) {
         this.name = name;
-        this.attributes = attributes;
+        this.states = states;
     }
 
     @Override
@@ -23,38 +26,28 @@ public class ComponentImpl implements Component {
     }
 
     @Override
-    public List<Attribute> getAttributes() {
-        return this.attributes;
+    public List<ActionType> getSupportedActions() {
+        return this.states.stream().map(ComponentState::getTriggerActions)
+                .flatMap(Collection::stream)
+                .collect(toList());
     }
 
     @Override
-    public Optional<Attribute> getAttribute(AttributeType type) {
-        return this.attributes.stream()
-                .filter(attribute -> type.equals(attribute.getType()))
-                .findFirst();
+    public Boolean supports(ActionType actionType) {
+        return this.getSupportedActions().contains(actionType);
     }
 
     @Override
-    public Boolean hasAttribute(AttributeType type) {
-        return this.attributes.stream()
-                .anyMatch(attribute -> attribute.getType().equals(type));
-    }
+    public ActionResponse doAction(ActionRequest request) {
+        List<ComponentState> collect = this.states.stream()
+                .filter(state -> state.getTriggerActions().contains(request.getType()))
+                .collect(toList());
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        if (collect.size() != 1) {
+            throw new IllegalStateException("It's expected one state to handle the action " + request.getType());
         }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        ComponentImpl component = (ComponentImpl) obj;
-        return Objects.equals(name, component.name)
-                && Objects.equals(attributes, component.attributes);
+
+        return collect.get(0).execute(request);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, attributes);
-    }
 }

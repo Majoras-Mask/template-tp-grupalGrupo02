@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.game.mission;
 
-import ar.fiuba.tdd.tp.game.mission.condition.Condition;
+import ar.fiuba.tdd.tp.game.commons.condition.Condition;
 
 import java.util.List;
 

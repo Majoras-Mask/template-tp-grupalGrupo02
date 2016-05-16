@@ -1,24 +1,23 @@
 package ar.fiuba.tdd.tp.game.component;
 
-import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
-import ar.fiuba.tdd.tp.game.component.attribute.AttributeType;
+import ar.fiuba.tdd.tp.game.player.action.ActionType;
+import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
+import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interface for all the components that a Game needs to work.
- * Every component has a list of {@link Attribute} that describes it.
- * For example, a Door can be Openable, or Lockable.
+ * Every component has a list of {@link ActionType} that supports.
  */
 public interface Component {
 
     String getName();
 
-    Optional<Attribute> getAttribute(AttributeType type);
+    List<ActionType> getSupportedActions();
 
-    List<Attribute> getAttributes();
+    Boolean supports(ActionType actionType);
 
-    Boolean hasAttribute(AttributeType attribute);
+    ActionResponse doAction(ActionRequest request);
 
 }

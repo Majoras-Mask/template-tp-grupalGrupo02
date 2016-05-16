@@ -1,6 +1,9 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
 import ar.fiuba.tdd.tp.game.component.Component;
+import ar.fiuba.tdd.tp.game.scenario.context.Context;
+
+import java.util.regex.Pattern;
 
 /**
  * Some actions take not one but two objects: PUT BOOK ON SHELF, UNLOCK DOOR WITH KEY.
@@ -12,6 +15,27 @@ import ar.fiuba.tdd.tp.game.component.Component;
  * isn't the main focus of the action.
  */
 public abstract class TwoObjectAction implements Action {
+
+    protected final Context context;
+    private final Pattern commandPattern;
+    private final String pattern;
+
+    public TwoObjectAction(Context context, String pattern) {
+        this.context = context;
+        this.pattern = pattern;
+        this.commandPattern = Pattern.compile(pattern);
+    }
+
+    @Override
+    public Boolean canExecute(String action) {
+        return this.commandPattern.matcher(action).find();
+    }
+
+    @Override
+    public String execute(String action) {
+        //TODO Parse action and populate arguments
+        return this.execute(null, null);
+    }
 
     protected abstract String execute(Component directComponent, Component indirectComponent);
 

@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.game;
 
 /*
- * Interface used by the engine to execute a game
+ * Interface used by the engine to doExecute a game
  */
 public interface Game {
 

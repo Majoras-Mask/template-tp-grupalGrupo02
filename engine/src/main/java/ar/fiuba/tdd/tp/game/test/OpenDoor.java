@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.game.test;
 
-public class OpenDoor {
-
+//public class OpenDoor implements Game {
+//
 //    private final PlayerImpl player;
 //    private final Mission mission;
 //
@@ -24,9 +24,9 @@ public class OpenDoor {
 //        List<Condition> winConditions = new ArrayList<>();
 //        List<Condition> loseConditions = new ArrayList<>();
 //
-//        Condition winCondition = new PlayerHas(this.player, "key", ConditionType.HAVE);
-//        Condition winCondition2 = new ScenarioHas(ConditionType.NOT_HAVE, scenario1, this.player);
-//        Condition winCondition3 = new ScenarioHas(ConditionType.HAVE, scenario2, this.player);
+//        Condition winCondition = new PlayerHave(this.player, "key", HaveType.HAVE);
+//        Condition winCondition2 = new ScenarioHave(HaveType.NOT_HAVE, scenario1, this.player);
+//        Condition winCondition3 = new ScenarioHave(HaveType.HAVE, scenario2, this.player);
 //
 //        winConditions.add(winCondition);
 //        winConditions.add(winCondition2);
@@ -62,21 +62,22 @@ public class OpenDoor {
 //        Attribute pickable = new PickableImpl();
 //        attributes.add(pickable);
 //
-//        return new ComponentImpl("key", attributes);
+//        return new ComponentImpl("key", attributes, states);
 //    }
 //
-//    private static Component createDoor() {
+//    private static Component createDoor(Component key) {
 //        List<Attribute> attributes = new ArrayList<>();
-//        Attribute openable = new OpenableImpl();
-//        attributes.add(openable);
+//        Attribute lockable = new LockableImpl(key);
+//        attributes.add(lockable);
 //
-//        return new ComponentImpl("door", attributes);
+//        return new ComponentImpl("door", attributes, states);
 //    }
 //
 //    private static List<Component> createRoom1Components() {
 //        List<Component> roomComponents = new ArrayList<>();
-//        roomComponents.add(createKey());
-//        roomComponents.add(createDoor());
+//        Component key = createKey();
+//        roomComponents.add(key);
+//        roomComponents.add(createDoor(key));
 //
 //        return roomComponents;
 //    }
@@ -109,4 +110,4 @@ public class OpenDoor {
 //    public String help() {
 //        return "eehrgm.. commands?";
 //    }
-}
+//}

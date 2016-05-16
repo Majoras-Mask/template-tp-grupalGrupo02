@@ -1,16 +1,15 @@
 package ar.fiuba.tdd.tp.game.test;
 
 import ar.fiuba.tdd.tp.game.Game;
+import ar.fiuba.tdd.tp.game.commons.condition.Condition;
+import ar.fiuba.tdd.tp.game.commons.condition.have.HaveType;
+import ar.fiuba.tdd.tp.game.commons.condition.have.PlayerHave;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.component.ComponentImpl;
-import ar.fiuba.tdd.tp.game.component.attribute.Attribute;
-import ar.fiuba.tdd.tp.game.component.attribute.impl.OpenableImpl;
-import ar.fiuba.tdd.tp.game.component.attribute.impl.PickableImpl;
+import ar.fiuba.tdd.tp.game.component.state.ComponentState;
+import ar.fiuba.tdd.tp.game.component.state.PickState;
 import ar.fiuba.tdd.tp.game.mission.Mission;
 import ar.fiuba.tdd.tp.game.mission.MissionImpl;
-import ar.fiuba.tdd.tp.game.mission.condition.Condition;
-import ar.fiuba.tdd.tp.game.mission.condition.ConditionType;
-import ar.fiuba.tdd.tp.game.mission.condition.PlayerHas;
 import ar.fiuba.tdd.tp.game.player.Inventory;
 import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.PlayerImpl;
@@ -22,10 +21,7 @@ import ar.fiuba.tdd.tp.game.player.action.resolver.ActionResolver;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 import ar.fiuba.tdd.tp.game.scenario.context.ContextImpl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class FetchQuest implements Game {
 
@@ -44,8 +40,8 @@ public class FetchQuest implements Game {
         List<Condition> winConditions = new ArrayList<>();
         List<Condition> loseConditions = new ArrayList<>();
 
-        Condition winCondition = new PlayerHas(this.player, "stick1", ConditionType.HAVE);
-        Condition loseCondition = new PlayerHas(this.player, "stick2", ConditionType.NOT_HAVE);
+        Condition winCondition = new PlayerHave(this.player, "stick1", HaveType.HAVE);
+        Condition loseCondition = new PlayerHave(this.player, "stick2", HaveType.NOT_HAVE);
 
         winConditions.add(winCondition);
         loseConditions.add(loseCondition);
@@ -73,27 +69,16 @@ public class FetchQuest implements Game {
     }
 
     private static Component createStick(String name) {
-        List<Attribute> attributes = new ArrayList<>();
-        Attribute pickable = new PickableImpl();
-        attributes.add(pickable);
-
-        return new ComponentImpl(name, attributes);
+        List<ComponentState> states = new ArrayList<>();
+        states.add(new PickState(Boolean.FALSE, new HashMap<>()));
+        return new ComponentImpl(name, states);
     }
 
     private static List<Component> createRoomComponents() {
         List<Component> roomComponents = new ArrayList<>();
         roomComponents.add(createStick("stick1"));
         roomComponents.add(createStick("stick2"));
-        roomComponents.add(createAirplane());
         return roomComponents;
-    }
-
-    private static Component createAirplane() {
-
-        List<Attribute> attributes = new ArrayList<>();
-        attributes.add(new OpenableImpl());
-
-        return new ComponentImpl("airplane", attributes);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.game.mission.condition;
+package ar.fiuba.tdd.tp.game.commons.condition;
 
 public interface Condition {
 

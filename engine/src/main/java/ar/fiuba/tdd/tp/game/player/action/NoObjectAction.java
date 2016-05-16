@@ -20,8 +20,8 @@ public abstract class NoObjectAction implements Action {
     }
 
     @Override
-    public String doExecute(String action) {
-        return this.execute();
+    public String execute(String action) {
+        return this.doExecute();
     }
 
     @Override
@@ -29,6 +29,6 @@ public abstract class NoObjectAction implements Action {
         return this.commandPattern.matcher(action).find();
     }
 
-    protected abstract String execute();
+    protected abstract String doExecute();
 
 }
