@@ -4,7 +4,7 @@ import ar.fiuba.tdd.tp.motor.UtilityParser;
 import ar.fiuba.tdd.tp.motor.chains.ChainCommandCreator;
 import ar.fiuba.tdd.tp.motor.games.riddle.GameRiddle;
 
-public abstract class ChainRiddle extends ChainCommandCreator{
+public abstract class ChainRiddle extends ChainCommandCreator {
 
     protected GameRiddle riddle;
 

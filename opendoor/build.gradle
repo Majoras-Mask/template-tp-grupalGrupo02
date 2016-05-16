@@ -1,0 +1,7 @@
+group 'ar.fiuba.tdd.tp-opendoor'
+version '1.0'
+
+dependencies {
+    compile project(':engine')
+}
+

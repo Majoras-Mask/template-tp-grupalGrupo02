@@ -7,7 +7,7 @@ import ar.fiuba.tdd.tp.motor.chains.riddle.ChainLeave;
 import ar.fiuba.tdd.tp.motor.chains.riddle.ChainTake;
 import ar.fiuba.tdd.tp.motor.games.Engine;
 
-public class EngineRiddle extends Engine{
+public class EngineRiddle extends Engine {
 
     private GameRiddle gameRiddle;
 
