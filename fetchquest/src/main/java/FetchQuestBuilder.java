@@ -5,6 +5,9 @@ import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 public class FetchQuestBuilder implements GameBuilder {
+    private static final String GAME_NAME = "Fetch Quest";
+    private static final String INSTRUCTIONS = "GAME COMMANDS:\n open X, close X, look around,"
+            + " consume X, store X in Y, what can i do with X, talk X, pick X";
 
     @Override
     public Game build() {
@@ -12,12 +15,15 @@ public class FetchQuestBuilder implements GameBuilder {
             final Context playerContext = RoomsBuilder.roomContext();
             private final Player player = PlayerBuilder.playerImplementation(playerContext);
             private final Mission mission = RoomsBuilder.createMission(player);
-            private static final String GAME_NAME = "Fetch Quest";
-            private static final String INSTRUCTIONS = "GAME COMMANDS:\n open X, close X, look around, consume X, store X in Y, what can i do with X, talk X, pick X";
 
             @Override
             public String doCommand(String command) {
-                return this.player.doCommand(command);
+                String message = this.player.doCommand(command);
+
+                if (isFinished()) {
+                    return "msg";
+                }
+                return message;
             }
 
             @Override
@@ -26,13 +32,8 @@ public class FetchQuestBuilder implements GameBuilder {
             }
 
             @Override
-            public Boolean isWon() {
-                return this.mission.isAccomplished();
-            }
-
-            @Override
-            public Boolean isLost() {
-                return this.mission.isFailed();
+            public Boolean isFinished() {
+                return (this.mission.isAccomplished() || this.mission.isFailed());
             }
 
             @Override

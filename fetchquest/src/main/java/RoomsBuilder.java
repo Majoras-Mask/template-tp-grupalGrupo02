@@ -16,9 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RoomsBuilder {
-    private final static String WINNING_STICK_NAME = "stick1";
-    private final static String ROOM_NAME = "room";
-    private final static String LOSING_STICK_NAME = "stick2";
+    private static final String WINNING_STICK_NAME = "stick1";
+    private static final String ROOM_NAME = "room";
+    private static final String LOSING_STICK_NAME = "stick2";
 
     public static final Context roomContext() {
         final List<Component> roomComponents = new ArrayList<>();
