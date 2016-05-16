@@ -1,5 +1,6 @@
-import ar.fiuba.tdd.tp.engine.Game;
+
 import ar.fiuba.tdd.tp.engine.GameBuilder;
+import ar.fiuba.tdd.tp.game.Game;
 import org.junit.Test;
 
 public class MainTest {
@@ -8,6 +9,6 @@ public class MainTest {
     public void testWinGame() {
         GameBuilder fetchQuestBuilder = new FetchQuestBuilder();
         Game fetchQuest = fetchQuestBuilder.build();
-        System.out.print(fetchQuest.command("pick stick"));
+        System.out.print(fetchQuest.doCommand("pick stick"));
     }
 }

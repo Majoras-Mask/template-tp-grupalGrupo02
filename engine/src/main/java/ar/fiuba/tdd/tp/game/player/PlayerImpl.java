@@ -15,6 +15,7 @@ public class PlayerImpl implements Player {
     @Override
     public String doCommand(String command) {
         return this.actionResolver.execute(command);
+        //TODO AGREGAR ACA QUE GANA O PIERDE EL GAME
     }
 
     @Override
