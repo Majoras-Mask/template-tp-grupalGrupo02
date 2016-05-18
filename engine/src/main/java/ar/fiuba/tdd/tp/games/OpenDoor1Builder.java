@@ -18,18 +18,18 @@ public class OpenDoor1Builder implements GameBuilder {
         Content player = new Content("player");
         Content key = new Content("key");
         Content door = new Content("door");
-        key.addCommand("pick", () -> true, () -> {
+        key.addCommand("pick", (params) -> true, (params) -> {
             player.put(player.getContainer().take("key"));
             return "You picked a key";
         });
-        door.addCommand("open", () -> player.has("key"), () -> {
+        door.addCommand("open", (params) -> player.has("key"), (params) -> {
             room2.put(room1.take("player"));
             return "You opened a door and walked to room2";
         });
         room1.put(player);
         room1.put(key);
         room1.put(door);
-        VoidToBoolean playerIsInRoom2 = () -> room2.has("player");
+        WinCondition playerIsInRoom2 = () -> room2.has("player");
         GameCommand pick = makePick(player);
         GameCommand lookAround = makeLookAround(player);
         GameCommand open = makeOpen(player);
