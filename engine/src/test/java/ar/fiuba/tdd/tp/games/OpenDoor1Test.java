@@ -68,4 +68,21 @@ public class OpenDoor1Test {
     public void lookAround() {
         assertEquals("room1 has door-key-player", game.command("look around"));
     }
+
+    @Test
+    public void lookAroundAfterPickAKey() {
+        game.command("pick key");
+        assertEquals("room1 has door-player", game.command("look around"));
+    }
+
+    @Test
+    public void openKey() {
+        assertEquals("Can't do open on key", game.command("open key"));
+    }
+
+    @Test
+    public void pickDoor() {
+        assertEquals("Can't do pick on door", game.command("pick door"));
+    }
+
 }
