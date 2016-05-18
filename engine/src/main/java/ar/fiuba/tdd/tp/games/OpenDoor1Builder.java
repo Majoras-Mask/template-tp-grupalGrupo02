@@ -8,27 +8,54 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("CPD-START")
-public class FetchBuilder implements GameBuilder{
+public class OpenDoor1Builder implements GameBuilder {
 
     @Override
     public Game build() {
         Game game = new Game();
-        Content room = new Content("room");
+        Content room1 = new Content("room1");
+        Content room2 = new Content("room2");
         Content player = new Content("player");
-        Content stick = new Content("stick");
-        stick.addCommand("pick", () -> true, () -> {
-            player.put(player.getContainer().take("stick"));
-            return "You picked a stick";
+        Content key = new Content("key");
+        key.addCommand("pick", () -> true, () -> {
+            player.put(player.getContainer().take("key"));
+            return "You picked a key";
         });
-        room.put(player);
-        room.put(stick);
-        VoidToBoolean playerHasStick = () -> player.has("stick");
+        Content door = new Content("door");
+        door.addCommand("open", () -> player.has("key"), () -> {
+            room2.put(room1.take("player"));
+            return "You opened a door and walked to room2";
+        });
+        room1.put(player);
+        room1.put(key);
+        room1.put(door);
+        VoidToBoolean playerIsInRoom2 = () -> room2.has("player");
         GameCommand pick = makePick(player);
         GameCommand lookAround = makeLookAround(player);
-        game.setWinCondition(playerHasStick);
+        GameCommand open = makeOpen(player);
+        game.setWinCondition(playerIsInRoom2);
         game.setCommand(pick);
         game.setCommand(lookAround);
+        game.setCommand(open);
         return game;
+    }
+
+    private GameCommand makeOpen(Content player) {
+        StringToString openParser = (command) -> {
+            Pattern openPattern = Pattern.compile("open .*");
+            Matcher openMatcher = openPattern.matcher(command);
+            return openMatcher.find() ? command.substring(5) : command;
+        };
+        StringToString openExecutor = (itemName) -> {
+            Content playerRoom = player.getContainer();
+            if (playerRoom.has(itemName)) {
+                return playerRoom.get(itemName).doCommand("open");
+            } else {
+                return "Can't do open on " + itemName;
+            }
+        };
+
+        return new GameCommand(openParser, openExecutor);
     }
 
     private GameCommand makePick(Content player) {
@@ -56,4 +83,5 @@ public class FetchBuilder implements GameBuilder{
         };
         return new GameCommand(lookAroundParser, lookAroundExecutor);
     }
+
 }

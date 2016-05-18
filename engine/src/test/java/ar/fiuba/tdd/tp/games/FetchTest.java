@@ -45,7 +45,7 @@ public class FetchTest {
 
     @Test
     public void invalidPick() {
-        assertEquals("Can't pick something", game.command("pick something"));
+        assertEquals("Can't do pick on something", game.command("pick something"));
     }
 
     @Test

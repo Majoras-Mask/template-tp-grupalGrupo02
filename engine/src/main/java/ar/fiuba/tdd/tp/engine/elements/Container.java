@@ -3,7 +3,7 @@ package ar.fiuba.tdd.tp.engine.elements;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Container {
+public abstract class Container {
     protected Map<String,Content> contents;
     protected String name;
 
@@ -26,6 +26,10 @@ public class Container {
         contents.remove(contentName);
         content.setContainer(null);
         return content;
+    }
+
+    public Content get(String contentName) {
+        return contents.get(contentName);
     }
 
     public String getName() {

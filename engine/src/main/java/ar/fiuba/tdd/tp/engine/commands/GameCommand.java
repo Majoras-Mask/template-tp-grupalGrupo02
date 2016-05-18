@@ -1,19 +1,19 @@
 package ar.fiuba.tdd.tp.engine.commands;
 
 public class GameCommand {
-    private CommandParser parser;
-    private CommandExecutor executor;
+    private StringToString parser;
+    private StringToString executor;
 
-    public GameCommand(CommandParser parser, CommandExecutor executor) {
+    public GameCommand(StringToString parser, StringToString executor) {
         this.parser = parser;
         this.executor = executor;
     }
 
     public String checkCommand(String command) {
-        return parser.parse(command);
+        return parser.convert(command);
     }
 
     public String doCommand(String parameter) {
-        return executor.execute(parameter);
+        return executor.convert(parameter);
     }
 }
