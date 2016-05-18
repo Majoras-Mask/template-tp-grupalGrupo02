@@ -16,13 +16,13 @@ public class FetchBuilder implements GameBuilder{
         Content room = new Content("room");
         Content player = new Content("player");
         Content stick = new Content("stick");
-        stick.addCommand("pick", () -> true, () -> {
+        stick.addCommand("pick", (params) -> true, (params) -> {
             player.put(player.getContainer().take("stick"));
             return "You picked a stick";
         });
         room.put(player);
         room.put(stick);
-        VoidToBoolean playerHasStick = () -> player.has("stick");
+        WinCondition playerHasStick = () -> player.has("stick");
         GameCommand pick = makePick(player);
         GameCommand lookAround = makeLookAround(player);
         game.setWinCondition(playerHasStick);

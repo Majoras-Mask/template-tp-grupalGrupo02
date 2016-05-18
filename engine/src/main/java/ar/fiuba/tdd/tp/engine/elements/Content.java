@@ -1,15 +1,15 @@
 package ar.fiuba.tdd.tp.engine.elements;
 
-import ar.fiuba.tdd.tp.engine.commands.VoidToString;
-import ar.fiuba.tdd.tp.engine.commands.VoidToBoolean;
+import ar.fiuba.tdd.tp.engine.commands.CommandExecution;
+import ar.fiuba.tdd.tp.engine.commands.CommandValidation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Content extends Container {
     private Content container;
-    private Map<String,VoidToBoolean> commandsValidations;
-    private Map<String,VoidToString> commandsExecutions;
+    private Map<String,CommandValidation> commandsValidations;
+    private Map<String,CommandExecution> commandsExecutions;
 
     public Content(String name) {
         this(name, 1000);
@@ -30,14 +30,18 @@ public class Content extends Container {
         return container;
     }
 
-    public void addCommand(String commandName, VoidToBoolean commandValidation, VoidToString commandExecution) {
+    public void addCommand(String commandName, CommandValidation commandValidation, CommandExecution commandExecution) {
         commandsValidations.put(commandName, commandValidation);
         commandsExecutions.put(commandName, commandExecution);
     }
 
     public String doCommand(String commandName) {
-        if (commandsValidations.containsKey(commandName) && commandsExecutions.containsKey(commandName) && commandsValidations.get(commandName).convert()) {
-            return commandsExecutions.get(commandName).execute();
+        return doCommand(commandName, new String[0]);
+    }
+
+    public String doCommand(String commandName, String[] params) {
+        if (commandsValidations.containsKey(commandName) && commandsExecutions.containsKey(commandName) && commandsValidations.get(commandName).convert(params)) {
+            return commandsExecutions.get(commandName).execute(params);
         } else {
             return "Can't do " + commandName + " on " + name;
         }

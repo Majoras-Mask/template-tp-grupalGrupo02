@@ -21,35 +21,35 @@ public class RiddleBuilder implements GameBuilder {
         Content cabbage = new Content("cabbage");
         Content northTransporter = new Content("north shore");
         Content southTransporter = new Content("south shore");
-        wolf.addCommand("take", () -> player.canPut(), () -> {
+        wolf.addCommand("take", (params) -> player.canPut(), (params) -> {
             player.put(player.getContainer().take("wolf"));
             return "take wolf on boat";
         });
-        wolf.addCommand("leave", () -> player.has("wolf"), () -> {
+        wolf.addCommand("leave", (params) -> player.has("wolf"), (params) -> {
             player.getContainer().put(player.take("wolf"));
             return "leave wolf from boat";
         });
-        sheep.addCommand("take", () -> player.canPut(), () -> {
+        sheep.addCommand("take", (params) -> player.canPut(), (params) -> {
             player.put(player.getContainer().take("sheep"));
             return "take sheep on boat";
         });
-        sheep.addCommand("leave", () -> player.has("sheep"), () -> {
+        sheep.addCommand("leave", (params) -> player.has("sheep"), (params) -> {
             player.getContainer().put(player.take("sheep"));
             return "leave sheep from boat";
         });
-        cabbage.addCommand("take", () -> player.canPut(), () -> {
+        cabbage.addCommand("take", (params) -> player.canPut(), (params) -> {
             player.put(player.getContainer().take("cabbage"));
             return "take cabbage on boat";
         });
-        cabbage.addCommand("leave", () -> player.has("cabbage"), () -> {
+        cabbage.addCommand("leave", (params) -> player.has("cabbage"), (params) -> {
             player.getContainer().put(player.take("cabbage"));
             return "leave cabbage from boat";
         });
-        northTransporter.addCommand("cross", () -> validCross(southShore), () -> {
+        northTransporter.addCommand("cross", (params) -> validCross(southShore), (params) -> {
             northShore.put(southShore.take("player"));
             return "You have crossed to north";
         });
-        southTransporter.addCommand("cross", () -> validCross(northShore), () -> {
+        southTransporter.addCommand("cross", (params) -> validCross(northShore), (params) -> {
             southShore.put(northShore.take("player"));
             return "You have crossed to south";
         });
@@ -59,11 +59,11 @@ public class RiddleBuilder implements GameBuilder {
         southShore.put(cabbage);
         southShore.put(northTransporter);
         northShore.put(southTransporter);
-        VoidToBoolean AllInNorthShore = () -> northShore.has("wolf") && northShore.has("sheep") && northShore.has("cabbage");
+        WinCondition allInNorthShore = () -> northShore.has("wolf") && northShore.has("sheep") && northShore.has("cabbage");
         GameCommand take = makeTake(player);
         GameCommand leave = makeLeave(player);
         GameCommand cross = makeCross(player);
-        game.setWinCondition(AllInNorthShore);
+        game.setWinCondition(allInNorthShore);
         game.setCommand(take);
         game.setCommand(leave);
         game.setCommand(cross);

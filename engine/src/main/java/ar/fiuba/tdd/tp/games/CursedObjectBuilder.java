@@ -21,19 +21,19 @@ public class CursedObjectBuilder implements GameBuilder {
         Content door1 = new Content("door");
         Content door2 = new Content("door");
         Content thief = new Content("thief");
-        cursedObject.addCommand("pick", () -> true, () -> {
+        cursedObject.addCommand("pick", (params) -> true, (params) -> {
             player.put(player.getContainer().take("cursed object"));
             return "You picked a cursed object";
         });
-        door1.addCommand("open", () -> player.has("cursed object"), () -> {
+        door1.addCommand("open", (params) -> player.has("cursed object"), (params) -> {
             room2.put(room1.take("player"));
             return "You opened a door and walked to room2";
         });
-        door2.addCommand("open", () -> !player.has("cursed object"), () -> {
+        door2.addCommand("open", (params) -> !player.has("cursed object"), (params) -> {
             room3.put(room2.take("player"));
             return "You opened a door and walked to room3";
         });
-        thief.addCommand("hello", () -> true, () -> {
+        thief.addCommand("hello", (params) -> true, (params) -> {
             player.take("cursed object");
             room2.take("thief");
             return "The thief stoled your cursed object and ran away";
@@ -43,7 +43,7 @@ public class CursedObjectBuilder implements GameBuilder {
         room1.put(door1);
         room2.put(door2);
         room2.put(thief);
-        VoidToBoolean playerIsInRoom3 = () -> room3.has("player");
+        WinCondition playerIsInRoom3 = () -> room3.has("player");
         GameCommand pick = makePick(player);
         GameCommand lookAround = makeLookAround(player);
         GameCommand open = makeOpen(player);

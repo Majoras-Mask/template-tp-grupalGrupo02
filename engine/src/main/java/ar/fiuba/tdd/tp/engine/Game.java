@@ -1,14 +1,15 @@
 package ar.fiuba.tdd.tp.engine;
 
 import ar.fiuba.tdd.tp.engine.commands.GameCommand;
-import ar.fiuba.tdd.tp.engine.commands.VoidToBoolean;
+import ar.fiuba.tdd.tp.engine.commands.CommandValidation;
+import ar.fiuba.tdd.tp.engine.commands.WinCondition;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Game {
-    private VoidToBoolean winCondition;
+    private WinCondition winCondition;
     private List<GameCommand> commands;
 
     public Game() {
@@ -28,16 +29,16 @@ public class Game {
         return response.equals(command) ? "invalid command" : response;
     }
 
-    public void setWinCondition(VoidToBoolean winCondition) {
+    public void setWinCondition(WinCondition winCondition) {
         this.winCondition = winCondition;
     }
 
     public String command(String string) {
-        if (winCondition.convert()) {
+        if (winCondition.check()) {
             return "You won the game!";
         } else {
             String response = doCommand(string);
-            if (winCondition.convert()) {
+            if (winCondition.check()) {
                 response = "You won the game!";
             }
             return response;

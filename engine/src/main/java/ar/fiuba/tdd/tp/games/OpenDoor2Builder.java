@@ -19,15 +19,15 @@ public class OpenDoor2Builder implements GameBuilder {
         Content box = new Content("box");
         Content key = new Content("key");
         Content door = new Content("door");
-        box.addCommand("open", () -> true, () -> {
+        box.addCommand("open", (params) -> true, (params) -> {
             room1.put(box.take("key"));
             return "You opened a box";
         });
-        key.addCommand("pick", () -> true, () -> {
+        key.addCommand("pick", (params) -> true, (params) -> {
             player.put(player.getContainer().take("key"));
             return "You picked a key";
         });
-        door.addCommand("open", () -> player.has("key"), () -> {
+        door.addCommand("open", (params) -> player.has("key"), (params) -> {
             room2.put(room1.take("player"));
             return "You opened a door and walked to room2";
         });
@@ -35,7 +35,7 @@ public class OpenDoor2Builder implements GameBuilder {
         room1.put(box);
         room1.put(door);
         box.put(key);
-        VoidToBoolean playerIsInRoom2 = () -> room2.has("player");
+        WinCondition playerIsInRoom2 = () -> room2.has("player");
         GameCommand pick = makePick(player);
         GameCommand lookAround = makeLookAround(player);
         GameCommand open = makeOpen(player);
