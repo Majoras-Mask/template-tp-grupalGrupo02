@@ -17,16 +17,16 @@ public class OpenDoor2Builder implements GameBuilder {
         Content room2 = new Content("room2");
         Content player = new Content("player");
         Content box = new Content("box");
+        Content key = new Content("key");
+        Content door = new Content("door");
         box.addCommand("open", () -> true, () -> {
             room1.put(box.take("key"));
             return "You opened a box";
         });
-        Content key = new Content("key");
         key.addCommand("pick", () -> true, () -> {
             player.put(player.getContainer().take("key"));
             return "You picked a key";
         });
-        Content door = new Content("door");
         door.addCommand("open", () -> player.has("key"), () -> {
             room2.put(room1.take("player"));
             return "You opened a door and walked to room2";

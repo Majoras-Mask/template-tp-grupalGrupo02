@@ -12,7 +12,11 @@ public class Content extends Container {
     private Map<String,VoidToString> commandsExecutions;
 
     public Content(String name) {
-        super(name);
+        this(name, 1000);
+    }
+
+    public Content(String name, Integer limit) {
+        super(name, limit);
         container = null;
         commandsValidations = new HashMap<>();
         commandsExecutions = new HashMap<>();

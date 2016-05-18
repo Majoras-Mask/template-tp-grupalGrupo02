@@ -6,15 +6,23 @@ import java.util.Map;
 public abstract class Container {
     protected Map<String,Content> contents;
     protected String name;
+    private Integer limit;
 
-    public Container(String name) {
+    public Container(String name, Integer limit) {
         this.name = name;
         this.contents = new HashMap<>();
+        this.limit = limit;
     }
 
     public void put(Content content) {
-        content.setContainer(this);
-        contents.put(content.getName(), content);
+        if (contents.size() < limit) {
+            content.setContainer(this);
+            contents.put(content.getName(), content);
+        }
+    }
+
+    public boolean canPut() {
+        return contents.size() < limit;
     }
 
     public boolean has(String contentName) {

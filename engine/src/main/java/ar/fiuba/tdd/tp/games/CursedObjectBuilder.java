@@ -43,12 +43,12 @@ public class CursedObjectBuilder implements GameBuilder {
         room1.put(door1);
         room2.put(door2);
         room2.put(thief);
-        VoidToBoolean playerIsInRoom2 = () -> room3.has("player");
+        VoidToBoolean playerIsInRoom3 = () -> room3.has("player");
         GameCommand pick = makePick(player);
         GameCommand lookAround = makeLookAround(player);
         GameCommand open = makeOpen(player);
         GameCommand hello = makeHello(player);
-        game.setWinCondition(playerIsInRoom2);
+        game.setWinCondition(playerIsInRoom3);
         game.setCommand(pick);
         game.setCommand(lookAround);
         game.setCommand(open);
@@ -75,12 +75,12 @@ public class CursedObjectBuilder implements GameBuilder {
     }
 
     private GameCommand makeHello(Content player) {
-        StringToString openParser = (command) -> {
-            Pattern openPattern = Pattern.compile("say hello .*");
-            Matcher openMatcher = openPattern.matcher(command);
-            return openMatcher.find() ? command.substring(10) : command;
+        StringToString helloParser = (command) -> {
+            Pattern helloPattern = Pattern.compile("say hello .*");
+            Matcher helloMatcher = helloPattern.matcher(command);
+            return helloMatcher.find() ? command.substring(10) : command;
         };
-        StringToString openExecutor = (itemName) -> {
+        StringToString helloExecutor = (itemName) -> {
             Content playerRoom = player.getContainer();
             if (playerRoom.has(itemName)) {
                 return playerRoom.get(itemName).doCommand("hello");
@@ -89,7 +89,7 @@ public class CursedObjectBuilder implements GameBuilder {
             }
         };
 
-        return new GameCommand(openParser, openExecutor);
+        return new GameCommand(helloParser, helloExecutor);
     }
 
     private GameCommand makePick(Content player) {
