@@ -41,47 +41,50 @@ public class OpenDoor1Builder implements GameBuilder {
     }
 
     private GameCommand makeOpen(Content player) {
-        CommandValidator openParser = (command) -> {
+        return new GameCommand((command) -> {
             Pattern openPattern = Pattern.compile("open .*");
             Matcher openMatcher = openPattern.matcher(command);
             return openMatcher.find();
-        };
-        CommandExecutor openExecutor = (params) -> {
+        }, (params) -> {
             Content playerRoom = player.getContainer();
             if (playerRoom.has(params[0])) {
                 return playerRoom.get(params[0]).doCommand("open");
             } else {
                 return "Can't do open on " + params[0];
             }
-        };
-
-        return new GameCommand(openParser, openExecutor, (command) -> new String[0]);
+        }, (command) -> {
+            String[] split = command.split(" ");
+            String[] params = new String[1];
+            params[0] = split[1];
+            return params;
+        });
     }
 
     private GameCommand makePick(Content player) {
-        CommandValidator pickParser = (command) -> {
+        return new GameCommand((command) -> {
             Pattern pickPattern = Pattern.compile("pick .*");
             Matcher pickMatcher = pickPattern.matcher(command);
             return pickMatcher.find();
-        };
-        CommandExecutor pickExecutor = (params) -> {
+        }, (params) -> {
             Content playerRoom = player.getContainer();
             if (playerRoom.has(params[0])) {
                 return playerRoom.get(params[0]).doCommand("pick");
             } else {
                 return "Can't do pick on " + params[0];
             }
-        };
-        return new GameCommand(pickParser, pickExecutor, (command) -> new String[0]);
+        }, (command) -> {
+            String[] split = command.split(" ");
+            String[] params = new String[1];
+            params[0] = split[1];
+            return params;
+        });
     }
 
     private GameCommand makeLookAround(Content player) {
-        CommandValidator lookAroundParser = (command) -> "look around".equals(command);
-        CommandExecutor lookAroundExecutor = (params) -> {
+        return new GameCommand((command) -> "look around".equals(command), (params) -> {
             Content playerRoom = player.getContainer();
             return playerRoom.getName() + " has " + playerRoom.getContentsList();
-        };
-        return new GameCommand(lookAroundParser, lookAroundExecutor, (command) -> new String[0]);
+        }, (command) -> new String[0]);
     }
 
 }

@@ -29,35 +29,29 @@ public class FetchBuilder implements GameBuilder{
             player.put(player.getContainer().take("stick"));
             return "You picked a stick";
         });
-        CommandValidator pickValidator = (command) -> {
+        return new GameCommand((command) -> {
             Pattern pickPattern = Pattern.compile("pick .*");
             Matcher pickMatcher = pickPattern.matcher(command);
             return pickMatcher.find();
-        };
-        CommandExecutor pickExecutor = (params) -> {
+        }, (params) -> {
             Content playerRoom = player.getContainer();
             if (playerRoom.has(params[0])) {
                 return playerRoom.get(params[0]).doCommand("pick");
             } else {
                 return "Can't do pick on " + params[0];
             }
-        };
-        CommandParser pickParser = (command) -> {
+        }, (command) -> {
             String[] split = command.split(" ");
             String[] params = new String[1];
             params[0] = split[1];
             return params;
-        };
-        return new GameCommand(pickValidator, pickExecutor, pickParser);
+        });
     }
 
     private GameCommand makeLookAround(Content player) {
-        CommandValidator lookAroundValidator = (command) -> "look around".equals(command);
-        CommandExecutor lookAroundExecutor = (empty) -> {
+        return new GameCommand((command) -> "look around".equals(command), (params) -> {
             Content playerRoom = player.getContainer();
             return playerRoom.getName() + " has " + playerRoom.getContentsList();
-        };
-        CommandParser lookAroundParser = (command) -> new String[0];
-        return new GameCommand(lookAroundValidator, lookAroundExecutor, lookAroundParser);
+        }, (command) -> new String[0]);
     }
 }
