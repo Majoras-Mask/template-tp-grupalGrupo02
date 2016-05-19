@@ -1,26 +1,19 @@
 import ar.fiuba.tdd.tp.engine.Game;
-import ar.fiuba.tdd.tp.engine.rules.Rule;
 
-public class WonGameRule implements Rule {
+public class WonGameRule {
 
     static Game game;
     static String winningRoomName;
 
-    @Override
-    public boolean satisfiesRule() {
+    public static boolean wonTheGame() {
         return game.getPlayer().currentRoomName().equals(winningRoomName);
-    }
-
-    @Override
-    public String reasonsOfRuleFail() {
-        return null;
-    }
-
-    public static void setGame(Game game) {
-        WonGameRule.game = game;
     }
 
     public static void setWinningRoomName(String winningRoomName) {
         WonGameRule.winningRoomName = winningRoomName;
+    }
+
+    public static void setGame(Game game) {
+        WonGameRule.game = game;
     }
 }

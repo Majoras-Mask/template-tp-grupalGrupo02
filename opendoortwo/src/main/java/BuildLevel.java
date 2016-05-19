@@ -21,12 +21,7 @@ public class BuildLevel {
     private static final String HELP = "help";
 
     public static void build(Game openDoorTwo) {
-        Player player = openDoorTwo.getPlayer();
-        player.addBehavior(LOOK_AROUND, new LookAround(openDoorTwo));
-        player.addBehavior(PICK, new DirectActionRoom(openDoorTwo));
-        player.addBehavior(OPEN, new DirectActionRoom(openDoorTwo));
-        player.addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(openDoorTwo));
-        player.addBehavior(HELP, new Help(openDoorTwo));
+        playerBehavior(openDoorTwo);
 
         ComponentInterface key = new ComponentSimple(KEY_NAME);
         key.addBehavior(PICK, new Pick(openDoorTwo, key));
@@ -47,5 +42,17 @@ public class BuildLevel {
         openDoorTwo.getPlayer().setRoom(room);
 
         door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(door));
+
+        WonGameRule.setWinningRoomName(WINNING_ROOM_NAME);
+        WonGameRule.setGame(openDoorTwo);
+    }
+
+    private static void playerBehavior(Game openDoorTwo) {
+        Player player = openDoorTwo.getPlayer();
+        player.addBehavior(LOOK_AROUND, new LookAround(openDoorTwo));
+        player.addBehavior(PICK, new DirectActionRoom(openDoorTwo));
+        player.addBehavior(OPEN, new DirectActionRoom(openDoorTwo));
+        player.addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(openDoorTwo));
+        player.addBehavior(HELP, new Help(openDoorTwo));
     }
 }

@@ -4,6 +4,7 @@ import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
+import ar.fiuba.tdd.tp.engine.rules.Rule;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,9 +20,10 @@ public class OpenDoorTwoBuilder implements GameBuilder {
 
     public Game build() {
         Game openDoorTwo = new Game() {
+
             @Override
             public boolean winCondition() {
-                return false;
+                return WonGameRule.wonTheGame();
             }
 
             @Override
@@ -39,6 +41,7 @@ public class OpenDoorTwoBuilder implements GameBuilder {
                 return WON_GAME;
             }
         };
+
 
         BuildLevel.build(openDoorTwo);
 
