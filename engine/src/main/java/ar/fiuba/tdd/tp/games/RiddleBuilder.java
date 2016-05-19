@@ -30,6 +30,7 @@ public class RiddleBuilder implements GameBuilder {
         addContentCommands(player, northShore, northTransporter, southShore, southTransporter, wolf, sheep, cabbage);
         setGameCommands(player, game);
         game.setWinCondition(() -> northShore.has("wolf") && northShore.has("sheep") && northShore.has("cabbage"));
+        game.setLoseCondition(() -> false);
         return game;
     }
 

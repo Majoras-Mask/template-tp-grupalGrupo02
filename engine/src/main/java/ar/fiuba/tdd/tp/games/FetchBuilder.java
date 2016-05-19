@@ -17,6 +17,7 @@ public class FetchBuilder implements GameBuilder{
         room.put(stick);
         addContentCommands(player, stick);
         game.setWinCondition(() -> player.has("stick"));
+        game.setLoseCondition(() -> false);
         game.setCommand(CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
         game.setCommand(CommandsUtils.getLookAroundCommand("look around", player));
         return game;

@@ -22,6 +22,7 @@ public class OpenDoor2Builder implements GameBuilder {
         box.put(key);
         addContentCommands(player, box, key, door, room1, room2);
         game.setWinCondition(() -> room2.has("player"));
+        game.setLoseCondition(() -> false);
         game.setCommand(CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
         game.setCommand(CommandsUtils.getLookAroundCommand("look around", player));
         game.setCommand(CommandsUtils.getSameRoomCommand("open .*", "open", player, 1));

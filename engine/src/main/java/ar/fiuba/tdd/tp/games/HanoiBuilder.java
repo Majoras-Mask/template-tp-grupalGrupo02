@@ -31,6 +31,7 @@ public class HanoiBuilder implements GameBuilder {
         addContentCommands(player, room, disk1, disk2, disk3);
         setGameCommands(player, game);
         game.setWinCondition(() -> stack3.has("disk1") && stack3.has("disk2") && stack3.has("disk3"));
+        game.setLoseCondition(() -> false);
         return game;
     }
 
