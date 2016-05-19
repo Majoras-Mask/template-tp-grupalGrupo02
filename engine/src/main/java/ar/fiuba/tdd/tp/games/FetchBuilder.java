@@ -18,17 +18,21 @@ public class FetchBuilder implements GameBuilder{
         Content stick = new Content("stick");
         room.put(player);
         room.put(stick);
+        addContentCommands(player, stick);
         game.setWinCondition(() -> player.has("stick"));
-        game.setCommand(makePick(player, stick));
+        game.setCommand(makePick(player));
         game.setCommand(makeLookAround(player));
         return game;
     }
 
-    private GameCommand makePick(Content player, Content stick) {
+    private void addContentCommands(Content player, Content stick) {
         stick.addCommand("pick", (params) -> true, (params) -> {
             player.put(player.getContainer().take("stick"));
             return "You picked a stick";
         });
+    }
+
+    private GameCommand makePick(Content player) {
         return new GameCommand((command) -> {
             Pattern pickPattern = Pattern.compile("pick .*");
             Matcher pickMatcher = pickPattern.matcher(command);

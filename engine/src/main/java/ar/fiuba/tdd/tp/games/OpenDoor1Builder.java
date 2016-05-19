@@ -18,6 +18,18 @@ public class OpenDoor1Builder implements GameBuilder {
         Content player = new Content("player");
         Content key = new Content("key");
         Content door = new Content("door");
+        room1.put(player);
+        room1.put(key);
+        room1.put(door);
+        addContentCommands(player, key, door, room1, room2);
+        game.setWinCondition(() -> room2.has("player"));
+        game.setCommand(makePick(player));
+        game.setCommand(makeLookAround(player));
+        game.setCommand(makeOpen(player));
+        return game;
+    }
+
+    private void addContentCommands(Content player, Content key, Content door, Content room1, Content room2) {
         key.addCommand("pick", (params) -> true, (params) -> {
             player.put(player.getContainer().take("key"));
             return "You picked a key";
@@ -26,18 +38,6 @@ public class OpenDoor1Builder implements GameBuilder {
             room2.put(room1.take("player"));
             return "You opened a door and walked to room2";
         });
-        room1.put(player);
-        room1.put(key);
-        room1.put(door);
-        WinCondition playerIsInRoom2 = () -> room2.has("player");
-        GameCommand pick = makePick(player);
-        GameCommand lookAround = makeLookAround(player);
-        GameCommand open = makeOpen(player);
-        game.setWinCondition(playerIsInRoom2);
-        game.setCommand(pick);
-        game.setCommand(lookAround);
-        game.setCommand(open);
-        return game;
     }
 
     private GameCommand makeOpen(Content player) {
