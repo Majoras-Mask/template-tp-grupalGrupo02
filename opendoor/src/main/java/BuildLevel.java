@@ -1,4 +1,5 @@
 import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.Player;
 import ar.fiuba.tdd.tp.engine.behavior.*;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
@@ -19,11 +20,12 @@ public class BuildLevel {
     private static final String WHAT_CAN_I_DO = "what can i do with";
 
     public static void build(Game openDoor) {
-        openDoor.getPlayer().addBehavior(LOOK_AROUND, new LookAround(openDoor));
-        openDoor.getPlayer().addBehavior(PICK, new DirectActionRoom(openDoor));
-        openDoor.getPlayer().addBehavior(OPEN, new DirectActionRoom(openDoor));
-        openDoor.getPlayer().addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(openDoor));
-        openDoor.getPlayer().addBehavior(HELP, new Help(openDoor));
+        Player player = openDoor.getPlayer();
+        player.addBehavior(LOOK_AROUND, new LookAround(openDoor));
+        player.addBehavior(PICK, new DirectActionRoom(openDoor));
+        player.addBehavior(OPEN, new DirectActionRoom(openDoor));
+        player.addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(openDoor));
+        player.addBehavior(HELP, new Help(openDoor));
 
         ComponentInterface key = new ComponentSimple(KEY_NAME);
         key.addBehavior(PICK, new Pick(openDoor, key));
