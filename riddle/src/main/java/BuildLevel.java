@@ -20,7 +20,7 @@ public class BuildLevel {
     private static final String BOAT_NAME = "boat";
     private static final String SOUTH_RIVER_NAME = "south";
     private static final String NORTH_RIVER_NAME = "north";
-    
+
     public static void build(Game riddle) {
         buildPlayerActions(riddle);
 
