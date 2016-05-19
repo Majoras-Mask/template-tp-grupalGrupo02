@@ -21,6 +21,21 @@ public class HanoiBuilder implements GameBuilder {
         Content disk1 = new Content("disk1");
         Content disk2 = new Content("disk2");
         Content disk3 = new Content("disk3");
+        stack1.put(disk1);
+        stack1.put(disk2);
+        stack1.put(disk3);
+        room.put(player);
+        room.put(stack1);
+        room.put(stack2);
+        room.put(stack3);
+        addContentCommands(player, room, disk1, disk2, disk3);
+        game.setWinCondition(() -> stack3.has("disk1") && stack3.has("disk2") && stack3.has("disk3"));
+        game.setCommand(makeTake(player));
+        game.setCommand(makePut(player));
+        return game;
+    }
+
+    private void addContentCommands(Content player, Content room, Content disk1, Content disk2, Content disk3) {
         disk1.addCommand("take", (params) -> true, (params) -> {
             String stackName = disk1.getContainer().getName();
             player.put(disk1.getContainer().take("disk1"));
@@ -48,54 +63,48 @@ public class HanoiBuilder implements GameBuilder {
             room.get(params[1]).put(player.take("disk3"));
             return "Placed disk3 on " + params[1];
         });
-        stack1.put(disk1);
-        stack1.put(disk2);
-        stack1.put(disk3);
-        room.put(player);
-        room.put(stack1);
-        room.put(stack2);
-        room.put(stack3);
-        WinCondition allDisksInThirdStack = () -> stack3.has("disk1") && stack3.has("disk2") && stack3.has("disk3");
-        GameCommand take = makeTake(player);
-        GameCommand put = makePut(player);
-        game.setWinCondition(allDisksInThirdStack);
-        game.setCommand(take);
-        game.setCommand(put);
-        return game;
     }
 
     private GameCommand makeTake(Content player) {
-        CommandValidator takeParser = (command) -> {
+        return new GameCommand((command) -> {
             Pattern takePattern = Pattern.compile("take .* from .*");
             Matcher takeMatcher = takePattern.matcher(command);
             return takeMatcher.find();
-        };
-        CommandExecutor takeExecutor = (params) -> {
+        }, (params) -> {
             Content playerRoom = player.getContainer();
             if (playerRoom.has(params[1]) && playerRoom.get(params[1]).has(params[0])) {
                 return playerRoom.get(params[1]).get(params[0]).doCommand("take");
             } else {
                 return "Can't do take on " + params[0] + " from " + params[1];
             }
-        };
-        return new GameCommand(takeParser, takeExecutor, (command) -> new String[0]);
+        }, (command) -> {
+            String[] split = command.split(" ");
+            String[] params = new String[2];
+            params[0] = split[1];
+            params[1] = split[3];
+            return params;
+        });
     }
 
     private GameCommand makePut(Content player) {
-        CommandValidator putParser = (command) -> {
+        return new GameCommand((command) -> {
             Pattern putPattern = Pattern.compile("put .* on .*");
             Matcher putMatcher = putPattern.matcher(command);
             return putMatcher.find();
-        };
-        CommandExecutor putExecutor = (params) -> {
+        }, (params) -> {
             Content playerRoom = player.getContainer();
             if (playerRoom.has(params[1]) && player.has(params[0])) {
                 return player.get(params[0]).doCommand("put", params);
             } else {
                 return "Can't do put with " + params[0] + " on " + params[1];
             }
-        };
-        return new GameCommand(putParser, putExecutor, (command) -> new String[0]);
+        }, (command) -> {
+            String[] split = command.split(" ");
+            String[] params = new String[2];
+            params[0] = split[1];
+            params[1] = split[3];
+            return params;
+        });
     }
 
 }
