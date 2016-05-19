@@ -12,6 +12,8 @@ public class ComponentSimple implements ComponentInterface {
 
     protected Map<String, Behavior> actions = new HashMap<>();
 
+    private static final String CANT_DO_THAT_ACTION = "Can't do that action with this.";
+
     public ComponentSimple(String name) {
         setName(name);
     }
@@ -25,7 +27,7 @@ public class ComponentSimple implements ComponentInterface {
         if (behavior != null) {
             return behavior.execute(commandModifier);
         }
-        return null;
+        return CANT_DO_THAT_ACTION;
     }
 
     public void setName(String name) {

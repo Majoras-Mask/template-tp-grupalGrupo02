@@ -1,8 +1,5 @@
 import ar.fiuba.tdd.tp.engine.Game;
-import ar.fiuba.tdd.tp.engine.behavior.DirectAction;
-import ar.fiuba.tdd.tp.engine.behavior.LookAround;
-import ar.fiuba.tdd.tp.engine.behavior.NormalPick;
-import ar.fiuba.tdd.tp.engine.behavior.WhatCanIDo;
+import ar.fiuba.tdd.tp.engine.behavior.*;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
@@ -14,6 +11,7 @@ public class BuildLevel {
     private static final String LOOK_AROUND = "look around";
     private static final String PICK = "pick";
     private static final String WHAT_CAN_I_DO_WITH = "what can i do with";
+    private static final String HELP = "help";
     private static ComponentInterface winningCondition;
 
     public static void build(Game fetchQuest) {
@@ -21,6 +19,7 @@ public class BuildLevel {
         fetchQuest.getPlayer().addBehavior(LOOK_AROUND, new LookAround(fetchQuest));
         fetchQuest.getPlayer().addBehavior(PICK, new DirectAction(fetchQuest));
         fetchQuest.getPlayer().addBehavior(WHAT_CAN_I_DO_WITH, new DirectAction(fetchQuest));
+        fetchQuest.getPlayer().addBehavior(HELP, new Help(fetchQuest));
 
         ComponentInterface stick = new ComponentSimple(STICK_NAME);
         stick.addBehavior(PICK, new NormalPick(fetchQuest, stick));

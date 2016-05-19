@@ -5,11 +5,10 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 public class WhatCanIDo implements Behavior {
     ComponentInterface item;
     private static final String WHAT_YOU_CAN = "You can: ";
-    private String whatYouCan;
+    private String whatYouCan = WHAT_YOU_CAN;
 
     public WhatCanIDo(ComponentInterface item) {
         this.item = item;
-        whatYouCan = WHAT_YOU_CAN;
     }
 
     public void changeDefaultStart(String message) {

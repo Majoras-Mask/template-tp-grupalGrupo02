@@ -10,12 +10,11 @@ public class DirectAction implements Behavior {
     private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
     Game game;
     private static final String NO_ITEM_ROOM = "There is no such item in this room.";
-    private String noItemInRoom;
+    private String noItemInRoom = NO_ITEM_ROOM;
 
 
     public DirectAction(Game game) {
         this.game = game;
-        noItemInRoom = NO_ITEM_ROOM;
     }
 
     public String execute(String completeMessage) {

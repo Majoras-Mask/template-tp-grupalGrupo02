@@ -22,8 +22,6 @@ public class FetchQuestBuilder implements GameBuilder {
 
     public Game build() {
         Game fetchQuest = new Game() {
-            public Player player = new Player();
-
             @Override
             public boolean winCondition() {
                 return this.getPlayer().playerHasItem(winningCondition);
@@ -45,13 +43,8 @@ public class FetchQuestBuilder implements GameBuilder {
             }
 
             @Override
-            public String command(String clientMessage) {
-                String response = player.doCommand(clientMessage.toLowerCase());
-                if (winCondition()) {
-                    wonGame();
-                    response = WON_GAME;
-                }
-                return response;
+            protected String wonMessage() {
+                return WON_GAME;
             }
         };
 

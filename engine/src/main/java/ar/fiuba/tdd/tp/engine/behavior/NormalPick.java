@@ -6,16 +6,14 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 public class NormalPick implements Behavior {
     Game game;
     ComponentInterface item;
-    private String cantPick;
-    private String pickSuccess;
+    private String cantPick = CANT_PICK;
+    private String pickSuccess = PICK_SUCCESS;
     private static final String CANT_PICK = "Can't pick.";
     private static final String PICK_SUCCESS = "You have picked ";
 
     public NormalPick(Game game, ComponentInterface item) {
         this.game = game;
         this.item = item;
-        cantPick = CANT_PICK;
-        pickSuccess = PICK_SUCCESS;
     }
 
     public String execute(String modifier) {
