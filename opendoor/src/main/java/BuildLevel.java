@@ -19,13 +19,13 @@ public class BuildLevel {
 
     public static void build(Game openDoor) {
         openDoor.getPlayer().addBehavior(LOOK_AROUND, new LookAround(openDoor));
-        openDoor.getPlayer().addBehavior(PICK, new DirectAction(openDoor));
-        openDoor.getPlayer().addBehavior(OPEN, new DirectAction(openDoor));
-        openDoor.getPlayer().addBehavior(WHAT_CAN_I_DO, new DirectAction(openDoor));
+        openDoor.getPlayer().addBehavior(PICK, new DirectActionRoom(openDoor));
+        openDoor.getPlayer().addBehavior(OPEN, new DirectActionRoom(openDoor));
+        openDoor.getPlayer().addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(openDoor));
         openDoor.getPlayer().addBehavior(HELP, new Help(openDoor));
 
         ComponentInterface key = new ComponentSimple(KEY_NAME);
-        key.addBehavior(PICK, new NormalPick(openDoor, key));
+        key.addBehavior(PICK, new Pick(openDoor, key));
         key.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(key));
 
         ComponentInterface door = new ComponentSimple(DOOR_NAME);

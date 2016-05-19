@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DirectAction implements Behavior {
+public abstract class DirectAction implements Behavior {
     private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
     Game game;
     private static final String NO_ITEM_ROOM = "There is no such item in this room.";
@@ -22,7 +22,7 @@ public class DirectAction implements Behavior {
         Matcher commandMatcher = commandPattern.matcher(completeMessage);
         ComponentInterface component = null;
         if (commandMatcher.find()) {
-            component = game.getPlayer().obtainItemRoom(commandMatcher.group(2));
+            component = whereToGetThatComponent(game, commandMatcher.group(2));
         }
         if (component != null) {
             return component.doAction(commandMatcher.group(1), completeMessage);
@@ -30,4 +30,6 @@ public class DirectAction implements Behavior {
 
         return noItemInRoom;
     }
+
+    abstract ComponentInterface whereToGetThatComponent(Game game, String itemName);
 }

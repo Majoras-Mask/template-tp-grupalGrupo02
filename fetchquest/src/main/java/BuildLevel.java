@@ -17,12 +17,12 @@ public class BuildLevel {
     public static void build(Game fetchQuest) {
 
         fetchQuest.getPlayer().addBehavior(LOOK_AROUND, new LookAround(fetchQuest));
-        fetchQuest.getPlayer().addBehavior(PICK, new DirectAction(fetchQuest));
-        fetchQuest.getPlayer().addBehavior(WHAT_CAN_I_DO_WITH, new DirectAction(fetchQuest));
+        fetchQuest.getPlayer().addBehavior(PICK, new DirectActionRoom(fetchQuest));
+        fetchQuest.getPlayer().addBehavior(WHAT_CAN_I_DO_WITH, new DirectActionRoom(fetchQuest));
         fetchQuest.getPlayer().addBehavior(HELP, new Help(fetchQuest));
 
         ComponentInterface stick = new ComponentSimple(STICK_NAME);
-        stick.addBehavior(PICK, new NormalPick(fetchQuest, stick));
+        stick.addBehavior(PICK, new Pick(fetchQuest, stick));
         stick.addBehavior(WHAT_CAN_I_DO_WITH, new WhatCanIDo(stick));
 
         ComponentContainer room = new ComponentContainer(ROOM_NAME);

@@ -12,11 +12,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Player implements PlayerInterface {
-    private List<ComponentInterface> inventory = new LinkedList<>();
+    private Map<String, ComponentInterface> inventory = new HashMap<>();
     private ComponentContainer room;
     //Esta lista va a ser necesaria para poder saber que comandos son soportados
     private Map<String, Behavior> actions = new HashMap<>();
     private static final String CANT_DO_ACTION = "Can't do that action.";
+    private static final int DEFAULT_INVENTORY_LIMIT = 10;
+    private int inventoryLimit = DEFAULT_INVENTORY_LIMIT;
+
+    public void setInventoryLimit(int limit) {
+        inventoryLimit = limit;
+    }
+
+    public int getInventoryLimit() {
+        return inventoryLimit;
+    }
 
     public List<String> listOfWhatISee() {
         return room.listOfComponents();
@@ -27,11 +37,15 @@ public class Player implements PlayerInterface {
     }
 
     public boolean playerHasItem(ComponentInterface item) {
-        return inventory.contains(item);
+        return inventory.containsValue(item);
+    }
+
+    public boolean playerHasItem(String itemName) {
+        return inventory.containsKey(itemName);
     }
 
     public void addItemToInventory(ComponentInterface item) {
-        inventory.add(item);
+        inventory.put(item.getName(), item);
     }
 
     public boolean seesItemInRoom(ComponentInterface item) {
@@ -82,5 +96,22 @@ public class Player implements PlayerInterface {
             }
         }
         return CANT_DO_ACTION;
+    }
+
+    public boolean inventoryFull() {
+        return (inventoryLimit <= inventory.size());
+    }
+
+    public void removeItem(ComponentInterface item) {
+        if (playerHasItem(item)) {
+            inventory.remove(item.getName());
+        }
+    }
+
+    public ComponentInterface obtainItemInventory(String itemName) {
+        if (playerHasItem(itemName)) {
+            return inventory.get(itemName);
+        }
+        return null;
     }
 }
