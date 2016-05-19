@@ -20,7 +20,6 @@ public class RiddleBuilder implements GameBuilder {
         Game riddle = new Game() {
             @Override
             public boolean winCondition() {
-                //TODO ver como comprobar
                 return GameRules.animalsOnTheOtherSide();
             }
 

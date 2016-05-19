@@ -52,6 +52,8 @@ public class FetchQuestBuilder implements GameBuilder {
 
         winningCondition = BuildLevel.getWinningCondition();
 
+        fetchQuest.readyGame();
+
         return fetchQuest;
     }
 }

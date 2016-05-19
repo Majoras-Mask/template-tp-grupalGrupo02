@@ -3,6 +3,7 @@ import ar.fiuba.tdd.tp.engine.behavior.*;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
+import ar.fiuba.tdd.tp.engine.rules.PlayerHasRule;
 
 public class BuildLevel {
     //names
@@ -28,13 +29,14 @@ public class BuildLevel {
         key.addBehavior(PICK, new Pick(openDoor, key));
         key.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(key));
 
-        ComponentInterface door = new ComponentSimple(DOOR_NAME);
-        ComponentContainer winningRoom = new ComponentContainer(WINNING_ROOM_NAME);
-        door.addBehavior(OPEN, new LockedDoorOpen(openDoor, key, winningRoom));
-        door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(door));
-
         ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(key);
+
+        ComponentInterface door = new ComponentSimple(DOOR_NAME);
+        ComponentContainer winningRoom = new ComponentContainer(WINNING_ROOM_NAME);
+        door.addBehavior(OPEN, new Cross(openDoor, room, winningRoom, new PlayerHasRule(openDoor, key)));
+        door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(door));
+
         room.addItem(door);
         openDoor.getPlayer().setRoom(room);
     }

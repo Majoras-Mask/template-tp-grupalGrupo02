@@ -21,8 +21,6 @@ public class OpenDoorBuilder implements GameBuilder {
 
     public Game build() {
         Game openDoor = new Game() {
-
-
             @Override
             public boolean winCondition() {
                 return this.getPlayer().currentRoomName().equals(winningRoomName);
