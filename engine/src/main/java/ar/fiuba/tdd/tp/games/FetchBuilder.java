@@ -1,15 +1,12 @@
 package ar.fiuba.tdd.tp.games;
 
 import ar.fiuba.tdd.tp.engine.*;
-import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.elements.*;
+import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-@SuppressWarnings("CPD-START")
 public class FetchBuilder implements GameBuilder{
 
+    @SuppressWarnings("CPD-START")
     @Override
     public Game build() {
         Game game = new Game();
@@ -19,47 +16,15 @@ public class FetchBuilder implements GameBuilder{
         room.put(player);
         room.put(stick);
         addContentCommands(player, stick);
-        setGameCommands(player, game);
         game.setWinCondition(() -> player.has("stick"));
+        game.setCommand(CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
+        game.setCommand(CommandsUtils.getLookAroundCommand("look around", player));
         return game;
     }
 
-    private void setGameCommands(Content player, Game game) {
-        game.setCommand(makePick(player));
-        game.setCommand(makeLookAround(player));
-    }
-
+    @SuppressWarnings("CPD-END")
     private void addContentCommands(Content player, Content stick) {
-        stick.addCommand("pick", (params) -> true, (params) -> {
-            player.put(player.getContainer().take("stick"));
-            return "You picked a stick";
-        });
+        CommandsUtils.addPickCommand(player, stick, "stick", "pick");
     }
 
-    private GameCommand makePick(Content player) {
-        return new GameCommand((command) -> {
-            Pattern pickPattern = Pattern.compile("pick .*");
-            Matcher pickMatcher = pickPattern.matcher(command);
-            return pickMatcher.find();
-        }, (params) -> {
-            Content playerRoom = player.getContainer();
-            if (playerRoom.has(params[0])) {
-                return playerRoom.get(params[0]).doCommand("pick");
-            } else {
-                return "Can't do pick on " + params[0];
-            }
-        }, (command) -> {
-            String[] split = command.split(" ");
-            String[] params = new String[1];
-            params[0] = split[1];
-            return params;
-        });
-    }
-
-    private GameCommand makeLookAround(Content player) {
-        return new GameCommand((command) -> "look around".equals(command), (params) -> {
-            Content playerRoom = player.getContainer();
-            return playerRoom.getName() + " has " + playerRoom.getContentsList();
-        }, (command) -> new String[0]);
-    }
 }

@@ -1,15 +1,12 @@
 package ar.fiuba.tdd.tp.games;
 
 import ar.fiuba.tdd.tp.engine.*;
-import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.elements.*;
+import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-@SuppressWarnings("CPD-START")
 public class CursedObjectBuilder implements GameBuilder {
 
+    @SuppressWarnings("CPD-START")
     @Override
     public Game build() {
         Game game = new Game();
@@ -32,18 +29,16 @@ public class CursedObjectBuilder implements GameBuilder {
         return game;
     }
 
+    @SuppressWarnings("CPD-END")
     private void setGameCommands(Content player, Game game) {
-        game.setCommand(makePick(player));
-        game.setCommand(makeLookAround(player));
-        game.setCommand(makeOpen(player));
-        game.setCommand(makeHello(player));
+        game.setCommand(CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
+        game.setCommand(CommandsUtils.getLookAroundCommand("look around", player));
+        game.setCommand(CommandsUtils.getSameRoomCommand("open .*", "open", player, 1));
+        game.setCommand(CommandsUtils.getSameRoomCommand("say hello .*", "hello", player, 2));
     }
 
     private void addContentCommands(Content player, Content door1, Content door2, Content room1, Content room2, Content room3, Content thief, Content cursedObject) {
-        cursedObject.addCommand("pick", (params) -> true, (params) -> {
-            player.put(player.getContainer().take("cursedObject"));
-            return "You picked a cursedObject";
-        });
+        CommandsUtils.addPickCommand(player, cursedObject, "cursedObject", "pick");
         door1.addCommand("open", (params) -> player.has("cursedObject"), (params) -> {
             room2.put(room1.take("player"));
             return "You opened a door and walked to room2";
@@ -58,72 +53,4 @@ public class CursedObjectBuilder implements GameBuilder {
             return "The thief stoled your cursedObject and ran away";
         });
     }
-
-    private GameCommand makeOpen(Content player) {
-        return new GameCommand((command) -> {
-            Pattern openPattern = Pattern.compile("open .*");
-            Matcher openMatcher = openPattern.matcher(command);
-            return openMatcher.find();
-        }, (params) -> {
-            Content playerRoom = player.getContainer();
-            if (playerRoom.has(params[0])) {
-                return playerRoom.get(params[0]).doCommand("open");
-            } else {
-                return "Can't do open on " + params[0];
-            }
-        }, (command) -> {
-            String[] split = command.split(" ");
-            String[] params = new String[1];
-            params[0] = split[1];
-            return params;
-        });
-    }
-
-    private GameCommand makeHello(Content player) {
-        return new GameCommand((command) -> {
-            Pattern helloPattern = Pattern.compile("say hello .*");
-            Matcher helloMatcher = helloPattern.matcher(command);
-            return helloMatcher.find();
-        }, (params) -> {
-            Content playerRoom = player.getContainer();
-            if (playerRoom.has(params[0])) {
-                return playerRoom.get(params[0]).doCommand("hello");
-            } else {
-                return "Can't do hello on " + params[0];
-            }
-        }, (command) -> {
-            String[] split = command.split(" ");
-            String[] params = new String[1];
-            params[0] = split[2];
-            return params;
-        });
-    }
-
-    private GameCommand makePick(Content player) {
-        return new GameCommand((command) -> {
-            Pattern pickPattern = Pattern.compile("pick .*");
-            Matcher pickMatcher = pickPattern.matcher(command);
-            return pickMatcher.find();
-        }, (params) -> {
-            Content playerRoom = player.getContainer();
-            if (playerRoom.has(params[0])) {
-                return playerRoom.get(params[0]).doCommand("pick");
-            } else {
-                return "Can't do pick on " + params[0];
-            }
-        }, (command) -> {
-            String[] split = command.split(" ");
-            String[] params = new String[1];
-            params[0] = split[1];
-            return params;
-        });
-    }
-
-    private GameCommand makeLookAround(Content player) {
-        return new GameCommand((command) -> "look around".equals(command), (empty) -> {
-            Content playerRoom = player.getContainer();
-            return playerRoom.getName() + " has " + playerRoom.getContentsList();
-        }, (command) -> new String[0]);
-    }
-
 }

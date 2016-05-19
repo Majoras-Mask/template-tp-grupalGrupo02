@@ -1,7 +1,7 @@
 package ar.fiuba.tdd.tp.engine;
 
-import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.commands.WinCondition;
+import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 
 import java.util.ArrayList;
 import java.util.Iterator;
