@@ -19,10 +19,14 @@ public class FetchBuilder implements GameBuilder{
         room.put(player);
         room.put(stick);
         addContentCommands(player, stick);
+        setGameCommands(player, game);
         game.setWinCondition(() -> player.has("stick"));
+        return game;
+    }
+
+    private void setGameCommands(Content player, Game game) {
         game.setCommand(makePick(player));
         game.setCommand(makeLookAround(player));
-        return game;
     }
 
     private void addContentCommands(Content player, Content stick) {

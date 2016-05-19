@@ -29,10 +29,14 @@ public class HanoiBuilder implements GameBuilder {
         room.put(stack2);
         room.put(stack3);
         addContentCommands(player, room, disk1, disk2, disk3);
+        setGameCommands(player, game);
         game.setWinCondition(() -> stack3.has("disk1") && stack3.has("disk2") && stack3.has("disk3"));
+        return game;
+    }
+
+    private void setGameCommands(Content player, Game game) {
         game.setCommand(makeTake(player));
         game.setCommand(makePut(player));
-        return game;
     }
 
     private void addContentCommands(Content player, Content room, Content disk1, Content disk2, Content disk3) {

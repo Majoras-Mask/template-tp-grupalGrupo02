@@ -28,11 +28,15 @@ public class RiddleBuilder implements GameBuilder {
         southShore.put(northTransporter);
         northShore.put(southTransporter);
         addContentCommands(player, northShore, northTransporter, southShore, southTransporter, wolf, sheep, cabbage);
+        setGameCommands(player, game);
         game.setWinCondition(() -> northShore.has("wolf") && northShore.has("sheep") && northShore.has("cabbage"));
+        return game;
+    }
+
+    private void setGameCommands(Content player, Game game) {
         game.setCommand(makeTake(player));
         game.setCommand(makeLeave(player));
         game.setCommand(makeCross(player));
-        return game;
     }
 
     private boolean validCross(Content leavingShore) {

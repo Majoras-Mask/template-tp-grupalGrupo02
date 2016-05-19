@@ -27,12 +27,12 @@ public class CursedObjectBuilder implements GameBuilder {
         room2.put(door2);
         room2.put(thief);
         addContentCommands(player, door1, door2, room1, room2, room3, thief, cursedObject);
-        setGameCommandsAndCondition(player, game, () -> room3.has("player"));
+        setGameCommands(player, game);
+        game.setWinCondition(() -> room3.has("player"));
         return game;
     }
 
-    private void setGameCommandsAndCondition(Content player, Game game, WinCondition winCondition) {
-        game.setWinCondition(winCondition);
+    private void setGameCommands(Content player, Game game) {
         game.setCommand(makePick(player));
         game.setCommand(makeLookAround(player));
         game.setCommand(makeOpen(player));
