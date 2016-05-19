@@ -75,8 +75,8 @@ public class HanoiTest {
 
     @Test
     public void cantMoveDisk1ToUndefinedStack(){
-        game.command("take disk1 from stak2");
-        assertEquals("Can't do put on disk1 on stack4",game.command("put disk1 on stack4"));
+        game.command("take disk1 from stack1");
+        assertEquals("Can't do put with disk1 on stack4",game.command("put disk1 on stack4"));
     }
 
     @Test

@@ -89,19 +89,19 @@ public class RiddleTest {
 
     @Test
     public void cantCrossWhenTheyEatEachOthers(){
-        assertEquals("Can't do cross on north shore",game.command("cross north shore"));
+        assertEquals("Can't do cross on northShore",game.command("cross northShore"));
     }
 
     @Test
     public void cantCrossIfTheWolfEatsTheSheep(){
-        game.command("take cabbge");
-        assertEquals("Can't do cross on south shore",game.command("cross south shore"));
+        game.command("take cabbage");
+        assertEquals("Can't do cross on southShore",game.command("cross southShore"));
     }
 
     @Test
     public void cantCrossIfTheSheepEatsTheCabbage(){
         game.command("take wolf");
-        assertEquals("Can't do cross on south shore",game.command("cross south shore"));
+        assertEquals("Can't do cross on southShore",game.command("cross southShore"));
     }
 
     @Test
