@@ -1,2 +1,2 @@
 rootProject.name = 'tp-tp-grupal'
-include 'client' , 'server' , 'engine'
+include 'client' , 'server' , 'engine', 'opendoor', 'fetchquest'

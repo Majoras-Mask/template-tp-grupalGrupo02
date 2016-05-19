@@ -2,6 +2,8 @@ import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.Player;
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
+import ar.fiuba.tdd.tp.engine.behavior.DirectAction;
+import ar.fiuba.tdd.tp.engine.behavior.WhatCanIDo;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
@@ -9,6 +11,7 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("CPD-START")
 public class OpenDoorBuilder implements GameBuilder {
 
     private static final String GAME_NAME = "Open Door";
@@ -73,12 +76,12 @@ public class OpenDoorBuilder implements GameBuilder {
 
         ComponentInterface key = new ComponentSimple(KEY_NAME);
         key.addBehavior(PICK, new NormalPick(openDoor, key));
-        key.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(openDoor, key));
+        key.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(key));
 
         ComponentInterface door = new ComponentSimple(DOOR_NAME);
         ComponentContainer winningRoom = new ComponentContainer(WINNING_ROOM_NAME);
         door.addBehavior(OPEN, new LockedDoorOpen(openDoor, key, winningRoom));
-        door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(openDoor, door));
+        door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(door));
 
         ComponentContainer room = new ComponentContainer(ROOM_NAME);
         room.addItem(key);
@@ -89,47 +92,6 @@ public class OpenDoorBuilder implements GameBuilder {
     }
 
     //Behaviors
-    public static class DirectAction implements Behavior {
-        private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
-        Game game;
-
-        public DirectAction(Game game) {
-            this.game = game;
-        }
-
-        public String execute(String completeMessage) {
-            Pattern commandPattern = Pattern.compile(DIRECT_ACTION_REGEX);
-            Matcher commandMatcher = commandPattern.matcher(completeMessage);
-            ComponentInterface component = null;
-            if (commandMatcher.find()) {
-                component = game.getPlayer().obtainItemRoom(commandMatcher.group(2));
-            }
-            if (component != null) {
-                return component.doAction(commandMatcher.group(1), completeMessage);
-            }
-
-            return NO_ITEM_ROOM;
-        }
-    }
-
-    private static class WhatCanIDo implements Behavior {
-        Game game;
-        ComponentInterface item;
-
-        WhatCanIDo(Game game, ComponentInterface item) {
-            this.game = game;
-            this.item = item;
-        }
-
-        public String execute(String modifier) {
-            StringBuffer message = new StringBuffer();
-            message.append("You can: ");
-            for (String action : item.getListOfActions()) {
-                message.append(action + ". ");
-            }
-            return message.toString();
-        }
-    }
 
     private static class LockedDoorOpen implements Behavior {
         Game game;

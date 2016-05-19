@@ -8,7 +8,7 @@ public class Main {
         GameBuilder fetchQuestBuilder = new FetchQuestBuilder();
         Game game = fetchQuestBuilder.build();
 
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in, "UTF-8");
 
         while (input.hasNext()) {
             System.out.print(game.command(input.nextLine()));
