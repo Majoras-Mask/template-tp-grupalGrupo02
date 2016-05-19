@@ -37,104 +37,104 @@ public class RiddleTest {
     }
 
     @Test
-    public void takeWolf(){
+    public void takeWolf() {
         assertEquals("take wolf on boat",game.command("take wolf"));
     }
 
     @Test
-    public void takeSheepAfterTakedWolf(){
+    public void takeSheepAfterTakedWolf() {
         game.command("take wolf");
         assertEquals("Can't do take on sheep",game.command("take sheep"));
     }
 
     @Test
-    public void takeCabbageAfterTakedWolf(){
+    public void takeCabbageAfterTakedWolf() {
         game.command("take wolf");
         assertEquals("Can't do take on cabbage",game.command("take cabbage"));
     }
 
     @Test
-    public void takeSheep(){
+    public void takeSheep() {
         assertEquals("take sheep on boat",game.command("take sheep"));
     }
 
     @Test
-    public void takeWolfAfterTakedSheep(){
+    public void takeWolfAfterTakedSheep() {
         game.command("take sheep");
         assertEquals("Can't do take on wolf",game.command("take wolf"));
     }
 
     @Test
-    public void takeCabbageAfterTakedSheep(){
+    public void takeCabbageAfterTakedSheep() {
         game.command("take sheep");
         assertEquals("Can't do take on cabbage",game.command("take cabbage"));
     }
 
     @Test
-    public void takeCabbage(){
+    public void takeCabbage() {
         assertEquals("take cabbage on boat",game.command("take cabbage"));
     }
 
     @Test
-    public void takeWolfAfterTakedCabbage(){
+    public void takeWolfAfterTakedCabbage() {
         game.command("take cabbage");
         assertEquals("Can't do take on wolf",game.command("take wolf"));
     }
 
     @Test
-    public void takeSheepAfterTakedCabbage(){
+    public void takeSheepAfterTakedCabbage() {
         game.command("take cabbage");
         assertEquals("Can't do take on sheep",game.command("take sheep"));
     }
 
     @Test
-    public void cantCrossWhenTheyEatEachOthers(){
+    public void cantCrossWhenTheyEatEachOthers() {
         assertEquals("Can't do cross on northShore",game.command("cross northShore"));
     }
 
     @Test
-    public void cantCrossIfTheWolfEatsTheSheep(){
+    public void cantCrossIfTheWolfEatsTheSheep() {
         game.command("take cabbage");
         assertEquals("Can't do cross on southShore",game.command("cross southShore"));
     }
 
     @Test
-    public void cantCrossIfTheSheepEatsTheCabbage(){
+    public void cantCrossIfTheSheepEatsTheCabbage() {
         game.command("take wolf");
         assertEquals("Can't do cross on southShore",game.command("cross southShore"));
     }
 
     @Test
-    public void cantLeaveSheepIfYouDontHaveOne(){
+    public void cantLeaveSheepIfYouDontHaveOne() {
         assertEquals("Can't do leave on sheep",game.command("leave sheep"));
     }
 
     @Test
-    public void cantLeaveWolfIfYouDontHaveOne(){
+    public void cantLeaveWolfIfYouDontHaveOne() {
         assertEquals("Can't do leave on wolf",game.command("leave wolf"));
     }
 
     @Test
-    public void cantLeaveCabbageIfYouDontHaveOne(){
+    public void cantLeaveCabbageIfYouDontHaveOne() {
         assertEquals("Can't do leave on cabbage",game.command("leave cabbage"));
     }
 
     @Test
-    public void canTakeCabbageAfterLeaveSomething(){
+    public void canTakeCabbageAfterLeaveSomething() {
         game.command("take sheep");
         game.command("leave sheep");
         assertEquals("take cabbage on boat",game.command("take cabbage"));
     }
 
     @Test
-    public void canTakeSheepAfterLeaveSomething(){
+    public void canTakeSheepAfterLeaveSomething() {
         game.command("take wolf");
         game.command("leave wolf");
         assertEquals("take sheep on boat",game.command("take sheep"));
     }
 
     @Test
-    public void canTakeWolfAfterLeaveSomething(){
+    public void canTakeWolfAfterLeaveSomething() {
         game.command("take cabbage");
         game.command("leave cabbage");
         assertEquals("take wolf on boat",game.command("take wolf"));

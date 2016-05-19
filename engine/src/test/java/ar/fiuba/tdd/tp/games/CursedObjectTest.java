@@ -51,38 +51,38 @@ public class CursedObjectTest {
     }
 
     @Test
-    public void pickCursedObject(){
+    public void pickCursedObject() {
         assertEquals("You picked a cursedObject",game.command("pick cursedObject"));
     }
 
     @Test
-    public void pickdoor(){
+    public void pickdoor() {
         assertEquals("Can't do pick on door",game.command("pick door"));
     }
 
     @Test
-    public void openCursedObject(){
+    public void openCursedObject() {
         assertEquals("Can't do open on cursedObject", game.command("open cursedObject"));
     }
 
     @Test
-    public void openDoor(){
+    public void openDoor() {
         assertEquals("Can't do open on door", game.command("open door"));
     }
 
     @Test
-    public void openDoorAfterPickedCursedObject(){
+    public void openDoorAfterPickedCursedObject() {
         game.command("pick cursedObject");
         assertEquals("You opened a door and walked to room2",game.command("open door"));
     }
 
     @Test
-    public void sayHelloDoor(){
+    public void sayHelloDoor() {
         assertEquals("Can't do hello on door",  game.command("say hello door"));
     }
 
     @Test
-    public void sayHelloCursedObject(){
+    public void sayHelloCursedObject() {
         assertEquals("Can't do hello on cursedObject",  game.command("say hello cursedObject"));
     }
     //Tests in second room
@@ -92,6 +92,7 @@ public class CursedObjectTest {
         game.command("open door");
         assertEquals("room2 has door-thief-player", game.command("look around"));
     }
+
     @Test
     public void lookAroundSecondRoomAfterTalkWithThief() {
         game.command("pick cursedObject");
@@ -144,7 +145,7 @@ public class CursedObjectTest {
     }
 
     @Test
-    public void sayHelloDoor2(){
+    public void sayHelloDoor2() {
         game.command("pick cursedObject");
         game.command("open door");
         assertEquals("Can't do hello on door",  game.command("say hello door"));

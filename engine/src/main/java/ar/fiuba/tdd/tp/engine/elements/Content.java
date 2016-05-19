@@ -41,7 +41,9 @@ public class Content extends Container {
     }
 
     public String doCommand(String commandName, String[] params) {
-        if (commandsValidations.containsKey(commandName) && commandsExecutors.containsKey(commandName) && commandsValidations.get(commandName).convert(params)) {
+        if (commandsValidations.containsKey(commandName)
+                && commandsExecutors.containsKey(commandName)
+                && commandsValidations.get(commandName).convert(params)) {
             return commandsExecutors.get(commandName).execute(params);
         } else {
             return "Can't do " + commandName + " on " + name;

@@ -7,7 +7,6 @@ import ar.fiuba.tdd.tp.engine.elements.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("CPD-START")
 public class OpenDoor1Builder implements GameBuilder {
 
     @Override

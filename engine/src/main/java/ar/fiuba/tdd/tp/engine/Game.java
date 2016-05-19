@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.engine;
 
 import ar.fiuba.tdd.tp.engine.commands.GameCommand;
-import ar.fiuba.tdd.tp.engine.commands.CommandValidation;
 import ar.fiuba.tdd.tp.engine.commands.WinCondition;
 
 import java.util.ArrayList;

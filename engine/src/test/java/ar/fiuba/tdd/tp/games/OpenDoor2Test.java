@@ -88,41 +88,41 @@ public class OpenDoor2Test {
     }
 
     @Test
-    public void pickBox(){
+    public void pickBox() {
         assertEquals("Can't do pick on box",game.command("pick box"));
     }
 
     @Test
-    public void pickBoxAfterOpened(){
+    public void pickBoxAfterOpened() {
         game.command("opeb box");
         assertEquals("Can't do pick on box",game.command("pick box"));
     }
 
     @Test
-    public void pickBoxAfterOpenedAndAfterPickedKey(){
+    public void pickBoxAfterOpenedAndAfterPickedKey() {
         game.command("open box");
         game.command("pick key");
         assertEquals("Can't do pick on box",game.command("pick box"));
     }
 
     @Test
-    public void pickDoor(){
+    public void pickDoor() {
         assertEquals("Can't do pick on door",game.command("pick door"));
     }
 
     @Test
-    public void pickKeyThatIDontSee(){
+    public void pickKeyThatIDontSee() {
         assertEquals("Can't do pick on key",game.command("pick key"));
     }
 
     @Test
-    public void openKey(){
+    public void openKey() {
         game.command("open box");
         assertEquals("Can't do open on key",game.command("open key"));
     }
 
     @Test
-    public void pickKeyAfterPickedKey(){
+    public void pickKeyAfterPickedKey() {
         game.command("open box");
         game.command("pick key");
         assertEquals("Can't do pick on key",game.command("pick key"));
