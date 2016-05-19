@@ -127,7 +127,7 @@ public class OpenDoor2Test {
         game.command("pick key");
         assertEquals("Can't do pick on key",game.command("pick key"));
     }
-
+//TODO: fix this
 //    @Test
 //    public void openBoxAllreadyOpened(){
 //        game.command("open box");
