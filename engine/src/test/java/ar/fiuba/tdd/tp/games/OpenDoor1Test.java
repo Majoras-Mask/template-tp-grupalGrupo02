@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+@SuppressWarnings("CPD-START")
 public class OpenDoor1Test {
     private final OpenDoor1Builder builder = new OpenDoor1Builder();
     private Game game;

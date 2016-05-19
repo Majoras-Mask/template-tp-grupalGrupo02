@@ -4,9 +4,9 @@ import ar.fiuba.tdd.tp.engine.*;
 import ar.fiuba.tdd.tp.engine.elements.*;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
+@SuppressWarnings("CPD-START")
 public class CursedObjectBuilder implements GameBuilder {
 
-    @SuppressWarnings("CPD-START")
     @Override
     public Game build() {
         Game game = new Game();
@@ -29,7 +29,6 @@ public class CursedObjectBuilder implements GameBuilder {
         return game;
     }
 
-    @SuppressWarnings("CPD-END")
     private void setGameCommands(Content player, Game game) {
         game.setCommand(CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
         game.setCommand(CommandsUtils.getLookAroundCommand("look around", player));

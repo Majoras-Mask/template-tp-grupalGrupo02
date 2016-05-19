@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+@SuppressWarnings("CPD-START")
 public class CursedObjectTest {
     private final CursedObjectBuilder builder = new CursedObjectBuilder();
     private Game game;

@@ -4,9 +4,9 @@ import ar.fiuba.tdd.tp.engine.*;
 import ar.fiuba.tdd.tp.engine.elements.*;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
+@SuppressWarnings("CPD-START")
 public class OpenDoor1Builder implements GameBuilder {
 
-    @SuppressWarnings("CPD-START")
     @Override
     public Game build() {
         Game game = new Game();
@@ -26,7 +26,7 @@ public class OpenDoor1Builder implements GameBuilder {
         return game;
     }
 
-    @SuppressWarnings("CPD-END")
+
     private void addContentCommands(Content player, Content key, Content door, Content room1, Content room2) {
         CommandsUtils.addPickCommand(player, key, "key", "pick");
         door.addCommand("open", (params) -> player.has("key"), (params) -> {
