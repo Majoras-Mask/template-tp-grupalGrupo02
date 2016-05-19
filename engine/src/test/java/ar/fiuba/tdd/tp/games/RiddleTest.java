@@ -18,21 +18,21 @@ public class RiddleTest {
     @Test
     public void winGame() {
         game.command("take sheep");
-        game.command("cross north shore");
+        game.command("cross northShore");
         game.command("leave sheep");
-        game.command("cross south shore");
+        game.command("cross southShore");
         game.command("take wolf");
-        game.command("cross north shore");
+        game.command("cross northShore");
         game.command("leave wolf");
         game.command("take sheep");
-        game.command("cross south shore");
+        game.command("cross southShore");
         game.command("leave sheep");
         game.command("take cabbage");
-        game.command("cross north shore");
+        game.command("cross northShore");
         game.command("leave cabbage");
-        game.command("cross south shore");
+        game.command("cross southShore");
         game.command("take sheep");
-        game.command("cross north shore");
+        game.command("cross northShore");
         assertEquals("You won the game!", game.command("leave sheep"));
     }
 
