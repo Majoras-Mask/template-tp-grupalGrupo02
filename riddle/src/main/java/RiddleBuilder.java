@@ -1,13 +1,6 @@
 import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.Player;
-import ar.fiuba.tdd.tp.engine.behavior.*;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RiddleBuilder implements GameBuilder {
     //Names of items, commands and responses
@@ -20,7 +13,7 @@ public class RiddleBuilder implements GameBuilder {
         Game riddle = new Game() {
             @Override
             public boolean winCondition() {
-                return GameRules.animalsOnTheOtherSide();
+                return GameRules.wonTheGame();
             }
 
             @Override

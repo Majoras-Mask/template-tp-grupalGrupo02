@@ -27,11 +27,6 @@ public class OpenDoorBuilder implements GameBuilder {
             }
 
             @Override
-            public Player getPlayer() {
-                return player;
-            }
-
-            @Override
             public String getName() {
                 return GAME_NAME;
             }

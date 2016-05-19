@@ -39,7 +39,7 @@ public class GameRules implements Rule {
         return ERROR;
     }
 
-    public static boolean animalsOnTheOtherSide() {
+    public static boolean wonTheGame() {
         if (northRiver.hasItem(wolf) && northRiver.hasItem(sheep) && northRiver.hasItem(cabbage)) {
             return true;
         }

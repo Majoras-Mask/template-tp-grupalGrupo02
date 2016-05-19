@@ -31,7 +31,9 @@ public abstract class Game {
         return response;
     }
 
-    public abstract Player getPlayer();
+    public Player getPlayer() {
+        return player;
+    }
 
     public abstract String getName();
 
