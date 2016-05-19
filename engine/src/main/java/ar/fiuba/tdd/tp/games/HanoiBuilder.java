@@ -37,16 +37,16 @@ public class HanoiBuilder implements GameBuilder {
             return "Picked disk3 from " + stackName;
         });
         disk1.addCommand("put", (params) -> true, (params) -> {
-            room.get(params[0]).put(player.take("disk1"));
-            return "Placed disk1 on " + params[0];
+            room.get(params[1]).put(player.take("disk1"));
+            return "Placed disk1 on " + params[1];
         });
-        disk2.addCommand("put", (params) -> !room.get(params[0]).has("disk1"), (params) -> {
-            room.get(params[0]).put(player.take("disk2"));
-            return "Placed disk2 on " + params[0];
+        disk2.addCommand("put", (params) -> !room.get(params[1]).has("disk1"), (params) -> {
+            room.get(params[1]).put(player.take("disk2"));
+            return "Placed disk2 on " + params[1];
         });
-        disk3.addCommand("put", (params) -> !room.get(params[0]).has("disk1") && !room.get(params[0]).has("disk2"), (params) -> {
-            room.get(params[0]).put(player.take("disk3"));
-            return "Placed disk3 on " + params[0];
+        disk3.addCommand("put", (params) -> !room.get(params[1]).has("disk1") && !room.get(params[1]).has("disk2"), (params) -> {
+            room.get(params[1]).put(player.take("disk3"));
+            return "Placed disk3 on " + params[1];
         });
         stack1.put(disk1);
         stack1.put(disk2);
@@ -64,50 +64,38 @@ public class HanoiBuilder implements GameBuilder {
         return game;
     }
 
-    /*private boolean validCross(Content leavingShore) {
-        return !((leavingShore.has("wolf") && leavingShore.has("sheep")) || (leavingShore.has("sheep") && leavingShore.has("cabbage")));
-    }*/
-
     private GameCommand makeTake(Content player) {
-        StringToString takeParser = (command) -> {
+        CommandValidator takeParser = (command) -> {
             Pattern takePattern = Pattern.compile("take .* from .*");
             Matcher takeMatcher = takePattern.matcher(command);
-            return takeMatcher.find() ? command.substring(5) : command;
+            return takeMatcher.find();
         };
-        StringToString takeExecutor = (itemName) -> {
-            String[] split = itemName.split(" ");
-            String disk = split[0];
-            String stack = split[2];
+        CommandExecutor takeExecutor = (params) -> {
             Content playerRoom = player.getContainer();
-            if (playerRoom.has(stack) && playerRoom.get(stack).has(disk)) {
-                return playerRoom.get(stack).get(disk).doCommand("take");
+            if (playerRoom.has(params[1]) && playerRoom.get(params[1]).has(params[0])) {
+                return playerRoom.get(params[1]).get(params[0]).doCommand("take");
             } else {
-                return "Can't do take on " + itemName;
+                return "Can't do take on " + params[0] + " from " + params[1];
             }
         };
-        return new GameCommand(takeParser, takeExecutor);
+        return new GameCommand(takeParser, takeExecutor, (command) -> new String[0]);
     }
 
     private GameCommand makePut(Content player) {
-        StringToString putParser = (command) -> {
+        CommandValidator putParser = (command) -> {
             Pattern putPattern = Pattern.compile("put .* on .*");
             Matcher putMatcher = putPattern.matcher(command);
-            return putMatcher.find() ? command.substring(4) : command;
+            return putMatcher.find();
         };
-        StringToString putExecutor = (itemName) -> {
-            String[] split = itemName.split(" ");
-            String disk = split[0];
-            String stack = split[2];
-            String[] params = new String[1];
-            params[0] = stack;
+        CommandExecutor putExecutor = (params) -> {
             Content playerRoom = player.getContainer();
-            if (playerRoom.has(stack) && player.has(disk)) {
-                return player.get(disk).doCommand("put", params);
+            if (playerRoom.has(params[1]) && player.has(params[0])) {
+                return player.get(params[0]).doCommand("put", params);
             } else {
-                return "Can't do put on " + itemName;
+                return "Can't do put with " + params[0] + " on " + params[1];
             }
         };
-        return new GameCommand(putParser, putExecutor);
+        return new GameCommand(putParser, putExecutor, (command) -> new String[0]);
     }
 
 }

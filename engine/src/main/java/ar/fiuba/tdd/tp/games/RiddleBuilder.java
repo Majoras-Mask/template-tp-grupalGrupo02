@@ -75,54 +75,54 @@ public class RiddleBuilder implements GameBuilder {
     }
 
     private GameCommand makeTake(Content player) {
-        StringToString takeParser = (command) -> {
+        CommandValidator takeParser = (command) -> {
             Pattern takePattern = Pattern.compile("take .*");
             Matcher takeMatcher = takePattern.matcher(command);
-            return takeMatcher.find() ? command.substring(5) : command;
+            return takeMatcher.find();
         };
-        StringToString takeExecutor = (itemName) -> {
+        CommandExecutor takeExecutor = (params) -> {
             Content playerRoom = player.getContainer();
-            if (playerRoom.has(itemName)) {
-                return playerRoom.get(itemName).doCommand("take");
+            if (playerRoom.has(params[0])) {
+                return playerRoom.get(params[0]).doCommand("take");
             } else {
-                return "Can't do take on " + itemName;
+                return "Can't do take on " + params[0];
             }
         };
 
-        return new GameCommand(takeParser, takeExecutor);
+        return new GameCommand(takeParser, takeExecutor, (command) -> new String[0]);
     }
 
     private GameCommand makeLeave(Content player) {
-        StringToString leaveParser = (command) -> {
+        CommandValidator leaveParser = (command) -> {
             Pattern leavePattern = Pattern.compile("leave .*");
             Matcher leaveMatcher = leavePattern.matcher(command);
-            return leaveMatcher.find() ? command.substring(6) : command;
+            return leaveMatcher.find();
         };
-        StringToString leaveExecutor = (itemName) -> {
-            if (player.has(itemName)) {
-                return player.get(itemName).doCommand("leave");
+        CommandExecutor leaveExecutor = (params) -> {
+            if (player.has(params[0])) {
+                return player.get(params[0]).doCommand("leave");
             } else {
-                return "Can't do leave on " + itemName;
+                return "Can't do leave on " + params[0];
             }
         };
-        return new GameCommand(leaveParser, leaveExecutor);
+        return new GameCommand(leaveParser, leaveExecutor, (command) -> new String[0]);
     }
 
     private GameCommand makeCross(Content player) {
-        StringToString crossParser = (command) -> {
+        CommandValidator crossParser = (command) -> {
             Pattern crossPattern = Pattern.compile("cross .*");
             Matcher crossMatcher = crossPattern.matcher(command);
-            return crossMatcher.find() ? command.substring(6) : command;
+            return crossMatcher.find();
         };
-        StringToString crossExecutor = (itemName) -> {
+        CommandExecutor crossExecutor = (params) -> {
             Content playerRoom = player.getContainer();
-            if (playerRoom.has(itemName)) {
-                return playerRoom.get(itemName).doCommand("cross");
+            if (playerRoom.has(params[0])) {
+                return playerRoom.get(params[0]).doCommand("cross");
             } else {
-                return "Can't do cross on " + itemName;
+                return "Can't do cross on " + params[0];
             }
         };
-        return new GameCommand(crossParser, crossExecutor);
+        return new GameCommand(crossParser, crossExecutor, (command) -> new String[0]);
     }
 
 }

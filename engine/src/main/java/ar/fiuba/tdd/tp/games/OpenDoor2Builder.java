@@ -47,47 +47,47 @@ public class OpenDoor2Builder implements GameBuilder {
     }
 
     private GameCommand makeOpen(Content player) {
-        StringToString openParser = (command) -> {
+        CommandValidator openParser = (command) -> {
             Pattern openPattern = Pattern.compile("open .*");
             Matcher openMatcher = openPattern.matcher(command);
-            return openMatcher.find() ? command.substring(5) : command;
+            return openMatcher.find();
         };
-        StringToString openExecutor = (itemName) -> {
+        CommandExecutor openExecutor = (params) -> {
             Content playerRoom = player.getContainer();
-            if (playerRoom.has(itemName)) {
-                return playerRoom.get(itemName).doCommand("open");
+            if (playerRoom.has(params[0])) {
+                return playerRoom.get(params[0]).doCommand("open");
             } else {
-                return "Can't do open on " + itemName;
+                return "Can't do open on " + params[0];
             }
         };
 
-        return new GameCommand(openParser, openExecutor);
+        return new GameCommand(openParser, openExecutor, (command) -> new String[0]);
     }
 
     private GameCommand makePick(Content player) {
-        StringToString pickParser = (command) -> {
+        CommandValidator pickParser = (command) -> {
             Pattern pickPattern = Pattern.compile("pick .*");
             Matcher pickMatcher = pickPattern.matcher(command);
-            return pickMatcher.find() ? command.substring(5) : command;
+            return pickMatcher.find();
         };
-        StringToString pickExecutor = (itemName) -> {
+        CommandExecutor pickExecutor = (params) -> {
             Content playerRoom = player.getContainer();
-            if (playerRoom.has(itemName)) {
-                return playerRoom.get(itemName).doCommand("pick");
+            if (playerRoom.has(params[0])) {
+                return playerRoom.get(params[0]).doCommand("pick");
             } else {
-                return "Can't do pick on " + itemName;
+                return "Can't do pick on " + params[0];
             }
         };
-        return new GameCommand(pickParser, pickExecutor);
+        return new GameCommand(pickParser, pickExecutor, (command) -> new String[0]);
     }
 
     private GameCommand makeLookAround(Content player) {
-        StringToString lookAroundParser = (command) -> "look around".equals(command) ? "" : command;
-        StringToString lookAroundExecutor = (empty) -> {
+        CommandValidator lookAroundParser = (command) -> "look around".equals(command);
+        CommandExecutor lookAroundExecutor = (params) -> {
             Content playerRoom = player.getContainer();
             return playerRoom.getName() + " has " + playerRoom.getContentsList();
         };
-        return new GameCommand(lookAroundParser, lookAroundExecutor);
+        return new GameCommand(lookAroundParser, lookAroundExecutor, (command) -> new String[0]);
     }
 
 }

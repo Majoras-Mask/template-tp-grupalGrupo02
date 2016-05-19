@@ -16,17 +16,16 @@ public class Game {
         commands = new ArrayList<>();
     }
 
-    private String doCommand(String command) {
-        String response = command;
+    private String processInput(String input) {
+        String response = input;
         Iterator iterator = commands.iterator();
-        while (iterator.hasNext() && response.equals(command)) {
+        while (iterator.hasNext() && response.equals(input)) {
             GameCommand gameCommand = (GameCommand) iterator.next();
-            String parameter;
-            if (!command.equals(parameter = gameCommand.checkCommand(command))) {
-                response = gameCommand.doCommand(parameter);
+            if (gameCommand.checkCommand(input)) {
+                response = gameCommand.doCommand(gameCommand.parseCommand(input));
             }
         }
-        return response.equals(command) ? "invalid command" : response;
+        return response.equals(input) ? "invalid command" : response;
     }
 
     public void setWinCondition(WinCondition winCondition) {
@@ -37,7 +36,7 @@ public class Game {
         if (winCondition.check()) {
             return "You won the game!";
         } else {
-            String response = doCommand(string);
+            String response = processInput(string);
             if (winCondition.check()) {
                 response = "You won the game!";
             }
