@@ -1,11 +1,10 @@
-package ar.fiuba.tdd.tp.engine;
+package ar.fiuba.tdd.tp.engine.player;
 
 import ar.fiuba.tdd.tp.engine.behavior.Behavior;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;

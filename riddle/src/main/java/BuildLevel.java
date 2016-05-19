@@ -1,5 +1,5 @@
 import ar.fiuba.tdd.tp.engine.Game;
-import ar.fiuba.tdd.tp.engine.Player;
+import ar.fiuba.tdd.tp.engine.player.Player;
 import ar.fiuba.tdd.tp.engine.behavior.*;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;

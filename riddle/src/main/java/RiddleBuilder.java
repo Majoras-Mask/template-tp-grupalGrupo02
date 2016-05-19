@@ -1,6 +1,6 @@
 import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
-import ar.fiuba.tdd.tp.engine.Player;
+import ar.fiuba.tdd.tp.engine.player.Player;
 
 public class RiddleBuilder implements GameBuilder {
     //Names of items, commands and responses

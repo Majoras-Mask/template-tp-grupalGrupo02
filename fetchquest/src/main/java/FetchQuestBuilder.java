@@ -1,13 +1,7 @@
 import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
-import ar.fiuba.tdd.tp.engine.Player;
-import ar.fiuba.tdd.tp.engine.behavior.*;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
+import ar.fiuba.tdd.tp.engine.player.Player;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
-import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @SuppressWarnings("CPD-START")
 public class FetchQuestBuilder implements GameBuilder {

@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp.engine;
 
+import ar.fiuba.tdd.tp.engine.player.Player;
+
 public abstract class Game {
     public Player player = new Player();
 
