@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.engine.commands;
+package ar.fiuba.tdd.tp.engine.commands.game;
 
 public class GameCommand {
     private CommandValidator validator;

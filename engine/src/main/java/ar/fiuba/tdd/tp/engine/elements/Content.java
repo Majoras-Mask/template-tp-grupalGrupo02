@@ -1,15 +1,14 @@
 package ar.fiuba.tdd.tp.engine.elements;
 
-import ar.fiuba.tdd.tp.engine.commands.CommandExecution;
-import ar.fiuba.tdd.tp.engine.commands.CommandExecutor;
-import ar.fiuba.tdd.tp.engine.commands.CommandValidation;
+import ar.fiuba.tdd.tp.engine.commands.content.CommandExecutor;
+import ar.fiuba.tdd.tp.engine.commands.content.CommandValidator;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Content extends Container {
     private Content container;
-    private Map<String,CommandValidation> commandsValidations;
+    private Map<String,CommandValidator> commandsValidators;
     private Map<String,CommandExecutor> commandsExecutors;
 
     public Content(String name) {
@@ -19,7 +18,7 @@ public class Content extends Container {
     public Content(String name, Integer limit) {
         super(name, limit);
         container = null;
-        commandsValidations = new HashMap<>();
+        commandsValidators = new HashMap<>();
         commandsExecutors = new HashMap<>();
     }
 
@@ -31,8 +30,8 @@ public class Content extends Container {
         return container;
     }
 
-    public void addCommand(String commandName, CommandValidation commandValidation, CommandExecutor commandExecutor) {
-        commandsValidations.put(commandName, commandValidation);
+    public void addCommand(String commandName, CommandValidator commandValidator, CommandExecutor commandExecutor) {
+        commandsValidators.put(commandName, commandValidator);
         commandsExecutors.put(commandName, commandExecutor);
     }
 
@@ -41,9 +40,9 @@ public class Content extends Container {
     }
 
     public String doCommand(String commandName, String[] params) {
-        if (commandsValidations.containsKey(commandName)
+        if (commandsValidators.containsKey(commandName)
                 && commandsExecutors.containsKey(commandName)
-                && commandsValidations.get(commandName).convert(params)) {
+                && commandsValidators.get(commandName).check(params)) {
             return commandsExecutors.get(commandName).execute(params);
         } else {
             return "Can't do " + commandName + " on " + name;
