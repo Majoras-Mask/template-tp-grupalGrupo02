@@ -4,6 +4,7 @@ import ar.fiuba.tdd.tp.engine.behavior.*;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
+import ar.fiuba.tdd.tp.engine.rules.Rule;
 
 public class BuildLevel {
     private static final String CROSS = "cross";
@@ -19,10 +20,7 @@ public class BuildLevel {
     private static final String BOAT_NAME = "boat";
     private static final String SOUTH_RIVER_NAME = "south";
     private static final String NORTH_RIVER_NAME = "north";
-
-
-    private static final String CROSS_SUCCESS = "Crossed to the other side.";
-
+    
     public static void build(Game riddle) {
         buildPlayerActions(riddle);
 
@@ -42,19 +40,21 @@ public class BuildLevel {
 
         ComponentContainer northRiver = new ComponentContainer(NORTH_RIVER_NAME);
 
-        ComponentInterface boat = buildBoat(riddle, southRiver, northRiver);
-        southRiver.addItem(boat);
-
+        Rule boatRules = new GameRules();
         GameRules.setGame(riddle);
         GameRules.setCabbage(cabbage);
         GameRules.setSheep(sheep);
         GameRules.setWolf(wolf);
         GameRules.setNorthRiver(northRiver);
+
+        ComponentInterface boat = buildBoat(riddle, southRiver, northRiver, boatRules);
+        southRiver.addItem(boat);
     }
 
-    private static ComponentInterface buildBoat(Game riddle, ComponentContainer from, ComponentContainer to) {
+    private static ComponentInterface buildBoat(Game riddle, ComponentContainer from, ComponentContainer to, Rule rules) {
         ComponentInterface component = new ComponentSimple(BOAT_NAME);
-        component.addBehavior(CROSS, new Crossing(riddle, from, to));
+
+        component.addBehavior(CROSS, new Cross(riddle, from, to, rules));
         return component;
     }
 
@@ -76,32 +76,4 @@ public class BuildLevel {
         player.addBehavior(LEAVE, new DirectActionPlayer(riddle));
         player.addBehavior(HELP, new Help(riddle));
     }
-
-    private static class Crossing implements Behavior {
-        Game game;
-        ComponentContainer from;
-        ComponentContainer to;
-
-        Crossing(Game game, ComponentContainer from, ComponentContainer to) {
-            this.game = game;
-            this.from = from;
-            this.to = to;
-        }
-
-        public String execute(String modifier) {
-            if (GameRules.boatSafeToGo()) {
-                game.getPlayer().setRoom(to);
-                swapFromTo();
-                return CROSS_SUCCESS;
-            }
-            return GameRules.boatWhyNotSafeToGo();
-        }
-
-        private void swapFromTo() {
-            ComponentContainer temp = this.from;
-            this.from = this.to;
-            this.to = temp;
-        }
-    }
-
 }
