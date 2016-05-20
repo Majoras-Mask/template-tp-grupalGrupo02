@@ -2,6 +2,7 @@
 import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.GameDriver;
+import ar.fiuba.tdd.tp.engine.GameState;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,8 +31,12 @@ public class MainTest {
         System.out.println(driver.sendCommand("goto pasillo"));
         System.out.println(driver.sendCommand("goto acceso biblioteca"));
         System.out.println(driver.sendCommand("show credencial bibliotecario"));
+        System.out.println(driver.sendCommand("goto biblioteca"));
+        System.out.println(driver.sendCommand("move libro viejo"));
+        System.out.println(driver.sendCommand("goto sotano"));
+        System.out.println(driver.sendCommand("use escalera"));
 
-        assertEquals(0, 0);
+        assertEquals(GameState.LOST, driver.getGameState());
     }
 
     private class ConcreteGameDriver implements GameDriver {
@@ -46,6 +51,11 @@ public class MainTest {
         @Override
         public String sendCommand(String cmd) {
             return game.command(cmd);
+        }
+
+        @Override
+        public GameState getGameState() {
+            return game.getGameState();
         }
     }
 }

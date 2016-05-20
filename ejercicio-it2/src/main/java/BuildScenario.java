@@ -146,7 +146,7 @@ public class BuildScenario {
 
         Behavior killPlayer = (modifier) -> {
             game.lostGame();
-            return "you died!";
+            return "While descending, a step crumbles beneath your feet, you slide to your death.\nYou died!\nGame Over";
         };
 
         escalera.addBehavior(USE, killPlayer);
