@@ -144,15 +144,13 @@ public class BuildScenario {
         ComponentSimple escalera = new ComponentSimple("escalera");
         ComponentInterface baranda = new ComponentSimple("baranda");
 
-        Behavior killPlayer = (modifier) -> {
+        Behavior killPlayerStepCrumbles = (modifier) -> {
             game.lostGame();
             return "While descending, a step crumbles beneath your feet, you slide to your death.\nYou died!\nGame Over";
         };
 
-        escalera.addBehavior(USE, killPlayer);
+        escalera.addBehavior(USE, killPlayerStepCrumbles);
         baranda.addBehavior(USE, new CrossWithRule(game, createSotanoAbajo(game), createMuereSiNoTieneMartillo(game)));
-
-        baranda.addBehavior("use", killPlayer);
 
         ComponentContainer sotano = new ComponentContainer("sotano");
         sotano.addItem(createDoor("biblioteca", game, sotano, biblioteca));
@@ -172,7 +170,7 @@ public class BuildScenario {
             @Override
             public String reasonsOfRuleFail() {
                 game.lostGame();
-                return "No tiene el martillo";
+                return "You descend and can't go back, and you can't break the window because you don't have the hammer\nYou die of starvation.";
             }
         };
     }
@@ -239,7 +237,6 @@ public class BuildScenario {
         }
 
         public String execute(String modifier) {
-            System.out.println(modifier);
             StringBuffer message = new StringBuffer();
             if (game.getPlayer().playerHasItem(keyRequired)) {
                 message.append("You open the caja fuerte.");

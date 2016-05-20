@@ -16,7 +16,31 @@ public class MainTest {
     }
 
     @Test
-    public void dummy() {
+    public void testLoseIfGoingDownUsingStairs() {
+        GameDriver driver = setup();
+        driver.sendCommand("goto acceso biblioteca");
+        driver.sendCommand("goto pasillo");
+        driver.sendCommand("goto salon 3");
+        driver.sendCommand("pick llave");
+        driver.sendCommand("goto pasillo");
+        driver.sendCommand("goto salon 1");
+        driver.sendCommand("move cuadro de barco");
+        driver.sendCommand("open caja fuerte");
+        driver.sendCommand("pick credencial");
+        driver.sendCommand("put foto credencial");
+        driver.sendCommand("goto pasillo");
+        driver.sendCommand("goto acceso biblioteca");
+        driver.sendCommand("show credencial bibliotecario");
+        driver.sendCommand("goto biblioteca");
+        driver.sendCommand("move libro viejo");
+        driver.sendCommand("goto sotano");
+        driver.sendCommand("use escalera");
+
+        assertEquals(GameState.LOST, driver.getGameState());
+    }
+
+    @Test
+    public void testLoseIfGoingDownWithoutHammerTime() {
         GameDriver driver = setup();
         System.out.println(driver.sendCommand("goto acceso biblioteca"));
         System.out.println(driver.sendCommand("goto pasillo"));
@@ -34,7 +58,7 @@ public class MainTest {
         System.out.println(driver.sendCommand("goto biblioteca"));
         System.out.println(driver.sendCommand("move libro viejo"));
         System.out.println(driver.sendCommand("goto sotano"));
-        System.out.println(driver.sendCommand("use escalera"));
+        System.out.println(driver.sendCommand("use baranda"));
 
         assertEquals(GameState.LOST, driver.getGameState());
     }
