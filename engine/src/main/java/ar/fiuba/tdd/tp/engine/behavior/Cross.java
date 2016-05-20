@@ -23,7 +23,7 @@ public class Cross implements Behavior {
     public String execute(String modifier) {
         if (rule.satisfiesRule()) {
             game.getPlayer().setRoom(to);
-            swapFromTo();
+//            swapFromTo();
             return CROSS_SUCCESS;
         }
         return rule.reasonsOfRuleFail();

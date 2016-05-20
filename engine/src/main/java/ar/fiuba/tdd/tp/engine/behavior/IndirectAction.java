@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 
 import java.util.regex.Matcher;
 
-public abstract class IndirectAction extends Action {
+public class IndirectAction extends Action {
     private static final String DIRECT_ACTION_REGEX = "(^.*) (.*) (.*$)";
 
     public IndirectAction(Game game) {
@@ -28,5 +28,10 @@ public abstract class IndirectAction extends Action {
 
     String regex() {
         return DIRECT_ACTION_REGEX;
+    }
+
+    @Override
+    ComponentInterface whereToGetThatComponent(Game game, String itemName) {
+        return game.getPlayer().obtainItemRoom(itemName);
     }
 }

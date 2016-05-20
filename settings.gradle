@@ -1,4 +1,5 @@
 rootProject.name = 'tp-tp-grupal'
 include 'client' , 'server' , 'engine', 'opendoor', 'fetchquest', 'riddle'
 include 'opendoortwo'
+include 'ejercicio-it2'
 
