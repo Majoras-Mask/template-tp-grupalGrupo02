@@ -19,11 +19,11 @@ public class IndirectAction extends Action {
             component = whereToGetThatComponent(game, matcher.group(2));
             receiverOfAction = whereToGetThatComponent(game, matcher.group(3));
         }
-        if (component != null) {
+        if (component != null && receiverOfAction != null) {
             return receiverOfAction.doAction(matcher.group(1), matcher.group(2));
         }
 
-        return noItemInRoom;
+        return "You are missing an item to perform this action.";
     }
 
     String regex() {

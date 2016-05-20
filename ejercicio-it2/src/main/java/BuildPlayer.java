@@ -43,24 +43,10 @@ public class BuildPlayer {
         player.addBehavior(BREAK, new DirectActionRoom(game));
 
         player.setInventoryLimit(4);
-        player.addItemToInventory(crateFoto());
-        player.addItemToInventory(createCredencial());
+        player.addItemToInventory(new ComponentSimple("foto"));
+        player.addItemToInventory(new ComponentSimple("lapicera"));
 
         return  player;
-    }
-
-    private static ComponentContainer createCredencial() {
-        //TODO reivisar comportamiento de esto
-
-        ComponentContainer credencial = new ComponentContainer("credencial");
-
-
-
-        return credencial;
-    }
-
-    private static ComponentInterface crateFoto() {
-        return new ComponentSimple("foto");
     }
 
     public static Behavior getStoreAction(Game ejercicioIt2) {

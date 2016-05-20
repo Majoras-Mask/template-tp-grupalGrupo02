@@ -17,11 +17,12 @@ public class BuildScenario {
     private static final String PUT = "put";
     private static final String SHOW = "show";
     private static final String FOTO = "foto";
-    private static final String CREDENCIAL_TRUCHADA = "credencial truchada";
+    private static final String CREDENCIAL = "credencial";
     private static final String SALON_UNO = "salon 1";
     private static final String SALON_DOS = "salon 2";
     private static final String SALON_TRES = "salon 3";
     private static final String PASILLO = "pasillo";
+    private static final String ACCESO_BIBLIOTECA = "acceso biblioteca";
 
     public static ComponentContainer build(Game game) {
 
@@ -29,7 +30,7 @@ public class BuildScenario {
         pasillo.addItem(createDoor(SALON_UNO, game, pasillo, createSalon1(game, pasillo)));
         pasillo.addItem(createDoor(SALON_DOS, game, pasillo, createSalon2(game, pasillo)));
         pasillo.addItem(createDoor(SALON_TRES, game, pasillo, createSalon3(game, pasillo)));
-        pasillo.addItem(createDoor("acceso biblioteca", game, pasillo, createAccesoBiblioteca(game, pasillo)));
+        pasillo.addItem(createDoor(ACCESO_BIBLIOTECA, game, pasillo, createAccesoBiblioteca(game, pasillo)));
 
         return pasillo;
     }
@@ -55,7 +56,7 @@ public class BuildScenario {
     private static ComponentInterface crateCuadroBarco(Game game) {
 
         //TODO pensar credencial
-        ComponentContainer credencial = new ComponentContainer("credencial");
+        ComponentContainer credencial = new ComponentContainer(CREDENCIAL);
         credencial.addBehavior(PICK, new Pick(game, credencial));
         credencial.addBehavior(PUT, new Store(game, credencial));
 
@@ -97,7 +98,7 @@ public class BuildScenario {
     }
 
     private static ComponentContainer createAccesoBiblioteca(Game game, ComponentContainer pasillo) {
-        ComponentContainer accessoBiblioteca = new ComponentContainer("accessoBiblioteca");
+        ComponentContainer accessoBiblioteca = new ComponentContainer(ACCESO_BIBLIOTECA);
         ComponentInterface bibliotecaDoor = createLockedDoor("biblioteca", game, null);
 
         ComponentInterface bibliotecario = new ComponentSimple("bibliotecario");
@@ -140,8 +141,6 @@ public class BuildScenario {
     }
 
     private static ComponentContainer createSotano(Game game, ComponentContainer biblioteca) {
-        ComponentContainer sotano = new ComponentContainer("sotano");
-
         ComponentSimple escalera = new ComponentSimple("escalera");
         ComponentInterface baranda = new ComponentSimple("baranda");
 
@@ -155,6 +154,7 @@ public class BuildScenario {
 
         baranda.addBehavior("use", killPlayer);
 
+        ComponentContainer sotano = new ComponentContainer("sotano");
         sotano.addItem(createDoor("biblioteca", game, sotano, biblioteca));
         sotano.addItem(escalera);
         sotano.addItem(baranda);
@@ -267,13 +267,20 @@ public class BuildScenario {
         @Override
         public String execute(String modifier) {
             if (modifier.equals(FOTO) && game.getPlayer().playerHasItem(modifier)) {
+                container.addItem(game.getPlayer().obtainItemInventory(modifier));
                 game.getPlayer().removeItem(modifier);
-                game.getPlayer().removeItem(container);
-                game.getPlayer().addItemToInventory(new ComponentSimple(CREDENCIAL_TRUCHADA));
-                return "Pasted your photo in there";
+                container.addBehavior("isValid", new True());
+                return "Pasted your photo in there. You now have a valid credencial.";
             }
 
             return "You don't have that item.";
+        }
+
+        private static class True implements Behavior {
+            @Override
+            public String execute(String modifier) {
+                return "true";
+            }
         }
     }
 
@@ -284,14 +291,16 @@ public class BuildScenario {
 
         public ShowCredencial(Game game, ComponentInterface doorToUnlock, ComponentContainer accesoBiblioteca) {
             this.game = game;
-                this.doorToUnlock = doorToUnlock;
+            this.doorToUnlock = doorToUnlock;
             this.accesoBiblioteca = accesoBiblioteca;
         }
 
         @Override
         public String execute(String modifier) {
-            if (game.getPlayer().obtainItemInventory(modifier).getName().equals(CREDENCIAL_TRUCHADA)) {
+            ComponentInterface component = game.getPlayer().obtainItemInventory(modifier);
+            if (component.getName().equals(CREDENCIAL) && component.doAction("isValid", "").equals("true")) {
                 doorToUnlock.addBehavior(GOTO, new Cross(game, createBiblioteca(game, accesoBiblioteca)));
+                return "Good, you can now go to the library.";
             }
             return "Show me your crendential.";
         }
