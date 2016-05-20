@@ -15,6 +15,9 @@ public class BuildScenario {
     private static final String USE = "use";
     private static final String OPEN = "open";
     private static final String PUT = "put";
+    private static final String SHOW = "show";
+    private static final String FOTO = "foto";
+    private static final String CREDENCIAL_TRUCHADA = "credencial truchada";
     private static final String SALON_UNO = "salon 1";
     private static final String SALON_DOS = "salon 2";
     private static final String SALON_TRES = "salon 3";
@@ -95,12 +98,14 @@ public class BuildScenario {
 
     private static ComponentContainer createAccesoBiblioteca(Game game, ComponentContainer pasillo) {
         ComponentContainer accessoBiblioteca = new ComponentContainer("accessoBiblioteca");
+        ComponentInterface bibliotecaDoor = createLockedDoor("biblioteca", game, null);
 
         ComponentInterface bibliotecario = new ComponentSimple("bibliotecario");
+        bibliotecario.addBehavior(SHOW, new ShowCredencial(game, bibliotecaDoor, accessoBiblioteca));
 
         accessoBiblioteca.addItem(bibliotecario);
         accessoBiblioteca.addItem(createDoor("pasillo", game, accessoBiblioteca, pasillo));
-        accessoBiblioteca.addItem(createLockedDoor("biblioteca", game, accessoBiblioteca, createBiblioteca(game, accessoBiblioteca)));
+        accessoBiblioteca.addItem(bibliotecaDoor);
 
         return accessoBiblioteca;
     }
@@ -195,8 +200,7 @@ public class BuildScenario {
         return libro;
     }
 
-    private static ComponentInterface createLockedDoor(String doorName, Game game,
-                                                       ComponentContainer from, ComponentContainer to) {
+    private static ComponentInterface createLockedDoor(String doorName, Game game, ComponentContainer to) {
         ComponentInterface door = new ComponentSimple(doorName);
         door.addBehavior(GOTO, new CrossWithRule(game, to, createRuleForBibliotecario()));
         return door;
@@ -262,12 +266,34 @@ public class BuildScenario {
 
         @Override
         public String execute(String modifier) {
-            if (game.getPlayer().playerHasItem(modifier)) {
-                container.addItem(game.getPlayer().obtainItemInventory(modifier));
+            if (modifier.equals(FOTO) && game.getPlayer().playerHasItem(modifier)) {
+                game.getPlayer().removeItem(modifier);
+                game.getPlayer().removeItem(container);
+                game.getPlayer().addItemToInventory(new ComponentSimple(CREDENCIAL_TRUCHADA));
                 return "Pasted your photo in there";
             }
 
             return "You don't have that item.";
+        }
+    }
+
+    private static class ShowCredencial implements Behavior {
+        Game game;
+        ComponentInterface doorToUnlock;
+        ComponentContainer accesoBiblioteca;
+
+        public ShowCredencial(Game game, ComponentInterface doorToUnlock, ComponentContainer accesoBiblioteca) {
+            this.game = game;
+                this.doorToUnlock = doorToUnlock;
+            this.accesoBiblioteca = accesoBiblioteca;
+        }
+
+        @Override
+        public String execute(String modifier) {
+            if (game.getPlayer().obtainItemInventory(modifier).getName().equals(CREDENCIAL_TRUCHADA)) {
+                doorToUnlock.addBehavior(GOTO, new Cross(game, createBiblioteca(game, accesoBiblioteca)));
+            }
+            return "Show me your crendential.";
         }
     }
 }

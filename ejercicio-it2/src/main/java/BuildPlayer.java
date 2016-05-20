@@ -38,7 +38,7 @@ public class BuildPlayer {
         player.addBehavior(GOTO, new DirectActionRoom(game));
         player.addBehavior(MOVE, new DirectActionRoom(game));
         player.addBehavior(PUT, new IndirectAction(game));
-        player.addBehavior(SHOW, new DirectActionRoom(game));
+        player.addBehavior(SHOW, new IndirectAction(game));
         player.addBehavior(USE, new DirectActionRoom(game));
         player.addBehavior(BREAK, new DirectActionRoom(game));
 

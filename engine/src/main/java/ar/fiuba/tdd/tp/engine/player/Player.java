@@ -107,6 +107,12 @@ public class Player implements PlayerInterface {
         }
     }
 
+    public void removeItem(String item) {
+        if (playerHasItem(item)) {
+            inventory.remove(item);
+        }
+    }
+
     public ComponentInterface obtainItemInventory(String itemName) {
         if (playerHasItem(itemName)) {
             return inventory.get(itemName);

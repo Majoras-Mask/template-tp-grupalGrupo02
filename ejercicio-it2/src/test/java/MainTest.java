@@ -27,6 +27,9 @@ public class MainTest {
         System.out.println(driver.sendCommand("open caja fuerte"));
         System.out.println(driver.sendCommand("pick credencial"));
         System.out.println(driver.sendCommand("put foto credencial"));
+        System.out.println(driver.sendCommand("goto pasillo"));
+        System.out.println(driver.sendCommand("goto acceso biblioteca"));
+        System.out.println(driver.sendCommand("show credencial bibliotecario"));
 
         assertEquals(0, 0);
     }
