@@ -6,8 +6,8 @@ import java.util.Scanner;
 @SuppressWarnings("CPD-START")
 public class Main {
     public static void main(String[] args) {
-        GameBuilder openDoorBuilder = new EjercicioIt2Builder();
-        Game game = openDoorBuilder.build();
+        GameBuilder ejercicioIt2Builder = new EjercicioIt2Builder();
+        Game game = ejercicioIt2Builder.build();
 
         Scanner input = new Scanner(System.in, "UTF-8");
 

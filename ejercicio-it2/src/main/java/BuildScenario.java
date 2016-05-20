@@ -13,20 +13,25 @@ public class BuildScenario {
     private static final String MOVE = "move";
     private static final String PICK = "pick";
     private static final String USE = "use";
+    private static final String OPEN = "open";
+    private static final String SALON_UNO = "salon 1";
+    private static final String SALON_DOS = "salon 2";
+    private static final String SALON_TRES = "salon 3";
+    private static final String PASILLO = "pasillo";
 
     public static ComponentContainer build(Game game) {
 
-        ComponentContainer pasillo = new ComponentContainer("pasillo");
-        pasillo.addItem(createDoor("salon 1", game, pasillo, createSalon1(game, pasillo)));
-        pasillo.addItem(createDoor("salon 2", game, pasillo, createSalon2(game, pasillo)));
-        pasillo.addItem(createDoor("salon 3", game, pasillo, createSalon3(game, pasillo)));
+        ComponentContainer pasillo = new ComponentContainer(PASILLO);
+        pasillo.addItem(createDoor(SALON_UNO, game, pasillo, createSalon1(game, pasillo)));
+        pasillo.addItem(createDoor(SALON_DOS, game, pasillo, createSalon2(game, pasillo)));
+        pasillo.addItem(createDoor(SALON_TRES, game, pasillo, createSalon3(game, pasillo)));
         pasillo.addItem(createDoor("acceso biblioteca", game, pasillo, createAccesoBiblioteca(game, pasillo)));
 
         return pasillo;
     }
 
     private static ComponentContainer createSalon1(Game game, ComponentContainer pasillo) {
-        ComponentContainer salon1 = new ComponentContainer("salon1");
+        ComponentContainer salon1 = new ComponentContainer(SALON_UNO);
 
         salon1.addItem(new ComponentSimple("mesa"));
 
@@ -38,7 +43,7 @@ public class BuildScenario {
         salon1.addItem(new ComponentSimple("silla 2"));
         salon1.addItem(new ComponentSimple("cuadro de tren"));
         salon1.addItem(crateCuadroBarco(game));
-        salon1.addItem(createDoor("pasillo", game, salon1, pasillo));
+        salon1.addItem(createDoor(PASILLO, game, salon1, pasillo));
 
         return salon1;
     }
@@ -50,6 +55,7 @@ public class BuildScenario {
 
         ComponentContainer cajaFuerte = new ComponentContainer("caja fuerte");
         cajaFuerte.addItem(credencial);
+        cajaFuerte.addBehavior(OPEN, new CajaFuerteDrop(game, cajaFuerte, "llave"));
 
         ComponentContainer cuadroBarco = new ComponentContainer("cuadro de barco");
         cuadroBarco.addBehavior(MOVE, new ContainerDrop(game, cuadroBarco));
@@ -59,7 +65,7 @@ public class BuildScenario {
     }
 
     private static ComponentContainer createSalon2(Game game, ComponentContainer pasillo) {
-        ComponentContainer salon2 = new ComponentContainer("salon2");
+        ComponentContainer salon2 = new ComponentContainer(SALON_DOS);
 
         ComponentInterface martillo = new ComponentSimple("martillo");
         martillo.addBehavior(PICK, new Pick(game, martillo));
@@ -73,7 +79,7 @@ public class BuildScenario {
     }
 
     private static ComponentContainer createSalon3(Game game, ComponentContainer pasillo) {
-        ComponentContainer salon3 = new ComponentContainer("salon3");
+        ComponentContainer salon3 = new ComponentContainer(SALON_TRES);
 
         ComponentInterface llave = new ComponentSimple("llave");
         llave.addBehavior(PICK, new Pick(game, llave));
@@ -212,5 +218,33 @@ public class BuildScenario {
         ComponentInterface door = new ComponentSimple(doorName);
         door.addBehavior(GOTO, new Cross(game, to));
         return door;
+    }
+
+    private static class CajaFuerteDrop implements Behavior {
+        Game game;
+        ComponentContainer item;
+        String keyRequired;
+
+        public CajaFuerteDrop(Game game, ComponentContainer item, String keyRequired) {
+            this.game = game;
+            this.item = item;
+            this.keyRequired = keyRequired;
+        }
+
+        public String execute(String modifier) {
+            System.out.println(modifier);
+            StringBuffer message = new StringBuffer();
+            if (game.getPlayer().playerHasItem(keyRequired)) {
+                message.append("You open the caja fuerte.");
+                for (String itemName : item.listOfComponents()) {
+                    ComponentInterface component = item.removeItem(itemName);
+                    game.getPlayer().putItemInRoom(component);
+                    message.append(itemName + " dropped. ");
+                }
+
+                return message.toString();
+            }
+            return "It's locked.";
+        }
     }
 }
