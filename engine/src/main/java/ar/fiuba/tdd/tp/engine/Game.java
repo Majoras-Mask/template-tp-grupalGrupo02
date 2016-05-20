@@ -28,6 +28,7 @@ public abstract class Game {
     public String command(String clientMessage) {
         String response = player.doCommand(clientMessage.toLowerCase());
         if (winCondition()) {
+            wonGame();
             response = wonMessage();
         }
         return response;

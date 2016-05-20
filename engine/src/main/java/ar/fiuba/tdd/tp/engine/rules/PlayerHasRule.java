@@ -8,11 +8,11 @@ public class PlayerHasRule implements Rule {
     private static final String PLAYER_NEEDS_ITEM = "You don't have the required item to perform this action.";
 
     Game game;
-    ComponentInterface itemRequired;
+    String itemRequired;
 
-    public PlayerHasRule(Game game, ComponentInterface item) {
+    public PlayerHasRule(Game game, String itemName) {
         this.game = game;
-        this.itemRequired = item;
+        this.itemRequired = itemName;
     }
 
     @Override

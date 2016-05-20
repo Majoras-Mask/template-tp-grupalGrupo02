@@ -164,13 +164,14 @@ public class BuildScenario {
         return new Rule() {
             @Override
             public boolean satisfiesRule() {
-                return game.getPlayer().playerHasItem(new ComponentSimple("martillo"));
+                return game.getPlayer().playerHasItem("martillo");
             }
 
             @Override
             public String reasonsOfRuleFail() {
                 game.lostGame();
-                return "You descend and can't go back, and you can't break the window because you don't have the hammer\nYou die of starvation.";
+                return "You descend and can't go back, and you can't break the window either because you don't have a hammer"
+                        + "\nYou die of starvation.";
             }
         };
     }
@@ -181,7 +182,7 @@ public class BuildScenario {
         ComponentContainer afuera = createAfuera();
         ComponentInterface ventana  = createDoor("ventana", game, sotanoAbajo, afuera);
         ventana.addBehavior("break", new CrossWithRule(game, afuera,
-                new PlayerHasRule(game, new ComponentSimple("martillo"))));
+                new PlayerHasRule(game, "martillo")));
 
         sotanoAbajo.addItem(ventana);
 
@@ -239,7 +240,8 @@ public class BuildScenario {
         public String execute(String modifier) {
             StringBuffer message = new StringBuffer();
             if (game.getPlayer().playerHasItem(keyRequired)) {
-                message.append("You open the caja fuerte.");
+                message.append("You open the caja fuerte usando la llave.");
+                game.getPlayer().removeItem(keyRequired);
                 for (String itemName : item.listOfComponents()) {
                     ComponentInterface component = item.removeItem(itemName);
                     game.getPlayer().putItemInRoom(component);
