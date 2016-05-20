@@ -10,12 +10,10 @@ public class Cross implements Behavior {
 
     Game game;
     Rule rule;
-    ComponentContainer from;
     ComponentContainer to;
 
-    public Cross(Game game, ComponentContainer from, ComponentContainer to, Rule rule) {
+    public Cross(Game game, ComponentContainer to, Rule rule) {
         this.game = game;
-        this.from = from;
         this.to = to;
         this.rule = rule;
     }
@@ -23,15 +21,9 @@ public class Cross implements Behavior {
     public String execute(String modifier) {
         if (rule.satisfiesRule()) {
             game.getPlayer().setRoom(to);
-//            swapFromTo();
             return CROSS_SUCCESS;
         }
         return rule.reasonsOfRuleFail();
     }
 
-    private void swapFromTo() {
-        ComponentContainer temp = this.from;
-        this.from = this.to;
-        this.to = temp;
-    }
 }

@@ -54,7 +54,7 @@ public class BuildLevel {
     private static ComponentInterface buildBoat(Game riddle, ComponentContainer from, ComponentContainer to, Rule rules) {
         ComponentInterface component = new ComponentSimple(BOAT_NAME);
 
-        component.addBehavior(CROSS, new Cross(riddle, from, to, rules));
+        component.addBehavior(CROSS, new Cross(riddle, to, rules));
         return component;
     }
 

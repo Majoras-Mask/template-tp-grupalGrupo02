@@ -6,8 +6,6 @@ public class EjercicioIt2Builder implements GameBuilder {
 
     private static final String AFUERA = "afuera";
 
-    private String winningRoomName;
-
     private static final String GAME_NAME = "Open Door";
 
     private static final String WON_GAME = "You won the game by opening the door!";

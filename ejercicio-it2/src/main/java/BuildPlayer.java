@@ -7,6 +7,7 @@ import ar.fiuba.tdd.tp.engine.player.Player;
 
 import java.util.regex.Matcher;
 
+@SuppressWarnings("CPD-START")
 public class BuildPlayer {
 
     //actions
@@ -17,26 +18,38 @@ public class BuildPlayer {
     private static final String WHAT_CAN_I_DO = "what can i do with";
     private static final String DROP = "drop";
     private static final String STORE = "store";
+    private static final String GOTO = "goto";
+    private static final String MOVE = "move";
+    private static final String PUT = "put";
+    private static final String SHOW = "show";
+    private static final String USE = "use";
+    private static final String BREAK = "break";
 
-    public static Player build(Game ejercicioIt2) {
+    public static Player build(Game game) {
 
-        Player player = ejercicioIt2.getPlayer();
-        player.addBehavior(LOOK_AROUND, new LookAround(ejercicioIt2));
-        player.addBehavior(PICK, new DirectActionRoom(ejercicioIt2));
-        player.addBehavior(OPEN, new DirectActionRoom(ejercicioIt2));
-        player.addBehavior(DROP, new DirectActionPlayer(ejercicioIt2));
-        player.addBehavior(STORE, getStoreAction(ejercicioIt2));
-        player.addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(ejercicioIt2));
-        player.addBehavior(HELP, new Help(ejercicioIt2));
+        Player player = game.getPlayer();
+        player.addBehavior(LOOK_AROUND, new LookAround(game));
+        player.addBehavior(PICK, new DirectActionRoom(game));
+        player.addBehavior(OPEN, new DirectActionRoom(game));
+        player.addBehavior(DROP, new DirectActionPlayer(game));
+        player.addBehavior(STORE, getStoreAction(game));
+        player.addBehavior(WHAT_CAN_I_DO, new DirectActionRoom(game));
+        player.addBehavior(HELP, new Help(game));
+        player.addBehavior(GOTO, new DirectActionRoom(game));
+        player.addBehavior(MOVE, new DirectActionRoom(game));
+        player.addBehavior(PUT, new IndirectAction(game));
+        player.addBehavior(SHOW, new DirectActionRoom(game));
+        player.addBehavior(USE, new DirectActionRoom(game));
+        player.addBehavior(BREAK, new DirectActionRoom(game));
 
         player.setInventoryLimit(4);
         player.addItemToInventory(crateFoto());
-        player.addItemToInventory(crateCredencial());
+        player.addItemToInventory(createCredencial());
 
         return  player;
     }
 
-    private static ComponentContainer crateCredencial() {
+    private static ComponentContainer createCredencial() {
         //TODO reivisar comportamiento de esto
 
         ComponentContainer credencial = new ComponentContainer("credencial");

@@ -9,6 +9,7 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
 import ar.fiuba.tdd.tp.engine.rules.PlayerHasRule;
 import ar.fiuba.tdd.tp.engine.rules.Rule;
 
+@SuppressWarnings("CPD-START")
 public class BuildScenario {
 
     private static final String GOTO = "goto";
@@ -139,7 +140,7 @@ public class BuildScenario {
         };
 
         escalera.addBehavior(USE, killPlayer);
-        baranda.addBehavior(USE, new Cross(game, sotano, createSotanoAbajo(game), createMuereSiNoTieneMartillo(game)));
+        baranda.addBehavior(USE, new Cross(game, createSotanoAbajo(game), createMuereSiNoTieneMartillo(game)));
 
         baranda.addBehavior("use", killPlayer);
 
@@ -170,7 +171,7 @@ public class BuildScenario {
 
         ComponentContainer afuera = createAfuera();
         ComponentInterface ventana  = createDoor("ventana", game, sotanoAbajo, afuera);
-        ventana.addBehavior("break", new Cross(game, sotanoAbajo, afuera,
+        ventana.addBehavior("break", new Cross(game, afuera,
                 new PlayerHasRule(game, new ComponentSimple("martillo"))));
 
         sotanoAbajo.addItem(ventana);
@@ -191,7 +192,7 @@ public class BuildScenario {
     private static ComponentInterface createLockedDoor(String doorName, Game game,
                                                        ComponentContainer from, ComponentContainer to) {
         ComponentInterface door = new ComponentSimple(doorName);
-        door.addBehavior(GOTO, new Cross(game, from, to, createRuleForBibliotecario()));
+        door.addBehavior(GOTO, new Cross(game, to, createRuleForBibliotecario()));
         return door;
     }
 
@@ -212,7 +213,7 @@ public class BuildScenario {
 
     private static ComponentInterface createDoor(String doorName, Game game, ComponentContainer from, ComponentContainer to) {
         ComponentInterface door = new ComponentSimple(doorName);
-        door.addBehavior(GOTO, new Cross(game, from, to, createDummyRule()));
+        door.addBehavior(GOTO, new Cross(game, to, createDummyRule()));
         return door;
     }
 
