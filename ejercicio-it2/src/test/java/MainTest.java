@@ -22,10 +22,11 @@ public class MainTest {
         System.out.println(driver.sendCommand("goto salon 3"));
         System.out.println(driver.sendCommand("pick llave"));
         System.out.println(driver.sendCommand("goto pasillo"));
-        System.out.println(driver.sendCommand("goto salon1"));
+        System.out.println(driver.sendCommand("goto salon 1"));
         System.out.println(driver.sendCommand("move cuadro de barco"));
-        System.out.println(driver.sendCommand("open caja fuerte using llave"));
+        System.out.println(driver.sendCommand("open caja fuerte"));
         System.out.println(driver.sendCommand("pick credencial"));
+        System.out.println(driver.sendCommand("put foto credencial"));
 
         assertEquals(0, 0);
     }
@@ -35,8 +36,8 @@ public class MainTest {
 
         @Override
         public void initGame(String jarPath) {
-            GameBuilder EjercicioIt2Builder = new EjercicioIt2Builder();
-            game = EjercicioIt2Builder.build();
+            GameBuilder ejercicioIt2Builder = new EjercicioIt2Builder();
+            game = ejercicioIt2Builder.build();
         }
 
         @Override

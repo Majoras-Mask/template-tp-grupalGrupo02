@@ -32,6 +32,10 @@ public class IndirectAction extends Action {
 
     @Override
     ComponentInterface whereToGetThatComponent(Game game, String itemName) {
-        return game.getPlayer().obtainItemRoom(itemName);
+        ComponentInterface component = game.getPlayer().obtainItemRoom(itemName);
+        if (component == null) {
+            return game.getPlayer().obtainItemInventory(itemName);
+        }
+        return component;
     }
 }

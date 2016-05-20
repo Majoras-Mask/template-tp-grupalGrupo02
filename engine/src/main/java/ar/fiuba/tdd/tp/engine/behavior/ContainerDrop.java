@@ -6,8 +6,6 @@ import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 
 public class ContainerDrop implements Behavior {
-    private static final String OPEN_BOX = "You open the box.";
-
     Game game;
     ComponentContainer item;
 
@@ -18,11 +16,11 @@ public class ContainerDrop implements Behavior {
 
     public String execute(String modifier) {
         StringBuffer message = new StringBuffer();
-        message.append(OPEN_BOX);
+        message.append(modifier + " reveals: ");
         for (String itemName : item.listOfComponents()) {
             ComponentInterface component = item.removeItem(itemName);
             game.getPlayer().putItemInRoom(component);
-            message.append(itemName + " dropped. ");
+            message.append(itemName + ". ");
         }
 
         return message.toString();

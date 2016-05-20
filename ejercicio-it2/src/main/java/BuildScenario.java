@@ -14,6 +14,7 @@ public class BuildScenario {
     private static final String PICK = "pick";
     private static final String USE = "use";
     private static final String OPEN = "open";
+    private static final String PUT = "put";
     private static final String SALON_UNO = "salon 1";
     private static final String SALON_DOS = "salon 2";
     private static final String SALON_TRES = "salon 3";
@@ -51,7 +52,9 @@ public class BuildScenario {
     private static ComponentInterface crateCuadroBarco(Game game) {
 
         //TODO pensar credencial
-        ComponentInterface credencial = new ComponentSimple("credencial");
+        ComponentContainer credencial = new ComponentContainer("credencial");
+        credencial.addBehavior(PICK, new Pick(game, credencial));
+        credencial.addBehavior(PUT, new Store(game, credencial));
 
         ComponentContainer cajaFuerte = new ComponentContainer("caja fuerte");
         cajaFuerte.addItem(credencial);
@@ -245,6 +248,26 @@ public class BuildScenario {
                 return message.toString();
             }
             return "It's locked.";
+        }
+    }
+
+    private static class Store implements Behavior {
+        Game game;
+        ComponentContainer container;
+
+        public Store(Game game, ComponentContainer container) {
+            this.game = game;
+            this.container = container;
+        }
+
+        @Override
+        public String execute(String modifier) {
+            if (game.getPlayer().playerHasItem(modifier)) {
+                container.addItem(game.getPlayer().obtainItemInventory(modifier));
+                return "Pasted your photo in there";
+            }
+
+            return "You don't have that item.";
         }
     }
 }
