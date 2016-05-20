@@ -6,24 +6,17 @@ import ar.fiuba.tdd.tp.engine.rules.Rule;
 
 public class Cross implements Behavior {
 
-    private static final String CROSS_SUCCESS = "Crossed to the other side.";
-
     Game game;
-    Rule rule;
     ComponentContainer to;
 
-    public Cross(Game game, ComponentContainer to, Rule rule) {
+    public Cross(Game game, ComponentContainer to) {
         this.game = game;
         this.to = to;
-        this.rule = rule;
     }
 
     public String execute(String modifier) {
-        if (rule.satisfiesRule()) {
-            game.getPlayer().setRoom(to);
-            return CROSS_SUCCESS;
-        }
-        return rule.reasonsOfRuleFail();
+        game.getPlayer().setRoom(to);
+        return "You go to " + to.getName();
     }
 
 }

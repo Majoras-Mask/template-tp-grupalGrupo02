@@ -36,7 +36,7 @@ public class BuildLevel {
 
         ComponentInterface door = new ComponentSimple(DOOR_NAME);
         ComponentContainer winningRoom = new ComponentContainer(WINNING_ROOM_NAME);
-        door.addBehavior(OPEN, new Cross(openDoor, winningRoom, new PlayerHasRule(openDoor, key)));
+        door.addBehavior(OPEN, new CrossWithRule(openDoor, winningRoom, new PlayerHasRule(openDoor, key)));
         door.addBehavior(WHAT_CAN_I_DO, new WhatCanIDo(door));
 
         room.addItem(door);

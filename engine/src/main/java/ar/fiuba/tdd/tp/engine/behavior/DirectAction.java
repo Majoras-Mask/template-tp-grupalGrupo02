@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class DirectAction extends Action {
-    private static final String DIRECT_ACTION_REGEX = "(^.*) (.*)";
+    private static final String DIRECT_ACTION_REGEX = "(^\\w*) ";
 
     public DirectAction(Game game) {
         super(game);
@@ -16,7 +16,7 @@ public abstract class DirectAction extends Action {
     public String doAction(Matcher matcher, String completeMessage) {
         ComponentInterface component = null;
         if (matcher.find()) {
-            component = whereToGetThatComponent(game, matcher.group(2));
+            component = whereToGetThatComponent(game, completeMessage.replaceFirst(matcher.group(0), ""));
         }
         if (component != null) {
             return component.doAction(matcher.group(1), completeMessage);

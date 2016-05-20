@@ -1,8 +1,5 @@
 import ar.fiuba.tdd.tp.engine.Game;
-import ar.fiuba.tdd.tp.engine.behavior.Behavior;
-import ar.fiuba.tdd.tp.engine.behavior.ContainerDrop;
-import ar.fiuba.tdd.tp.engine.behavior.Cross;
-import ar.fiuba.tdd.tp.engine.behavior.Pick;
+import ar.fiuba.tdd.tp.engine.behavior.*;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentContainer;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentInterface;
 import ar.fiuba.tdd.tp.engine.gamecomponents.ComponentSimple;
@@ -20,10 +17,10 @@ public class BuildScenario {
     public static ComponentContainer build(Game game) {
 
         ComponentContainer pasillo = new ComponentContainer("pasillo");
-        pasillo.addItem(createDoor("puertaSalon1", game, pasillo, createSalon1(game, pasillo)));
-        pasillo.addItem(createDoor("puertaSalon2", game, pasillo, createSalon2(game, pasillo)));
-        pasillo.addItem(createDoor("puertaSalon3", game, pasillo, createSalon3(game, pasillo)));
-        pasillo.addItem(createDoor("puertaAccesoBiblioteca", game, pasillo, createAccesoBiblioteca(game, pasillo)));
+        pasillo.addItem(createDoor("salon 1", game, pasillo, createSalon1(game, pasillo)));
+        pasillo.addItem(createDoor("salon 2", game, pasillo, createSalon2(game, pasillo)));
+        pasillo.addItem(createDoor("salon 3", game, pasillo, createSalon3(game, pasillo)));
+        pasillo.addItem(createDoor("acceso biblioteca", game, pasillo, createAccesoBiblioteca(game, pasillo)));
 
         return pasillo;
     }
@@ -140,7 +137,7 @@ public class BuildScenario {
         };
 
         escalera.addBehavior(USE, killPlayer);
-        baranda.addBehavior(USE, new Cross(game, createSotanoAbajo(game), createMuereSiNoTieneMartillo(game)));
+        baranda.addBehavior(USE, new CrossWithRule(game, createSotanoAbajo(game), createMuereSiNoTieneMartillo(game)));
 
         baranda.addBehavior("use", killPlayer);
 
@@ -171,7 +168,7 @@ public class BuildScenario {
 
         ComponentContainer afuera = createAfuera();
         ComponentInterface ventana  = createDoor("ventana", game, sotanoAbajo, afuera);
-        ventana.addBehavior("break", new Cross(game, afuera,
+        ventana.addBehavior("break", new CrossWithRule(game, afuera,
                 new PlayerHasRule(game, new ComponentSimple("martillo"))));
 
         sotanoAbajo.addItem(ventana);
@@ -192,7 +189,7 @@ public class BuildScenario {
     private static ComponentInterface createLockedDoor(String doorName, Game game,
                                                        ComponentContainer from, ComponentContainer to) {
         ComponentInterface door = new ComponentSimple(doorName);
-        door.addBehavior(GOTO, new Cross(game, to, createRuleForBibliotecario()));
+        door.addBehavior(GOTO, new CrossWithRule(game, to, createRuleForBibliotecario()));
         return door;
     }
 
@@ -213,21 +210,7 @@ public class BuildScenario {
 
     private static ComponentInterface createDoor(String doorName, Game game, ComponentContainer from, ComponentContainer to) {
         ComponentInterface door = new ComponentSimple(doorName);
-        door.addBehavior(GOTO, new Cross(game, to, createDummyRule()));
+        door.addBehavior(GOTO, new Cross(game, to));
         return door;
-    }
-
-    private static Rule createDummyRule() {
-        return new Rule() {
-            @Override
-            public boolean satisfiesRule() {
-                return true;
-            }
-
-            @Override
-            public String reasonsOfRuleFail() {
-                return "";
-            }
-        }        ;
     }
 }
