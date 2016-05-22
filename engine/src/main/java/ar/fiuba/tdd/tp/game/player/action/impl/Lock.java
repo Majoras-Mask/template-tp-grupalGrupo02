@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.game.player.action.impl;
+/*package ar.fiuba.tdd.tp.game.player.action.impl;
 
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
@@ -10,9 +10,9 @@ import ar.fiuba.tdd.tp.game.scenario.context.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+*//*
  * This behavior executes the open operation on the given component
- */
+ *//*
 public class Lock extends TwoObjectAction {
 
     public Lock(Context context) {
@@ -33,8 +33,4 @@ public class Lock extends TwoObjectAction {
         return null;
     }
 
-    @Override
-    public List<Constraint> getConstrains() {
-        return new ArrayList<>();
-    }
-}
+}*/

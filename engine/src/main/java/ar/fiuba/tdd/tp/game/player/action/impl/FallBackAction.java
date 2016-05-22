@@ -22,7 +22,7 @@ public class FallBackAction implements Action {
 
     public FallBackAction() {
         this.responses = new ArrayList<>();
-        this.responses.add("I do not know what you tell me to do!");
+        this.responses.add("I do not know what are you telling me to do!");
         this.responses.add("mmm I think i don't get it.. what?");
         this.responses.add("I Can't do that!");
         this.responses.add("What the heck? I can't do that...");
@@ -39,7 +39,8 @@ public class FallBackAction implements Action {
     }
 
     @Override
-    public List<Constraint> getConstrains() {
-        return new ArrayList<>();
+    public Boolean satisfiesActionConstraints() {
+        return true;
     }
+
 }

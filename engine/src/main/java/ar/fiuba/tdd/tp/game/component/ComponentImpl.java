@@ -1,5 +1,6 @@
 package ar.fiuba.tdd.tp.game.component;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.state.ComponentState;
 import ar.fiuba.tdd.tp.game.player.action.ActionType;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
@@ -14,6 +15,7 @@ public class ComponentImpl implements Component {
 
     private final String name;
     private final List<ComponentState> states;
+    private List<Constraint> constraints;
 
     public ComponentImpl(String name, List<ComponentState> states) {
         this.name = name;
@@ -38,6 +40,16 @@ public class ComponentImpl implements Component {
     }
 
     @Override
+    public Boolean satisfiesConstraints() {
+        for (Constraint constraint : constraints) {
+            if (!constraint.isSatisfied()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public ActionResponse doAction(ActionRequest request) {
         List<ComponentState> collect = this.states.stream()
                 .filter(state -> state.getTriggerActions().contains(request.getType()))
@@ -50,4 +62,7 @@ public class ComponentImpl implements Component {
         return collect.get(0).execute(request);
     }
 
+    public void setConstraints(List<Constraint> constraints) {
+        this.constraints = constraints;
+    }
 }

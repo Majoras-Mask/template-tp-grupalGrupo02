@@ -15,8 +15,8 @@ import java.util.Optional;
  */
 public class WhatToDoWith extends OneObjectAction {
 
-    public WhatToDoWith(Player player) {
-        super(player, "^what to do with ");
+    public WhatToDoWith(Player player, String commandName) {
+        super(player, "^" + commandName + " ");
     }
 
     @Override
@@ -36,8 +36,4 @@ public class WhatToDoWith extends OneObjectAction {
         return attribute1 + "/" + attribute2;
     }
 
-    @Override
-    public List<Constraint> getConstrains() {
-        return new ArrayList<>();
-    }
 }

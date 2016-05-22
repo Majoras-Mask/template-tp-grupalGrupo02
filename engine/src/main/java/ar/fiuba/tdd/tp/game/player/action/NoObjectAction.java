@@ -1,8 +1,10 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.player.Player;
-import ar.fiuba.tdd.tp.game.scenario.context.Context;
+import ar.fiuba.tdd.tp.game.player.action.resolver.ActionAbstract;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -10,26 +12,19 @@ import java.util.regex.Pattern;
  * Examples of this type are: LOOK AROUND or SLEEP that expresses an action without
  * mentioning any objects.
  */
-public abstract class NoObjectAction implements Action {
-
-    protected final Player player;
-    private final Pattern commandPattern;
+public abstract class NoObjectAction extends ActionAbstract {
 
     protected NoObjectAction(Player player, String pattern) {
-        this.player = player;
-        this.commandPattern = Pattern.compile(pattern);
+        super(player,pattern);
     }
 
     @Override
     public String execute(String action) {
-        return this.doExecute();
-    }
-
-    @Override
-    public Boolean canExecute(String action) {
-        return this.commandPattern.matcher(action).find();
+        if (satisfiesActionConstraints()) {
+            return this.doExecute();
+        }
+        return "No cumple una condicion";
     }
 
     protected abstract String doExecute();
-
 }

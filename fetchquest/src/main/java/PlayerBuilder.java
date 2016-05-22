@@ -26,8 +26,8 @@ public class PlayerBuilder {
         final Set<Action> actions = new HashSet<>();
 
         final LookAround lookAround = new LookAround(player);
-        final WhatToDoWith whatToDoWith = new WhatToDoWith(player);
-        final Pick pick = new Pick(inventory, player);
+        final WhatToDoWith whatToDoWith = new WhatToDoWith(player, "what can i do with");
+        final Pick pick = new Pick(inventory, player, "pick");
 
         actions.add(lookAround);
         actions.add(whatToDoWith);

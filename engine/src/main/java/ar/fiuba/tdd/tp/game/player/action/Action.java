@@ -15,6 +15,6 @@ public interface Action {
 
     String execute(String action);
 
-    List<Constraint> getConstrains();
+    Boolean satisfiesActionConstraints();
 
 }

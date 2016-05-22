@@ -25,7 +25,7 @@ public class ActionResolver {
 
     public String execute(String command) {
         final Action action = this.findAction(command);
-        //TODO implement constrains for action
+        //TODO implement constrains for action esto ya esta en las acciones(OneObjectAction), hay que moverlo aca?
 //        List<Constraint> constrains = action.getConstrains();
         return action.execute(command);
     }

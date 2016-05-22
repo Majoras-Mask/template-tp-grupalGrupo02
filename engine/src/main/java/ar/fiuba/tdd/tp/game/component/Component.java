@@ -18,6 +18,8 @@ public interface Component {
 
     Boolean supports(ActionType actionType);
 
+    Boolean satisfiesConstraints();
+
     ActionResponse doAction(ActionRequest request);
 
 }

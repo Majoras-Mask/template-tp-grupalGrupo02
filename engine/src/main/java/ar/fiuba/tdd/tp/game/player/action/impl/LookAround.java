@@ -26,11 +26,6 @@ public class LookAround extends NoObjectAction {
 
     }
 
-    @Override
-    public List<Constraint> getConstrains() {
-        return new ArrayList<>();
-    }
-
     private Optional<String> getDescriptions() {
         return this.player.getCurrentContext().getComponents().stream().map(Component::getName).reduce(this::combine);
     }

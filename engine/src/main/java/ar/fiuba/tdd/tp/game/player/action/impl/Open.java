@@ -18,8 +18,8 @@ import static ar.fiuba.tdd.tp.game.player.action.ActionType.OPEN;
  */
 public class Open extends OneObjectAction {
 
-    public Open(Player player) {
-        super(player, "^open ");
+    public Open(Player player, String commandName) {
+        super(player, "^" + commandName + " ");
     }
 
     @Override
@@ -40,8 +40,4 @@ public class Open extends OneObjectAction {
         return "Opened!";
     }
 
-    @Override
-    public List<Constraint> getConstrains() {
-        return new ArrayList<>();
-    }
 }

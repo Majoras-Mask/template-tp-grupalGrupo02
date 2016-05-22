@@ -1,6 +1,8 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
 import ar.fiuba.tdd.tp.game.component.Component;
+import ar.fiuba.tdd.tp.game.player.Player;
+import ar.fiuba.tdd.tp.game.player.action.resolver.ActionAbstract;
 import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
 import java.util.regex.Pattern;
@@ -14,22 +16,15 @@ import java.util.regex.Pattern;
  * The key is called the "indirect object," because it's being used in the course of performing the action but
  * isn't the main focus of the action.
  */
-public abstract class TwoObjectAction implements Action {
+public abstract class TwoObjectAction extends ActionAbstract {
 
-    protected final Context context;
-    private final Pattern commandPattern;
     private final String pattern;
 
-    public TwoObjectAction(Context context, String pattern) {
-        this.context = context;
+    public TwoObjectAction(Player player, String pattern) {
+        super(player, pattern);
         this.pattern = pattern;
-        this.commandPattern = Pattern.compile(pattern);
     }
 
-    @Override
-    public Boolean canExecute(String action) {
-        return this.commandPattern.matcher(action).find();
-    }
 
     @Override
     public String execute(String action) {

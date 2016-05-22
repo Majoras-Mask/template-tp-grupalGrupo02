@@ -7,9 +7,7 @@ import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.action.OneObjectAction;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
-import ar.fiuba.tdd.tp.game.scenario.context.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static ar.fiuba.tdd.tp.game.player.action.ActionType.PICK;
@@ -21,8 +19,9 @@ public class Pick extends OneObjectAction {
 
     private final Inventory inventory;
 
-    public Pick(Inventory inventory, Player player) {
-        super(player, "^pick ");
+
+    public Pick(Inventory inventory, Player player, String pattern) {
+        super(player, "^" + pattern + " ");
         this.inventory = inventory;
     }
 
@@ -44,10 +43,5 @@ public class Pick extends OneObjectAction {
         }
 
         return this.canNotPick(component) + ": " + actionResponse.getMessage();
-    }
-
-    @Override
-    public List<Constraint> getConstrains() {
-        return new ArrayList<>();
     }
 }
