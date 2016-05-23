@@ -1,10 +1,5 @@
 package ar.fiuba.tdd.tp.game.component;
 
-import ar.fiuba.tdd.tp.game.player.action.ActionType;
-import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
-import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
-
-import java.util.List;
 import java.util.Set;
 
 /**

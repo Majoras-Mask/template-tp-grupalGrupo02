@@ -3,7 +3,8 @@ package ar.fiuba.tdd.tp.game.player.action;
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.player.Player;
-import ar.fiuba.tdd.tp.game.player.action.resolver.ActionAbstract;
+import ar.fiuba.tdd.tp.game.player.action.impl.Action;
+import ar.fiuba.tdd.tp.game.player.action.resolver.ActionDeciderAbstract;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,20 +15,20 @@ import java.util.regex.Pattern;
  * These are called "transitive" actions, and the object that a transitive action
  * operates upon is called the action's 'direct object.'
  */
-public abstract class OneObjectAction extends ActionAbstract {
+public abstract class OneObjectActionDecider extends ActionDeciderAbstract {
 
-    private final String pattern;
-    private final String action;
+    private final Player player;
 
-    protected OneObjectAction(Player player, String pattern, String action) {
-        super(player, pattern);
-        this.pattern = pattern;
-        this.action = action;
+    public OneObjectActionDecider(String commandName, List<Action> actions, List<Constraint> constraints, Player player) {
+        super(commandName, actions, constraints);
+        this.commandPattern = Pattern.compile("^" + commandName + " ");
+        this.player = player;
     }
+
 
     @Override
     public String execute(String action) {
-        final String directObject = action.replaceFirst(pattern, "");
+        final String directObject = action.replaceFirst(commandName, "");
         final Optional<Component> component = this.getDirectObject(directObject);
 
         if (!component.isPresent()) {
@@ -41,7 +42,7 @@ public abstract class OneObjectAction extends ActionAbstract {
     }
 
     private boolean satisfiesItemConstraints(Component component) {
-        return component.satisfiesConstraints(this.action);
+        return component.satisfiesConstraints(commandName);
     }
 
     private Optional<Component> getDirectObject(String directObject) {
@@ -60,9 +61,5 @@ public abstract class OneObjectAction extends ActionAbstract {
             }
         }
         return true;
-    }
-
-    public void setConstraints(List<Constraint> constraints) {
-        this.constraints = constraints;
     }
 }

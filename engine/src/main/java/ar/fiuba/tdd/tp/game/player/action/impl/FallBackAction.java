@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.game.player.action.impl;
 
-import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
-import ar.fiuba.tdd.tp.game.player.action.Action;
+import ar.fiuba.tdd.tp.game.player.action.ActionDecider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Random;
  *
  * This behavior can be used when no other behavior can interpret the command received
  */
-public class FallBackAction implements Action {
+public class FallBackAction implements ActionDecider {
 
     private static final Random random = new Random();
     private final List<String> responses;

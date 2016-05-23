@@ -1,11 +1,12 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.component.Component;
 import ar.fiuba.tdd.tp.game.player.Player;
-import ar.fiuba.tdd.tp.game.player.action.resolver.ActionAbstract;
-import ar.fiuba.tdd.tp.game.scenario.context.Context;
+import ar.fiuba.tdd.tp.game.player.action.impl.Action;
+import ar.fiuba.tdd.tp.game.player.action.resolver.ActionDeciderAbstract;
 
-import java.util.regex.Pattern;
+import java.util.List;
 
 /**
  * Some actions take not one but two objects: PUT BOOK ON SHELF, UNLOCK DOOR WITH KEY.
@@ -16,13 +17,10 @@ import java.util.regex.Pattern;
  * The key is called the "indirect object," because it's being used in the course of performing the action but
  * isn't the main focus of the action.
  */
-public abstract class TwoObjectAction extends ActionAbstract {
+public abstract class TwoObjectActionDecider extends ActionDeciderAbstract {
 
-    private final String pattern;
-
-    public TwoObjectAction(Player player, String pattern) {
-        super(player, pattern);
-        this.pattern = pattern;
+    public TwoObjectActionDecider(String commandName, List<Action> actions, List<Constraint> constraints) {
+        super(commandName, actions, constraints);
     }
 
 

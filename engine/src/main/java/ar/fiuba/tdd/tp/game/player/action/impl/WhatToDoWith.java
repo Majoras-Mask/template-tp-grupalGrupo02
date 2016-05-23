@@ -1,23 +1,22 @@
 package ar.fiuba.tdd.tp.game.player.action.impl;
 
 import ar.fiuba.tdd.tp.game.component.Component;
-import ar.fiuba.tdd.tp.game.player.Player;
-import ar.fiuba.tdd.tp.game.player.action.OneObjectAction;
 
-import java.util.List;
 import java.util.Set;
 
 /*
  * This {@link Action} executes the open operation on the given {@link Component}
  */
-public class WhatToDoWith extends OneObjectAction {
+public class WhatToDoWith implements Action {
 
-    public WhatToDoWith(Player player, String commandName) {
-        super(player, "^" + commandName + " ", commandName);
+    private final Component component;
+
+    public WhatToDoWith(Component component) {
+        this.component = component;
     }
 
     @Override
-    public String doExecute(Component component) {
+    public String doAction() {
         Set<String> actions = component.getSupportedActions();
         if (actions != null) {
             StringBuffer message = new StringBuffer();
@@ -30,5 +29,4 @@ public class WhatToDoWith extends OneObjectAction {
         }
         return "You can do nothing with the " + component.getName();
     }
-
 }

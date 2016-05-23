@@ -2,19 +2,22 @@ package ar.fiuba.tdd.tp.game.player.action.resolver;
 
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
 import ar.fiuba.tdd.tp.game.player.Player;
-import ar.fiuba.tdd.tp.game.player.action.Action;
+import ar.fiuba.tdd.tp.game.player.action.ActionDecider;
+import ar.fiuba.tdd.tp.game.player.action.impl.Action;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-public abstract class ActionAbstract implements Action {
+public abstract class ActionDeciderAbstract implements ActionDecider {
     protected List<Constraint> constraints;
-    protected Player player;
     protected Pattern commandPattern;
+    protected List<Action> actions;
+    protected String commandName;
 
-    public ActionAbstract(Player player, String pattern) {
-        this.player = player;
-        this.commandPattern = Pattern.compile(pattern);
+    public ActionDeciderAbstract(String commandName, List<Action> actions, List<Constraint> constraints) {
+        this.commandName = commandName;
+        this.actions = actions;
+        this.constraints = constraints;
     }
 
     public Boolean satisfiesActionConstraints() {
@@ -24,10 +27,6 @@ public abstract class ActionAbstract implements Action {
             }
         }
         return true;
-    }
-
-    public void setConstraints(List<Constraint> constraints) {
-        this.constraints = constraints;
     }
 
     @Override

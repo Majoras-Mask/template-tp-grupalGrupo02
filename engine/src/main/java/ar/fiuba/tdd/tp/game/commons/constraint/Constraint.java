@@ -1,9 +1,9 @@
 package ar.fiuba.tdd.tp.game.commons.constraint;
 
-import ar.fiuba.tdd.tp.game.player.action.Action;
+import ar.fiuba.tdd.tp.game.player.action.ActionDecider;
 
 /**
- * A Constraint is what blocks an {@link Action} from happening.
+ * A Constraint is what blocks an {@link ActionDecider} from happening.
  */
 public interface Constraint {
 
