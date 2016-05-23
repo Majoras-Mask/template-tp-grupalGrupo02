@@ -13,6 +13,8 @@ public interface Player {
 
     Inventory getInventory();
 
+    void putInRoom(Context room);
+
     void setActionResolver(ActionResolver actionResolver);
 
 }

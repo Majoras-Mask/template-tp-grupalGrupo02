@@ -29,13 +29,15 @@ public class PlayerImpl implements Player {
         return currentContext;
     }
 
-    public void setCurrentContext(Context currentContext) {
-        this.currentContext = currentContext;
-    }
 
     @Override
     public Inventory getInventory() {
         return inventory;
+    }
+
+    @Override
+    public void putInRoom(Context room) {
+        currentContext = room;
     }
 
     @Override
