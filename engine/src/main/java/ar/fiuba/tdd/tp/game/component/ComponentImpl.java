@@ -8,6 +8,8 @@ import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -15,11 +17,12 @@ public class ComponentImpl implements Component {
 
     private final String name;
     private final List<ComponentState> states;
-    private List<Constraint> constraints;
+    private Map<String,List<Constraint>> actions;
 
-    public ComponentImpl(String name, List<ComponentState> states) {
+    public ComponentImpl(String name, List<ComponentState> states, Map<String,List<Constraint>> actions) {
         this.name = name;
         this.states = states;
+        this.actions = actions;
     }
 
     @Override
@@ -28,41 +31,22 @@ public class ComponentImpl implements Component {
     }
 
     @Override
-    public List<ActionType> getSupportedActions() {
-        return this.states.stream().map(ComponentState::getTriggerActions)
-                .flatMap(Collection::stream)
-                .collect(toList());
+    public Set<String> getSupportedActions() {
+        return actions.keySet();
     }
 
     @Override
-    public Boolean supports(ActionType actionType) {
+    public Boolean supports(String actionType) {
         return this.getSupportedActions().contains(actionType);
     }
 
     @Override
-    public Boolean satisfiesConstraints() {
-        for (Constraint constraint : constraints) {
+    public Boolean satisfiesConstraints(String action) {
+        for (Constraint constraint : actions.get(action)) {
             if (!constraint.isSatisfied()) {
                 return false;
             }
         }
         return true;
-    }
-
-    @Override
-    public ActionResponse doAction(ActionRequest request) {
-        List<ComponentState> collect = this.states.stream()
-                .filter(state -> state.getTriggerActions().contains(request.getType()))
-                .collect(toList());
-
-        if (collect.size() != 1) {
-            throw new IllegalStateException("It's expected one state to handle the action " + request.getType());
-        }
-
-        return collect.get(0).execute(request);
-    }
-
-    public void setConstraints(List<Constraint> constraints) {
-        this.constraints = constraints;
     }
 }

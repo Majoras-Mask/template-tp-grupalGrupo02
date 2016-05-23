@@ -19,29 +19,16 @@ public class Pick extends OneObjectAction {
 
     private final Inventory inventory;
 
-
-    public Pick(Inventory inventory, Player player, String pattern) {
-        super(player, "^" + pattern + " ");
+    public Pick(Inventory inventory, Player player, String action) {
+        super(player, "^" + action + " ", action);
         this.inventory = inventory;
     }
 
     @Override
     public String doExecute(Component component) {
-        return (component.supports(PICK)) ? doPick(component) : canNotPick(component);
-    }
-
-    private String canNotPick(Component component) {
-        return component.getName() + " can not be picked";
-    }
-
-    private String doPick(Component component) {
-        ActionResponse actionResponse = component.doAction(new ActionRequest(PICK));
-        if (actionResponse.success()) {
-            this.player.getCurrentContext().remove(component);
-            this.inventory.add(component);
-            return "ok! " + component.getName() + " picked!";
-        }
-
-        return this.canNotPick(component) + ": " + actionResponse.getMessage();
+        this.player.getCurrentContext().remove(component);
+        this.inventory.add(component);
+        return "ok! " + component.getName() + " picked!";
     }
 }
+

@@ -15,14 +15,7 @@ import java.util.List;
  */
 public interface ComponentState {
 
-    /*
-     * Returns all actions that modifies this state
-     */
-    List<ActionType> getTriggerActions();
+    void changeValue(String value);
 
-    /*
-     * Perform the action
-     */
-    ActionResponse execute(ActionRequest request);
-
+    String getValue();
 }

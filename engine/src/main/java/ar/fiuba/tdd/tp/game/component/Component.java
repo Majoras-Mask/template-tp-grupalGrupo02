@@ -5,6 +5,7 @@ import ar.fiuba.tdd.tp.game.player.action.io.ActionRequest;
 import ar.fiuba.tdd.tp.game.player.action.io.ActionResponse;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Interface for all the components that a Game needs to work.
@@ -14,12 +15,9 @@ public interface Component {
 
     String getName();
 
-    List<ActionType> getSupportedActions();
+    Set<String> getSupportedActions();
 
-    Boolean supports(ActionType actionType);
+    Boolean supports(String actionType);
 
-    Boolean satisfiesConstraints();
-
-    ActionResponse doAction(ActionRequest request);
-
+    Boolean satisfiesConstraints(String action);
 }

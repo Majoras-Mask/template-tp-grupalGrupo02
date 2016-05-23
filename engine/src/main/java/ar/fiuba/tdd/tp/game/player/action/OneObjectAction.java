@@ -17,10 +17,12 @@ import java.util.regex.Pattern;
 public abstract class OneObjectAction extends ActionAbstract {
 
     private final String pattern;
+    private final String action;
 
-    protected OneObjectAction(Player player, String pattern) {
+    protected OneObjectAction(Player player, String pattern, String action) {
         super(player, pattern);
         this.pattern = pattern;
+        this.action = action;
     }
 
     @Override
@@ -39,7 +41,7 @@ public abstract class OneObjectAction extends ActionAbstract {
     }
 
     private boolean satisfiesItemConstraints(Component component) {
-        return component.satisfiesConstraints();
+        return component.satisfiesConstraints(this.action);
     }
 
     private Optional<Component> getDirectObject(String directObject) {
