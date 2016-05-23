@@ -19,8 +19,8 @@ public abstract class OneObjectActionDecider extends ActionDeciderAbstract {
 
     private final Player player;
 
-    public OneObjectActionDecider(String commandName, List<Action> actions, List<Constraint> constraints, Player player) {
-        super(commandName, actions, constraints);
+    public OneObjectActionDecider(String commandName, List<Constraint> constraints, Player player) {
+        super(commandName, constraints);
         this.commandPattern = Pattern.compile("^" + commandName + " ");
         this.player = player;
     }
@@ -36,7 +36,7 @@ public abstract class OneObjectActionDecider extends ActionDeciderAbstract {
         }
 
         if (satisfiesActionConstraints() && satisfiesItemConstraints(component.get())) {
-            return this.doExecute(component.get());
+            return component.get().doAction(commandName);
         }
         return "No se cumple un constraint de la accion o del objeto.";
     }
@@ -49,13 +49,8 @@ public abstract class OneObjectActionDecider extends ActionDeciderAbstract {
         return this.player.getCurrentContext().findComponentByName(directObject);
     }
 
-
-
-    protected abstract String doExecute(Component component);
-
-
     public Boolean satisfiesActionConstraints() {
-        for (Constraint constraint : constraints) {
+        for (Constraint constraint : actionConstraints) {
             if (!constraint.isSatisfied()) {
                 return false;
             }

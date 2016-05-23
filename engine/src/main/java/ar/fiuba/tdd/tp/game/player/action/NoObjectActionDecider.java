@@ -15,10 +15,12 @@ import java.util.regex.Pattern;
  */
 public abstract class NoObjectActionDecider extends ActionDeciderAbstract {
 
+    private final List<Action> actions;
 
     public NoObjectActionDecider(String commandName, List<Action> actions, List<Constraint> constraints) {
-        super(commandName, actions, constraints);
+        super(commandName, constraints);
         this.commandPattern = Pattern.compile("^" + commandName + "$");
+        this.actions = actions;
     }
 
     @Override

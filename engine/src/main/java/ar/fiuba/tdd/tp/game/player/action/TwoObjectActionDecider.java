@@ -19,8 +19,8 @@ import java.util.List;
  */
 public abstract class TwoObjectActionDecider extends ActionDeciderAbstract {
 
-    public TwoObjectActionDecider(String commandName, List<Action> actions, List<Constraint> constraints) {
-        super(commandName, actions, constraints);
+    public TwoObjectActionDecider(String commandName, List<Constraint> constraints) {
+        super(commandName, constraints);
     }
 
 

@@ -1,18 +1,23 @@
 package ar.fiuba.tdd.tp.game.component;
 
+import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
+import ar.fiuba.tdd.tp.game.player.action.impl.Action;
+
+import java.util.List;
 import java.util.Set;
 
 /**
  * Interface for all the components that a Game needs to work.
- * Every component has a list of {@link ActionType} that supports.
- */
+ * */
 public interface Component {
 
     String getName();
 
     Set<String> getSupportedActions();
 
-    Boolean supports(String actionType);
+    void addAction(String actionName, List<Action> actionsList, List<Constraint> constraintList);
 
     Boolean satisfiesConstraints(String action);
+
+    String doAction(String commandName);
 }
