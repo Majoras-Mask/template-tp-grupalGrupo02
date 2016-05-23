@@ -9,12 +9,10 @@ import ar.fiuba.tdd.tp.game.player.Player;
  */
 public class Pick implements Action {
 
-    private final Inventory inventory;
     private final Player player;
     private final Component component;
 
-    public Pick(Inventory inventory, Player player, Component component) {
-        this.inventory = inventory;
+    public Pick(Player player, Component component) {
         this.player = player;
         this.component = component;
     }
@@ -22,7 +20,7 @@ public class Pick implements Action {
     @Override
     public String doAction() {
         this.player.getCurrentContext().remove(component);
-        this.inventory.add(component);
+        this.player.getInventory().add(component);
         return "ok! " + component.getName() + " picked!";
     }
 }

@@ -2,22 +2,18 @@ package ar.fiuba.tdd.tp.game.player;
 
 import ar.fiuba.tdd.tp.game.component.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
 public class Inventory {
 
-    private final List<Component> components;
+    private final List<Component> components = new ArrayList<>();
     private final Integer limit;
 
-    public Inventory(List<Component> components, Integer limit) {
-        this.components = requireNonNull(components);
+    public Inventory(Integer limit) {
         this.limit = requireNonNull(limit);
-
-        if (this.limitReached()) {
-            throw new IllegalArgumentException("Limit exceeded!");
-        }
     }
 
     public List<Component> getComponents() {
@@ -42,7 +38,7 @@ public class Inventory {
         this.components.remove(component);
     }
 
-    private Boolean limitReached() {
+    public Boolean limitReached() {
         return this.getSize() >= this.getLimit();
     }
 }

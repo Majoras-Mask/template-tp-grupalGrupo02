@@ -9,9 +9,8 @@ public class PlayerImpl implements Player {
     private final Inventory inventory;
     private Context currentContext;
 
-    public PlayerImpl(Context context, Inventory inventory) {
-        currentContext = context;
-        this.inventory = inventory;
+    public PlayerImpl(int inventoryLimit) {
+        this.inventory = new Inventory(inventoryLimit);
     }
 
     @Override
@@ -28,6 +27,15 @@ public class PlayerImpl implements Player {
     @Override
     public Context getCurrentContext() {
         return currentContext;
+    }
+
+    public void setCurrentContext(Context currentContext) {
+        this.currentContext = currentContext;
+    }
+
+    @Override
+    public Inventory getInventory() {
+        return inventory;
     }
 
     @Override

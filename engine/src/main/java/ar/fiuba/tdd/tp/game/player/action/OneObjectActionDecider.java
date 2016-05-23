@@ -15,12 +15,12 @@ import java.util.regex.Pattern;
  * These are called "transitive" actions, and the object that a transitive action
  * operates upon is called the action's 'direct object.'
  */
-public abstract class OneObjectActionDecider extends ActionDeciderAbstract {
+public class OneObjectActionDecider extends ActionDeciderAbstract {
 
     private final Player player;
 
-    public OneObjectActionDecider(String commandName, List<Constraint> constraints, Player player) {
-        super(commandName, constraints);
+    public OneObjectActionDecider(String commandName, Constraint constraint, Player player) {
+        super(commandName, constraint);
         this.commandPattern = Pattern.compile("^" + commandName + " ");
         this.player = player;
     }
@@ -50,11 +50,6 @@ public abstract class OneObjectActionDecider extends ActionDeciderAbstract {
     }
 
     public Boolean satisfiesActionConstraints() {
-        for (Constraint constraint : actionConstraints) {
-            if (!constraint.isSatisfied()) {
-                return false;
-            }
-        }
-        return true;
+        return actionConstraint.isSatisfied();
     }
 }

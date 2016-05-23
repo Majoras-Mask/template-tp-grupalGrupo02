@@ -8,22 +8,17 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class ActionDeciderAbstract implements ActionDecider {
-    protected List<Constraint> actionConstraints;
+    protected Constraint actionConstraint;
     protected Pattern commandPattern;
     protected String commandName;
 
-    public ActionDeciderAbstract(String commandName,List<Constraint> actionConstraints) {
+    public ActionDeciderAbstract(String commandName,Constraint actionConstraint) {
         this.commandName = commandName;
-        this.actionConstraints = actionConstraints;
+        this.actionConstraint = actionConstraint;
     }
 
     public Boolean satisfiesActionConstraints() {
-        for (Constraint constraint : actionConstraints) {
-            if (!constraint.isSatisfied()) {
-                return false;
-            }
-        }
-        return true;
+        return actionConstraint.isSatisfied();
     }
 
     @Override

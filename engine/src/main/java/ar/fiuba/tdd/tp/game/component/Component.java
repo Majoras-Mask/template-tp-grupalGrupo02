@@ -15,7 +15,7 @@ public interface Component {
 
     Set<String> getSupportedActions();
 
-    void addAction(String actionName, List<Action> actionsList, List<Constraint> constraintList);
+    void addAction(String actionName, List<Action> actionsList, Constraint constraint);
 
     Boolean satisfiesConstraints(String action);
 

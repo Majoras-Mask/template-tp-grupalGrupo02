@@ -11,6 +11,8 @@ public interface Player {
 
     Context getCurrentContext();
 
+    Inventory getInventory();
+
     void setActionResolver(ActionResolver actionResolver);
 
 }

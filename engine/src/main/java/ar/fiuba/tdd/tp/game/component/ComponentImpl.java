@@ -14,7 +14,7 @@ public class ComponentImpl implements Component {
     private final String name;
     private final List<ComponentState> states;
     private Map<String,List<Action>> commandActions = new HashMap<>();
-    private Map<String,List<Constraint>> commandConstraints = new HashMap<>();
+    private Map<String,Constraint> commandConstraint = new HashMap<>();
 
     public ComponentImpl(String name, List<ComponentState> states) {
         this.name = name;
@@ -32,19 +32,14 @@ public class ComponentImpl implements Component {
     }
 
     @Override
-    public void addAction(String actionName, List<Action> actionsList, List<Constraint> constraintList) {
+    public void addAction(String actionName, List<Action> actionsList, Constraint constraint) {
         commandActions.put(actionName, actionsList);
-        commandConstraints.put(actionName, constraintList);
+        commandConstraint.put(actionName, constraint);
     }
 
     @Override
     public Boolean satisfiesConstraints(String action) {
-        for (Constraint constraint : commandConstraints.get(action)) {
-            if (!constraint.isSatisfied()) {
-                return false;
-            }
-        }
-        return true;
+        return commandConstraint.get(action).isSatisfied();
     }
 
     @Override

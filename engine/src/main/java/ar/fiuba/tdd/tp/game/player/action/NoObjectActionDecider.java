@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.game.player.action;
 
 import ar.fiuba.tdd.tp.game.commons.constraint.Constraint;
-import ar.fiuba.tdd.tp.game.player.Player;
 import ar.fiuba.tdd.tp.game.player.action.impl.Action;
 import ar.fiuba.tdd.tp.game.player.action.resolver.ActionDeciderAbstract;
 
@@ -13,12 +12,12 @@ import java.util.regex.Pattern;
  * Examples of this type are: LOOK AROUND or SLEEP that expresses an action without
  * mentioning any objects.
  */
-public abstract class NoObjectActionDecider extends ActionDeciderAbstract {
+public class NoObjectActionDecider extends ActionDeciderAbstract {
 
     private final List<Action> actions;
 
-    public NoObjectActionDecider(String commandName, List<Action> actions, List<Constraint> constraints) {
-        super(commandName, constraints);
+    public NoObjectActionDecider(String commandName, List<Action> actions, Constraint constraint) {
+        super(commandName, constraint);
         this.commandPattern = Pattern.compile("^" + commandName + "$");
         this.actions = actions;
     }

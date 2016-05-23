@@ -3,6 +3,7 @@ package ar.fiuba.tdd.tp.game.player.action.resolver;
 import ar.fiuba.tdd.tp.game.player.action.ActionDecider;
 import ar.fiuba.tdd.tp.game.player.action.impl.FallBackAction;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,17 +18,17 @@ public class ActionResolver {
 
     private static final ActionDecider FALL_BACK_ACTION_DECIDER = new FallBackAction();
 
-    private final Set<ActionDecider> actionDeciders;
-
-    public ActionResolver(Set<ActionDecider> actionDeciders) {
-        this.actionDeciders = actionDeciders;
-    }
+    private final Set<ActionDecider> actionDeciders = new HashSet<>();
 
     public String execute(String command) {
         final ActionDecider actionDecider = this.findAction(command);
         //TODO implement constrains for action esto ya esta en las acciones(OneObjectAction), hay que moverlo aca?
 //        List<Constraint> constrains = action.getConstrains();
         return actionDecider.execute(command);
+    }
+
+    public void addActionDecider(ActionDecider action) {
+        actionDeciders.add(action);
     }
 
     private ActionDecider findAction(String command) {
