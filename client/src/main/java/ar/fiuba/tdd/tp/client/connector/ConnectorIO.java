@@ -4,7 +4,9 @@ import ar.fiuba.tdd.tp.client.exception.ConnectorException;
 import ar.fiuba.tdd.tp.server.communication.Request;
 import ar.fiuba.tdd.tp.server.communication.Response;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
