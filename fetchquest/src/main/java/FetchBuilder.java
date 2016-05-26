@@ -1,6 +1,5 @@
-package ar.fiuba.tdd.tp.engine.test;
-
-import ar.fiuba.tdd.tp.engine.GameImpl;
+import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.commons.condition.Condition;
 import ar.fiuba.tdd.tp.engine.commons.condition.have.NoConditionRequired;
 import ar.fiuba.tdd.tp.engine.commons.condition.have.PlayerInventoryNotFull;
@@ -23,31 +22,28 @@ import ar.fiuba.tdd.tp.engine.scenario.context.ContextImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FetchQuest extends GameImpl {
-    private static final String GAME_NAME = "Fetch Quest";
-    private static final String ROOM_NAME = "Room";
-    private static final String STICK_NAME = "stick";
-    private static final String GAME_HELP = "Fetch Quest Help commands";
+public class FetchBuilder implements GameBuilder {
     private static final int INVENTORY_LIMIT = 10;
+    private static final String STICK_NAME = "stick";
+    private static final String ROOM_NAME = "room";
     private static final String LOOK_AROUND = "look around";
     private static final String PICK = "pick";
 
-    public FetchQuest() {
-        this.setGameName(GAME_NAME);
-        this.setHelp(GAME_HELP);
-        this.setPlayer(createPlayer());
-        makeFirstRoomAndPutPlayerInIt(player);
+
+    @Override
+    public Game build() {
+        Player player = createPlayer();
+        player.putInRoom(initialRoom());
+        return new FetchQuest(player);
     }
 
-    private void makeFirstRoomAndPutPlayerInIt(Player player) {
+    private Context initialRoom() {
         List<Component> components = new ArrayList<>();
         List<ComponentState> states = new ArrayList<>();
 
         components.add(new ComponentImpl(STICK_NAME,states));
 
-        Context context = new ContextImpl(ROOM_NAME, components);
-
-        player.putInRoom(context);
+        return new ContextImpl(ROOM_NAME, components);
     }
 
     private Player createPlayer() {
@@ -75,5 +71,4 @@ public class FetchQuest extends GameImpl {
 
         return player;
     }
-
 }

@@ -2,16 +2,12 @@ package ar.fiuba.tdd.tp.engine;
 
 import ar.fiuba.tdd.tp.engine.player.Player;
 
-public class GameImpl implements Game {
+public abstract class GameImpl implements Game {
 
-    protected String gameName;
-    protected String help;
     protected Player player;
-    protected String gameWelcomeMessage;
 
-    @Override
-    public String getName() {
-        return gameName;
+    public GameImpl(Player player) {
+        this.player = player;
     }
 
     @Override
@@ -21,38 +17,11 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public String help() {
-        return help;
-    }
-
-    @Override
     public String doCommand(String clientMessage) {
         String message = player.doCommand(clientMessage);
         if (isFinished()) {
             return "Game over.";
         }
         return message;
-    }
-
-    @Override
-    public String getWelcomeMessage() {
-        return gameWelcomeMessage;
-    }
-
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
-    }
-
-    public void setHelp(String help) {
-        this.help = help;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public void setGameWelcomeMessage(String gameWelcomeMessage) {
-        this.gameWelcomeMessage = gameWelcomeMessage;
     }
 }
