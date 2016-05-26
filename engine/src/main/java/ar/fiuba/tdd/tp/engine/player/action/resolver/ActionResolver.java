@@ -20,6 +20,9 @@ public class ActionResolver {
 
     private final Set<ActionDecider> actionDeciders = new HashSet<>();
 
+    public ActionResolver() {
+    }
+
     public String execute(String command) {
         final ActionDecider actionDecider = this.findAction(command);
         //TODO implement constrains for action esto ya esta en las acciones(OneObjectAction), hay que moverlo aca?

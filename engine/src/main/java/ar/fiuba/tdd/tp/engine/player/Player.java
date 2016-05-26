@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.engine.player;
 
-import ar.fiuba.tdd.tp.engine.player.action.resolver.ActionResolver;
+import ar.fiuba.tdd.tp.engine.player.action.ActionDecider;
 import ar.fiuba.tdd.tp.engine.scenario.context.Context;
 
 public interface Player {
@@ -13,8 +13,10 @@ public interface Player {
 
     Inventory getInventory();
 
+    void limitInventory(int limit);
+
     void putInRoom(Context room);
 
-    void setActionResolver(ActionResolver actionResolver);
+    void addAction(ActionDecider actionDecider);
 
 }

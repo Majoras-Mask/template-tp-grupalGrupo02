@@ -10,18 +10,13 @@ import static java.util.Objects.requireNonNull;
 public class Inventory {
 
     private final List<Component> components = new ArrayList<>();
-    private final Integer limit;
+    private int limit = 10; //Default value
 
-    public Inventory(Integer limit) {
-        this.limit = requireNonNull(limit);
+    public Inventory() {
     }
 
     public List<Component> getComponents() {
         return components;
-    }
-
-    public Integer getLimit() {
-        return limit;
     }
 
     public Integer getSize() {
@@ -29,16 +24,18 @@ public class Inventory {
     }
 
     public void add(Component component) {
-        if (!this.limitReached()) {
-            this.components.add(component);
-        }
+        this.components.add(component);
     }
 
     public void remove(Component component) {
         this.components.remove(component);
     }
 
-    public Boolean limitReached() {
-        return this.getSize() >= this.getLimit();
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public boolean limitReached() {
+        return (getSize() >= limit);
     }
 }

@@ -22,6 +22,12 @@ public class NoObjectActionDecider extends ActionDeciderAbstract {
         this.actions = actions;
     }
 
+    public NoObjectActionDecider(String commandName, List<Action> actions) {
+        super(commandName);
+        this.commandPattern = Pattern.compile("^" + commandName + "$");
+        this.actions = actions;
+    }
+
     @Override
     public String execute(String fullMessage) {
         if (satisfiesActionConstraints()) {

@@ -1,16 +1,18 @@
 package ar.fiuba.tdd.tp.engine.player;
 
+import ar.fiuba.tdd.tp.engine.player.action.ActionDecider;
 import ar.fiuba.tdd.tp.engine.player.action.resolver.ActionResolver;
 import ar.fiuba.tdd.tp.engine.scenario.context.Context;
 
 public class PlayerImpl implements Player {
 
-    private ActionResolver actionResolver;
     private final Inventory inventory;
     private Context currentContext;
+    private ActionResolver actionResolver;
 
-    public PlayerImpl(int inventoryLimit) {
-        this.inventory = new Inventory(inventoryLimit);
+    public PlayerImpl() {
+        this.inventory = new Inventory();
+        actionResolver = new ActionResolver();
     }
 
     @Override
@@ -36,14 +38,18 @@ public class PlayerImpl implements Player {
     }
 
     @Override
+    public void limitInventory(int limit) {
+        this.inventory.setLimit(limit);
+    }
+
+    @Override
     public void putInRoom(Context room) {
         currentContext = room;
     }
 
     @Override
-    public void setActionResolver(ActionResolver actionResolver) {
-        this.actionResolver = actionResolver;
+    public void addAction(ActionDecider actionDecider) {
+        actionResolver.addActionDecider(actionDecider);
     }
-
 
 }
