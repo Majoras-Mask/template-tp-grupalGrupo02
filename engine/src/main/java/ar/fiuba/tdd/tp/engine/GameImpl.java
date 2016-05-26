@@ -7,6 +7,7 @@ public class GameImpl implements Game {
     protected String gameName;
     protected String help;
     protected Player player;
+    protected String gameWelcomeMessage;
 
     @Override
     public String getName() {
@@ -33,6 +34,11 @@ public class GameImpl implements Game {
         return message;
     }
 
+    @Override
+    public String getWelcomeMessage() {
+        return gameWelcomeMessage;
+    }
+
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
@@ -44,5 +50,9 @@ public class GameImpl implements Game {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void setGameWelcomeMessage(String gameWelcomeMessage) {
+        this.gameWelcomeMessage = gameWelcomeMessage;
     }
 }

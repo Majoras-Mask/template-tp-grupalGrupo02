@@ -62,6 +62,18 @@ public class ServerOutput {
     }
 
     public static void chooseGame() {
-        print("The possible games are " + GAMES);
+        print("Please provide a path to a game Jar.");
+    }
+
+    public static void notEnoughPrivileges() {
+        print("You don't have the sufficient privileges to access that file.");
+    }
+
+    public static void instantiationException() {
+        print("We got an instantiationException error.");
+    }
+
+    public static void noClassFound() {
+        print("No class found with that name. Which name? who knows!");
     }
 }

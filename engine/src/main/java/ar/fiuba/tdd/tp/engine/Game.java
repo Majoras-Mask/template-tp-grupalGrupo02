@@ -13,4 +13,5 @@ public interface Game {
 
     String doCommand(String clientMessage);
 
+    String getWelcomeMessage();
 }
