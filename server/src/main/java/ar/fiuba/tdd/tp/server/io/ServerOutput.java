@@ -2,7 +2,6 @@ package ar.fiuba.tdd.tp.server.io;
 
 public class ServerOutput {
     private static final String PREFIX = "Server> ";
-    private static final String GAMES = "'fetch', 'hanoi', 'riddle', 'open door1', 'open door2', 'cursed object' and 'treasure hunt'";
     private static final String COMMANDS = "'load game', 'close port', 'exit' and 'help'";
 
     private static void print(String string) {
@@ -57,12 +56,8 @@ public class ServerOutput {
         print("Thread finished");
     }
 
-    public static void invalidGame() {
-        print("That's not a valid game, choose between " + GAMES);
-    }
-
     public static void chooseGame() {
-        print("The possible games are " + GAMES);
+        print("Please provide a path to a game Jar.");
     }
 
     public static void notEnoughPrivileges() {
