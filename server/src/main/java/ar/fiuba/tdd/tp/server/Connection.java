@@ -1,11 +1,13 @@
 package ar.fiuba.tdd.tp.server;
 
-import ar.fiuba.tdd.tp.motor.games.Engine;
+import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.server.communication.Request;
 import ar.fiuba.tdd.tp.server.communication.Response;
 import ar.fiuba.tdd.tp.server.io.ServerOutput;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,16 +16,16 @@ import static java.util.Objects.requireNonNull;
 
 public class Connection extends Thread {
     private final ServerSocket serverSocket;
-    private final Engine engine;
+    private final Game game;
     private Socket clientSocket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private Request request;
     private Response response;
 
-    public Connection(ServerSocket serverSocket, Engine engine) {
+    public Connection(ServerSocket serverSocket, Game game) {
         this.serverSocket = requireNonNull(serverSocket);
-        this.engine = engine;
+        this.game = game;
     }
 
     public void closeConnection() {
@@ -50,7 +52,7 @@ public class Connection extends Thread {
                 exit = true;
                 response = new Response("exit");
             } else {
-                response = new Response(engine.request(request.getSomething()));
+                response = new Response(game.command(request.getSomething()));
             }
             outputStream.writeObject(response);
             outputStream.flush();
@@ -58,7 +60,7 @@ public class Connection extends Thread {
     }
 
     private void welcome() throws IOException {
-        response = new Response(engine.getWelcomeMessage());
+        response = new Response(game.getWelcomeMessage());
         outputStream.writeObject(response);
         outputStream.flush();
     }

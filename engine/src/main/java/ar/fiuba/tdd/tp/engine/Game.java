@@ -56,4 +56,9 @@ public class Game {
         commands.add(command);
     }
 
+
+    public String getWelcomeMessage() {
+        //TODO change this
+        return "Welcome message.";
+    }
 }
