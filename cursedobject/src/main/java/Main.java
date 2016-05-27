@@ -1,3 +1,4 @@
+
 import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 
@@ -6,7 +7,7 @@ import java.util.Scanner;
 @SuppressWarnings("CPD-START")
 public class Main {
     public static void main(String[] args) {
-        GameBuilder fetchQuestBuilder = new FetchBuilder();
+        GameBuilder fetchQuestBuilder = new CursedObjectBuilder();
         Game game = fetchQuestBuilder.build();
 
         Scanner input = new Scanner(System.in, "UTF-8");

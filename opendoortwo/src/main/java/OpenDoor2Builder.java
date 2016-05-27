@@ -1,12 +1,11 @@
-package ar.fiuba.tdd.tp.games;
-
-import ar.fiuba.tdd.tp.engine.*;
-import ar.fiuba.tdd.tp.engine.elements.*;
+import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.GameBuilder;
+import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
+@SuppressWarnings("CPD-START")
 public class OpenDoor2Builder implements GameBuilder {
 
-    @SuppressWarnings("CPD-START")
     @Override
     public Game build() {
         Game game = new Game();
@@ -29,7 +28,6 @@ public class OpenDoor2Builder implements GameBuilder {
         return game;
     }
 
-    @SuppressWarnings("CPD-END")
     private void addContentCommands(Content player, Content box, Content key, Content door, Content room1, Content room2) {
         CommandsUtils.addPickCommand(player, key, "key", "pick");
         box.addCommand("open", (params) -> true, (params) -> {

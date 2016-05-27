@@ -1,5 +1,3 @@
-package ar.fiuba.tdd.tp.games;
-
 import ar.fiuba.tdd.tp.engine.Game;
 import org.junit.Before;
 import org.junit.Test;
@@ -134,6 +132,5 @@ public class OpenDoor2Test {
 //        game.command("open box");
 //        assertEquals("Can't do open on box",game.command("open box"));
 //    }
-
 
 }

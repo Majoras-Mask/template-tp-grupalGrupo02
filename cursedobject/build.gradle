@@ -1,0 +1,6 @@
+group 'ar.fiuba.tdd.tp-cursedobject'
+version '1.0'
+
+dependencies {
+    compile project(':engine')
+}

@@ -1,7 +1,6 @@
-package ar.fiuba.tdd.tp.games;
-
-import ar.fiuba.tdd.tp.engine.*;
-import ar.fiuba.tdd.tp.engine.elements.*;
+import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.GameBuilder;
+import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
 @SuppressWarnings("CPD-START")

@@ -1,5 +1,3 @@
-package ar.fiuba.tdd.tp.games;
-
 import ar.fiuba.tdd.tp.engine.*;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.elements.*;

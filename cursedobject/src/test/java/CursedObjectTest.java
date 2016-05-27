@@ -1,5 +1,3 @@
-package ar.fiuba.tdd.tp.games;
-
 import ar.fiuba.tdd.tp.engine.Game;
 import org.junit.Before;
 import org.junit.Test;
@@ -151,5 +149,4 @@ public class CursedObjectTest {
         game.command("open door");
         assertEquals("Can't do hello on door",  game.command("say hello door"));
     }
-
 }

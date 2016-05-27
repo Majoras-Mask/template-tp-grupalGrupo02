@@ -1,5 +1,3 @@
-package ar.fiuba.tdd.tp.games;
-
 import ar.fiuba.tdd.tp.engine.Game;
 import org.junit.Before;
 import org.junit.Test;
@@ -101,6 +99,4 @@ public class HanoiTest {
         game.command("take disk1 from stack1");
         assertNotEquals("You won the game!",game.command("put disk1 on stack2"));
     }
-
-
 }

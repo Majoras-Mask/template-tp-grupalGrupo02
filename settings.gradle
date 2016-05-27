@@ -1,4 +1,9 @@
 rootProject.name = 'tp-tp-grupal'
 include 'client' , 'server' , 'engine', 'fetchquest'
 include 'fetchquest'
+include 'hanoi'
+include 'riddle'
+include 'cursedobject'
+include 'opendoorone'
+include 'opendoortwo'
 

@@ -3,6 +3,7 @@ import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
+@SuppressWarnings("CPD-START")
 public class FetchBuilder implements GameBuilder {
 
     @SuppressWarnings("CPD-START")

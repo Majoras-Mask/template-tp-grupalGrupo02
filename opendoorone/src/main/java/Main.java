@@ -6,7 +6,7 @@ import java.util.Scanner;
 @SuppressWarnings("CPD-START")
 public class Main {
     public static void main(String[] args) {
-        GameBuilder fetchQuestBuilder = new FetchBuilder();
+        GameBuilder fetchQuestBuilder = new OpenDoor1Builder();
         Game game = fetchQuestBuilder.build();
 
         Scanner input = new Scanner(System.in, "UTF-8");

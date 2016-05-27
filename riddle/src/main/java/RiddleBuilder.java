@@ -1,8 +1,7 @@
-package ar.fiuba.tdd.tp.games;
-
-import ar.fiuba.tdd.tp.engine.*;
+import ar.fiuba.tdd.tp.engine.Game;
+import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
-import ar.fiuba.tdd.tp.engine.elements.*;
+import ar.fiuba.tdd.tp.engine.elements.Content;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
