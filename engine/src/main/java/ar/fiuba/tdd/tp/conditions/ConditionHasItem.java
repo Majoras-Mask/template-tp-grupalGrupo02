@@ -7,16 +7,13 @@ import ar.fiuba.tdd.tp.values.Value;
 /**
  * Created by kevin on 28/05/16.
  */
-public class ConditionHasItem implements Condition {
+public class ConditionHasItem extends ConditionAbstract {
 
-    private Value objectDescription;
     private Value item;
-    private Context context;
 
     public ConditionHasItem(Value objectDescription, Value item, Context context) {
-        this.objectDescription = objectDescription;
+        super(objectDescription, context);
         this.item = item;
-        this.context = context;
     }
 
     @Override
