@@ -12,4 +12,5 @@ public interface Container {
 
     boolean hasObject(ObjectInterface object);
 
+    int getSize();
 }

@@ -42,6 +42,11 @@ public class ObjectConcrete implements ObjectInterface {
     }
 
     @Override
+    public int getSize() {
+        return items.size();
+    }
+
+    @Override
     public String getDescription() {
         return description;
     }

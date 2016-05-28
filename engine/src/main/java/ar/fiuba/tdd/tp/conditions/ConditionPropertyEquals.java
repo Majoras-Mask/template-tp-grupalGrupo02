@@ -25,4 +25,5 @@ public class ConditionPropertyEquals extends ConditionAbstract {
 
         return (actualPropertyValue.equals(valueProperty.getValue()));
     }
+
 }
