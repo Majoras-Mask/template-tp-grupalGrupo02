@@ -37,6 +37,11 @@ public class ObjectConcrete implements ObjectInterface {
     }
 
     @Override
+    public boolean hasObject(ObjectInterface object) {
+        return items.contains(object);
+    }
+
+    @Override
     public String getDescription() {
         return description;
     }

@@ -10,4 +10,6 @@ public interface Container {
 
     void removeAll();
 
+    boolean hasObject(ObjectInterface object);
+
 }
