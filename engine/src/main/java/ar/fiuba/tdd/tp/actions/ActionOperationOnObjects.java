@@ -11,14 +11,16 @@ public abstract class ActionOperationOnObjects implements Action {
 
     private Value objectDescription;
     private Value objectToAddDescription;
+    private Context context;
 
-    public ActionOperationOnObjects(Value objectDescription, Value objectToAddDescription) {
+    public ActionOperationOnObjects(Value objectDescription, Value objectToAddDescription, Context context) {
         this.objectDescription = objectDescription;
         this.objectToAddDescription = objectToAddDescription;
+        this.context = context;
     }
 
     @Override
-    public void execute(Context context) {
+    public void execute() {
         ObjectInterface primaryObject = context.getObject(objectDescription.getValue());
         ObjectInterface secondaryObject = context.getObject(objectToAddDescription.getValue());
 
