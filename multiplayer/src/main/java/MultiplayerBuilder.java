@@ -4,12 +4,11 @@ import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
 
 @SuppressWarnings("CPD-START")
-public class FetchBuilder implements GameBuilder {
-    private static final int MAXPLAYERS = 1;
+public class MultiplayerBuilder implements GameBuilder {
 
     @Override
     public Game build() {
-        Game game = new Game(MAXPLAYERS) {
+        Game game = new Game(1) {
             @Override
             public void addPlayer(int playerID) {
                 Content room = new Content("room");
@@ -18,8 +17,8 @@ public class FetchBuilder implements GameBuilder {
                 room.put(player);
                 room.put(stick);
                 addContentCommands(player, stick);
-                this.addWinCondition(playerID, () -> player.has("stick"));
-                this.addLoseCondition(playerID, () -> false);
+                this.setWinCondition(() -> player.has("stick"));
+                this.setLoseCondition(() -> false);
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
                 this.setCommand(playerID, CommandsUtils.getLookAroundCommand("look around", player));
             }

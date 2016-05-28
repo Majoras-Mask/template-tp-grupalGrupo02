@@ -48,7 +48,7 @@ public class ClientConnection extends Thread {
                 exit = true;
                 response = new Response("exit");
             } else {
-                response = new Response(game.command(request.getSomething()));
+                response = new Response(game.command(clientSocket.getPort(), request.getSomething()));
             }
             outputStream.writeObject(response);
             outputStream.flush();

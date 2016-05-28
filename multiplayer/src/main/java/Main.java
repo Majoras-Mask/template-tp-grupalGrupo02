@@ -6,9 +6,10 @@ import java.util.Scanner;
 @SuppressWarnings("CPD-START")
 public class Main {
     public static void main(String[] args) {
-        GameBuilder fetchQuestBuilder = new FetchBuilder();
-        Game game = fetchQuestBuilder.build();
+        GameBuilder multiplayerBuilder = new MultiplayerBuilder();
+        Game game = multiplayerBuilder.build();
 
+        game.joinPlayer(1);
         Scanner input = new Scanner(System.in, "UTF-8");
 
         while (input.hasNext()) {

@@ -41,6 +41,7 @@ public class Connection extends Thread {
                 clientSocket = serverSocket.accept();
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
                 ClientConnection client = new ClientConnection(clientSocket, game, serverSocket);
+                game.joinPlayer(clientSocket.getPort());
                 client.start();
             }
         } catch (IOException e) {
