@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Created by kevin on 28/05/16.
  */
-public class ObjectConcrete implements Container, Descriptible {
+public class ObjectConcrete implements ObjectInterface {
 
     private HashMap<String, String> properties = new HashMap<>();
-    private List<String> items = new ArrayList<>();
+    private List<ObjectInterface> items = new ArrayList<>();
     private String description;
 
     ObjectConcrete(String description) {
@@ -18,16 +18,16 @@ public class ObjectConcrete implements Container, Descriptible {
     }
 
     @Override
-    public void add(String value) {
-        if (!items.contains(value)) {
-            items.add(value);
+    public void add(ObjectInterface object) {
+        if (!items.contains(object)) {
+            items.add(object);
         }
     }
 
     @Override
-    public void remove(String value) {
-        if (items.contains(value)) {
-            items.remove(value);
+    public void remove(ObjectInterface object) {
+        if (items.contains(object)) {
+            items.remove(object);
         }
     }
 
