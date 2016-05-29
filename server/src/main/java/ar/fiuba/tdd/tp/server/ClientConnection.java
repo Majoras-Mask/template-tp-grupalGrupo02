@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
 
 import static java.util.Objects.nonNull;
 
@@ -22,6 +24,8 @@ public class ClientConnection extends Thread {
     private ObjectInputStream inputStream;
     private Request request;
     private Response response;
+    private List<Socket> allClientSockets = new LinkedList<>();
+
 
     public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket) {
         this.clientSocket = clientSocket;
@@ -48,7 +52,9 @@ public class ClientConnection extends Thread {
                 exit = true;
                 response = new Response("exit");
             } else {
-                response = new Response(game.command(clientSocket.getPort(), request.getSomething()));
+                String message = request.getSomething();
+                response = new Response(game.command(clientSocket.getPort(), message));
+                notifyAllListeners(message);
             }
             outputStream.writeObject(response);
             outputStream.flush();
@@ -64,5 +70,18 @@ public class ClientConnection extends Thread {
     private void getStream(Socket clientSocket) throws IOException {
         this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         this.inputStream = new ObjectInputStream(clientSocket.getInputStream());
+    }
+
+    public void setListeners(List<Socket> allClientSockets) {
+        this.allClientSockets = allClientSockets;
+        allClientSockets.remove(clientSocket);  //Removes itself
+    }
+
+    private void notifyAllListeners(String message) throws IOException {
+        for (Socket socket : allClientSockets) {
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.writeObject(message);
+            outputStream.flush();
+        }
     }
 }
