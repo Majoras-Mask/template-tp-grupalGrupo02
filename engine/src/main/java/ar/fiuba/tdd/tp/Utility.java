@@ -11,6 +11,12 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
+    public static boolean matches(String regex, String string) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(string);
+        return matcher.matches();
+    }
+
     public static List<String> getTagObjectGroups(String command) {
         List<String> lista = new ArrayList<>();
         int index = command.indexOf('(');

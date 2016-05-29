@@ -9,7 +9,7 @@ import ar.fiuba.tdd.tp.Element;
 public interface Command {
     boolean matches(String command);
 
-    void execute(Context context);
+    void execute(String command, Context context);
 
     void addElement(Element element);
 }

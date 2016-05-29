@@ -15,18 +15,20 @@ public class CommandConcrete implements Command {
     protected List<Element> elements = new ArrayList<>();
 
     public CommandConcrete(String command) {
-        this.command = command;
+        this.command = command.toLowerCase();
     }
 
     @Override
     public boolean matches(String command) {
-        return this.command.equals(command);
+        return this.command.equals(command.toLowerCase());
     }
 
     @Override
-    public void execute(Context context) {
-        for (Element element:elements) {
-            element.execute(context);
+    public void execute(String command, Context context) {
+        if (matches(command)) {
+            for (Element element:elements) {
+                element.execute(context);
+            }
         }
     }
 
