@@ -4,7 +4,7 @@ include 'fetchquest'
 //include 'hanoi'
 //include 'riddle'
 //include 'cursedobject'
-//include 'opendoorone'
+include 'opendoorone'
 //include 'opendoortwo'
 //include 'multiplayer'
 
