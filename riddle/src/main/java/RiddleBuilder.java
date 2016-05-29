@@ -8,35 +8,41 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("CPD-START")
 public class RiddleBuilder implements GameBuilder {
+    private static final int MAXPLAYERS = 1;
 
     @Override
     public Game build() {
-        Game game = new Game();
         Content northShore = new Content("northShore");
         Content southShore = new Content("southShore");
-        Content player = new Content("player", 1);
         Content wolf = new Content("wolf");
         Content sheep = new Content("sheep");
         Content cabbage = new Content("cabbage");
         Content northTransporter = new Content("northShore");
         Content southTransporter = new Content("southShore");
-        southShore.put(player);
         southShore.put(wolf);
         southShore.put(sheep);
         southShore.put(cabbage);
         southShore.put(northTransporter);
         northShore.put(southTransporter);
-        addContentCommands(player, northShore, northTransporter, southShore, southTransporter, wolf, sheep, cabbage);
-        setGameCommands(player, game);
-        game.setWinCondition(() -> northShore.has("wolf") && northShore.has("sheep") && northShore.has("cabbage"));
-        game.setLoseCondition(() -> false);
+
+        Game game = new Game(MAXPLAYERS) {
+            @Override
+            public void addPlayer(int playerID) {
+                Content player = new Content("player" + playerID, 1);
+                southShore.put(player);
+                addContentCommands(player, northShore, northTransporter, southShore, southTransporter, wolf, sheep, cabbage);
+                setGameCommands(playerID, player, this);
+                this.addWinCondition(playerID, () -> northShore.has(wolf.getName()) && northShore.has(sheep.getName()) && northShore.has(cabbage.getName()));
+                this.addLoseCondition(playerID, () -> false);
+            }
+        };
         return game;
     }
 
-    private void setGameCommands(Content player, Game game) {
-        game.setCommand(makeTake(player));
-        game.setCommand(makeLeave(player));
-        game.setCommand(makeCross(player));
+    private void setGameCommands(int playerID, Content player, Game game) {
+        game.setCommand(playerID, makeTake(player));
+        game.setCommand(playerID, makeLeave(player));
+        game.setCommand(playerID, makeCross(player));
     }
 
     private boolean validCross(Content leavingShore) {
@@ -69,11 +75,11 @@ public class RiddleBuilder implements GameBuilder {
             return "leave cabbage from boat";
         });
         northTransporter.addCommand("cross", (params) -> validCross(southShore), (params) -> {
-            northShore.put(southShore.take("player"));
+            northShore.put(southShore.take(player.getName()));
             return "You have crossed to north";
         });
         southTransporter.addCommand("cross", (params) -> validCross(northShore), (params) -> {
-            southShore.put(northShore.take("player"));
+            southShore.put(northShore.take(player.getName()));
             return "You have crossed to south";
         });
     }

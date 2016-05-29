@@ -7,63 +7,69 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("CPD-START")
 public class HanoiBuilder implements GameBuilder {
+    private static final int MAXPLAYERS = 1;
 
     @Override
     public Game build() {
-        Game game = new Game();
         Content room = new Content("room");
         Content stack1 = new Content("stack1");
         Content stack2 = new Content("stack2");
         Content stack3 = new Content("stack3");
-        Content player = new Content("player", 1);
         Content disk1 = new Content("disk1");
         Content disk2 = new Content("disk2");
         Content disk3 = new Content("disk3");
         stack1.put(disk1);
         stack1.put(disk2);
         stack1.put(disk3);
-        room.put(player);
         room.put(stack1);
         room.put(stack2);
         room.put(stack3);
-        addContentCommands(player, room, disk1, disk2, disk3);
-        setGameCommands(player, game);
-        game.setWinCondition(() -> stack3.has("disk1") && stack3.has("disk2") && stack3.has("disk3"));
-        game.setLoseCondition(() -> false);
+
+        Game game = new Game(MAXPLAYERS) {
+            @Override
+            public void addPlayer(int playerID) {
+                Content player = new Content("player" + playerID, 1);
+                room.put(player);
+                addContentCommands(player, room, disk1, disk2, disk3);
+                setGameCommands(playerID, player, this);
+                this.addWinCondition(playerID, () -> stack3.has(disk1.getName()) && stack3.has(disk2.getName()) && stack3.has(disk3.getName()));
+                this.addLoseCondition(playerID, () -> false);
+            }
+        };
         return game;
     }
 
-    private void setGameCommands(Content player, Game game) {
-        game.setCommand(makeTake(player));
-        game.setCommand(makePut(player));
+    private void setGameCommands(int playerID, Content player, Game game) {
+        game.setCommand(playerID, makeTake(player));
+        game.setCommand(playerID, makePut(player));
     }
 
     private void addContentCommands(Content player, Content room, Content disk1, Content disk2, Content disk3) {
         disk1.addCommand("take", (params) -> true, (params) -> {
             String stackName = disk1.getContainer().getName();
-            player.put(disk1.getContainer().take("disk1"));
+            player.put(disk1.getContainer().take(disk1.getName()));
             return "Picked disk1 from " + stackName;
         });
-        disk2.addCommand("take", (params) -> !disk2.getContainer().has("disk1"), (params) -> {
+        disk2.addCommand("take", (params) -> !disk2.getContainer().has(disk1.getName()), (params) -> {
             String stackName = disk2.getContainer().getName();
-            player.put(disk2.getContainer().take("disk2"));
+            player.put(disk2.getContainer().take(disk2.getName()));
             return "Picked disk2 from " + stackName;
         });
-        disk3.addCommand("take", (params) -> !disk3.getContainer().has("disk1") && !disk3.getContainer().has("disk2"), (params) -> {
+        disk3.addCommand("take", (params) -> !disk3.getContainer().has(disk1.getName()) && !disk3.getContainer().has(disk2.getName()), (params) -> {
             String stackName = disk3.getContainer().getName();
-            player.put(disk3.getContainer().take("disk3"));
+            player.put(disk3.getContainer().take(disk3.getName()));
             return "Picked disk3 from " + stackName;
         });
         disk1.addCommand("put", (params) -> true, (params) -> {
-            room.get(params[1]).put(player.take("disk1"));
+            room.get(params[1]).put(player.take(disk1.getName()));
             return "Placed disk1 on " + params[1];
         });
-        disk2.addCommand("put", (params) -> !room.get(params[1]).has("disk1"), (params) -> {
-            room.get(params[1]).put(player.take("disk2"));
+        disk2.addCommand("put", (params) -> !room.get(params[1]).has(disk1.getName()), (params) -> {
+            room.get(params[1]).put(player.take(disk2.getName()));
             return "Placed disk2 on " + params[1];
         });
-        disk3.addCommand("put", (params) -> !room.get(params[1]).has("disk1") && !room.get(params[1]).has("disk2"), (params) -> {
-            room.get(params[1]).put(player.take("disk3"));
+        disk3.addCommand("put", (params) -> !room.get(params[1]).has(disk1.getName()) && !room.get(params[1]).has(disk2.getName()), (params) -> {
+            room.get(params[1]).put(player.take(disk3.getName()));
             return "Placed disk3 on " + params[1];
         });
     }
