@@ -9,8 +9,8 @@ import ar.fiuba.tdd.tp.values.Value;
  */
 public class ActionRemoveObject extends ActionOperationOnObjects {
 
-    public ActionRemoveObject(Value objectDescription, Value objectToAddDescription, Context context) {
-        super(objectDescription, objectToAddDescription, context);
+    public ActionRemoveObject(Value objectDescription, Value objectToAddDescription) {
+        super(objectDescription, objectToAddDescription);
     }
 
     @Override

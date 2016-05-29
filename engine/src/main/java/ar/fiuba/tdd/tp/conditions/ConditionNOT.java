@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp.conditions;
 
+import ar.fiuba.tdd.tp.Context;
+
 /**
  * Created by kevin on 28/05/16.
  */
@@ -12,7 +14,7 @@ public class ConditionNOT implements Condition {
     }
     
     @Override
-    public boolean check() {
-        return !condition.check();
+    public boolean check(Context context) {
+        return !condition.check(context);
     }
 }

@@ -14,17 +14,15 @@ public class ConditionSize implements Condition {
     private ConditionSizeOperation operation;
     protected Value objectDescription;
     protected int argument;
-    protected Context context;
 
-    public ConditionSize(Value objectDescription, int argument, ConditionSizeOperation operation, Context context) {
+    public ConditionSize(Value objectDescription, int argument, ConditionSizeOperation operation) {
         this.objectDescription = objectDescription;
         this.argument = argument;
-        this.context = context;
         this.operation = operation;
     }
 
     @Override
-    public boolean check() {
+    public boolean check(Context context) {
         ObjectInterface object = context.getObject(objectDescription.getValue());
         return operation.compare(object.getSize(), argument);
     }

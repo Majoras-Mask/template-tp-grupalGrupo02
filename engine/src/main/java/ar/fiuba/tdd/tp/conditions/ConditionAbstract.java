@@ -8,10 +8,8 @@ import ar.fiuba.tdd.tp.values.Value;
  */
 public abstract class ConditionAbstract implements Condition {
     protected Value objectDescription;
-    protected Context context;
 
-    public ConditionAbstract(Value objectDescription, Context context) {
+    public ConditionAbstract(Value objectDescription) {
         this.objectDescription = objectDescription;
-        this.context = context;
     }
 }

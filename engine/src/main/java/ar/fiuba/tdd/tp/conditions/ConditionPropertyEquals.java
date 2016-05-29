@@ -12,14 +12,14 @@ public class ConditionPropertyEquals extends ConditionAbstract {
     private Value valueProperty;
     private Value property;
 
-    public ConditionPropertyEquals(Value objectDescription, Value property, Value valueProperty, Context context) {
-        super(objectDescription, context);
+    public ConditionPropertyEquals(Value objectDescription, Value property, Value valueProperty) {
+        super(objectDescription);
         this.property = property;
         this.valueProperty = valueProperty;
     }
 
     @Override
-    public boolean check() {
+    public boolean check(Context context) {
         ObjectInterface object = context.getObject(objectDescription.getValue());
         String actualPropertyValue = object.getProperty(property.getValue());
 

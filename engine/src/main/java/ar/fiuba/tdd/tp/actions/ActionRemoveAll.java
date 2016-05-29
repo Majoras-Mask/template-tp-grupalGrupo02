@@ -10,15 +10,13 @@ import ar.fiuba.tdd.tp.values.Value;
 public class ActionRemoveAll implements Action {
 
     Value objectDescription;
-    Context context;
 
-    public ActionRemoveAll(Value objectDescription, Context context) {
+    public ActionRemoveAll(Value objectDescription) {
         this.objectDescription = objectDescription;
-        this.context = context;
     }
 
     @Override
-    public void execute() {
+    public void execute(Context context) {
         ObjectInterface objectInterface = context.getObject(objectDescription.getValue());
         if (objectInterface != null) {
             objectInterface.removeAll();

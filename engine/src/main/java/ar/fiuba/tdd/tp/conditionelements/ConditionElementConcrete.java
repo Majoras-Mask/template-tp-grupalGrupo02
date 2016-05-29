@@ -27,9 +27,11 @@ public class ConditionElementConcrete implements ConditionElement {
     }
 
     @Override
-    public void execute() {
-        if (condition.check()) {
-            elements.forEach(Element::execute);
+    public void execute(Context context) {
+        if (condition.check(context)) {
+            for (Element e: elements) {
+                e.execute(context);
+            }
         }
     }
 }
