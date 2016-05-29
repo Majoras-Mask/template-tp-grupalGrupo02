@@ -7,13 +7,13 @@ import ar.fiuba.tdd.tp.values.Value;
 /**
  * Created by kevin on 28/05/16.
  */
-public class ActionSetProperty implements  Action {
+public class ActionSetProperty implements Action {
 
     private Value property;
     private Value value;
     private Value objectDescription;
 
-    public ActionSetProperty(Value property, Value value, Value objectDescription, Context context) {
+    public ActionSetProperty(Value objectDescription, Value property, Value value, Context context) {
         this.property = property;
         this.value = value;
         this.objectDescription = objectDescription;
@@ -22,9 +22,9 @@ public class ActionSetProperty implements  Action {
 
     @Override
     public void execute(Context context) {
-        ObjectInterface object = context.getObject(objectDescription.getValue());
-        String stringProperty = property.getValue();
-        String stringValue = value.getValue();
+        ObjectInterface object = context.getObject(objectDescription.getValue(context));
+        String stringProperty = property.getValue(context);
+        String stringValue = value.getValue(context);
 
         if (object != null) {
             object.setProperty(stringProperty, stringValue);

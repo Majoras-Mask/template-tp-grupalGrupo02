@@ -19,8 +19,8 @@ public abstract class ActionOperationOnObjects implements Action {
 
     @Override
     public void execute(Context context) {
-        ObjectInterface primaryObject = context.getObject(objectDescription.getValue());
-        ObjectInterface secondaryObject = context.getObject(objectToAddDescription.getValue());
+        ObjectInterface primaryObject = context.getObject(objectDescription.getValue(context));
+        ObjectInterface secondaryObject = context.getObject(objectToAddDescription.getValue(context));
 
         if (primaryObject != null && secondaryObject != null) {
             doOperationOnObjects(primaryObject, secondaryObject);

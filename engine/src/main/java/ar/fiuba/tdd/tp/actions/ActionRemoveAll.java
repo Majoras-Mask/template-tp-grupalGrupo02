@@ -17,7 +17,7 @@ public class ActionRemoveAll implements Action {
 
     @Override
     public void execute(Context context) {
-        ObjectInterface objectInterface = context.getObject(objectDescription.getValue());
+        ObjectInterface objectInterface = context.getObject(objectDescription.getValue(context));
         if (objectInterface != null) {
             objectInterface.removeAll();
         }
