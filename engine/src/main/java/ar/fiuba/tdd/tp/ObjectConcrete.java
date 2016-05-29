@@ -11,6 +11,7 @@ public class ObjectConcrete implements ObjectInterface {
 
     private HashMap<String, String> properties = new HashMap<>();
     private List<ObjectInterface> items = new ArrayList<>();
+    private List<ObjectInterface> relatedObjects = new ArrayList<>();
     private String description;
 
     ObjectConcrete(String description) {
@@ -42,6 +43,11 @@ public class ObjectConcrete implements ObjectInterface {
     }
 
     @Override
+    public List<ObjectInterface> getObjects() {
+        return items;
+    }
+
+    @Override
     public int getSize() {
         return items.size();
     }
@@ -59,5 +65,17 @@ public class ObjectConcrete implements ObjectInterface {
     @Override
     public String getProperty(String property) {
         return properties.get(property);
+    }
+
+    @Override
+    public List<ObjectInterface> getRelatedObjects() {
+        return relatedObjects;
+    }
+
+    @Override
+    public void addRelatedObject(ObjectInterface object) {
+        if (!relatedObjects.contains(object)) {
+            relatedObjects.add(object);
+        }
     }
 }

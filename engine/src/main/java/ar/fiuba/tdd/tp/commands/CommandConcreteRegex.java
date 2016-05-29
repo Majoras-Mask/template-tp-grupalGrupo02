@@ -37,7 +37,11 @@ public class CommandConcreteRegex extends CommandConcrete implements Context {
 
     @Override
     public ObjectInterface getObject(String name) {
-        return lastContext.getObject(lastMap.get(name));
+        if (lastMap.containsKey(name)) {
+            return lastContext.getObject(lastMap.get(name));
+        }
+
+        return lastContext.getObject(name);
     }
 
 }

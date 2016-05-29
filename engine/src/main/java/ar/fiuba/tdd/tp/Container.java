@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp;
 
+import java.util.List;
+
 /**
  * Created by kevin on 28/05/16.
  */
@@ -11,6 +13,8 @@ public interface Container {
     void removeAll();
 
     boolean hasObject(ObjectInterface object);
+
+    List<ObjectInterface> getObjects();
 
     int getSize();
 }
