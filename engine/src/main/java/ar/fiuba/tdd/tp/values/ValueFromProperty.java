@@ -10,17 +10,15 @@ public class ValueFromProperty implements Value {
 
     private Value objectDescription;
     private Value propertyDescription;
-    private Context context;
 
-    public ValueFromProperty(Value objectDescription, Value propertyDescription, Context context) {
-        this.context = context;
+    public ValueFromProperty(Value objectDescription, Value propertyDescription) {
         this.objectDescription = objectDescription;
         this.propertyDescription = propertyDescription;
     }
 
     @Override
-    public String getValue() {
-        ObjectInterface object = context.getObject(objectDescription.getValue());
-        return object.getProperty(propertyDescription.getValue());
+    public String getValue(Context context) {
+        ObjectInterface object = context.getObject(objectDescription.getValue(context));
+        return object.getProperty(propertyDescription.getValue(context));
     }
 }

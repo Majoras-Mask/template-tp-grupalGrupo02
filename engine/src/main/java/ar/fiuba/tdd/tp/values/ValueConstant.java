@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp.values;
 
+import ar.fiuba.tdd.tp.Context;
+
 /**
  * Created by kevin on 28/05/16.
  */
@@ -12,7 +14,7 @@ public class ValueConstant implements Value {
     }
 
     @Override
-    public String getValue() {
+    public String getValue(Context context) {
         return value;
     }
 }
