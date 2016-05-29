@@ -5,6 +5,6 @@ include 'fetchquest'
 //include 'riddle'
 //include 'cursedobject'
 include 'opendoorone'
-//include 'opendoortwo'
+include 'opendoortwo'
 //include 'multiplayer'
 

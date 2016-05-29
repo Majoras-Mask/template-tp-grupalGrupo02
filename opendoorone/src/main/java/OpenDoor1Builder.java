@@ -23,7 +23,7 @@ public class OpenDoor1Builder implements GameBuilder {
                 Content player = new Content("player" + playerID);
                 room1.put(player);
                 addContentCommands(player, key, door, room1, room2);
-                this.addWinCondition(playerID, () -> room2.has("player" + playerID));
+                this.addWinCondition(playerID, () -> room2.has(player.getName()));
                 this.addLoseCondition(playerID, () -> false);
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
                 this.setCommand(playerID, CommandsUtils.getLookAroundCommand("look around", player));

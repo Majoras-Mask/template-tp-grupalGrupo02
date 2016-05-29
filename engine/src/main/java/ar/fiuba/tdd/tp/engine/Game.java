@@ -82,7 +82,7 @@ public abstract class Game {
         setGameState(GameState.InProgress);
     }
 
-    public abstract void addPlayer(int PlayerID);
+    public abstract void addPlayer(int playerID);
 
     public String getWelcomeMessage() {
         //TODO change this

@@ -5,14 +5,17 @@ import java.util.Scanner;
 
 @SuppressWarnings("CPD-START")
 public class Main {
+    private static final int PLAYERID = 1;
+
     public static void main(String[] args) {
         GameBuilder fetchQuestBuilder = new OpenDoor2Builder();
         Game game = fetchQuestBuilder.build();
+        game.joinPlayer(PLAYERID);
 
         Scanner input = new Scanner(System.in, "UTF-8");
 
         while (input.hasNext()) {
-            System.out.print(game.command(input.nextLine()));
+            System.out.print(game.command(PLAYERID, input.nextLine()));
         }
         System.out.println();
     }
