@@ -20,10 +20,10 @@ public class ConditionPropertyEquals extends ConditionAbstract {
 
     @Override
     public boolean check(Context context) {
-        ObjectInterface object = context.getObject(objectDescription.getValue());
-        String actualPropertyValue = object.getProperty(property.getValue());
+        ObjectInterface object = context.getObject(objectDescription.getValue(context));
+        String actualPropertyValue = object.getProperty(property.getValue(context));
 
-        return (actualPropertyValue.equals(valueProperty.getValue()));
+        return (actualPropertyValue.equals(valueProperty.getValue(context)));
     }
 
 }

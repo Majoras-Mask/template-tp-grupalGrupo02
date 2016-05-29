@@ -18,8 +18,8 @@ public class ConditionHasItem extends ConditionAbstract {
 
     @Override
     public boolean check(Context context) {
-        ObjectInterface object = context.getObject(objectDescription.getValue());
-        ObjectInterface objectItem = context.getObject(item.getValue());
+        ObjectInterface object = context.getObject(objectDescription.getValue(context));
+        ObjectInterface objectItem = context.getObject(item.getValue(context));
         return object.hasObject(objectItem);
     }
 

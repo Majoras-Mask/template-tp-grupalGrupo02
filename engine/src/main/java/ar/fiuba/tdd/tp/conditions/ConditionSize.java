@@ -23,7 +23,7 @@ public class ConditionSize implements Condition {
 
     @Override
     public boolean check(Context context) {
-        ObjectInterface object = context.getObject(objectDescription.getValue());
+        ObjectInterface object = context.getObject(objectDescription.getValue(context));
         return operation.compare(object.getSize(), argument);
     }
 }
