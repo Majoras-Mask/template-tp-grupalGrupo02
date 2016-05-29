@@ -9,14 +9,16 @@ public class FetchBuilder implements GameBuilder {
 
     @Override
     public Game build() {
+
+        Content room = new Content("room");
+        Content stick = new Content("stick");
+        room.put(stick);
+
         Game game = new Game(MAXPLAYERS) {
             @Override
             public void addPlayer(int playerID) {
-                Content room = new Content("room");
-                Content player = new Content("player");
-                Content stick = new Content("stick");
+                Content player = new Content("player" + playerID);
                 room.put(player);
-                room.put(stick);
                 addContentCommands(player, stick);
                 this.addWinCondition(playerID, () -> player.has("stick"));
                 this.addLoseCondition(playerID, () -> false);

@@ -41,7 +41,7 @@ public class FetchTest {
 
     @Test
     public void lookAround() {
-        assertEquals("room has stick-player", game.command(PLAYERID, "look around"));
+        assertEquals("room has player1-stick", game.command(PLAYERID, "look around"));
     }
 
     @Test

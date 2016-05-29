@@ -9,17 +9,19 @@ public class OpenDoor1Builder implements GameBuilder {
 
     @Override
     public Game build() {
+
+        Content room1 = new Content("room1");
+        Content room2 = new Content("room2");
+        Content key = new Content("key");
+        Content door = new Content("door");
+        room1.put(key);
+        room1.put(door);
+
         Game game = new Game(MAXPLAYERS) {
             @Override
             public void addPlayer(int playerID) {
-                Content room1 = new Content("room1");
-                Content room2 = new Content("room2");
                 Content player = new Content("player" + playerID);
-                Content key = new Content("key");
-                Content door = new Content("door");
                 room1.put(player);
-                room1.put(key);
-                room1.put(door);
                 addContentCommands(player, key, door, room1, room2);
                 this.addWinCondition(playerID, () -> room2.has("player" + playerID));
                 this.addLoseCondition(playerID, () -> false);
@@ -28,7 +30,6 @@ public class OpenDoor1Builder implements GameBuilder {
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("open .*", "open", player, 1));
             }
         };
-
         return game;
     }
 
