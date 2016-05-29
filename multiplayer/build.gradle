@@ -1,6 +1,0 @@
-group 'ar.fiuba.tdd.tp-multiplayer'
-version '1.0'
-
-dependencies {
-    compile project(':engine')
-}
