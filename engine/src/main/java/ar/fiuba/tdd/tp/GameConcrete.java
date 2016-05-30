@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp;
 
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditionelements.ConditionElement;
+import ar.fiuba.tdd.tp.timer.Timer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,8 @@ public class GameConcrete implements Game, Context, Logger {
     private List<Command> commands = new ArrayList<>();
     private HashMap<String, String> map = new HashMap<String,String>();
     private StringBuilder buffer = new StringBuilder();
+    private GameState gameState = GameState.Running;
+    private List<Timer> timers = new ArrayList<>();
 
     @Override
     public void addObject(ObjectInterface object) {
@@ -48,9 +51,41 @@ public class GameConcrete implements Game, Context, Logger {
         log("Can't do that.");
     }
 
+    private void clearFinishedTimers() {
+        List<Timer> timersToDelete = new ArrayList<>();
+        for (Timer timer : timers) {
+            if (timer.isFinished()) {
+                timersToDelete.add(timer);
+            }
+        }
+
+        for (Timer timer : timersToDelete) {
+            timers.remove(timer);
+        }
+    }
+
     @Override
     public void update() {
+        for (Timer timer:timers) {
+            timer.update();
+        }
 
+        clearFinishedTimers();
+    }
+
+    @Override
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    @Override
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    @Override
+    public void addTimer(Timer timer) {
+        this.timers.add(timer);
     }
 
     @Override
