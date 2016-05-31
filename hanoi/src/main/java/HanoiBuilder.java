@@ -1,6 +1,8 @@
 import ar.fiuba.tdd.tp.engine.*;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.elements.*;
+import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
+import ar.fiuba.tdd.tp.engine.utils.ConditionUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,8 +34,8 @@ public class HanoiBuilder implements GameBuilder {
                 room.put(player);
                 addContentCommands(player, room, disk1, disk2, disk3);
                 setGameCommands(playerID, player, this);
-                this.addWinCondition(playerID, () -> stack3.has(disk1.getName()) && stack3.has(disk2.getName()) && stack3.has(disk3.getName()));
-                this.addLoseCondition(playerID, () -> false);
+                this.addWinCondition(playerID,ConditionUtils.multipleConditions(ConditionUtils.contentHasItem(stack3, disk1.getName()), ConditionUtils.contentHasItem(stack3, disk2.getName()), ConditionUtils.contentHasItem(stack3, disk3.getName())));
+                this.addLoseCondition(playerID, ConditionUtils.neverHappens());
             }
         };
         return game;
@@ -45,33 +47,37 @@ public class HanoiBuilder implements GameBuilder {
     }
 
     private void addContentCommands(Content player, Content room, Content disk1, Content disk2, Content disk3) {
-        disk1.addCommand("take", (params) -> true, (params) -> {
-            String stackName = disk1.getContainer().getName();
-            player.put(disk1.getContainer().take(disk1.getName()));
-            return "Picked disk1 from " + stackName;
-        });
-        disk2.addCommand("take", (params) -> !disk2.getContainer().has(disk1.getName()), (params) -> {
-            String stackName = disk2.getContainer().getName();
-            player.put(disk2.getContainer().take(disk2.getName()));
-            return "Picked disk2 from " + stackName;
-        });
-        disk3.addCommand("take", (params) -> !disk3.getContainer().has(disk1.getName()) && !disk3.getContainer().has(disk2.getName()), (params) -> {
-            String stackName = disk3.getContainer().getName();
-            player.put(disk3.getContainer().take(disk3.getName()));
-            return "Picked disk3 from " + stackName;
-        });
-        disk1.addCommand("put", (params) -> true, (params) -> {
-            room.get(params[1]).put(player.take(disk1.getName()));
-            return "Placed disk1 on " + params[1];
-        });
-        disk2.addCommand("put", (params) -> !room.get(params[1]).has(disk1.getName()), (params) -> {
-            room.get(params[1]).put(player.take(disk2.getName()));
-            return "Placed disk2 on " + params[1];
-        });
-        disk3.addCommand("put", (params) -> !room.get(params[1]).has(disk1.getName()) && !room.get(params[1]).has(disk2.getName()), (params) -> {
-            room.get(params[1]).put(player.take(disk3.getName()));
-            return "Placed disk3 on " + params[1];
-        });
+        disk1.addCommand("take",
+                CommandsUtils.noCondition(),
+                CommandsUtils.removeFromContainerPutOnThere(disk1, player, "Picked disk1 from " + disk1.getContainer().getName()));
+
+        disk2.addCommand("take",
+                CommandsUtils.contentContainerDoesntHaveItem(disk2, disk1.getName()),
+                CommandsUtils.removeFromContainerPutOnThere(disk2, player, "Picked disk2 from " + disk2.getContainer().getName()));
+
+        disk3.addCommand("take",
+                CommandsUtils.multipleConditions(CommandsUtils.contentContainerDoesntHaveItem(disk3, disk1.getName()),
+                        CommandsUtils.contentContainerDoesntHaveItem(disk3, disk2.getName())),
+                CommandsUtils.removeFromContainerPutOnThere(disk3, player, "Picked disk3 from " + disk3.getContainer().getName()));
+
+        disk1.addCommand("put",
+                CommandsUtils.noCondition(),
+                CommandsUtils.multipleCommands("Placed disk1 on there",
+                    CommandsUtils.removeItemFromContent(player, disk1.getName(), ""),
+                    CommandsUtils.putContentInContentParam(disk1, room, 1, "")));
+
+        disk2.addCommand("put",
+                CommandsUtils.contentParamDoesntHaveItem(room, 1, disk1.getName()),
+                CommandsUtils.multipleCommands("Placed disk2 on there",
+                        CommandsUtils.removeItemFromContent(player, disk2.getName(), ""),
+                        CommandsUtils.putContentInContentParam(disk2, room, 1, "")));
+
+        disk3.addCommand("put",
+                CommandsUtils.multipleConditions(CommandsUtils.contentParamDoesntHaveItem(room, 1, disk1.getName()),
+                        CommandsUtils.contentParamDoesntHaveItem(room, 1, disk2.getName())),
+                CommandsUtils.multipleCommands("Placed disk3 on there",
+                        CommandsUtils.removeItemFromContent(player, disk3.getName(), ""),
+                        CommandsUtils.putContentInContentParam(disk3, room, 1, "")));
     }
 
     private GameCommand makeTake(Content player) {

@@ -7,9 +7,6 @@ import ar.fiuba.tdd.tp.engine.commands.game.CommandValidator;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.elements.Content;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,10 +35,43 @@ public class CommandsUtils {
         return (params) -> true;
     }
 
+    public static CommandValidatorContent contentParamDoesntHaveItem(Content content, int paramNum, String itemName) {
+        return (params) -> !content.get(params[paramNum]).has(itemName);
+    }
+
+    public static CommandValidatorContent multipleConditions(CommandValidatorContent... conditions) {
+        return (params) -> {
+            for (CommandValidatorContent condition : conditions) {
+                if (!condition.check(params)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
+    public static CommandValidatorContent contentContainerDoesntHaveItem(Content content, String itemName) {
+        return (params) -> !content.getContainer().has(itemName);
+    }
+
     public static CommandExecutor removeFromHerePutOnThere(Content from, Content to, Content whatToRemove, String messageOutput) {
         return (params) -> {
             to.put(from.take(whatToRemove.getName()));
             return messageOutput;
+        };
+    }
+
+    public static CommandExecutor putContentInContentParam(Content what, Content where, int paramNum, String message) {
+        return (params) -> {
+            where.get(params[paramNum]).put(what);
+            return message;
+        };
+    }
+
+    public static CommandExecutor removeFromContainerPutOnThere(Content from, Content to, String message) {
+        return (params) -> {
+            to.put(from.getContainer().take(from.getName()));
+            return message;
         };
     }
 

@@ -11,4 +11,15 @@ public class ConditionUtils {
     public static GameCondition neverHappens() {
         return () -> false;
     }
+
+    public static GameCondition multipleConditions(GameCondition... conditions) {
+        return () -> {
+            for (GameCondition condition : conditions) {
+                if (!condition.check()) {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
 }

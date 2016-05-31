@@ -64,7 +64,7 @@ public class HanoiTest {
     @Test
     public void moveDisk1ToStack2() {
         game.command(PLAYERID, "take disk1 from stack1");
-        assertEquals("Placed disk1 on stack2",game.command(PLAYERID, "put disk1 on stack2"));
+        assertEquals("Placed disk1 on there",game.command(PLAYERID, "put disk1 on stack2"));
     }
 
     @Test
