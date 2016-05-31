@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp;
 
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditionelements.ConditionElement;
+import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.timer.Timer;
 
 /**
@@ -22,5 +23,7 @@ public interface Game {
     GameState getGameState();
 
     void addTimer(Timer timer);
+
+    void setWinCondition(Condition winCondition);
 
 }

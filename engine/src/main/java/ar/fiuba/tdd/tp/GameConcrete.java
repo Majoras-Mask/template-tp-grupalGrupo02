@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp;
 
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditionelements.ConditionElement;
+import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.timer.Timer;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class GameConcrete implements Game, Context {
     private HashMap<String, String> map = new HashMap<String,String>();
     private GameState gameState = GameState.Running;
     private List<Timer> timers = new ArrayList<>();
+    private Condition winCondition;
 
     @Override
     public void addObject(ObjectInterface object) {
@@ -39,6 +41,10 @@ public class GameConcrete implements Game, Context {
 
     @Override
     public String executeCommand(String playerName, String commandString) {
+        if (winCondition.check(this)) {
+            return "Game State Won";
+        }
+
         setUpHashMap(playerName);
 
         for (Command command: commands) {
@@ -86,6 +92,11 @@ public class GameConcrete implements Game, Context {
     @Override
     public void addTimer(Timer timer) {
         this.timers.add(timer);
+    }
+
+    @Override
+    public void setWinCondition(Condition winCondition) {
+        this.winCondition = winCondition;
     }
 
     @Override
