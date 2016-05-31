@@ -14,7 +14,7 @@ public class ObjectConcrete implements ObjectInterface {
     private List<ObjectInterface> relatedObjects = new ArrayList<>();
     private String description;
 
-    ObjectConcrete(String description) {
+    public ObjectConcrete(String description) {
         this.description = description;
     }
 

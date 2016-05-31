@@ -11,12 +11,11 @@ import java.util.List;
 /**
  * Created by kevin on 29/05/16.
  */
-public class GameConcrete implements Game, Context, Logger {
+public class GameConcrete implements Game, Context {
 
     private List<ObjectInterface> objects = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
     private HashMap<String, String> map = new HashMap<String,String>();
-    private StringBuilder buffer = new StringBuilder();
     private GameState gameState = GameState.Running;
     private List<Timer> timers = new ArrayList<>();
 
@@ -39,16 +38,17 @@ public class GameConcrete implements Game, Context, Logger {
     }
 
     @Override
-    public void executeCommand(String playerName, String commandString) {
+    public String executeCommand(String playerName, String commandString) {
         setUpHashMap(playerName);
 
         for (Command command: commands) {
-            if (command.matches(commandString)) {
-                command.execute(commandString, this);
+            if (command.matches(commandString, this)) {
+                return command.execute(commandString, this);
             }
         }
 
-        log("Can't do that.");
+        return "No command found.";
+
     }
 
     private void clearFinishedTimers() {
@@ -102,15 +102,4 @@ public class GameConcrete implements Game, Context, Logger {
         return ObjectNull.getInstance();
     }
 
-    @Override
-    public void log(String string) {
-        buffer.append(string);
-    }
-
-    @Override
-    public String getLog() {
-        String messageToReturn = buffer.toString();
-        buffer.setLength(0);
-        return messageToReturn;
-    }
 }

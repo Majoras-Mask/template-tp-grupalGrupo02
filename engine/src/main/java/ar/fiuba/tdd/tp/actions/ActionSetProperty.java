@@ -13,7 +13,7 @@ public class ActionSetProperty implements Action {
     private Value value;
     private Value objectDescription;
 
-    public ActionSetProperty(Value objectDescription, Value property, Value value, Context context) {
+    public ActionSetProperty(Value objectDescription, Value property, Value value) {
         this.property = property;
         this.value = value;
         this.objectDescription = objectDescription;

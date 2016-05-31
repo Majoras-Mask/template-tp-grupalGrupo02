@@ -13,7 +13,7 @@ public interface Game {
 
     void addCommand(Command command);
 
-    void executeCommand(String playerName, String commandString);
+    String executeCommand(String playerName, String commandString);
 
     void update();
 

@@ -15,24 +15,25 @@ public class CommandConcreteRegex extends CommandConcrete implements Context {
     private HashMap<String, String> lastMap;
     private Context lastContext;
 
-    public CommandConcreteRegex(String command) {
-        super(command);
+    public CommandConcreteRegex(String command, String response) {
+        super(command, response);
     }
 
     @Override
-    public boolean matches(String command) {
-        return Utility.matches(Utility.makeCommandARegex(this.command), command.toLowerCase());
+    public boolean matches(String command, Context context) {
+        return Utility.matches(Utility.makeCommandARegex(this.command), command.toLowerCase()) && condition.check(context);
     }
 
     @Override
-    public void execute(String command, Context context) {
-        if (matches(command)) {
+    public String execute(String command, Context context) {
+        if (matches(command, context)) {
             this.lastMap = Utility.getObjectGroups(this.command, command);
             this.lastContext = context;
             for (Element element:elements) {
                 element.execute(this);
             }
         }
+        return response;
     }
 
     @Override
