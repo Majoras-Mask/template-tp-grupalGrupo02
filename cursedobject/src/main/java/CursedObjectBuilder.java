@@ -2,6 +2,9 @@ import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
+import ar.fiuba.tdd.tp.engine.utils.ConditionUtils;
+
+import java.util.List;
 
 @SuppressWarnings("CPD-START")
 public class CursedObjectBuilder implements GameBuilder {
@@ -28,8 +31,8 @@ public class CursedObjectBuilder implements GameBuilder {
                 room1.put(player);
                 addContentCommands(player, door1, door2, room1, room2, room3, thief, cursedObject);
                 setGameCommands(playerID, player, this);
-                this.addWinCondition(playerID, () -> room3.has(player.getName()));
-                this.addLoseCondition(playerID, () -> false);
+                this.addWinCondition(playerID, ConditionUtils.contentHasItem(room3, player.getName()));
+                this.addLoseCondition(playerID, ConditionUtils.neverHappens());
             }
         };
         return game;
@@ -44,18 +47,8 @@ public class CursedObjectBuilder implements GameBuilder {
 
     private void addContentCommands(Content player, Content door1, Content door2, Content room1, Content room2, Content room3, Content thief, Content cursedObject) {
         CommandsUtils.addPickCommand(player, cursedObject, "pick");
-        door1.addCommand("open", (params) -> player.has("cursedObject"), (params) -> {
-            room2.put(room1.take(player.getName()));
-            return "You opened a door and walked to room2";
-        });
-        door2.addCommand("open", (params) -> !player.has("cursedObject"), (params) -> {
-            room3.put(room2.take(player.getName()));
-            return "You opened a door and walked to room3";
-        });
-        thief.addCommand("hello", (params) -> true, (params) -> {
-            player.take("cursedObject");
-            room2.take(thief.getName());
-            return "The thief stoled your cursedObject and ran away";
-        });
+        door1.addCommand("open", CommandsUtils.contentHasItem(player, cursedObject.getName()), CommandsUtils.removeFromHerePutOnThere (room1, room2, player, "You opened a door and walked to room2"));
+        door2.addCommand("open", CommandsUtils.contentDoesntHaveItem(player, cursedObject.getName()), CommandsUtils.removeFromHerePutOnThere(room2, room3, player, "You opened a door and walked to room3"));
+        thief.addCommand("hello", CommandsUtils.noCondition(), CommandsUtils.multipleCommands("The thief stole your cursedObject and ran away", CommandsUtils.removeItemFromContent(player, cursedObject.getName(), ""),CommandsUtils.removeItemFromContent(room2, thief.getName(), "")));
     }
 }

@@ -25,7 +25,7 @@ public class OpenDoor2Builder implements GameBuilder {
                 Content player = new Content("player" + playerID);
                 room1.put(player);
                 addContentCommands(player, box, key, door, room1, room2);
-                this.addWinCondition(playerID, ConditionUtils.contentHasItem (room2, player.getName()));
+                this.addWinCondition(playerID, ConditionUtils.contentHasItem(room2, player.getName()));
                 this.addLoseCondition(playerID, ConditionUtils.neverHappens());
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
                 this.setCommand(playerID, CommandsUtils.getLookAroundCommand("look around", player));
@@ -37,7 +37,7 @@ public class OpenDoor2Builder implements GameBuilder {
 
     private void addContentCommands(Content player, Content box, Content key, Content door, Content room1, Content room2) {
         CommandsUtils.addPickCommand(player, key, "pick");
-        box.addCommand("open", CommandsUtils.alwaysTrue(), CommandsUtils.removeFromHerePutOnThere (box, room1, key, "You opened a box"));
-        door.addCommand("open", CommandsUtils.contentHasItem(player, key.getName()), CommandsUtils.removeFromHerePutOnThere (room1, room2, player, "You opened a door and walked to room2"));
+        box.addCommand("open", CommandsUtils.noCondition(), CommandsUtils.removeFromHerePutOnThere(box, room1, key, "You opened a box"));
+        door.addCommand("open", CommandsUtils.contentHasItem(player, key.getName()), CommandsUtils.removeFromHerePutOnThere(room1, room2, player, "You opened a door and walked to room2"));
     }
 }

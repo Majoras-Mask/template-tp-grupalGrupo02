@@ -7,6 +7,9 @@ import ar.fiuba.tdd.tp.engine.commands.game.CommandValidator;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 import ar.fiuba.tdd.tp.engine.elements.Content;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +30,11 @@ public class CommandsUtils {
         return (params) -> content.has(itemName);
     }
 
-    public static CommandValidatorContent alwaysTrue() {
+    public static CommandValidatorContent contentDoesntHaveItem(Content content, String itemName) {
+        return (params) -> !content.has(itemName);
+    }
+
+    public static CommandValidatorContent noCondition() {
         return (params) -> true;
     }
 
@@ -35,6 +42,22 @@ public class CommandsUtils {
         return (params) -> {
             to.put(from.take(whatToRemove.getName()));
             return messageOutput;
+        };
+    }
+
+    public static CommandExecutor multipleCommands(String message, CommandExecutor... commands) {
+        return (params) -> {
+            for (CommandExecutor command : commands) {
+                command.execute(params);
+            }
+            return message;
+        };
+    }
+
+    public static CommandExecutor removeItemFromContent(Content content, String itemName, String message) {
+        return (params) -> {
+            content.take(itemName);
+            return message;
         };
     }
 

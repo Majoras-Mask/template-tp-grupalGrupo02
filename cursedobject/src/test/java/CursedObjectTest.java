@@ -143,7 +143,7 @@ public class CursedObjectTest {
     public void sayHelloThief() {
         game.command(PLAYERID, "pick cursedObject");
         game.command(PLAYERID, "open door");
-        assertEquals("The thief stoled your cursedObject and ran away",  game.command(PLAYERID, "say hello thief"));
+        assertEquals("The thief stole your cursedObject and ran away",  game.command(PLAYERID, "say hello thief"));
     }
 
     @Test
