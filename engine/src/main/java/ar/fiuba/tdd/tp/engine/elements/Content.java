@@ -1,14 +1,14 @@
 package ar.fiuba.tdd.tp.engine.elements;
 
 import ar.fiuba.tdd.tp.engine.commands.content.CommandExecutor;
-import ar.fiuba.tdd.tp.engine.commands.content.CommandValidator;
+import ar.fiuba.tdd.tp.engine.commands.content.CommandValidatorContent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Content extends Container {
     private Content container;
-    private Map<String,CommandValidator> commandsValidators;
+    private Map<String,CommandValidatorContent> commandsValidators;
     private Map<String,CommandExecutor> commandsExecutors;
 
     public Content(String name) {
@@ -30,8 +30,8 @@ public class Content extends Container {
         return container;
     }
 
-    public void addCommand(String commandName, CommandValidator commandValidator, CommandExecutor commandExecutor) {
-        commandsValidators.put(commandName, commandValidator);
+    public void addCommand(String commandName, CommandValidatorContent commandValidatorContent, CommandExecutor commandExecutor) {
+        commandsValidators.put(commandName, commandValidatorContent);
         commandsExecutors.put(commandName, commandExecutor);
     }
 

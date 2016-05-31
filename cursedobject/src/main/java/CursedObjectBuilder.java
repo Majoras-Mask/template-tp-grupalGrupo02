@@ -43,7 +43,7 @@ public class CursedObjectBuilder implements GameBuilder {
     }
 
     private void addContentCommands(Content player, Content door1, Content door2, Content room1, Content room2, Content room3, Content thief, Content cursedObject) {
-        CommandsUtils.addPickCommand(player, cursedObject, "cursedObject", "pick");
+        CommandsUtils.addPickCommand(player, cursedObject, "pick");
         door1.addCommand("open", (params) -> player.has("cursedObject"), (params) -> {
             room2.put(room1.take(player.getName()));
             return "You opened a door and walked to room2";

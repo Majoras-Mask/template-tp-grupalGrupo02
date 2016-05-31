@@ -2,6 +2,7 @@ import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
+import ar.fiuba.tdd.tp.engine.utils.ConditionUtils;
 
 @SuppressWarnings("CPD-START")
 public class OpenDoor1Builder implements GameBuilder {
@@ -23,8 +24,8 @@ public class OpenDoor1Builder implements GameBuilder {
                 Content player = new Content("player" + playerID);
                 room1.put(player);
                 addContentCommands(player, key, door, room1, room2);
-                this.addWinCondition(playerID, () -> room2.has(player.getName()));
-                this.addLoseCondition(playerID, () -> false);
+                this.addWinCondition(playerID, ConditionUtils.contentHasItem(room2, player.getName()));
+                this.addLoseCondition(playerID, ConditionUtils.neverHappens());
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
                 this.setCommand(playerID, CommandsUtils.getLookAroundCommand("look around", player));
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("open .*", "open", player, 1));
@@ -34,10 +35,7 @@ public class OpenDoor1Builder implements GameBuilder {
     }
 
     private void addContentCommands(Content player, Content key, Content door, Content room1, Content room2) {
-        CommandsUtils.addPickCommand(player, key, key.getName(), "pick");
-        door.addCommand("open", (params) -> player.has(key.getName()), (params) -> {
-            room2.put(room1.take(player.getName()));
-            return "You opened a door and walked to room2";
-        });
+        CommandsUtils.addPickCommand(player, key, "pick");
+        door.addCommand("open", CommandsUtils.contentHasItem(player, key.getName()), CommandsUtils.removeFromHerePutOnThere(room1, room2, player, "You opened a door and walked to room2"));
     }
 }

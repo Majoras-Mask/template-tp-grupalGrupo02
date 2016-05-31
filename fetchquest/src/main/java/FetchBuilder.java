@@ -2,6 +2,7 @@ import ar.fiuba.tdd.tp.engine.Game;
 import ar.fiuba.tdd.tp.engine.GameBuilder;
 import ar.fiuba.tdd.tp.engine.elements.Content;
 import ar.fiuba.tdd.tp.engine.utils.CommandsUtils;
+import ar.fiuba.tdd.tp.engine.utils.ConditionUtils;
 
 @SuppressWarnings("CPD-START")
 public class FetchBuilder implements GameBuilder {
@@ -20,8 +21,8 @@ public class FetchBuilder implements GameBuilder {
                 Content player = new Content("player" + playerID);
                 room.put(player);
                 addContentCommands(player, stick);
-                this.addWinCondition(playerID, () -> player.has("stick"));
-                this.addLoseCondition(playerID, () -> false);
+                this.addWinCondition(playerID, ConditionUtils.contentHasItem(player, stick.getName()));
+                this.addLoseCondition(playerID, ConditionUtils.neverHappens());
                 this.setCommand(playerID, CommandsUtils.getSameRoomCommand("pick .*", "pick", player, 1));
                 this.setCommand(playerID, CommandsUtils.getLookAroundCommand("look around", player));
             }
@@ -30,6 +31,6 @@ public class FetchBuilder implements GameBuilder {
     }
 
     private void addContentCommands(Content player, Content stick) {
-        CommandsUtils.addPickCommand(player, stick, "stick", "pick");
+        CommandsUtils.addPickCommand(player, stick, "pick");
     }
 }

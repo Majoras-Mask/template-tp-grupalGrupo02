@@ -1,4 +1,4 @@
-package ar.fiuba.tdd.tp.engine.commands;
+package ar.fiuba.tdd.tp.engine.conditions;
 
 /**
  * Created by manuelcruz on 18/05/2016.

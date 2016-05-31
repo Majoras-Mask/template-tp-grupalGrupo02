@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.tp.engine;
 
-import ar.fiuba.tdd.tp.engine.commands.GameCondition;
+import ar.fiuba.tdd.tp.engine.conditions.GameCondition;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
 
 import java.util.*;

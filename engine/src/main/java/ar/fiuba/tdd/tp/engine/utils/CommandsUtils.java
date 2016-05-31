@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.tp.engine.utils;
 
+import ar.fiuba.tdd.tp.engine.commands.content.CommandExecutor;
+import ar.fiuba.tdd.tp.engine.commands.content.CommandValidatorContent;
 import ar.fiuba.tdd.tp.engine.commands.game.CommandParser;
 import ar.fiuba.tdd.tp.engine.commands.game.CommandValidator;
 import ar.fiuba.tdd.tp.engine.commands.game.GameCommand;
@@ -18,6 +20,21 @@ public class CommandsUtils {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(command);
             return matcher.find();
+        };
+    }
+
+    public static CommandValidatorContent contentHasItem(Content content, String itemName) {
+        return (params) -> content.has(itemName);
+    }
+
+    public static CommandValidatorContent alwaysTrue() {
+        return (params) -> true;
+    }
+
+    public static CommandExecutor removeFromHerePutOnThere(Content from, Content to, Content whatToRemove, String messageOutput) {
+        return (params) -> {
+            to.put(from.take(whatToRemove.getName()));
+            return messageOutput;
         };
     }
 
@@ -52,10 +69,10 @@ public class CommandsUtils {
         }, getEmptyParser());
     }
 
-    public static void addPickCommand(Content player, Content content, String contentName, String commandName) {
+    public static void addPickCommand(Content player, Content content, String commandName) {
         content.addCommand(commandName, (params) -> true, (params) -> {
-            player.put(player.getContainer().take(contentName));
-            return "You picked a " + contentName;
+            player.put(player.getContainer().take(content.getName()));
+            return "You picked a " + content.getName();
         });
     }
 }
