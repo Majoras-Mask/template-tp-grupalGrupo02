@@ -21,7 +21,12 @@ public class CommandConcreteRegex extends CommandConcrete implements Context {
 
     @Override
     public boolean matches(String command, Context context) {
-        return Utility.matches(Utility.makeCommandARegex(this.command), command.toLowerCase()) && condition.check(context);
+        if (Utility.matches(Utility.makeCommandARegex(this.command), command.toLowerCase())) {
+            this.lastMap = Utility.getObjectGroups(this.command, command);
+            this.lastContext = context;
+            return condition.check(this);
+        }
+        return false;
     }
 
     @Override
