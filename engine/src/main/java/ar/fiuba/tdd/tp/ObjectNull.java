@@ -49,7 +49,7 @@ public class ObjectNull implements ObjectInterface {
 
     @Override
     public int getSize() {
-        return 0;
+        return -1;
     }
 
     @Override
@@ -67,13 +67,4 @@ public class ObjectNull implements ObjectInterface {
         return "";
     }
 
-    @Override
-    public List<ObjectInterface> getRelatedObjects() {
-        return new ArrayList<ObjectInterface>();
-    }
-
-    @Override
-    public void addRelatedObject(ObjectInterface object) {
-        return;
-    }
 }

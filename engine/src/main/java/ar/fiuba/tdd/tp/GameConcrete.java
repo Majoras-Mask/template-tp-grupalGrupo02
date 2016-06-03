@@ -48,7 +48,7 @@ public class GameConcrete implements Game, Context {
         setUpHashMap(playerName);
 
         for (Command command: commands) {
-            if (command.matches(commandString, this)) {
+            if (command.matches(commandString)) {
                 return command.execute(commandString, this);
             }
         }

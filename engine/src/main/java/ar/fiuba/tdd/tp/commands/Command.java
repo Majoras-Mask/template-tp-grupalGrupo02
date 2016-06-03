@@ -9,11 +9,10 @@ import ar.fiuba.tdd.tp.conditions.Condition;
  */
 public interface Command {
 
-    boolean matches(String command, Context context);
+    boolean matches(String command);
 
     String execute(String command, Context context);
 
-    void setCondition(Condition condition);
+    void setCondition(Condition condition, Element toExecute, String response);
 
-    void addElement(Element element);
 }
