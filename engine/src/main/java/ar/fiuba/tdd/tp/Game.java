@@ -24,6 +24,8 @@ public interface Game {
 
     void addTimer(Timer timer);
 
-    void setWinCondition(Condition winCondition);
+    void setWinCondition(String playerID, Condition winCondition);
+
+    void setLostCondition(String playerID, Condition lostCondition);
 
 }

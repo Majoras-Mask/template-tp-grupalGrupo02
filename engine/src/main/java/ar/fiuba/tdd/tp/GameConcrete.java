@@ -8,6 +8,7 @@ import ar.fiuba.tdd.tp.timer.Timer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kevin on 29/05/16.
@@ -19,7 +20,9 @@ public class GameConcrete implements Game, Context {
     private HashMap<String, String> map = new HashMap<String,String>();
     private GameState gameState = GameState.Running;
     private List<Timer> timers = new ArrayList<>();
-    private Condition winCondition;
+    private HashMap<String, Condition> winConditions = new HashMap<>();
+    private HashMap<String, Condition> lostConditions = new HashMap<>();
+    //private String playerWhoFinishedTheGame;
 
     @Override
     public void addObject(ObjectInterface object) {
@@ -41,8 +44,8 @@ public class GameConcrete implements Game, Context {
 
     @Override
     public String executeCommand(String playerName, String commandString) {
-        if (winCondition.check(this)) {
-            return "Game State Won";
+        if (getGameState() == GameState.Win  || getGameState() == GameState.Lost) {
+            return "Game finished";
         }
 
         setUpHashMap(playerName);
@@ -72,11 +75,25 @@ public class GameConcrete implements Game, Context {
 
     @Override
     public void update() {
+
+        checkConditions(winConditions, GameState.Win);
+        checkConditions(lostConditions, GameState.Lost);
+
         for (Timer timer:timers) {
             timer.update();
         }
 
         clearFinishedTimers();
+    }
+
+    private void checkConditions(HashMap<String, Condition> conditions, GameState gameStateToSet) {
+        for (Map.Entry<String, Condition> entry : conditions.entrySet()) {
+            String playerId = entry.getKey();
+            Condition condition = entry.getValue();
+            if (condition.check(this)) {
+                setGameState(gameStateToSet);
+            }
+        }
     }
 
     @Override
@@ -95,8 +112,13 @@ public class GameConcrete implements Game, Context {
     }
 
     @Override
-    public void setWinCondition(Condition winCondition) {
-        this.winCondition = winCondition;
+    public void setWinCondition(String playerID, Condition winCondition) {
+        this.winConditions.put(playerID, winCondition);
+    }
+
+    @Override
+    public void setLostCondition(String playerID, Condition lostCondition) {
+        this.lostConditions.put(playerID, lostCondition);
     }
 
     @Override
