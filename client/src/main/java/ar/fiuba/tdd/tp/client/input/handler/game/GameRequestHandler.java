@@ -3,10 +3,8 @@ package ar.fiuba.tdd.tp.client.input.handler.game;
 import ar.fiuba.tdd.tp.client.ClientCore;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
 import ar.fiuba.tdd.tp.client.input.handler.AbstractRequestHandler;
-import ar.fiuba.tdd.tp.client.output.ClientResponse;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class GameRequestHandler extends AbstractRequestHandler {
 
@@ -19,8 +17,8 @@ public class GameRequestHandler extends AbstractRequestHandler {
         });
     }
 
-    public Optional<ClientResponse> handle(ClientRequest request) {
-        return Optional.of(this.core.sendAndReceive(request));
+    public void handle(ClientRequest request) {
+        this.core.send(request);
     }
 
     @Override

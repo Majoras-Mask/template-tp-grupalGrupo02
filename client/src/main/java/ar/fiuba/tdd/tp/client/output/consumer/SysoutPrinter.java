@@ -21,7 +21,7 @@ public class SysoutPrinter implements ClientConsumer {
     public void consume(ClientResponse response) {
         try {
             this.outputBuffer.write(PREFIX + response.getEvent());
-            this.outputBuffer.write(Constants.LINE_SEPARATOR + PREFIX);
+            this.outputBuffer.write(Constants.LINE_SEPARATOR);
             this.outputBuffer.flush();
         } catch (Exception e) {
             throw new IllegalStateException("Unexpected error occurred while writing to output buffer: " + e);

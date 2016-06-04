@@ -11,9 +11,9 @@ import java.util.List;
  * All type of {@link RequestHandler} for the client are disabled while the {@link ClientCore} is connected.
  * Only game request are sent.
  */
-public abstract class AbstractClientRequestHandler extends AbstractRequestHandler {
+abstract class AbstractClientRequestHandler extends AbstractRequestHandler {
 
-    public AbstractClientRequestHandler(ClientCore core, List<String> regexList) {
+    AbstractClientRequestHandler(ClientCore core, List<String> regexList) {
         super(core, regexList);
     }
 

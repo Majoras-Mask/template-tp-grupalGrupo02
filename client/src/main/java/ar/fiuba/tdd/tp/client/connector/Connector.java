@@ -34,14 +34,6 @@ public class Connector {
         }
     }
 
-    public Response receiveIfAvailable() {
-        try {
-            return this.connectorIO.receiveIfAvailable();
-        } catch (Exception e) {
-            throw new ConnectorException("Can't connect with server");
-        }
-    }
-
     public void close() {
         try {
             this.connectorIO.close();

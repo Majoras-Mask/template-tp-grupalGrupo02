@@ -58,7 +58,14 @@ public class ClientConnection extends Thread {
             }
             outputStream.writeObject(response);
             outputStream.flush();
+
+            //TODO borrar estas lineas que siguen. Solo estan para probar si el cliente
+            //puede leer mas de un mensaje
             outputStream.writeObject(response);
+            outputStream.flush();
+            outputStream.writeObject(response);
+            outputStream.flush();
+            outputStream.writeObject(new Response("ULTIMO MENSAJE! DE TEST!"));
             outputStream.flush();
         }
     }
@@ -82,7 +89,7 @@ public class ClientConnection extends Thread {
     private void notifyAllListeners(String message) throws IOException {
         for (Socket socket : allClientSockets) {
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            outputStream.writeObject(message);
+            outputStream.writeObject(new Response(message));
             outputStream.flush();
         }
     }

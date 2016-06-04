@@ -4,10 +4,8 @@ import ar.fiuba.tdd.tp.client.ClientCore;
 import ar.fiuba.tdd.tp.client.connector.config.ConnectorSettings;
 import ar.fiuba.tdd.tp.client.exception.ConverterException;
 import ar.fiuba.tdd.tp.client.input.ClientRequest;
-import ar.fiuba.tdd.tp.client.output.ClientResponse;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +27,8 @@ public class ConnectRequestHandler extends AbstractClientRequestHandler {
         });
     }
 
-    public Optional<ClientResponse> handle(ClientRequest request) {
-        return Optional.of(this.core.connect(getConnectionSettings(request.getInput())));
+    public void handle(ClientRequest request) {
+        this.core.connect(getConnectionSettings(request.getInput()));
     }
 
     private ConnectorSettings getConnectionSettings(String input) {
