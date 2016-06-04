@@ -9,7 +9,7 @@ import ar.fiuba.tdd.tp.values.Value;
  */
 
 
-public class ConditionSize implements Condition {
+public class ConditionSize extends ConditionLogic {
 
     private ConditionSizeOperation operation;
     protected Value objectDescription;

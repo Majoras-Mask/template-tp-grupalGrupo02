@@ -8,7 +8,7 @@ import ar.fiuba.tdd.tp.values.Value;
 /**
  * Created by kevin on 29/05/16.
  */
-public class ConditionGameHasObject implements Condition {
+public class ConditionGameHasObject extends ConditionLogic {
 
     private Value objectDescription;
 

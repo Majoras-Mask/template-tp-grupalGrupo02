@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.values.Value;
 /**
  * Created by kevin on 28/05/16.
  */
-public abstract class ConditionAbstract implements Condition {
+public abstract class ConditionAbstract extends ConditionLogic {
     protected Value objectDescription;
 
     public ConditionAbstract(Value objectDescription) {

@@ -7,4 +7,10 @@ import ar.fiuba.tdd.tp.Context;
  */
 public interface Condition {
     boolean check(Context context);
+
+    Condition and(Condition other);
+
+    Condition or(Condition other);
+
+    Condition not();
 }

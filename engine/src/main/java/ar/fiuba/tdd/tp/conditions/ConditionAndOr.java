@@ -5,24 +5,14 @@ import ar.fiuba.tdd.tp.Context;
 /**
  * Created by kevin on 28/05/16.
  */
-public class ConditionAndOr implements Condition {
+public abstract class ConditionAndOr extends ConditionLogic {
 
-    private Condition condition1;
-    private Condition condition2;
-    private boolean andOperation;
+    protected Condition condition1;
+    protected Condition condition2;
 
-    public ConditionAndOr(boolean andOperation, Condition condition1, Condition condition2) {
+    public ConditionAndOr(Condition condition1, Condition condition2) {
         this.condition1 = condition1;
         this.condition2 = condition2;
-        this.andOperation = andOperation;
 
-    }
-
-    @Override
-    public boolean check(Context context) {
-        if (andOperation) {
-            return condition1.check(context) && condition2.check(context);
-        }
-        return condition1.check(context) || condition2.check(context);
     }
 }

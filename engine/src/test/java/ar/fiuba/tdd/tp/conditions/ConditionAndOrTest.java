@@ -12,14 +12,14 @@ public class ConditionAndOrTest {
     @Test
     public void check() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
-        Condition condition = new ConditionAndOr(true, new ConditionAlwaysTrue(), new ConditionNOT(new ConditionAlwaysTrue()));
+        Condition condition = new ConditionAnd(new ConditionAlwaysTrue(), new ConditionNOT(new ConditionAlwaysTrue()));
         assertFalse(condition.check(gameConcrete));
     }
 
     @Test
     public void check2() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
-        Condition condition = new ConditionAndOr(true, new ConditionAlwaysTrue(), new ConditionAlwaysTrue());
+        Condition condition = new ConditionAnd(new ConditionAlwaysTrue(), new ConditionAlwaysTrue());
         assertTrue(condition.check(gameConcrete));
     }
 

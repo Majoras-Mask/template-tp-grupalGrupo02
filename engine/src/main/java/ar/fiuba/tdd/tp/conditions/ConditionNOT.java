@@ -5,7 +5,7 @@ import ar.fiuba.tdd.tp.Context;
 /**
  * Created by kevin on 28/05/16.
  */
-public class ConditionNOT implements Condition {
+public class ConditionNOT extends ConditionLogic {
 
     private Condition condition;
 

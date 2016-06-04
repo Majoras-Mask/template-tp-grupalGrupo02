@@ -8,7 +8,7 @@ import ar.fiuba.tdd.tp.GameState;
 /**
  * Created by kevin on 31/05/16.
  */
-public class ConditionCheckGameState implements Condition {
+public class ConditionCheckGameState extends ConditionLogic {
 
     private Game game;
     private GameState gameState;
