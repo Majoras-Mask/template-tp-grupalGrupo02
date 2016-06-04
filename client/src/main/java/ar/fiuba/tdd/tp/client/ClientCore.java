@@ -44,6 +44,7 @@ public class ClientCore {
             this.connector = createConnector(settings);
             final Response response = this.connector.receive();
             this.connected = Boolean.TRUE;
+            //TODO poner aca un thread que empiece a correr¿?
             return new ClientResponse(CONNECTION_SUCCESSFUL + response.getSomething());
         }
         throw new ClientException(ANOTHER_OPEN_CONNECTION);
