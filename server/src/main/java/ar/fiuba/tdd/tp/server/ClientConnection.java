@@ -24,13 +24,14 @@ public class ClientConnection extends Thread {
     private ObjectInputStream inputStream;
     private Request request;
     private Response response;
-    private List<Socket> allClientSockets = new LinkedList<>();
+    private List<ObjectOutputStream> allClientsOutput = new LinkedList<>();
 
 
-    public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket) {
+    public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket, ObjectOutputStream outputStream) {
         this.clientSocket = clientSocket;
         this.game = game;
         this.serverSocket = serverSocket;
+        this.outputStream = outputStream;
     }
 
     public void run() {
@@ -68,20 +69,18 @@ public class ClientConnection extends Thread {
     }
 
     private void getStream(Socket clientSocket) throws IOException {
-        this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         this.inputStream = new ObjectInputStream(clientSocket.getInputStream());
     }
 
-    public void setListeners(List<Socket> allClientSocketss) {
-        this.allClientSockets = allClientSocketss;
-        this.allClientSockets.remove(clientSocket);  //Removes itself
+    public void setListeners(List<ObjectOutputStream> allClientsOutput) {
+        this.allClientsOutput = allClientsOutput;
+        this.allClientsOutput.remove(this.outputStream);  //Removes itself
     }
 
     private void notifyAllListeners(String message) throws IOException {
-        for (Socket socket : allClientSockets) {
-            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            outputStream.writeObject(new Response(message));
-            outputStream.flush();
+        for (ObjectOutputStream output : allClientsOutput) {
+            output.writeObject(new Response(message));
+            output.flush();
         }
     }
 }

@@ -1,12 +1,9 @@
 package ar.fiuba.tdd.tp.server;
 
 import ar.fiuba.tdd.tp.engine.Game;
-import ar.fiuba.tdd.tp.server.communication.Request;
-import ar.fiuba.tdd.tp.server.communication.Response;
 import ar.fiuba.tdd.tp.server.io.ServerOutput;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,7 +17,7 @@ public class Connection extends Thread {
     private final ServerSocket serverSocket;
     private final Game game;
     private Socket clientSocket;
-    private List<Socket> allClientSockets = new LinkedList<>();
+    private List<ObjectOutputStream> allClientsOutput = new LinkedList<>();
     private List<ClientConnection> allClientConnections = new LinkedList<>();
 
     public Connection(ServerSocket serverSocket, Game game) {
@@ -39,8 +36,10 @@ public class Connection extends Thread {
         }
     }
 
-    private void addClientSocket(Socket clientSocket) {
-        allClientSockets.add(clientSocket);
+    private ObjectOutputStream addOutputStreamFromSocket(Socket clientSocket) throws IOException {
+        ObjectOutputStream outputSocket = new ObjectOutputStream(clientSocket.getOutputStream());
+        allClientsOutput.add(outputSocket);
+        return outputSocket;
     }
 
     private void addClientConnection(ClientConnection clientConnection) {
@@ -51,9 +50,9 @@ public class Connection extends Thread {
         try {
             while (!serverSocket.isClosed()) {
                 clientSocket = serverSocket.accept();
-                addClientSocket(clientSocket);
+                ObjectOutputStream outputStream = addOutputStreamFromSocket(clientSocket);
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
-                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket);
+                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket, outputStream);
                 addClientConnection(client);
                 game.joinPlayer(clientSocket.getPort());
                 makeClientsKnowEachOther();
@@ -66,9 +65,9 @@ public class Connection extends Thread {
 
     private void makeClientsKnowEachOther() {
         for (ClientConnection clientConnection : allClientConnections) {
-            List<Socket> allClientSocketsClone = new LinkedList<>();
-            allClientSocketsClone.addAll(allClientSockets);
-            clientConnection.setListeners(allClientSocketsClone);
+            List<ObjectOutputStream> allClientsOutputClone = new LinkedList<>();
+            allClientsOutputClone.addAll(allClientsOutput);
+            clientConnection.setListeners(allClientsOutputClone);
         }
     }
 }
