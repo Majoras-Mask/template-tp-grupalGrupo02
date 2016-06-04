@@ -58,6 +58,8 @@ public class ClientConnection extends Thread {
             }
             outputStream.writeObject(response);
             outputStream.flush();
+            outputStream.writeObject(response);
+            outputStream.flush();
         }
     }
 

@@ -29,7 +29,14 @@ public class ConnectorIO {
     }
 
     public Response receive() throws IOException, ClassNotFoundException {
-        return (Response) this.inputStream.readObject();
+         return (Response) this.inputStream.readObject();
+    }
+
+    public String receiveIfAvailable() throws IOException, ClassNotFoundException {
+        if(inputStream.available() > 0) {
+            return inputStream.readLine();
+        }
+        return null;
     }
 
     public void close() {

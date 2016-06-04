@@ -45,6 +45,7 @@ public class ClientCore {
             final Response response = this.connector.receive();
             this.connected = Boolean.TRUE;
             //TODO poner aca un thread que empiece a correr¿?
+            (new Thread(new ReceiverOfMessages(this))).start();
             return new ClientResponse(CONNECTION_SUCCESSFUL + response.getSomething());
         }
         throw new ClientException(ANOTHER_OPEN_CONNECTION);
@@ -104,6 +105,25 @@ public class ClientCore {
         } catch (IOException e) {
             socket.close();
             throw new IllegalStateException();
+        }
+    }
+
+    private class ReceiverOfMessages implements Runnable {
+        ClientCore core;
+
+        public ReceiverOfMessages(ClientCore core) {
+            this.core = core;
+        }
+
+        @Override
+        public void run() {
+            String response;
+            while (core.isRunning()) {
+                response = core.connector.receiveIfAvailable();
+                if(response != null) {
+                    System.out.print(response);
+                }
+            }
         }
     }
 }
