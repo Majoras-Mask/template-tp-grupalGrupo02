@@ -32,9 +32,9 @@ public class ConnectorIO {
          return (Response) this.inputStream.readObject();
     }
 
-    public String receiveIfAvailable() throws IOException, ClassNotFoundException {
+    public Response receiveIfAvailable() throws IOException, ClassNotFoundException {
         if(inputStream.available() > 0) {
-            return inputStream.readLine();
+            return (Response) inputStream.readObject();
         }
         return null;
     }

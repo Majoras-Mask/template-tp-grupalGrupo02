@@ -117,11 +117,11 @@ public class ClientCore {
 
         @Override
         public void run() {
-            String response;
+            Response response;
             while (core.isRunning()) {
                 response = core.connector.receiveIfAvailable();
                 if(response != null) {
-                    System.out.print(response);
+                    System.out.print(response.getSomething());
                 }
             }
         }

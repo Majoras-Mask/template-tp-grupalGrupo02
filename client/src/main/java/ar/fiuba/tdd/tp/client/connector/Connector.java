@@ -34,7 +34,7 @@ public class Connector {
         }
     }
 
-    public String receiveIfAvailable() {
+    public Response receiveIfAvailable() {
         try {
             return this.connectorIO.receiveIfAvailable();
         } catch (Exception e) {
