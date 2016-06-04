@@ -6,7 +6,7 @@ import ar.fiuba.tdd.tp.engine.utils.ConditionUtils;
 
 @SuppressWarnings("CPD-START")
 public class FetchBuilder implements GameBuilder {
-    private static final int MAXPLAYERS = 1;
+    private static final int MAXPLAYERS = 3;
 
     @Override
     public Game build() {

@@ -66,7 +66,9 @@ public class Connection extends Thread {
 
     private void makeClientsKnowEachOther() {
         for (ClientConnection clientConnection : allClientConnections) {
-            clientConnection.setListeners(allClientSockets);
+            List<Socket> allClientSocketsClone = new LinkedList<>();
+            allClientSocketsClone.addAll(allClientSockets);
+            clientConnection.setListeners(allClientSocketsClone);
         }
     }
 }
