@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
@@ -16,7 +17,6 @@ import static java.util.Objects.requireNonNull;
 public class Connection extends Thread {
     private final ServerSocket serverSocket;
     private final Game game;
-    private Socket clientSocket;
     private HashMap<String, Socket> clientSockets = new HashMap<>();
 
     public Connection(ServerSocket serverSocket, Game game) {
@@ -26,8 +26,11 @@ public class Connection extends Thread {
 
     public void closeConnection() {
         try {
-            if (nonNull(clientSocket) && !clientSocket.isClosed()) {
-                clientSocket.close();
+            for (Map.Entry<String,Socket> entry : clientSockets.entrySet()) {
+                Socket clientSocket = entry.getValue();
+                if (nonNull(clientSocket) && !clientSocket.isClosed()) {
+                    clientSocket.close();
+                }
             }
             serverSocket.close();
         } catch (IOException e) {
@@ -38,7 +41,7 @@ public class Connection extends Thread {
     public void run() {
         try {
             while (!serverSocket.isClosed()) {
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
                 String playerID = game.getPlayerIDAvailable();
                 ClientConnection client = new ClientConnection(clientSocket, game, serverSocket,playerID);
