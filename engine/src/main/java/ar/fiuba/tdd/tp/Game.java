@@ -28,4 +28,8 @@ public interface Game {
 
     void setLostCondition(String playerID, Condition lostCondition);
 
+    void addPlayer(ObjectInterface player);
+
+    String getPlayerIDAvailable();
+
 }

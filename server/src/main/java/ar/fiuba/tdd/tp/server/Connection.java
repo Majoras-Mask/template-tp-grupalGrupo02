@@ -1,29 +1,27 @@
 package ar.fiuba.tdd.tp.server;
 
-import ar.fiuba.tdd.tp.motor.games.Engine;
-import ar.fiuba.tdd.tp.server.communication.Request;
-import ar.fiuba.tdd.tp.server.communication.Response;
+import ar.fiuba.tdd.tp.Game;
 import ar.fiuba.tdd.tp.server.io.ServerOutput;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 
 public class Connection extends Thread {
     private final ServerSocket serverSocket;
-    private final Engine engine;
+    private final Game game;
     private Socket clientSocket;
-    private ObjectOutputStream outputStream;
-    private ObjectInputStream inputStream;
-    private Request request;
-    private Response response;
+    private HashMap<String, Socket> clientSockets = new HashMap<>();
 
-    public Connection(ServerSocket serverSocket, Engine engine) {
+    public Connection(ServerSocket serverSocket, Game game) {
         this.serverSocket = requireNonNull(serverSocket);
-        this.engine = engine;
+        this.game = game;
     }
 
     public void closeConnection() {
@@ -37,44 +35,19 @@ public class Connection extends Thread {
         }
     }
 
-    private void getStream(Socket clientSocket) throws IOException {
-        this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-        this.inputStream = new ObjectInputStream(clientSocket.getInputStream());
-    }
-
-    private void speak() throws IOException, ClassNotFoundException {
-        welcome();
-        boolean exit = false;
-        while (!exit && nonNull(request = (Request) inputStream.readObject())) {
-            if (request.isExit()) {
-                exit = true;
-                response = new Response("exit");
-            } else {
-                response = new Response(engine.request(request.getSomething()));
-            }
-            outputStream.writeObject(response);
-            outputStream.flush();
-        }
-    }
-
-    private void welcome() throws IOException {
-        response = new Response(engine.getWelcomeMessage());
-        outputStream.writeObject(response);
-        outputStream.flush();
-    }
-
     public void run() {
         try {
             while (!serverSocket.isClosed()) {
                 clientSocket = serverSocket.accept();
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
-                getStream(clientSocket);
-                speak();
-                clientSocket.close();
-                ServerOutput.clientDisconnected(serverSocket.getLocalPort());
+                String playerID = game.getPlayerIDAvailable();
+                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket,playerID);
+                clientSockets.put(playerID, clientSocket);
+                client.start();
             }
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             ServerOutput.threadFinished();
         }
     }
+
 }

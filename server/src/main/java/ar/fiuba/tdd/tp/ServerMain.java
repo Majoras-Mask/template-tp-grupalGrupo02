@@ -4,7 +4,7 @@ import ar.fiuba.tdd.tp.server.Server;
 
 import java.io.*;
 
-public class Main {
+public class ServerMain {
     public static void main(String[] args) {
         try {
             Server server = new Server();

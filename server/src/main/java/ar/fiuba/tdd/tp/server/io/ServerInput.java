@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.server.io;
 
 import ar.fiuba.tdd.tp.server.utils.Command;
+import ar.fiuba.tdd.tp.server.utils.PortPattern;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,59 +28,36 @@ public class ServerInput {
         inputBuffer = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
     }
 
-    public void init() {
-        ServerOutput.welcomeMessage();
-    }
-
-    public Command readEntry() {
+    private String readString() {
         String input;
         try {
             input = inputBuffer.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
-            return Command.NONE;
+            input = "";
         }
-        if (input == null) {
-            return Command.NONE;
-        }
-        return readInput(input);
+        return input;
     }
 
-    public Command readInput(String input) {
+    public Command readCommand() {
+        String input = readString();
         if (commands.containsKey(input)) {
             return commands.get(input);
         }
         return Command.NONE;
     }
 
-    public Integer getPort() {
-        ServerOutput.choosePort();
-        String splitPattern1 = "((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})";
-        String splitPattern2 = "([1-5][0-9]{4})|([1-9][0-9]{3})|([1-9][0-9]{2})|([1-9][0-9])|([0-9]))";
-        Pattern pattern = Pattern.compile(splitPattern1 + "|" + splitPattern2);
-        String input;
+    public Integer readPort() {
         Integer port = 0;
-        try {
-            input = inputBuffer.readLine();
-            Matcher matcher = pattern.matcher(input);
-            if (matcher.find()) {
-                port = Integer.parseInt(input);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String input = readString();
+        Pattern portPattern = PortPattern.getPattern();
+        Matcher matcher = portPattern.matcher(input);
+        if (matcher.find()) {
+            port = Integer.parseInt(input);
         }
         return port;
     }
 
     public String readGame() {
-        ServerOutput.chooseGame();
-        String input = "";
-        try {
-            input = inputBuffer.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return input;
-        }
-        return input;
+        return readString();
     }
 }

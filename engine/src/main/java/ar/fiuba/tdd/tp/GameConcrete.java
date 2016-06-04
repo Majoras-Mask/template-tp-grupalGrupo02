@@ -22,6 +22,8 @@ public class GameConcrete implements Game, Context {
     private List<Timer> timers = new ArrayList<>();
     private HashMap<String, Condition> winConditions = new HashMap<>();
     private HashMap<String, Condition> lostConditions = new HashMap<>();
+    private List<String> playerIDS = new ArrayList<>();
+    private int indexPlayerIDAvailable = 0;
     //private String playerWhoFinishedTheGame;
 
     @Override
@@ -119,6 +121,25 @@ public class GameConcrete implements Game, Context {
     @Override
     public void setLostCondition(String playerID, Condition lostCondition) {
         this.lostConditions.put(playerID, lostCondition);
+    }
+
+    @Override
+    public void addPlayer(ObjectInterface player) {
+        addObject(player);
+        if (!playerIDS.contains(player.getDescription())) {
+            playerIDS.add(player.getDescription());
+        }
+    }
+
+    @Override
+    public String getPlayerIDAvailable() {
+        if (playerIDS.size() > 0 && indexPlayerIDAvailable < playerIDS.size()) {
+            String playerId = playerIDS.get(indexPlayerIDAvailable);
+            indexPlayerIDAvailable += 1;
+            return playerId;
+        }
+
+        return null;
     }
 
     @Override

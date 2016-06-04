@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp.server;
 
-import ar.fiuba.tdd.tp.motor.games.Engine;
-import ar.fiuba.tdd.tp.motor.games.EngineFactoryConcrete;
+import ar.fiuba.tdd.tp.GameBuilder;
 import ar.fiuba.tdd.tp.server.io.ServerInput;
 import ar.fiuba.tdd.tp.server.io.ServerOutput;
 import ar.fiuba.tdd.tp.server.utils.Command;
@@ -17,15 +16,9 @@ public class Server {
         void exec();
     }
 
-    interface EngineGetter {
-        Engine create();
-    }
-
     private ServerInput serverInput;
     private Map<Integer,Connection> connections;
     private Map<Command,Process> commands;
-    private Map<String,EngineGetter> gamesCreator;
-    private static final EngineFactoryConcrete engineFactory = EngineFactoryConcrete.getInstance();
     private static final int FIRST_PORT = 8000;
     private static final int LAST_PORT = 8100;
 
@@ -33,7 +26,6 @@ public class Server {
         connections = new HashMap<>();
         serverInput = new ServerInput();
         setCommands();
-        setGames();
     }
 
     private void setCommands() {
@@ -45,22 +37,12 @@ public class Server {
         commands.put(Command.HELP, ServerOutput::help);
     }
 
-    private void setGames() {
-        gamesCreator = new HashMap<>();
-        gamesCreator.put("fetch", () -> engineFactory.createEngineFetch());
-        gamesCreator.put("hanoi", () -> engineFactory.createEngineHanoi());
-        gamesCreator.put("riddle", () -> engineFactory.createEngineRiddle());
-        gamesCreator.put("open door1", () -> engineFactory.createEngineOpenDoor());
-        gamesCreator.put("open door2", () -> engineFactory.createEngineOpenDoorTwo());
-        gamesCreator.put("cursed object", () -> engineFactory.createEngineCursedObject());
-        gamesCreator.put("treasure hunt", () -> engineFactory.createEngineTreasureHunt());
-    }
 
     public void run() {
-        Command entry;
-        serverInput.init();
-        while ((entry = serverInput.readEntry()) != Command.EXIT) {
-            commands.get(entry).exec();
+        Command command;
+        ServerOutput.welcomeMessage();
+        while ((command = serverInput.readCommand()) != Command.EXIT) {
+            commands.get(command).exec();
         }
         commands.get(Command.EXIT).exec();
     }
@@ -78,19 +60,22 @@ public class Server {
         if (port == LAST_PORT) {
             ServerOutput.noPortsAvailable();
         } else {
-            String gameName = serverInput.readGame();
-            if (!gamesCreator.containsKey(gameName)) {
-                ServerOutput.unvalidGame();
-            } else {
-                Connection connection;
-                try {
-                    connection = new Connection(new ServerSocket(port), gamesCreator.get(gameName).create());
-                    connection.start();
-                    connections.put(port, connection);
-                    ServerOutput.newGame(port);
-                } catch (IOException e) {
-                    ServerOutput.unopenedConnection(port);
-                }
+            ServerOutput.chooseGame();
+            String gamePath = serverInput.readGame();
+            try {
+                GameBuilder gameBuilder = BuilderLoader.load(gamePath);
+                Connection connection = new Connection(new ServerSocket(port), gameBuilder.build());
+                connection.start();
+                connections.put(port, connection);
+                ServerOutput.newGame(port);
+            } catch (IOException e) {
+                ServerOutput.unopenedConnection(port);
+            } catch (IllegalAccessException e) {
+                ServerOutput.notEnoughPrivileges();
+            } catch (InstantiationException e) {
+                ServerOutput.instantiationException();
+            } catch (ClassNotFoundException e) {
+                ServerOutput.noClassFound();
             }
         }
     }
@@ -100,7 +85,8 @@ public class Server {
     }
 
     private void closeConnection() {
-        Integer port = serverInput.getPort();
+        ServerOutput.choosePort();
+        Integer port = serverInput.readPort();
         if (port >= FIRST_PORT && port <= LAST_PORT && connections.containsKey(port)) {
             connections.get(port).closeConnection();
             connections.remove(port);
