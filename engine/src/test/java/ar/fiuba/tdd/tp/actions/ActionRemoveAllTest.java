@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Created by kevin on 31/05/16.
  */
-public class ActionRemoveAllTest {
+public class ActionRemoveAllTest  {
     @Test
     public void execute() throws Exception {
         GameConcrete game = new GameConcrete();
