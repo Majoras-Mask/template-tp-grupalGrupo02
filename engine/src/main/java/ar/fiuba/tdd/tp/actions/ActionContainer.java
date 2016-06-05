@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ActionContainer implements Action {
 
-    List<Action> actions = new ArrayList<>();
+    protected List<Action> actions = new ArrayList<>();
 
     public void addAction(Action action) {
         if (!actions.contains(action)) {
