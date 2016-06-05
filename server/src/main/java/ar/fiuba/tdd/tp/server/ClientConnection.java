@@ -26,11 +26,12 @@ public class ClientConnection extends Thread {
     private Response response;
 
 
-    public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket, String playerID) {
+    public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket, String playerID, ObjectOutputStream outputStream) {
         this.clientSocket = clientSocket;
         this.game = game;
         this.serverSocket = serverSocket;
         this.playerID = playerID;
+        this.outputStream = outputStream;
     }
 
     public void run() {
@@ -45,6 +46,9 @@ public class ClientConnection extends Thread {
     }
 
     private void speak() throws IOException, ClassNotFoundException {
+        response = new Response("bienvenidos");
+        outputStream.writeObject(response);
+        outputStream.flush();
         boolean exit = false;
         while (!exit && nonNull(request = (Request) inputStream.readObject())) {
             if (request.isExit()) {
@@ -60,7 +64,6 @@ public class ClientConnection extends Thread {
     }
 
     private void getStream(Socket clientSocket) throws IOException {
-        this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         this.inputStream = new ObjectInputStream(clientSocket.getInputStream());
     }
 
