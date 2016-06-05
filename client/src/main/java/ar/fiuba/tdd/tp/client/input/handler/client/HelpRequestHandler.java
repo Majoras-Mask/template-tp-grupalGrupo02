@@ -6,7 +6,6 @@ import ar.fiuba.tdd.tp.client.output.ClientResponse;
 import ar.fiuba.tdd.tp.client.utils.Constants;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class HelpRequestHandler extends AbstractClientRequestHandler {
 
@@ -19,8 +18,8 @@ public class HelpRequestHandler extends AbstractClientRequestHandler {
         });
     }
 
-    public Optional<ClientResponse> handle(ClientRequest request) {
-        return Optional.of(new ClientResponse(Constants.HELP));
+    public void handle(ClientRequest request) {
+        this.core.notifyListeners(new ClientResponse(Constants.HELP));
     }
 
 }

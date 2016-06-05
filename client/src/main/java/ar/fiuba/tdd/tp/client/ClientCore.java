@@ -13,6 +13,8 @@ import ar.fiuba.tdd.tp.server.communication.Response;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static ar.fiuba.tdd.tp.client.utils.Constants.*;
 
@@ -21,10 +23,12 @@ public class ClientCore {
     private Boolean running;
     private Boolean connected;
     private Connector connector;
+    private List<ClientListener> listeners;
 
     public ClientCore() {
         this.running = Boolean.FALSE;
         this.connected = Boolean.FALSE;
+        this.listeners = new CopyOnWriteArrayList<>();
     }
 
     public Boolean isRunning() {
@@ -39,30 +43,22 @@ public class ClientCore {
         this.running = Boolean.FALSE;
     }
 
-    public ClientResponse connect(ConnectorSettings settings) {
+    public void connect(ConnectorSettings settings) {
         if (!this.isConnected()) {
             this.connector = createConnector(settings);
-            final Response response = this.connector.receive();
             this.connected = Boolean.TRUE;
-            return new ClientResponse(CONNECTION_SUCCESSFUL + response.getSomething());
+
+            (new Thread(this::receiveThread)).start();
+            return;
         }
         throw new ClientException(ANOTHER_OPEN_CONNECTION);
     }
 
-    public ClientResponse sendAndReceive(ClientRequest request) {
-
+    public void send(ClientRequest request) {
         if (this.isConnected()) {
-
             this.connector.send(new Request(request.getInput()));
-            final Response response = this.connector.receive();
-
-            if (response.isExit()) {
-                this.stopConnector();
-            }
-
-            return new ClientResponse(response.getSomething());
+            return;
         }
-
         throw new ClientException(OPEN_CONNECTION_FIRST);
     }
 
@@ -88,8 +84,7 @@ public class ClientCore {
 
     private Socket createSocket(ConnectorSettings settings) throws IOException {
         final Socket socket = new Socket();
-        socket.connect(new InetSocketAddress(settings.getHost(), settings.getPort()), settings.getConnectionTimeout());
-        socket.setSoTimeout(settings.getReadTimeout());
+        socket.connect(new InetSocketAddress(settings.getHost(), settings.getPort()));
 
         return socket;
     }
@@ -104,5 +99,32 @@ public class ClientCore {
             socket.close();
             throw new IllegalStateException();
         }
+    }
+
+    private void receiveThread() {
+        while (isConnected()) {
+            this.notifyListeners(this.receive());
+        }
+    }
+
+    private ClientResponse receive() {
+        final Response response = this.connector.receive();
+        if (response.isExit()) {
+            this.stopConnector();
+        }
+
+        return new ClientResponse(response.getSomething());
+    }
+
+    public void addListener(ClientListener listener) {
+        this.listeners.add(listener);
+    }
+
+    public void removeListener(ClientListener listener) {
+        this.listeners.remove(listener);
+    }
+
+    public void notifyListeners(ClientResponse response) {
+        this.listeners.forEach(listener -> listener.listen(response));
     }
 }

@@ -8,8 +8,6 @@ import ar.fiuba.tdd.tp.client.input.supplier.ClientSupplier;
 import ar.fiuba.tdd.tp.client.output.ClientResponse;
 import ar.fiuba.tdd.tp.client.output.consumer.ClientConsumer;
 
-import java.util.Optional;
-
 import static ar.fiuba.tdd.tp.client.utils.Constants.PROCESS_COMMAND_ERROR;
 import static ar.fiuba.tdd.tp.client.utils.Constants.WELCOME;
 
@@ -18,7 +16,7 @@ import static ar.fiuba.tdd.tp.client.utils.Constants.WELCOME;
  * Those requests are handled by one {@link RequestHandler} and then this result is communicated
  * to the {@link ClientConsumer}.
  */
-public class Client {
+public class Client implements ClientListener {
 
     private final ClientCore core;
     private final RequestHandlerResolver resolver;
@@ -35,28 +33,23 @@ public class Client {
 
     public void run() {
         this.core.start();
+        this.core.addListener(this);
         this.callConsumer(new ClientResponse(WELCOME));
         this.doRun();
     }
 
     private void doRun() {
         while (this.core.isRunning()) {
-            this.processRequest();
+            this.processRequest(this.callSupplier());
         }
+        this.core.removeListener(this);
     }
 
-    private void processRequest() {
-        Optional<ClientResponse> response = this.processRequest(this.callSupplier());
-        if (response.isPresent()) {
-            callConsumer(response.get());
-        }
-    }
-
-    private Optional<ClientResponse> processRequest(ClientRequest request) {
+    private void processRequest(ClientRequest request) {
         try {
-            return this.resolver.resolve(request).handle(request);
+            this.resolver.resolve(request).handle(request);
         } catch (ClientException e) {
-            return Optional.of(new ClientResponse(PROCESS_COMMAND_ERROR + e.getMessage()));
+            callConsumer(new ClientResponse(PROCESS_COMMAND_ERROR + e.getMessage()));
         }
     }
 
@@ -68,4 +61,8 @@ public class Client {
         this.consumer.consume(event);
     }
 
+    @Override
+    public void listen(ClientResponse response) {
+        this.callConsumer(response);
+    }
 }
