@@ -74,7 +74,7 @@ public class Server {
                 ServerOutput.notEnoughPrivileges();
             } catch (InstantiationException e) {
                 ServerOutput.instantiationException();
-            } catch (ClassNotFoundException e) {
+            } catch (Exception e) {
                 ServerOutput.noClassFound();
             }
         }
