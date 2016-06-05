@@ -1,6 +1,0 @@
-group 'ar.fiuba.tdd.tp-riddle'
-version '1.0'
-
-dependencies {
-    compile project(':engine')
-}
