@@ -50,9 +50,10 @@ public class Connection extends Thread implements Sender {
                 Socket clientSocket = serverSocket.accept();
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
                 String playerID = game.getPlayerIDAvailable();
-                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket,playerID);
+                ObjectOutputStream clientOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket, playerID, clientOutput);
                 clientSockets.put(playerID, clientSocket);
-                clientOutputs.put(playerID, new ObjectOutputStream(clientSocket.getOutputStream()));
+                clientOutputs.put(playerID, clientOutput);
                 client.start();
             }
         } catch (IOException e) {
