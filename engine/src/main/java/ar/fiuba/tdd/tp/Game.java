@@ -32,4 +32,6 @@ public interface Game {
 
     String getPlayerIDAvailable();
 
+    void setSender(Sender sender);
+
 }

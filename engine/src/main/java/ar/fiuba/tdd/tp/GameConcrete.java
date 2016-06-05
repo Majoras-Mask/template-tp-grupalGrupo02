@@ -23,18 +23,19 @@ public class GameConcrete implements Game, Context {
     private HashMap<String, Condition> winConditions = new HashMap<>();
     private HashMap<String, Condition> lostConditions = new HashMap<>();
     private List<String> playerIDS = new ArrayList<>();
+    private Sender sender;
     private int indexPlayerIDAvailable = 0;
     //private String playerWhoFinishedTheGame;
 
     @Override
-    public void addObject(ObjectInterface object) {
+    public synchronized void addObject(ObjectInterface object) {
         if (!objects.contains(object)) {
             objects.add(object);
         }
     }
 
     @Override
-    public void addCommand(Command command) {
+    public synchronized void addCommand(Command command) {
         if (!commands.contains(command)) {
             commands.add(command);
         }
@@ -44,22 +45,58 @@ public class GameConcrete implements Game, Context {
         map.put("(player)", playerName);
     }
 
+    private void sendAllExcept(String message, String playerException) {
+        for (String playerID: playerIDS) {
+            if (!playerID.equals(playerException)) {
+                sender.send(playerID, message);
+            }
+        }
+    }
+
+    private void logExecuteCommand(String playerName, String commandString) {
+        String message = playerName.concat(" execute: ");
+        message = message.concat(commandString);
+        sendAllExcept(message, playerName);
+    }
+
+    private boolean checkIfGameIsFinished() {
+        return getGameState() == GameState.Win  || getGameState() == GameState.Lost;
+    }
+
+    private String checkIfGameHasBeenFinished(String playerName, String response) {
+        if (getGameState() == GameState.Running) {
+            return response;
+        } else if (getGameState() == GameState.Win) {
+            String message = playerName.concat(" has won. The game is over.");
+            sendAllExcept(message, playerName);
+            return response.concat(" You won the game!");
+        } else {
+            String message = playerName.concat(" has Lost. The game is over.");
+            sendAllExcept(message, playerName);
+            return response.concat(" You lost the game!");
+        }
+
+    }
+
     @Override
-    public String executeCommand(String playerName, String commandString) {
-        if (getGameState() == GameState.Win  || getGameState() == GameState.Lost) {
+    public synchronized String executeCommand(String playerName, String commandString) {
+        if (checkIfGameIsFinished()) {
             return "Game finished";
         }
 
+        logExecuteCommand(playerName, commandString);
         setUpHashMap(playerName);
+
+        String response = "No command found.";
 
         for (Command command: commands) {
             if (command.matches(commandString)) {
-                return command.execute(commandString, this);
+                response = command.execute(commandString, this);
+                break;
             }
         }
 
-        return "No command found.";
-
+        return checkIfGameHasBeenFinished(playerName, response);
     }
 
     private void clearFinishedTimers() {
@@ -75,17 +112,12 @@ public class GameConcrete implements Game, Context {
         }
     }
 
-    @Override
-    public void update() {
-
-        checkConditions(winConditions, GameState.Win);
-        checkConditions(lostConditions, GameState.Lost);
-
-        for (Timer timer:timers) {
-            timer.update();
+    private void logGameFinishedBy(String playerId, GameState gameState) {
+        if (gameState == GameState.Win) {
+            sender.sendAll(playerId.concat(" has Won."));
+        } else if (gameState == GameState.Lost) {
+            sender.sendAll(playerId.concat(" has Lost."));
         }
-
-        clearFinishedTimers();
     }
 
     private void checkConditions(HashMap<String, Condition> conditions, GameState gameStateToSet) {
@@ -94,37 +126,53 @@ public class GameConcrete implements Game, Context {
             Condition condition = entry.getValue();
             if (condition.check(this)) {
                 setGameState(gameStateToSet);
+                logGameFinishedBy(playerId, gameStateToSet);
             }
         }
     }
 
     @Override
-    public void setGameState(GameState gameState) {
+    public synchronized void update() {
+
+        for (Timer timer:timers) {
+            timer.update(this, sender);
+        }
+
+        clearFinishedTimers();
+
+        checkConditions(winConditions, GameState.Win);
+        if (!checkIfGameIsFinished()) {
+            checkConditions(lostConditions, GameState.Lost);
+        }
+    }
+
+    @Override
+    public synchronized void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
     @Override
-    public GameState getGameState() {
+    public synchronized GameState getGameState() {
         return gameState;
     }
 
     @Override
-    public void addTimer(Timer timer) {
+    public synchronized void addTimer(Timer timer) {
         this.timers.add(timer);
     }
 
     @Override
-    public void setWinCondition(String playerID, Condition winCondition) {
+    public synchronized void setWinCondition(String playerID, Condition winCondition) {
         this.winConditions.put(playerID, winCondition);
     }
 
     @Override
-    public void setLostCondition(String playerID, Condition lostCondition) {
+    public synchronized void setLostCondition(String playerID, Condition lostCondition) {
         this.lostConditions.put(playerID, lostCondition);
     }
 
     @Override
-    public void addPlayer(ObjectInterface player) {
+    public synchronized void addPlayer(ObjectInterface player) {
         addObject(player);
         if (!playerIDS.contains(player.getDescription())) {
             playerIDS.add(player.getDescription());
@@ -132,7 +180,7 @@ public class GameConcrete implements Game, Context {
     }
 
     @Override
-    public String getPlayerIDAvailable() {
+    public synchronized String getPlayerIDAvailable() {
         if (playerIDS.size() > 0 && indexPlayerIDAvailable < playerIDS.size()) {
             String playerId = playerIDS.get(indexPlayerIDAvailable);
             indexPlayerIDAvailable += 1;
@@ -143,7 +191,12 @@ public class GameConcrete implements Game, Context {
     }
 
     @Override
-    public ObjectInterface getObject(String name) {
+    public synchronized void setSender(Sender sender) {
+        this.sender = sender;
+    }
+
+    @Override
+    public synchronized ObjectInterface getObject(String name) {
         if (map.containsKey(name)) {
             name = map.get(name);
         }
