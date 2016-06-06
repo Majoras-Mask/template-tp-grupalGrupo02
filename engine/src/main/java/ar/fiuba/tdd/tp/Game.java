@@ -34,4 +34,5 @@ public interface Game {
 
     void setSender(Sender sender);
 
+    void startLoop();
 }

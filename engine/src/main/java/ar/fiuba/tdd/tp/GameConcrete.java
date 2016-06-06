@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class GameConcrete implements Game, Context {
 
+    private static final long TIME_TICK_MS = 1000; // 1 segundo.
     private List<ObjectInterface> objects = new ArrayList<>();
     private List<Command> commands = new ArrayList<>();
     private HashMap<String, String> map = new HashMap<String,String>();
@@ -202,6 +203,12 @@ public class GameConcrete implements Game, Context {
     @Override
     public synchronized void setSender(Sender sender) {
         this.sender = sender;
+    }
+
+    @Override
+    public synchronized void startLoop() {
+        ThreadUpdater threadUpdater = new ThreadUpdater(this,TIME_TICK_MS);
+        threadUpdater.start();
     }
 
     @Override

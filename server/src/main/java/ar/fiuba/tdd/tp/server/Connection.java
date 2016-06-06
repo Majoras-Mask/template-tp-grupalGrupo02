@@ -28,6 +28,7 @@ public class Connection extends Thread implements Sender {
         this.serverSocket = requireNonNull(serverSocket);
         this.game = game;
         this.game.setSender(this);
+        this.game.startLoop();
     }
 
     public void closeConnection() {
