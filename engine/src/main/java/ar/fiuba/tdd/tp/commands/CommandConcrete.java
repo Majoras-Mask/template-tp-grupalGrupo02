@@ -28,6 +28,9 @@ public class CommandConcrete implements Command {
 
     @Override
     public String execute(String command, Context context) {
+        if (!matches(command)) {
+            return "Can't do it";
+        }
         for (Condition condition : actions.keySet()) {
             if (condition.check(context)) {
                 actions.get(condition).execute(context);
