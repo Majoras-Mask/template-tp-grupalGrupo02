@@ -2,6 +2,7 @@ package ar.fiuba.tdd.tp.conditions;
 
 import ar.fiuba.tdd.tp.GameConcrete;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import static org.junit.Assert.*;
 
@@ -10,17 +11,35 @@ import static org.junit.Assert.*;
  */
 public class ConditionAndOrTest {
     @Test
-    public void check() throws Exception {
+    public void checkAndTrueFalse() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
-        Condition condition = new ConditionAnd(new ConditionAlwaysTrue(), new ConditionNOT(new ConditionAlwaysTrue()));
+        Condition alwaysTrue = new ConditionAlwaysTrue();
+        Condition condition = alwaysTrue.and(alwaysTrue.not());
         assertFalse(condition.check(gameConcrete));
     }
 
     @Test
-    public void check2() throws Exception {
+    public void checkAndTrueTrue() throws Exception {
         GameConcrete gameConcrete = new GameConcrete();
-        Condition condition = new ConditionAnd(new ConditionAlwaysTrue(), new ConditionAlwaysTrue());
+        Condition alwaysTrue = new ConditionAlwaysTrue();
+        Condition condition = alwaysTrue.and(alwaysTrue);
         assertTrue(condition.check(gameConcrete));
+    }
+
+    @Test
+    public void checkOrTrueFalse() throws Exception {
+        GameConcrete gameConcrete = new GameConcrete();
+        Condition alwaysTrue = new ConditionAlwaysTrue();
+        Condition condition = alwaysTrue.or(alwaysTrue.not());
+        assertTrue(condition.check(gameConcrete));
+    }
+
+    @Test
+    public void checkOrFalseFalse() throws Exception {
+        GameConcrete gameConcrete = new GameConcrete();
+        Condition alwaysTrue = new ConditionAlwaysTrue();
+        Condition condition = alwaysTrue.not().and(alwaysTrue.not());
+        assertFalse(condition.check(gameConcrete));
     }
 
 }

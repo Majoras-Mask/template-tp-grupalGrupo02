@@ -17,4 +17,11 @@ public class ConditionCheckGameStateTest {
         assertTrue(condition.check(gameConcrete));
     }
 
+    @Test
+    public void checkNegative() throws Exception {
+        GameConcrete gameConcrete = new GameConcrete();
+        ConditionCheckGameState condition = new ConditionCheckGameState(gameConcrete, GameState.Lost);
+        assertFalse(condition.check(gameConcrete));
+    }
+
 }
