@@ -31,18 +31,22 @@ public class GameBuilderOpenDoorMultiplayer implements GameBuilder {
 
     private Game crearGame() {
         GameConcrete game = new GameConcrete();
+        /* Agregado de players */
         ObjectConcrete player1 = new ObjectConcrete(PLAYER1_NAME);
         ObjectConcrete player2 = new ObjectConcrete(PLAYER2_NAME);
         game.addPlayer(player1);
         game.addPlayer(player2);
 
+        /* Creacion de objetos */
         ObjectConcrete key = new ObjectConcrete(KEY_NAME);
         ObjectConcrete room1 = new ObjectConcrete(ROOM1_NAME);
         ObjectConcrete room2 = new ObjectConcrete(ROOM2_NAME);
         game.addObject(key);
         game.addObject(room1);
         game.addObject(room2);
+        room1.add(key);
 
+        /* Creacion de comandos */
         CommandConcrete commandLookAround = new CommandConcrete(LOOKAROUND_COMMAND);
         Condition conditionRooom1HasKey = new ConditionHasItem(new ValueConstant(ROOM1_NAME), new ValueConstant(KEY_NAME));
         commandLookAround.setCondition(
