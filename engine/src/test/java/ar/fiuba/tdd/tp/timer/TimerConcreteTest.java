@@ -10,6 +10,7 @@ import ar.fiuba.tdd.tp.actions.ActionSetPropertyTest;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionAlwaysTrue;
 import ar.fiuba.tdd.tp.values.ValueConstant;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -20,31 +21,55 @@ import static org.junit.Assert.*;
 public class TimerConcreteTest implements Sender{
 
     private String message = "";
+    private GameConcrete game;
+    private ObjectInterface objeto;
+    private Condition condition;
+    private Action action;
+    private String responseRequired;
 
-    @Test
-    public void testTimer() {
-        GameConcrete game = new GameConcrete();
+    @Before
+    public void setUp() throws Exception {
+        game = new GameConcrete();
         game.setSender(this);
-        ObjectInterface objeto = new ObjectConcrete("objeto");
+        objeto = new ObjectConcrete("objeto");
         objeto.setProperty("estado", "ninguno");
         game.addObject(objeto);
+        condition = new ConditionAlwaysTrue();
+        action = new ActionSetProperty(new ValueConstant("objeto"), new ValueConstant("estado"), new ValueConstant("bueno"));
+        responseRequired = "Se cambio el estado del objeto";
+    }
 
-        TimerConcrete timer = new TimerConcrete(1);
-        Condition condition = new ConditionAlwaysTrue();
-        Action action = new ActionSetProperty(new ValueConstant("objeto"), new ValueConstant("estado"), new ValueConstant("bueno"));
-        String responseRequired = "Se cambio el estado del objeto";
-
-        timer.setCondition(condition, action, responseRequired);
-
-        game.addTimer(timer);
-
-        assertNotEquals(message, responseRequired);
-        assertNotEquals(objeto.getProperty("estado"), "bueno");
-
-        game.update(); // Un tick solo.
+    private void testTimerExpireAction() {
         assertEquals(responseRequired, message);
         assertEquals("bueno", objeto.getProperty("estado"));
+    }
 
+    @Test
+    public void testTimerConcrete() {
+        TimerConcrete timer = new TimerConcrete(1);
+        timer.setCondition(condition, action, responseRequired);
+        game.addTimer(timer);
+
+        game.update(); // Un tick solo.
+        testTimerExpireAction();
+
+        assertTrue(timer.isFinished());
+    }
+
+    @Test
+    public void testPeriodicTimer() {
+        TimerConcrete timer = new PeriodicTimer(1);
+        timer.setCondition(condition, action, responseRequired);
+        game.addTimer(timer);
+
+        game.update(); // Un tick solo.
+        testTimerExpireAction();
+        assertFalse(timer.isFinished());
+
+        objeto.setProperty("estado", "ninguno");
+        message = "";
+        game.update();
+        testTimerExpireAction();
     }
 
     @Override
