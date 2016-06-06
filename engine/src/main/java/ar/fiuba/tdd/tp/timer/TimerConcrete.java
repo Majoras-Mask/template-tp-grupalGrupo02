@@ -44,6 +44,10 @@ public class TimerConcrete implements Timer {
 
     @Override
     public void update(Context context, Sender sender) {
+        if (isFinished()) {
+            return;
+        }
+
         this.currentTicks += 1;
         if (this.currentTicks == ticksRequired) {
             // Expiro el timer

@@ -1,4 +1,5 @@
 rootProject.name = 'tp-tp-grupal'
 include 'client' , 'server' , 'engine'
 include 'openDoorMultiplayer'
+include 'juegoPerderALos30Segs'
 
