@@ -63,7 +63,10 @@ public class ObjectConcrete implements ObjectInterface {
 
     @Override
     public String getProperty(String property) {
-        return properties.get(property);
+        if (properties.containsKey(property)) {
+            return properties.get(property);
+        }
+        return "";
     }
 
 }
