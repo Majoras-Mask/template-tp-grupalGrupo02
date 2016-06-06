@@ -46,7 +46,7 @@ public class ClientConnection extends Thread {
     }
 
     private void speak() throws IOException, ClassNotFoundException {
-        response = new Response("bienvenidos");
+        response = new Response("Welcome to the game, you are ".concat(playerID));
         outputStream.writeObject(response);
         outputStream.flush();
         boolean exit = false;
