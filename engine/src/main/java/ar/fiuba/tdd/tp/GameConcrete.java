@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp;
 
 import ar.fiuba.tdd.tp.commands.Command;
-import ar.fiuba.tdd.tp.conditionelements.ConditionElement;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.timer.Timer;
 
@@ -10,9 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by kevin on 29/05/16.
- */
+
 public class GameConcrete implements Game, Context {
 
     private List<ObjectInterface> objects = new ArrayList<>();
@@ -25,7 +22,7 @@ public class GameConcrete implements Game, Context {
     private List<String> playerIDS = new ArrayList<>();
     private Sender sender;
     private int indexPlayerIDAvailable = 0;
-    //private String playerWhoFinishedTheGame;
+    private String playerWhoFinishedTheGame;
 
     @Override
     public synchronized void addObject(ObjectInterface object) {
@@ -63,17 +60,20 @@ public class GameConcrete implements Game, Context {
         return getGameState() == GameState.Win  || getGameState() == GameState.Lost;
     }
 
-    private String checkIfGameHasBeenFinished(String playerName, String response) {
+    private String checkPostExecuteCommand(String playerName, String response) {
+        checkConditions(winConditions, GameState.Win);
+        checkConditions(lostConditions, GameState.Lost);
+
         if (getGameState() == GameState.Running) {
             return response;
         } else if (getGameState() == GameState.Win) {
-            String message = playerName.concat(" has won. The game is over.");
+            String message = playerWhoFinishedTheGame.concat(" won the game.");
             sendAllExcept(message, playerName);
-            return response.concat(" You won the game!");
+            return message;
         } else {
-            String message = playerName.concat(" has Lost. The game is over.");
+            String message = playerWhoFinishedTheGame.concat(" has Lost. The game is over.");
             sendAllExcept(message, playerName);
-            return response.concat(" You lost the game!");
+            return message;
         }
 
     }
@@ -96,7 +96,7 @@ public class GameConcrete implements Game, Context {
             }
         }
 
-        return checkIfGameHasBeenFinished(playerName, response);
+        return checkPostExecuteCommand(playerName, response);
     }
 
     private void clearFinishedTimers() {
@@ -126,13 +126,25 @@ public class GameConcrete implements Game, Context {
             Condition condition = entry.getValue();
             if (condition.check(this)) {
                 setGameState(gameStateToSet);
-                logGameFinishedBy(playerId, gameStateToSet);
+                playerWhoFinishedTheGame = playerId;
+                return;
             }
+        }
+    }
+
+    private void checkGameConditions() {
+        checkConditions(winConditions, GameState.Win);
+        checkConditions(lostConditions, GameState.Lost);
+        if (checkIfGameIsFinished()) {
+            logGameFinishedBy(playerWhoFinishedTheGame,gameState);
         }
     }
 
     @Override
     public synchronized void update() {
+        if (checkIfGameIsFinished()) {
+            return;
+        }
 
         for (Timer timer:timers) {
             timer.update(this, sender);
@@ -140,10 +152,7 @@ public class GameConcrete implements Game, Context {
 
         clearFinishedTimers();
 
-        checkConditions(winConditions, GameState.Win);
-        if (!checkIfGameIsFinished()) {
-            checkConditions(lostConditions, GameState.Lost);
-        }
+        checkGameConditions();
     }
 
     @Override
