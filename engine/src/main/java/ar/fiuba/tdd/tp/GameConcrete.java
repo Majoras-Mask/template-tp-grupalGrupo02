@@ -20,10 +20,10 @@ public class GameConcrete implements Game, Context {
     private List<Timer> timers = new ArrayList<>();
     private HashMap<String, Condition> winConditions = new HashMap<>();
     private HashMap<String, Condition> lostConditions = new HashMap<>();
+    private List<String> playerIDSHaveLost = new ArrayList<>();
     private List<String> playerIDS = new ArrayList<>();
+    private List<String> playerIDSAvailable = new ArrayList<>();
     private Sender sender;
-    private int indexPlayerIDAvailable = 0;
-    private String playerWhoFinishedTheGame;
 
     @Override
     public synchronized void addObject(ObjectInterface object) {
@@ -45,7 +45,7 @@ public class GameConcrete implements Game, Context {
 
     private void sendAllExcept(String message, String playerException) {
         for (String playerID: playerIDS) {
-            if (!playerID.equals(playerException)) {
+            if (!playerID.equals(playerException) && !playerIDSAvailable.contains(playerID)) {
                 sender.send(playerID, message);
             }
         }
@@ -61,33 +61,8 @@ public class GameConcrete implements Game, Context {
         return getGameState() == GameState.Win  || getGameState() == GameState.Lost;
     }
 
-    private String checkPostExecuteCommand(String playerName, String response) {
-        checkConditions(winConditions, GameState.Win);
-        checkConditions(lostConditions, GameState.Lost);
 
-        if (getGameState() == GameState.Running) {
-            return response;
-        } else if (getGameState() == GameState.Win) {
-            String message = playerWhoFinishedTheGame.concat(" won the game.");
-            sendAllExcept(message, playerName);
-            return message;
-        } else {
-            String message = playerWhoFinishedTheGame.concat(" has Lost. The game is over.");
-            sendAllExcept(message, playerName);
-            return message;
-        }
-
-    }
-
-    @Override
-    public synchronized String executeCommand(String playerName, String commandString) {
-        if (checkIfGameIsFinished()) {
-            return "Game finished";
-        }
-
-        logExecuteCommand(playerName, commandString);
-        setUpHashMap(playerName);
-
+    private String processCommand(String playerName, String commandString) {
         String response = "No command found.";
 
         for (Command command: commands) {
@@ -97,7 +72,29 @@ public class GameConcrete implements Game, Context {
             }
         }
 
-        return checkPostExecuteCommand(playerName, response);
+        checkGameConditions();
+
+        if (checkIfGameIsFinished() || playerIDSHaveLost.contains(playerName)) {
+            return "Game finished";
+        }
+
+        return response;
+    }
+
+    @Override
+    public synchronized String executeCommand(String playerName, String commandString) {
+        if (!playerIDS.contains(playerName)) {
+            return "You aren't a valid player.";
+        }
+
+        if (checkIfGameIsFinished() || playerIDSHaveLost.contains(playerName)) {
+            return "Game finished";
+        }
+
+        logExecuteCommand(playerName, commandString);
+        setUpHashMap(playerName);
+
+        return processCommand(playerName, commandString);
     }
 
     private void clearFinishedTimers() {
@@ -113,32 +110,48 @@ public class GameConcrete implements Game, Context {
         }
     }
 
-    private void logGameFinishedBy(String playerId, GameState gameState) {
-        if (gameState == GameState.Win) {
-            sender.sendAll(playerId.concat(" has Won."));
-        } else if (gameState == GameState.Lost) {
-            sender.sendAll(playerId.concat(" has Lost."));
-        }
-    }
 
-    private void checkConditions(HashMap<String, Condition> conditions, GameState gameStateToSet) {
+    private String checkConditions(HashMap<String, Condition> conditions) {
         for (Map.Entry<String, Condition> entry : conditions.entrySet()) {
             String playerId = entry.getKey();
             Condition condition = entry.getValue();
             if (condition.check(this)) {
-                setGameState(gameStateToSet);
-                playerWhoFinishedTheGame = playerId;
-                return;
+                return playerId;
+            }
+        }
+        return null;
+    }
+
+    private void checkWinConditions() {
+        String playerID = checkConditions(winConditions);
+        if (playerID != null) {
+            setGameState(GameState.Win);
+            sender.sendAll(playerID.concat(" has Won. The game is over."));
+        }
+    }
+
+    private boolean checkIfAllPlayersHaveLost() {
+        return playerIDSHaveLost.size() == playerIDS.size();
+    }
+
+    private void checkLostConditions() {
+        String playerID = checkConditions(lostConditions);
+        if (playerID != null) {
+            lostConditions.remove(playerID);
+            playerIDSHaveLost.add(playerID);
+            if (checkIfAllPlayersHaveLost()) {
+                setGameState(GameState.Lost);
+                sender.sendAll(playerID.concat(" has Lost. All player have lost. The game is over."));
+            } else {
+                sender.sendAll(playerID.concat(" has Lost."));
             }
         }
     }
 
+
     private void checkGameConditions() {
-        checkConditions(winConditions, GameState.Win);
-        checkConditions(lostConditions, GameState.Lost);
-        if (checkIfGameIsFinished()) {
-            logGameFinishedBy(playerWhoFinishedTheGame,gameState);
-        }
+        checkWinConditions();
+        checkLostConditions();
     }
 
     @Override
@@ -186,18 +199,25 @@ public class GameConcrete implements Game, Context {
         addObject(player);
         if (!playerIDS.contains(player.getDescription())) {
             playerIDS.add(player.getDescription());
+            playerIDSAvailable.add(player.getDescription());
         }
     }
 
     @Override
     public synchronized String getPlayerIDAvailable() {
-        if (playerIDS.size() > 0 && indexPlayerIDAvailable < playerIDS.size()) {
-            String playerId = playerIDS.get(indexPlayerIDAvailable);
-            indexPlayerIDAvailable += 1;
-            return playerId;
+        if (playerIDSAvailable.size() > 0) {
+            String playerID = playerIDSAvailable.get(0);
+            playerIDSAvailable.remove(0);
+            return playerID;
         }
+        return "";
+    }
 
-        return null;
+    @Override
+    public void leavePlayer(String playerID) {
+        if (!playerIDSAvailable.contains(playerID)) {
+            playerIDSAvailable.add(playerID);
+        }
     }
 
     @Override

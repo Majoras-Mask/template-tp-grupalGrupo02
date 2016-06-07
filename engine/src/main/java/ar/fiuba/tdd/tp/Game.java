@@ -32,6 +32,8 @@ public interface Game {
 
     String getPlayerIDAvailable();
 
+    void leavePlayer(String playerID);
+
     void setSender(Sender sender);
 
     void startLoop();
