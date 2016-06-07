@@ -87,6 +87,10 @@ public class Builder {
         return action;
     }
 
+    public Action createActionAddTimer(Timer timer) {
+        return new ActionAddTimer(timer, game);
+    }
+
     /* Creation of conditions */
     public Condition createConditionAlwaysTrue() {
         return new ConditionAlwaysTrue();
@@ -132,13 +136,11 @@ public class Builder {
     /* Creation of timers */
     public TimerConcrete createTimerConcrete(int ticks) {
         TimerConcrete timerConcrete = new TimerConcrete(ticks);
-        game.addTimer(timerConcrete);
         return timerConcrete;
     }
 
     public PeriodicTimer createPeriodicTimer(int ticks) {
         PeriodicTimer periodicTimer = new PeriodicTimer(ticks);
-        game.addTimer(periodicTimer);
         return periodicTimer;
     }
 
@@ -153,6 +155,11 @@ public class Builder {
         CommandConcreteRegex commandConcreteRegex = new CommandConcreteRegex(commandRegex);
         game.addCommand(commandConcreteRegex);
         return commandConcreteRegex;
+    }
+
+    /* Utils */
+    public void addTimer(Timer timer) {
+        game.addTimer(timer);
     }
 
 }
