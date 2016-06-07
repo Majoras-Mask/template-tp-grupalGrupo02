@@ -14,6 +14,7 @@ import java.util.List;
 public class CommandConcrete implements Command {
 
     protected String command;
+    protected List<Condition> conditions = new ArrayList<>();
     protected HashMap<Condition, String> responses = new HashMap<>();
     protected HashMap<Condition,Element> actions = new HashMap<>();
 
@@ -31,7 +32,7 @@ public class CommandConcrete implements Command {
         if (!matches(command)) {
             return "Can't do it";
         }
-        for (Condition condition : actions.keySet()) {
+        for (Condition condition : conditions) {
             if (condition.check(context)) {
                 actions.get(condition).execute(context);
                 return responses.get(condition);
@@ -43,6 +44,7 @@ public class CommandConcrete implements Command {
 
     @Override
     public void setCondition(Condition condition, Element toExecute, String response) {
+        conditions.add(condition);
         this.actions.put(condition, toExecute);
         this.responses.put(condition, response);
     }

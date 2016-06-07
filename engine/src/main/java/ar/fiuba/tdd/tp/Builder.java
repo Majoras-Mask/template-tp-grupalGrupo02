@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.conditions.*;
 import ar.fiuba.tdd.tp.timer.*;
 import ar.fiuba.tdd.tp.values.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,19 +21,23 @@ public class Builder {
         this.game = game;
     }
 
-    private ObjectConcrete createObjectConcrete(String objectID) {
+    public ObjectInterface getObjectConcrete(String objectID) {
+        return game.getObject(objectID);
+    }
+
+    private ObjectInterface createObjectConcrete(String objectID) {
         ObjectConcrete object = new ObjectConcrete(objectID);
         return object;
     }
 
-    public ObjectConcrete createPlayer(String playerID) {
-        ObjectConcrete objectConcrete = createObjectConcrete(playerID);
+    public ObjectInterface createPlayer(String playerID) {
+        ObjectInterface objectConcrete = createObjectConcrete(playerID);
         game.addPlayer(objectConcrete);
         return objectConcrete;
     }
 
-    public ObjectConcrete createObject(String objectID) {
-        ObjectConcrete object = createObjectConcrete(objectID);
+    public ObjectInterface createObject(String objectID) {
+        ObjectInterface object = createObjectConcrete(objectID);
         game.addObject(object);
         return object;
     }
@@ -116,6 +121,14 @@ public class Builder {
         return new ConditionGameHasObject(new ValueConstant(objectDescription));
     }
 
+    public Condition createConditionSameObject(String description1, String description2) {
+        return new ConditionSameObject(new ValueConstant(description1), new ValueConstant(description2));
+    }
+
+    public Condition createConditionHasItem(String objectDescription, String item) {
+        return new ConditionHasItem(new ValueConstant(objectDescription), new ValueConstant(item));
+    }
+
     /* Creation of timers */
     public TimerConcrete createTimerConcrete(int ticks) {
         TimerConcrete timerConcrete = new TimerConcrete(ticks);
@@ -130,19 +143,16 @@ public class Builder {
     }
 
     /* Creation of commands */
-    public CommandConcrete createCommandConcrete(String command) {
+    public Command createCommandConcrete(String command) {
         CommandConcrete commandConcrete = new CommandConcrete(command);
         game.addCommand(commandConcrete);
         return commandConcrete;
     }
 
-    public CommandConcreteRegex createCommandConcreteRegex(String commandRegex) {
+    public Command createCommandConcreteRegex(String commandRegex) {
         CommandConcreteRegex commandConcreteRegex = new CommandConcreteRegex(commandRegex);
         game.addCommand(commandConcreteRegex);
         return commandConcreteRegex;
     }
-
-
-
 
 }
