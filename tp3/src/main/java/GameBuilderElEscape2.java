@@ -1,4 +1,4 @@
-
+/*
 import ar.fiuba.tdd.tp.*;
 import ar.fiuba.tdd.tp.actions.ActionRemoveObject;
 import ar.fiuba.tdd.tp.commands.Command;
@@ -516,3 +516,4 @@ public class GameBuilderElEscape2 implements GameBuilder {
     }
 
 }
+*/
