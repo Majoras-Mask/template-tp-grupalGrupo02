@@ -381,7 +381,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         command.setCondition(
                 playerInSotanoAbajo.not(),
                 builder.createActionNull(),
-                RESPONSE_COMMAND_GOTO_NOT_IN_NEIGHBOR_ROOM,
+                RESPONSE_COMMAND_GOTO_NOT_IN_NEIGHBOR_ROOM
         );
 
         command.setCondition(
@@ -607,6 +607,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         createConditionCambioDePosicion(timer, ROOM_SOTANO, ROOM_BIBLIOTECA, ROOM_SOTANO_ABAJO);
         createConditionCambioDePosicion(timer, ROOM_SOTANO_ABAJO, ROOM_SOTANO, ROOM_AFUERA);
         createConditionCambioDePosicion(timer, ROOM_AFUERA, ROOM_SOTANO_ABAJO);
+        return timer;
     }
 
 
@@ -656,6 +657,13 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 RESPONSE_DRUG_OK
         );
         
+    }
+
+    private void createCommandPutIn() {
+        return;
+    }
+    private void createCommandShow() {
+        return;
     }
     
     private void createCommands() {
