@@ -1,9 +1,12 @@
 /*
 import ar.fiuba.tdd.tp.*;
+import ar.fiuba.tdd.tp.actions.Action;
+import ar.fiuba.tdd.tp.actions.ActionRandom;
 import ar.fiuba.tdd.tp.actions.ActionRemoveObject;
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
+import ar.fiuba.tdd.tp.timer.Timer;
 import ar.fiuba.tdd.tp.values.ValueConstant;
 import ar.fiuba.tdd.tp.values.ValueFromProperty;
 
@@ -100,9 +103,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_COMMAND_GOTO_SUCCESSFUL = "You are now in ";
     private static final String RESPONSE_COMMAND_GOTO_CANT_GO_BIBLIOTECA = "You can't go to the library.";
     private static final String COMMAND_OPEN_CAJA_FUERTE = "open CajaFuerte using Llave";
-    private static final String OBJECT_LLAVE = "llave";
     private static final String RESPONSE_COMMAND_OPEN_NOT_KEY = "You don't have the key.";
-    private static final String OBJECT_CAJA_FUERTE = "CajaFuerte";
     private static final String PROPERTY_FUE_ABIERTA = "";
     private static final String VALUE_FUE_ABIERTA_SI = "";
     private static final String RESPONSE_COMMAND_OPEN_WAS_OPEN = "It was opened.";
@@ -134,7 +135,27 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String PROPERTY_LADDER_CAN_BE_SEEN = "escalera visible";
     private static final String VALUE_LADDER_CAN_BE_SEEN = "si";
     private static final String VALUE_LADDER_CAN_NOT_BE_SEEN = "no";
+    private static final String RESPONSE_COMMAND_GOTO_CANT_SEE_THE_LADDER = "You can't see the ladder";
 
+    // Break
+    private static final String COMMAND_BREAK = "break Ventana using Martillo";
+    private static final String RESPONSE_BREAK_YOU_MUST_HAVE_MARTILLO = "You must have the Martillo";
+    private static final String RESPONSE_BREAK_NO_VENTANA = "There's not a Ventana";
+    private static final String RESPONSE_BREAK_SUCCESSFUL = "You break the ventana!!!";
+    private static final String PROPERTY_ESTADO_VENTANA = "estado-ventana";
+    private static final String VALUE_ESTADO_VENTANA_SANA = "ventana-sana";
+    private static final String VALUE_ESTADO_VENTANA_ROTA = "ventana-rota";
+    private static final String RESPONSE_COMMAND_GOTO_CANT_GO_TO_AFUERA = "You cannot. Break the window first.";
+
+    private static final String COMMAND_WHERE = "where";
+    private static final String COMMAND_DRUG = "drug Bibliotecario";
+    private static final int TICKS_DORMIDO = 120;
+    private static final int TICKS_CAMBIO_POSICION = 60*4;
+    private static final String RESPONSE_NOTIFICATION_BIBLIOTECARIO_DESPIERTO = "Se desperto el bibliotecario!!!";
+    private static final String RESPONSE_DRUG_OK = "El bibliotecario está dormido.";
+    private static final String RESPONSE_DRUG_NO_BIBLIOTECARIO = "No está el bibliotecario para drogarlo.";
+    private static final String RESPONSE_DRUG_NO_LICOR = "No tienes la botella de vino.";
+    private static final String RESPONSE_CAMBIO_DE_POSICION = "El bibliotecario cambio de posición!!!!!";
 
 
     private GameConcrete gameConcrete = new GameConcrete();
@@ -168,9 +189,12 @@ public class GameBuilderElEscape2 implements GameBuilder {
         // Otra condición: Si uso la escalera, pierde.
         Condition usoEscalera = builder.createConditionPropertyEquals(playerID, PROPERTY_USO_ESCALERA, VALUE_USO_ESCALERA_SI);
 
-        // TODO: Condicion bajo sin martillo.
+        Condition enSotanoAbajoSinMartillo =
+                builder.createConditionPropertyEquals(playerID, PROPERTY_ROOM, ROOM_SOTANO_ABAJO).and(
+                        builder.createConditionHasItem(playerID, MARTILLO).not()
+                );
 
-        Condition lostCondition = seEncontroConBibliotecario.or(usoEscalera);
+        Condition lostCondition = seEncontroConBibliotecario.or(usoEscalera).or(enSotanoAbajoSinMartillo);
         gameConcrete.setLostCondition(playerID, lostCondition);
     }
 
@@ -277,7 +301,10 @@ public class GameBuilderElEscape2 implements GameBuilder {
         // De Sotano a biblioteca, se puede.
         command.setCondition(
                 builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO),
-                builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_LADDER_CAN_BE_SEEN, VALUE_LADDER_CAN_NOT_BE_SEEN)
+                ),
                 RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
         );
 
@@ -311,15 +338,74 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
     }
 
+    private void createCommandGoToSotano() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_GOTO.concat(ROOM_SOTANO));
+
+        Condition playerInBiblioteca =
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA);
+
+        Condition playerSeeTheSotano =
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_LADDER_CAN_BE_SEEN, VALUE_LADDER_CAN_BE_SEEN);
+
+
+        command.setCondition(
+                playerInBiblioteca.not(),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_GOTO_NOT_IN_NEIGHBOR_ROOM
+        );
+
+        command.setCondition(
+                playerSeeTheSotano.not(),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_GOTO_CANT_SEE_THE_LADDER
+        );
+
+        command.setCondition(
+                playerSeeTheSotano.and(playerInBiblioteca),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO),
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_LADDER_CAN_BE_SEEN, VALUE_LADDER_CAN_NOT_BE_SEEN)
+                ),
+                RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
+        );
+    }
+
+    private void createCommandGoToAfuera() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_GOTO.concat(ROOM_AFUERA));
+
+        Condition playerInSotanoAbajo =
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO_ABAJO);
+        Condition ventanaRota =
+                builder.createConditionPropertyEquals(VENTANA, PROPERTY_ESTADO_VENTANA, VALUE_ESTADO_VENTANA_ROTA);
+
+        command.setCondition(
+                playerInSotanoAbajo.not(),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_GOTO_NOT_IN_NEIGHBOR_ROOM,
+        );
+
+        command.setCondition(
+                ventanaRota.not(),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_GOTO_CANT_GO_TO_AFUERA
+        );
+
+        command.setCondition(
+                ventanaRota.and(playerInSotanoAbajo),
+                builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_AFUERA),
+                RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_AFUERA)
+        );
+    }
+
     private void createCommandGoTo() {
         createCommandGoToGeneric(new String[]{ROOM_PASILLO}, ROOM_SALON1);
         createCommandGoToGeneric(new String[]{ROOM_PASILLO}, ROOM_SALON2);
         createCommandGoToGeneric(new String[]{ROOM_PASILLO}, ROOM_SALON3);
         createCommandGoToGeneric(new String[]{ROOM_PASILLO, ROOM_BIBLIOTECA}, ROOM_BIBLIOTECA_ACCESO);
         createCommandGoToGeneric(new String[]{ROOM_SALON1,ROOM_SALON2,ROOM_SALON3,ROOM_BIBLIOTECA_ACCESO}, ROOM_PASILLO);
-        createCommandGoToGeneric(new String[]{ROOM_BIBLIOTECA}, ROOM_SOTANO);
-        createCommandGoToGeneric(new String[]{ROOM_SOTANO_ABAJO}, ROOM_AFUERA);
 
+        createCommandGoToAfuera();
+        createCommandGoToSotano();
         createCommandGoToBiblioteca();
     }
 
@@ -333,13 +419,13 @@ public class GameBuilderElEscape2 implements GameBuilder {
         );
         
         command.setCondition(
-                builder.createConditionHasItem(CURRENT_PLAYER, OBJECT_LLAVE).not(),
+                builder.createConditionHasItem(CURRENT_PLAYER, LLAVE).not(),
                 builder.createActionNull(),
                 RESPONSE_COMMAND_OPEN_NOT_KEY
         );
                 
         command.setCondition(
-                builder.createConditionPropertyEquals(OBJECT_CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
+                builder.createConditionPropertyEquals(CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
                 builder.createActionNull(),
                 RESPONSE_COMMAND_OPEN_WAS_OPEN
         );
@@ -353,7 +439,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         command.setCondition(
                 builder.createConditionAlwaysTrue(),
                 builder.createActionContainer(
-                        builder.createActionSetProperty(OBJECT_CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
+                        builder.createActionSetProperty(CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
                         builder.createActionSetProperty(OBJECT_CREDENCIAL, PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI),
                         builder.createActionSetProperty(OBJECT_CREDENCIAL, PROPERTY_ROOM, ROOM_SALON1),
                         builder.createActionAddObject(ROOM_SALON1, OBJECT_CREDENCIAL)
@@ -385,8 +471,18 @@ public class GameBuilderElEscape2 implements GameBuilder {
         );
 
         commandUse.setCondition(
-                conditionPlayerInBasement.and(conditionUseStairs.or(conditionUseRailing)),
+                conditionPlayerInBasement.and(conditionUseRailing),
                 builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO_ABAJO),
+                RESPONSE_DOWN_BASEMENT
+        );
+
+        // Uso la escalera, va a perder el juego porque se setea la property uso escalera.
+        commandUse.setCondition(
+                conditionPlayerInBasement.and(conditionUseStairs),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO_ABAJO),
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_USO_ESCALERA, VALUE_USO_ESCALERA_SI)
+                ),
                 RESPONSE_DOWN_BASEMENT
         );
     }
@@ -432,14 +528,147 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
     }
 
+    private void createCommandBreak() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_BREAK);
+
+        Condition conditionThereIsVentana =
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO_ABAJO);
+
+        Condition conditionPlayerHasMartillo =
+                builder.createConditionHasItem(CURRENT_PLAYER, MARTILLO);
+
+        command.setCondition(
+                conditionPlayerHasMartillo.not(),
+                builder.createActionNull(),
+                RESPONSE_BREAK_YOU_MUST_HAVE_MARTILLO
+        );
+
+        command.setCondition(
+                conditionThereIsVentana.not(),
+                builder.createActionNull(),
+                RESPONSE_BREAK_NO_VENTANA
+        );
+
+        command.setCondition(
+                conditionPlayerHasMartillo.and(conditionThereIsVentana),
+                builder.createActionSetProperty(VENTANA, PROPERTY_ESTADO_VENTANA, VALUE_ESTADO_VENTANA_ROTA),
+                RESPONSE_BREAK_SUCCESSFUL
+        );
+
+    }
+
+    private void createConditionBibliotecarioIn(Command command, String room) {
+        Condition inRoom = builder.createConditionPropertyEquals(NPC_BIBLIOTECARIO, PROPERTY_ROOM, room);
+        command.setCondition(
+                inRoom,
+                builder.createActionNull(),
+                room
+        );
+    }
+
+    private void createCommandWhereIsBibliotecario() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_WHERE);
+
+        createConditionBibliotecarioIn(command, ROOM_SALON1);
+        createConditionBibliotecarioIn(command, ROOM_SALON2);
+        createConditionBibliotecarioIn(command, ROOM_SALON3);
+        createConditionBibliotecarioIn(command, ROOM_PASILLO);
+        createConditionBibliotecarioIn(command, ROOM_BIBLIOTECA_ACCESO);
+        createConditionBibliotecarioIn(command, ROOM_BIBLIOTECA);
+        createConditionBibliotecarioIn(command, ROOM_SOTANO);
+        createConditionBibliotecarioIn(command, ROOM_SOTANO_ABAJO);
+        createConditionBibliotecarioIn(command, ROOM_AFUERA);
+    }
+
+    private void createConditionCambioDePosicion(Timer timer, String roomFrom, String... posibleRoomsTo) {
+        ActionRandom actionRandom = new ActionRandom();
+        for (String roomTo: posibleRoomsTo) {
+            actionRandom.addAction(
+                    builder.createActionSetProperty(NPC_BIBLIOTECARIO, PROPERTY_ROOM, roomTo)
+            );
+        }
+
+        timer.setCondition(
+                builder.createConditionPropertyEquals(NPC_BIBLIOTECARIO, PROPERTY_ROOM, roomFrom),
+                actionRandom,
+                RESPONSE_CAMBIO_DE_POSICION
+        );
+
+    }
+
+    private Timer createTimerCambioDePosicion() {
+        Timer timer = builder.createPeriodicTimer(TICKS_CAMBIO_POSICION);
+        createConditionCambioDePosicion(timer, ROOM_SALON1, ROOM_PASILLO);
+        createConditionCambioDePosicion(timer, ROOM_SALON2, ROOM_PASILLO);
+        createConditionCambioDePosicion(timer, ROOM_SALON3, ROOM_PASILLO);
+        createConditionCambioDePosicion(timer, ROOM_PASILLO, ROOM_SALON1, ROOM_SALON2, ROOM_SALON3, ROOM_BIBLIOTECA_ACCESO);
+        createConditionCambioDePosicion(timer, ROOM_BIBLIOTECA_ACCESO, ROOM_PASILLO, ROOM_BIBLIOTECA);
+        createConditionCambioDePosicion(timer, ROOM_BIBLIOTECA, ROOM_BIBLIOTECA_ACCESO, ROOM_SOTANO);
+        createConditionCambioDePosicion(timer, ROOM_SOTANO, ROOM_BIBLIOTECA, ROOM_SOTANO_ABAJO);
+        createConditionCambioDePosicion(timer, ROOM_SOTANO_ABAJO, ROOM_SOTANO, ROOM_AFUERA);
+        createConditionCambioDePosicion(timer, ROOM_AFUERA, ROOM_SOTANO_ABAJO);
+    }
+
+
+    private Timer createTimerDespertarBibliotecario() {
+        Timer timerCambioDePosicion = createTimerCambioDePosicion();
+
+        Timer timer = builder.createTimerConcrete(TICKS_DORMIDO);
+
+        timer.setCondition(
+                builder.createConditionAlwaysTrue(),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(NPC_BIBLIOTECARIO, PROPERTY_DORMIDO, VALUE_DORMIDO_NO),
+                        builder.createActionAddTimer(timerCambioDePosicion)
+                ),
+                RESPONSE_NOTIFICATION_BIBLIOTECARIO_DESPIERTO
+        );
+
+        return timer;
+    }
+
+    private void createCommandDrug() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_DRUG);
+
+        Condition playerInBibliotecaAcceso =
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA_ACCESO);
+
+        Condition playerHasLicor = builder.createConditionHasItem(CURRENT_PLAYER, BOTELLA);
+
+        command.setCondition(
+                playerInBibliotecaAcceso.not(),
+                builder.createActionNull(),
+                RESPONSE_DRUG_NO_BIBLIOTECARIO
+        );
+
+        command.setCondition(
+                playerHasLicor.not(),
+                builder.createActionNull(),
+                RESPONSE_DRUG_NO_LICOR
+        );
+
+        command.setCondition(
+                playerInBibliotecaAcceso.and(playerHasLicor),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(NPC_BIBLIOTECARIO, PROPERTY_DORMIDO, VALUE_DORMIDO_SI),
+                        builder.createActionAddTimer(createTimerDespertarBibliotecario())
+                ),
+                RESPONSE_DRUG_OK
+        );
+        
+    }
+    
     private void createCommands() {
         createCommandPick();
         createCommandGoTo();
         createCommandOpen();
         createCommandPutIn();
         createCommandShow();
+        createCommandWhereIsBibliotecario();
+        createCommandBreak();
         createCommandMove();
         createCommandUse();
+        createCommandDrug();
     }
 
     private void initializeRooms() {

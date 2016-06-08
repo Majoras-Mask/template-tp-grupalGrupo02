@@ -22,6 +22,7 @@ public class TimerConcrete implements Timer {
         this.currentTicks = 0;
     }
 
+    @Override
     public void setCondition(Condition condition, Element toExecute, String response) {
         this.actions.put(condition, toExecute);
         this.responses.put(condition, response);
