@@ -133,6 +133,11 @@ public class Builder {
         return new ConditionHasItem(new ValueConstant(objectDescription), new ValueConstant(item));
     }
 
+    public Condition createConditionComparePropertyEqual(String object, String propertyObject, String other, String propertyOther) {
+        return new ConditionPropertyEquals(new ValueConstant(object), new ValueConstant(propertyObject),
+                new ValueFromProperty(new ValueConstant(other), new ValueConstant(propertyOther)));
+    }
+
     /* Creation of timers */
     public TimerConcrete createTimerConcrete(int ticks) {
         TimerConcrete timerConcrete = new TimerConcrete(ticks);
