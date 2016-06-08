@@ -70,7 +70,7 @@ public class GameBuilderRiddle implements GameBuilder {
     }
 
     private void setWinCondition(GameConcrete gameConcrete, Builder builder) {
-        Condition conditionShoreSize = builder.createConditionSizeEqual(NORTH_SHORE,3);
+        Condition conditionShoreSize = builder.createConditionSizeEqual(NORTH_SHORE, 3);
         gameConcrete.setWinCondition(PLAYER, conditionShoreSize);
     }
 
@@ -93,8 +93,8 @@ public class GameBuilderRiddle implements GameBuilder {
                 RESPONSE_DONT_HAVE
         );
 
-        setConditionLeave(commandLeave,SOUTH_SHORE,builder, conditionPlayerHasAnimal);
-        setConditionLeave(commandLeave,NORTH_SHORE,builder, conditionPlayerHasAnimal);
+        setConditionLeave(commandLeave, SOUTH_SHORE, builder, conditionPlayerHasAnimal);
+        setConditionLeave(commandLeave, NORTH_SHORE, builder, conditionPlayerHasAnimal);
 
     }
 
@@ -140,12 +140,7 @@ public class GameBuilderRiddle implements GameBuilder {
                 RESPONSE_ALREADY_HAVE
         );
 
-        Condition conditionPlayerSize = builder.createConditionSizeGreaterThan(PLAYER,0);
-
-        Condition conditionPlayerHasSheep = builder.createConditionHasItem(PLAYER, SHEEP);
-        Condition conditionPlayerHasWolf = builder.createConditionHasItem(PLAYER,  WOLF);
-        Condition conditionPlayerHasCabbage = builder.createConditionHasItem(PLAYER,  CABBAGE);
-        Condition conditionPlayerHasAny = conditionPlayerHasCabbage.or(conditionPlayerHasSheep.or(conditionPlayerHasWolf));
+        Condition conditionPlayerSize = builder.createConditionSizeGreaterThan(PLAYER, 0);
 
         commandTake.setCondition(
                 conditionPlayerSize,
@@ -153,8 +148,8 @@ public class GameBuilderRiddle implements GameBuilder {
                 RESPONSE_BOAT_FULL
         );
 
-        setConditionShoreAndThereIsAnimal(builder,commandTake,SOUTH_SHORE);
-        setConditionShoreAndThereIsAnimal(builder,commandTake,NORTH_SHORE);
+        setConditionShoreAndThereIsAnimal(builder, commandTake, SOUTH_SHORE);
+        setConditionShoreAndThereIsAnimal(builder, commandTake, NORTH_SHORE);
     }
 
     private void setConditionShoreAndThereIsAnimal(Builder builder, Command commandTake, String shore) {
@@ -164,7 +159,7 @@ public class GameBuilderRiddle implements GameBuilder {
         Condition conditionCorrectShoreAndThereIsAnimal = conditionCorrectShore.and(conditionSouthShoreHasAnimal);
 
         ActionContainer actionTakeAnimalSouth = new ActionContainer();
-        actionTakeAnimalSouth.addAction(builder.createActionAddObject(PLAYER,ANIMAL));
+        actionTakeAnimalSouth.addAction(builder.createActionAddObject(PLAYER, ANIMAL));
         actionTakeAnimalSouth.addAction(builder.createActionRemoveObject(shore, ANIMAL));
 
         commandTake.setCondition(
@@ -196,30 +191,29 @@ public class GameBuilderRiddle implements GameBuilder {
         setConditionCantCrossShore(commandCross, SOUTH_SHORE, builder);
         setConditionCantCrossShore(commandCross, NORTH_SHORE, builder);
 
-        setConditionCurrentShore(builder,SOUTH_SHORE,commandCross);
-        setConditionCurrentShore(builder,NORTH_SHORE,commandCross);
+        setConditionCurrentShore(builder, SOUTH_SHORE, commandCross);
+        setConditionCurrentShore(builder, NORTH_SHORE, commandCross);
     }
 
     private void setConditionCurrentShore(Builder builder, String shore, Command commandCross) {
-        //Condition conditionCurrentX = builder.createConditionPropertyEquals(PLAYER,CURRENT_SHORE, shore);
-        Condition conditionEqualToNextShore = builder.createConditionSameObject(shore,SHORE);
+        Condition conditionCurrent = builder.createConditionSameObject(shore, SHORE);
 
         commandCross.setCondition(
-                conditionEqualToNextShore,
+                conditionCurrent,
                 builder.createActionSetProperty(PLAYER, CURRENT_SHORE, shore),
                 RESPONSE_CROSSED
         );
     }
 
     private void setConditionCantCrossShore(Command commandCross, String shore, Builder builder) {
-        Condition conditionInSouthShore = builder.createConditionPropertyEquals(PLAYER, CURRENT_SHORE, shore);
+        Condition conditionCurrent = builder.createConditionPropertyEquals(PLAYER, CURRENT_SHORE, shore);
 
         Condition conditionSouthHasSheep = builder.createConditionHasItem(shore,SHEEP);
         Condition conditionSouthHasWolf = builder.createConditionHasItem(shore, WOLF);
         Condition conditionSouthHasCabbage = builder.createConditionHasItem(shore, CABBAGE);
 
-        Condition conditionCantCrossWolfSheep = conditionInSouthShore.and(conditionSouthHasSheep.and(conditionSouthHasWolf));
-        Condition conditionCantCrossSheepCabbage = conditionInSouthShore.and(conditionSouthHasSheep.and(conditionSouthHasCabbage));
+        Condition conditionCantCrossWolfSheep = conditionCurrent.and(conditionSouthHasSheep.and(conditionSouthHasWolf));
+        Condition conditionCantCrossSheepCabbage = conditionCurrent.and(conditionSouthHasSheep.and(conditionSouthHasCabbage));
 
         commandCross.setCondition(
                 conditionCantCrossWolfSheep,
@@ -235,14 +229,13 @@ public class GameBuilderRiddle implements GameBuilder {
     }
 
     private void setConditionSameShore(Builder builder, String shore, Command commandCross) {
-        Condition conditionInSouth = builder.createConditionSameObject(SHORE, shore);
+        Condition conditionCurrent = builder.createConditionSameObject(SHORE, shore);
         Condition conditionSameShoreProp = builder.createConditionPropertyEquals(PLAYER, CURRENT_SHORE, shore);
-        Condition conditionSameShore = conditionInSouth.and(conditionSameShoreProp);
+        Condition conditionSameShore = conditionCurrent.and(conditionSameShoreProp);
         commandCross.setCondition(
                 conditionSameShore,
                 builder.createActionNull(),
                 RESPONSE_ALREADY_THERE
         );
     }
-
 }
