@@ -514,7 +514,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         Condition isCajaFuerte =
                 builder.createConditionSameObject(OBJECT_OPEN, CAJA_FUERTE);
         Condition usingLlave =
-                builder.createConditionSameObject(OBJECT_OPEN_WITH, MARTILLO);
+                builder.createConditionSameObject(OBJECT_OPEN_WITH, LLAVE);
 
         command.setCondition(
                 isCajaFuerte.not().or(usingLlave.not()),
