@@ -751,7 +751,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         Condition conditionHasShowItem = builder.createConditionHasItem(CURRENT_PLAYER, SHOW_OBJECT);
 
         command.setCondition(
-                conditionShowToLibrarian.not(),//no ingreso bien el nombre o es incorrecto
+                conditionShowToLibrarian.not(),//no ingreso bien el nombre o es    incorrecto
                 builder.createActionNull(),
                 RESPONSE_THERE_IS_NO_ONE
         );
