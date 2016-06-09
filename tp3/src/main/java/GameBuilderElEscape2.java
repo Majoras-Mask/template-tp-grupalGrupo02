@@ -231,7 +231,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         seEncontroConBibliotecario =
                 seEncontroConBibliotecario.and(
                         builder.createConditionPropertyEquals(NPC_BIBLIOTECARIO, PROPERTY_DORMIDO, VALUE_DORMIDO_SI).not()
-                )
+                );
 
         // Otra condición: Si uso la escalera, pierde.
         Condition usoEscalera = builder.createConditionPropertyEquals(playerID, PROPERTY_USO_ESCALERA, VALUE_USO_ESCALERA_SI);
