@@ -1,4 +1,4 @@
-/*
+
 import ar.fiuba.tdd.tp.*;
 import ar.fiuba.tdd.tp.actions.Action;
 import ar.fiuba.tdd.tp.actions.ActionRandom;
@@ -6,6 +6,7 @@ import ar.fiuba.tdd.tp.actions.ActionRemoveObject;
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
+import ar.fiuba.tdd.tp.conditions.ConditionOr;
 import ar.fiuba.tdd.tp.timer.Timer;
 import ar.fiuba.tdd.tp.values.ValueConstant;
 import ar.fiuba.tdd.tp.values.ValueFromProperty;
@@ -60,6 +61,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
     //objects
     private static final String MESA = "mesa";
+    private static final String CREDENCIAL = "credencial";
     private static final String BOTELLA = "botella-licor";
     private static final String VASO1 = "vaso1";
     private static final String VASO2 = "vaso2";
@@ -68,8 +70,14 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String CUADRO_TREN = "cuadro-tren";
     private static final String CUADRO_BARCO = "cuadro-barco";
     private static final String CAJA_FUERTE = "caja-fuerte";
-    private static final String FOTO = "foto";
-    private static final String LAPICERA = "lapicera";
+    private static final String FOTO1 = "foto1";
+    private static final String FOTO2 = "foto2";
+    private static final String FOTO3 = "foto3";
+    private static final String FOTO4 = "foto4";
+    private static final String LAPICERA1 = "lapicera1";
+    private static final String LAPICERA2 = "lapicera2";
+    private static final String LAPICERA3 = "lapicera3";
+    private static final String LAPICERA4 = "lapicera4";
     private static final String MARTILLO = "martillo";
     private static final String DESTORNILLADOR1 = "destornillador1";
     private static final String DESTORNILLADOR2 = "destornillador2";
@@ -136,6 +144,28 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String VALUE_LADDER_CAN_BE_SEEN = "si";
     private static final String VALUE_LADDER_CAN_NOT_BE_SEEN = "no";
     private static final String RESPONSE_COMMAND_GOTO_CANT_SEE_THE_LADDER = "You can't see the ladder";
+
+    //put foto in credencial
+    private static final String COMMAND_PUT = "put (object1) in (object2)";
+    private static final String OBJECT1_PUT = "(object1)";
+    private static final String OBJECT2_PUT = "(object2)";
+    private static final String PROPERTY_CRED_FOTO = "credencial foto";
+    private static final String VALUE_CRED_FOTO_SI = "si";
+    private static final String VALUE_CRED_FOTO_NO = "no";
+    private static final String PROPERTY_ES_FOTO = "es foto";
+    private static final String VALUE_ES_FOTO_SI = "si";
+    private static final String RESPONSE_CANT_DO_THAT = "You cant do that.";
+    private static final String RESPONSE_YOU_PUT_PHOTO = "You put photo in credential.";
+
+    //show
+    private static final String COMMAND_SHOW = "show (objeto) in (personaje)";
+    private static final String SHOW_OBJECT = "(objeto)";
+    private static final String SHOW_PERSONAJE = "(personaje)";
+    private static final String RESPONSE_CANT_SHOW = "There's no-one to display it to";
+    private static final String RESPONSE_YOU_DONT_HAVE_IT = "You dont have it.";
+    private static final String RESPONSE_YOU_CAN_GO = "You can go to the library, there is no-one here.";
+    private static final String RESPONSE_AUTENTICATION_FAIL = "Fail the autentication.";
+    private static final String RESPONSE_THERE_IS_NO_ONE = "You cant show that to him.";
 
     // Break
     private static final String COMMAND_BREAK = "break Ventana using Martillo";
@@ -205,7 +235,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         createLostConditionForPlayer(PLAYER4);
     }
 
-    private void createPlayer(String playerID) {
+    private ObjectInterface createPlayer(String playerID) {
         ObjectInterface player = builder.createPlayer(playerID);
         player.setProperty(PROPERTY_ROOM, ROOM_PASILLO);
         player.setProperty(PROPERTY_USO_ESCALERA, VALUE_USO_ESCALERA_NO);
@@ -213,13 +243,29 @@ public class GameBuilderElEscape2 implements GameBuilder {
         player.setProperty(PROPERTY_MOSTRO_CREDENCIAL_INVALIDA, VALUE_MOSTRO_CREDENCIAL_INVALIDA_NO);
         player.setProperty(PROPERTY_SAFEBOX_CAN_BE_SEEN, VALUE_PROPERTY_CAN_NOT_BE_SEEN);
         player.setProperty(PROPERTY_LADDER_CAN_BE_SEEN, VALUE_LADDER_CAN_NOT_BE_SEEN);
+        return player;
     }
 
     private void createPlayers() {
-        createPlayer(PLAYER1);
-        createPlayer(PLAYER2);
-        createPlayer(PLAYER3);
-        createPlayer(PLAYER4);
+        ObjectInterface player1 = createPlayer(PLAYER1);
+        ObjectInterface foto1 = builder.createObject(FOTO1);
+        foto1.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
+        player1.add(foto1);player1.add(builder.createObject(LAPICERA1));
+
+        ObjectInterface player2 = createPlayer(PLAYER2);
+        ObjectInterface foto2 = builder.createObject(FOTO2);
+        foto2.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
+        player2.add(foto2);player1.add(builder.createObject(LAPICERA2));
+
+        ObjectInterface player3 = createPlayer(PLAYER3);
+        ObjectInterface foto3 = builder.createObject(FOTO3);
+        foto3.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
+        player3.add(foto3);player1.add(builder.createObject(LAPICERA3));
+
+        ObjectInterface player4 = createPlayer(PLAYER4);
+        ObjectInterface foto4 = builder.createObject(FOTO4);
+        foto4.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
+        player4.add(foto4);player1.add(builder.createObject(LAPICERA4));
     }
 
     private void createCommandPick() {
@@ -660,10 +706,97 @@ public class GameBuilderElEscape2 implements GameBuilder {
     }
 
     private void createCommandPutIn() {
-        return;
+        Command command = builder.createCommandConcreteRegex(COMMAND_PUT);
+
+        Condition conditionHasObjectPut = builder.createConditionHasItem(CURRENT_PLAYER,OBJECT1_PUT);
+        Condition conditionObjectPutIsPhoto = builder.createConditionPropertyEquals(OBJECT1_PUT,PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
+
+        Condition conditionHasObjectToPut = builder.createConditionHasItem(CURRENT_PLAYER,OBJECT2_PUT);
+        Condition conditionObjectToPutIsCredential = builder.createConditionSameObject(OBJECT2_PUT,CREDENCIAL);
+
+        command.setCondition(
+                conditionHasObjectPut.not().or(conditionHasObjectToPut.not()),
+                builder.createActionNull(),
+                RESPONSE_YOU_DONT_HAVE_IT
+        );
+
+        command.setCondition(
+                conditionHasObjectPut.and(conditionObjectPutIsPhoto.not()),
+                builder.createActionNull(),
+                RESPONSE_CANT_DO_THAT
+        );
+
+        command.setCondition(
+                conditionHasObjectToPut.and(conditionObjectToPutIsCredential.not()),
+                builder.createActionNull(),
+                RESPONSE_CANT_DO_THAT
+        );
+
+        command.setCondition(
+                conditionHasObjectPut.and(conditionObjectPutIsPhoto.and(conditionHasObjectToPut.and(conditionObjectToPutIsCredential))),
+                builder.createActionSetProperty(CREDENCIAL,PROPERTY_CRED_FOTO,VALUE_CRED_FOTO_SI),
+                RESPONSE_YOU_PUT_PHOTO
+        );
+
+
     }
     private void createCommandShow() {
-        return;
+        Command command = builder.createCommandConcreteRegex(COMMAND_SHOW);
+
+        Condition conditionInAccessLibrary = builder.createConditionPropertyEquals(CURRENT_OBJECT,PROPERTY_ROOM,ROOM_BIBLIOTECA_ACCESO);
+
+
+        Condition conditionShowToLibrarian = builder.createConditionSameObject(NPC_BIBLIOTECARIO,SHOW_PERSONAJE);
+
+        Condition conditionHasShowItem = builder.createConditionHasItem(CURRENT_PLAYER, SHOW_OBJECT);
+
+        command.setCondition(
+                conditionShowToLibrarian.not(),//no ingreso bien el nombre o es incorrecto
+                builder.createActionNull(),
+                RESPONSE_THERE_IS_NO_ONE
+        );
+
+        command.setCondition(
+                conditionInAccessLibrary.not().and(conditionHasShowItem.not()),//show fuera del acceso y no tengo el objeto
+                builder.createActionNull(),                              //a mostrar
+                RESPONSE_YOU_DONT_HAVE_IT
+        );
+
+        command.setCondition(
+                conditionInAccessLibrary.not().and(conditionHasShowItem),//show fuera del acceso y tengo el objeto
+                builder.createActionNull(),                              //a mostrar
+                RESPONSE_CANT_SHOW
+        );
+
+        Condition conditionThereIsLibrarian = builder.createConditionPropertyEquals(NPC_BIBLIOTECARIO,PROPERTY_ROOM,ROOM_BIBLIOTECA_ACCESO);
+
+        command.setCondition(
+                conditionThereIsLibrarian.not().and(conditionInAccessLibrary),//estoy en el acceso y no esta el bibliotecario
+                builder.createActionNull(),
+                RESPONSE_YOU_CAN_GO
+        );
+
+        Condition conditionShowCredential = builder.createConditionSameObject(SHOW_OBJECT,CREDENCIAL);
+
+        command.setCondition(
+                conditionThereIsLibrarian.and(conditionShowCredential.not()),//esta el bibliotecario y muestro un objeto
+                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),                                 //distinto que la credencial falla la autentificacion
+                RESPONSE_AUTENTICATION_FAIL
+        );
+
+        Condition conditionCredentialHasPhoto = builder.createConditionPropertyEquals(CREDENCIAL,PROPERTY_CRED_FOTO,VALUE_CRED_FOTO_SI);
+
+        command.setCondition(
+                conditionThereIsLibrarian.and(conditionHasShowItem.and(conditionCredentialHasPhoto.not())),//esta el bibliotecario y
+                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),                                                          //tengo el item que muerto y
+                RESPONSE_AUTENTICATION_FAIL                                                                  //y la credencial NO tiene la foto
+        );
+
+        command.setCondition(
+                conditionThereIsLibrarian.and(conditionHasShowItem.and(conditionCredentialHasPhoto)),
+                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_AUTENTICADO,VALUE_AUTENTICADO_SI),///
+                RESPONSE_YOU_CAN_GO
+        );
     }
     
     private void createCommands() {
@@ -691,6 +824,9 @@ public class GameBuilderElEscape2 implements GameBuilder {
         ObjectInterface trainPicture = builder.createObject(CUADRO_TREN);
         ObjectInterface boatPicture = builder.createObject(CUADRO_BARCO);
         ObjectInterface safeBox = builder.createObject(CAJA_FUERTE);
+        ObjectInterface credential = builder.createObject(CREDENCIAL);
+        credential.setProperty(PROPERTY_CRED_FOTO,VALUE_CRED_FOTO_NO);
+        safeBox.add(credential);
         ObjectInterface room1 = builder.createObject(ROOM_SALON1);
         room1.add(table); room1.add(bottle); room1.add(glass1);
         room1.add(glass2); room1.add(chair1); room1.add(chair2);
@@ -710,9 +846,6 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
         //pasillo
         ObjectInterface hall = builder.createObject(ROOM_PASILLO);
-        ObjectInterface pen = builder.createObject(LAPICERA);
-        ObjectInterface picture = builder.createObject(FOTO);
-        hall.add(pen); hall.add(picture);
 
         //acceso biblioteca
         ObjectInterface libraryAccess = builder.createObject(ROOM_BIBLIOTECA_ACCESO);
@@ -753,4 +886,3 @@ public class GameBuilderElEscape2 implements GameBuilder {
     }
 
 }
-*/
