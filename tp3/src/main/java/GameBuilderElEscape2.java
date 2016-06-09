@@ -300,14 +300,6 @@ public class GameBuilderElEscape2 implements GameBuilder {
         );
 
         command.setCondition(
-                builder.createConditionComparePropertyEqual(
-                        CURRENT_PLAYER, PROPERTY_ROOM, CURRENT_OBJECT, PROPERTY_ROOM
-                ).not(),
-                builder.createActionNull(),
-                RESPONSE_COMMAND_PICK_NO_OBJECT_IN_CURRENT_ROOM
-        );
-
-        command.setCondition(
                 builder.createConditionSizeLessThanEqual(CURRENT_PLAYER, MAX_ITEMS).not(),
                 builder.createActionNull(),
                 RESPONSE_COMMAND_PICK_FULL_ITEMS
