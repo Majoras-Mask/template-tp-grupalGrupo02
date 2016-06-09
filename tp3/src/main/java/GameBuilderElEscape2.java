@@ -992,6 +992,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
         createPlayers();
         initializeRooms();
         createCommands();
+        createWinConditions();
+        createLostCondition();
 
         return gameConcrete;
     }
