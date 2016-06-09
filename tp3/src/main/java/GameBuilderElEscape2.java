@@ -903,6 +903,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         createCommandMove();
         createCommandUse();
         createCommandDrug();
+        createCommandDrop();
     }
 
     private void initializeRooms() {
