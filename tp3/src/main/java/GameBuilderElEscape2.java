@@ -271,17 +271,17 @@ public class GameBuilderElEscape2 implements GameBuilder {
         ObjectInterface player2 = createPlayer(PLAYER2);
         ObjectInterface foto2 = builder.createObject(FOTO2);
         foto2.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player2.add(foto2);player1.add(builder.createObject(LAPICERA2));
+        player2.add(foto2);player2.add(builder.createObject(LAPICERA2));
 
         ObjectInterface player3 = createPlayer(PLAYER3);
         ObjectInterface foto3 = builder.createObject(FOTO3);
         foto3.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player3.add(foto3);player1.add(builder.createObject(LAPICERA3));
+        player3.add(foto3);player3.add(builder.createObject(LAPICERA3));
 
         ObjectInterface player4 = createPlayer(PLAYER4);
         ObjectInterface foto4 = builder.createObject(FOTO4);
         foto4.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player4.add(foto4);player1.add(builder.createObject(LAPICERA4));
+        player4.add(foto4);player4.add(builder.createObject(LAPICERA4));
     }
 
     private void createCommandPick() {
