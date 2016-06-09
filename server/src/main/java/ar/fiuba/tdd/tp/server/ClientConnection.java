@@ -39,8 +39,10 @@ public class ClientConnection extends Thread {
             getStream(clientSocket);
             speak();
             clientSocket.close();
+            game.leavePlayer(playerID);
             ServerOutput.clientDisconnected(serverSocket.getLocalPort());
         } catch (ClassNotFoundException | IOException e)  {
+            game.leavePlayer(playerID);
             ServerOutput.threadFinished();
         }
     }
