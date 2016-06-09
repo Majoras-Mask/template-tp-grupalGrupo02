@@ -466,7 +466,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
                         builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO),
                         builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_LADDER_CAN_BE_SEEN, VALUE_LADDER_CAN_NOT_BE_SEEN)
                 ),
-                RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
+                RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_SOTANO)
         );
     }
 
