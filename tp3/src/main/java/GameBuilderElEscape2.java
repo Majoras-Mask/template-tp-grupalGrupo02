@@ -868,7 +868,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         library.add(bookCase);
 
         //sotano
-        ObjectInterface basement = builder.createObject(ROOM_SOTANO);
+        ObjectInterface basement= builder.createObject(ROOM_SOTANO);
 
         //bajo sotano
         ObjectInterface basementDown = builder.createObject(ROOM_SOTANO_ABAJO);
