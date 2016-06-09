@@ -1,9 +1,6 @@
 
 import ar.fiuba.tdd.tp.*;
-import ar.fiuba.tdd.tp.actions.Action;
-import ar.fiuba.tdd.tp.actions.ActionAddObject;
-import ar.fiuba.tdd.tp.actions.ActionRandom;
-import ar.fiuba.tdd.tp.actions.ActionRemoveObject;
+import ar.fiuba.tdd.tp.actions.*;
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
@@ -810,9 +807,13 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 RESPONSE_CANT_DO_THAT
         );
 
+        ActionContainer action = new ActionContainer();
+        action.addAction(builder.createActionRemoveObject(CURRENT_PLAYER,OBJECT1_PUT));
+        action.addAction(builder.createActionSetProperty(CREDENCIAL,PROPERTY_CRED_FOTO,VALUE_CRED_FOTO_SI));
+
         command.setCondition(
                 conditionHasObjectPut.and(conditionObjectPutIsPhoto.and(conditionHasObjectToPut.and(conditionObjectToPutIsCredential))),
-                builder.createActionSetProperty(CREDENCIAL,PROPERTY_CRED_FOTO,VALUE_CRED_FOTO_SI),
+                action,
                 RESPONSE_YOU_PUT_PHOTO
         );
 
