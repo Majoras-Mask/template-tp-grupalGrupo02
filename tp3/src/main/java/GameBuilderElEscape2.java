@@ -561,7 +561,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     }
 
     private void createCommandUse() {
-        Command commandUse = builder.createCommandConcrete(COMMAND_USE);
+        Command commandUse = builder.createCommandConcreteRegex(COMMAND_USE);
 
         Condition conditionPlayerInBasement = builder.createConditionPropertyEquals(CURRENT_PLAYER,PROPERTY_ROOM,ROOM_SOTANO);
 
