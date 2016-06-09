@@ -859,7 +859,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         Condition conditionShowCredential = builder.createConditionSameObject(SHOW_OBJECT,CREDENCIAL);
 
         command.setCondition(
-                conditionThereIsLibrarian.and(conditionShowCredential.not()),//esta el bibliotecario y muestro un objeto
+                conditionThereIsLibrarian.and(conditionShowCredential.not().or(conditionHasShowItem.not())),//esta el bibliotecario y muestro un objeto
                 builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),                                 //distinto que la credencial falla la autentificacion
                 RESPONSE_AUTENTICATION_FAIL
         );
