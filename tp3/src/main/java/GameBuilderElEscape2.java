@@ -115,8 +115,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_COMMAND_OPEN_INVALIDE_USE = "I dont understand!!!";
 
     private static final String RESPONSE_COMMAND_OPEN_NOT_KEY = "You don't have the key.";
-    private static final String PROPERTY_FUE_ABIERTA = "";
-    private static final String VALUE_FUE_ABIERTA_SI = "";
+    private static final String PROPERTY_FUE_ABIERTA = "fue-abierta";
+    private static final String VALUE_FUE_ABIERTA_SI = "si-abierta";
     private static final String RESPONSE_COMMAND_OPEN_WAS_OPEN = "It was opened.";
     private static final String RESPONSE_COMMAND_OPEN_NO_BOX = "There isnt box in the room";
     private static final String RESPONSE_NO_SAFEBOX = "There isnt a safebox here.";
