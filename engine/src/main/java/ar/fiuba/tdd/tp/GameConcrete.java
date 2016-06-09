@@ -39,11 +39,11 @@ public class GameConcrete implements Game, Context {
         }
     }
 
-    private void setUpHashMap(String playerName) {
+    private synchronized void setUpHashMap(String playerName) {
         map.put("(player)", playerName);
     }
 
-    private void sendAllExcept(String message, String playerException) {
+    private synchronized void sendAllExcept(String message, String playerException) {
         for (String playerID: playerIDS) {
             if (!playerID.equals(playerException) && !playerIDSAvailable.contains(playerID)) {
                 sender.send(playerID, message);
@@ -51,18 +51,18 @@ public class GameConcrete implements Game, Context {
         }
     }
 
-    private void logExecuteCommand(String playerName, String commandString) {
+    private synchronized void logExecuteCommand(String playerName, String commandString) {
         String message = playerName.concat(" execute: ");
         message = message.concat(commandString);
         sendAllExcept(message, playerName);
     }
 
-    private boolean checkIfGameIsFinished() {
+    private synchronized boolean checkIfGameIsFinished() {
         return getGameState() == GameState.Win  || getGameState() == GameState.Lost;
     }
 
 
-    private String processCommand(String playerName, String commandString) {
+    private synchronized String processCommand(String playerName, String commandString) {
         String response = "No command found.";
 
         for (Command command: commands) {
@@ -97,7 +97,7 @@ public class GameConcrete implements Game, Context {
         return processCommand(playerName, commandString);
     }
 
-    private void clearFinishedTimers() {
+    private synchronized void clearFinishedTimers() {
         List<Timer> timersToDelete = new ArrayList<>();
         for (Timer timer : timers) {
             if (timer.isFinished()) {
@@ -111,7 +111,7 @@ public class GameConcrete implements Game, Context {
     }
 
 
-    private String checkConditions(HashMap<String, Condition> conditions) {
+    private synchronized String checkConditions(HashMap<String, Condition> conditions) {
         for (Map.Entry<String, Condition> entry : conditions.entrySet()) {
             String playerId = entry.getKey();
             Condition condition = entry.getValue();
@@ -122,7 +122,7 @@ public class GameConcrete implements Game, Context {
         return null;
     }
 
-    private void checkWinConditions() {
+    private synchronized void checkWinConditions() {
         String playerID = checkConditions(winConditions);
         if (playerID != null) {
             setGameState(GameState.Win);
@@ -130,11 +130,11 @@ public class GameConcrete implements Game, Context {
         }
     }
 
-    private boolean checkIfAllPlayersHaveLost() {
+    private synchronized boolean checkIfAllPlayersHaveLost() {
         return playerIDSHaveLost.size() == playerIDS.size();
     }
 
-    private void checkLostConditions() {
+    private synchronized void checkLostConditions() {
         String playerID = checkConditions(lostConditions);
         if (playerID != null) {
             lostConditions.remove(playerID);
@@ -149,7 +149,7 @@ public class GameConcrete implements Game, Context {
     }
 
 
-    private void checkGameConditions() {
+    private synchronized void checkGameConditions() {
         checkWinConditions();
         checkLostConditions();
     }
@@ -160,7 +160,9 @@ public class GameConcrete implements Game, Context {
             return;
         }
 
-        for (Timer timer:timers) {
+        List<Timer> timersCopy = new ArrayList<>(timers);
+
+        for (Timer timer:timersCopy) {
             timer.update(this, sender);
         }
 
@@ -214,7 +216,7 @@ public class GameConcrete implements Game, Context {
     }
 
     @Override
-    public void leavePlayer(String playerID) {
+    public synchronized void leavePlayer(String playerID) {
         if (!playerIDSAvailable.contains(playerID)) {
             playerIDSAvailable.add(playerID);
         }
