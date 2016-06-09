@@ -133,6 +133,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String COMMAND_MOVE = "move (objeto)";
     private static final String OBJECT_MOVED = "(objeto)";
     private static final String RESPONSE_NOTHING_HAPPENED = "Nothing happened.";
+    private static final String RESPONSE_NOT_EXIST = "That object not exist.";
 
     // move cuadro barco respuestas, property y values
     private static final String RESPONSE_CAN_SEE_SAFEBOX = "You can see a safebox behind.";
@@ -606,6 +607,14 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
         Condition conditionUseBoatPicture = builder.createConditionSameObject(OBJECT_MOVED, CUADRO_BARCO);
         Condition conditionUseOldBook = builder.createConditionSameObject(OBJECT_MOVED, LIBRO_VIEJO);
+
+        Condition cond = builder.createConditionGameHasObject(OBJECT_MOVED);
+
+        command.setCondition(
+                cond.not(),
+                builder.createActionNull(),
+                RESPONSE_NOT_EXIST
+        );
 
         command.setCondition(
                 conditionInRoom1.not().and(conditionLibrary.not()),
