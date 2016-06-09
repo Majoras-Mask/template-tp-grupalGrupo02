@@ -1,8 +1,6 @@
 /*
 import ar.fiuba.tdd.tp.*;
-import ar.fiuba.tdd.tp.actions.Action;
-import ar.fiuba.tdd.tp.actions.ActionRandom;
-import ar.fiuba.tdd.tp.actions.ActionRemoveObject;
+import ar.fiuba.tdd.tp.actions.*;
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
@@ -102,7 +100,12 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_COMMAND_GOTO_NOT_IN_NEIGHBOR_ROOM = "You can't do it";
     private static final String RESPONSE_COMMAND_GOTO_SUCCESSFUL = "You are now in ";
     private static final String RESPONSE_COMMAND_GOTO_CANT_GO_BIBLIOTECA = "You can't go to the library.";
-    private static final String COMMAND_OPEN_CAJA_FUERTE = "open CajaFuerte using Llave";
+
+    private static final String COMMAND_OPEN_CAJA_FUERTE = "open (object) using (with)";
+    private static final String OBJECT_OPEN = "(object)";
+    private static final String OBJECT_OPEN_WITH = "(with)";
+    private static final String RESPONSE_COMMAND_OPEN_INVALIDE_USE = "I dont understand!!!";
+
     private static final String RESPONSE_COMMAND_OPEN_NOT_KEY = "You don't have the key.";
     private static final String PROPERTY_FUE_ABIERTA = "";
     private static final String VALUE_FUE_ABIERTA_SI = "";
@@ -138,7 +141,11 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_COMMAND_GOTO_CANT_SEE_THE_LADDER = "You can't see the ladder";
 
     // Break
-    private static final String COMMAND_BREAK = "break Ventana using Martillo";
+    private static final String COMMAND_BREAK = "break (object) using (with)";
+    private static final String BREAK_OBJECT = "(object)";
+    private static final String BREAK_OBJECT_WITH = "(with)";
+    private static final String RESPONSE_BREAK_INCORRECT_USE = "You cant do that";
+
     private static final String RESPONSE_BREAK_YOU_MUST_HAVE_MARTILLO = "You must have the Martillo";
     private static final String RESPONSE_BREAK_NO_VENTANA = "There's not a Ventana";
     private static final String RESPONSE_BREAK_SUCCESSFUL = "You break the ventana!!!";
@@ -156,6 +163,14 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_DRUG_NO_BIBLIOTECARIO = "No está el bibliotecario para drogarlo.";
     private static final String RESPONSE_DRUG_NO_LICOR = "No tienes la botella de vino.";
     private static final String RESPONSE_CAMBIO_DE_POSICION = "El bibliotecario cambio de posición!!!!!";
+
+    private static final String COMMAND_DROP = "drop (objeto)";
+    private static final String OBJECT_DROP = "(objeto)";
+    private static final String RESPONSE_COMMAND_DROP_NOT_DROPPEABLE = "Not droppeable.";
+    private static final String RESPONSE_COMMAND_DROP_DONT_HAVE_ITEM = "You dont have the item";
+    private static final String RESPONSE_COMMAND_DROP_SUCCESFUL = "Dropped";
+    private static final String RESPONSE_MOSTRASTE_CREDENCIAL_INVALIDA = "You are banned!!!";
+
 
 
     private GameConcrete gameConcrete = new GameConcrete();
@@ -213,6 +228,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         player.setProperty(PROPERTY_MOSTRO_CREDENCIAL_INVALIDA, VALUE_MOSTRO_CREDENCIAL_INVALIDA_NO);
         player.setProperty(PROPERTY_SAFEBOX_CAN_BE_SEEN, VALUE_PROPERTY_CAN_NOT_BE_SEEN);
         player.setProperty(PROPERTY_LADDER_CAN_BE_SEEN, VALUE_LADDER_CAN_NOT_BE_SEEN);
+        player.setProperty(PROPERTY_MOSTRO_CREDENCIAL_INVALIDA, VALUE_MOSTRO_CREDENCIAL_INVALIDA_NO);
     }
 
     private void createPlayers() {
@@ -238,14 +254,6 @@ public class GameBuilderElEscape2 implements GameBuilder {
         );
 
         command.setCondition(
-                builder.createConditionComparePropertyEqual(
-                        CURRENT_PLAYER, PROPERTY_ROOM, CURRENT_OBJECT, PROPERTY_ROOM
-                ).not(),
-                builder.createActionNull(),
-                RESPONSE_COMMAND_PICK_NO_OBJECT_IN_CURRENT_ROOM
-        );
-
-        command.setCondition(
                 builder.createConditionSizeLessThanEqual(CURRENT_PLAYER, MAX_ITEMS).not(),
                 builder.createActionNull(),
                 RESPONSE_COMMAND_PICK_FULL_ITEMS
@@ -260,7 +268,38 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 ),
                 RESPONSE_COMMAND_PICK_SUCCESFUL
         );
+    }
 
+    private void createCommandDrop() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_DROP);
+
+        Condition objectDroppeable =
+                builder.createConditionPropertyEquals(OBJECT_DROP, PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+
+        Condition playerHasObject =
+                builder.createConditionHasItem(CURRENT_PLAYER, OBJECT_DROP);
+
+        command.setCondition(
+                objectDroppeable.not(),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_DROP_NOT_DROPPEABLE
+        );
+
+        command.setCondition(
+                playerHasObject.not(),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_DROP_DONT_HAVE_ITEM
+        );
+
+        command.setCondition(
+                playerHasObject.and(objectDroppeable),
+                builder.createActionContainer(
+                        builder.createActionRemoveObject(CURRENT_PLAYER, OBJECT_DROP),
+                        new ActionAddObject(new ValueFromProperty(new ValueConstant(CURRENT_PLAYER), new ValueConstant(PROPERTY_ROOM)),
+                                new ValueConstant(OBJECT_DROP))
+                ),
+                RESPONSE_COMMAND_DROP_SUCCESFUL
+        );
     }
 
     private void createCommandGoToGeneric(String[] fromRoomArray, String nextRoom) {
@@ -312,21 +351,37 @@ public class GameBuilderElEscape2 implements GameBuilder {
         // De acceso a biblioteca se puede si no está el bibliotecario.
         command.setCondition(
                 builder.createConditionPropertyEquals(NPC_BIBLIOTECARIO, PROPERTY_ROOM, ROOM_BIBLIOTECA_ACCESO).not(),
-                builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
-                RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
-        );
-
-        // El player está autenticado pasa.
-        command.setCondition(
-                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_AUTENTICADO, VALUE_AUTENTICADO_SI),
-                builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_INGRESO_A_LA_BIBLIOTECA, VALUE_INGRESO_A_LA_BIBLIOTECA_SI)
+                ),
                 RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
         );
 
         // El bibliotecario dormido.
         command.setCondition(
                 builder.createConditionPropertyEquals(NPC_BIBLIOTECARIO, PROPERTY_DORMIDO, VALUE_DORMIDO_SI),
-                builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_INGRESO_A_LA_BIBLIOTECA, VALUE_INGRESO_A_LA_BIBLIOTECA_SI)
+                ),
+                RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
+        );
+
+        // Mostraste credencial invalida.
+        command.setCondition(
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_MOSTRO_CREDENCIAL_INVALIDA, VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),
+                builder.createActionNull(),
+                RESPONSE_MOSTRASTE_CREDENCIAL_INVALIDA
+        );
+
+        // El player está autenticado pasa.
+        command.setCondition(
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_AUTENTICADO, VALUE_AUTENTICADO_SI),
+                builder.createActionContainer(
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_BIBLIOTECA),
+                        builder.createActionSetProperty(CURRENT_PLAYER, PROPERTY_INGRESO_A_LA_BIBLIOTECA, VALUE_INGRESO_A_LA_BIBLIOTECA_SI)
+                ),
                 RESPONSE_COMMAND_GOTO_SUCCESSFUL.concat(ROOM_BIBLIOTECA)
         );
 
@@ -412,6 +467,17 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private void createCommandOpen() {
         Command command = builder.createCommandConcreteRegex(COMMAND_OPEN_CAJA_FUERTE);
 
+        Condition isCajaFuerte =
+                builder.createConditionSameObject(OBJECT_OPEN, CAJA_FUERTE);
+        Condition usingLlave =
+                builder.createConditionSameObject(OBJECT_OPEN_WITH, MARTILLO);
+        
+        command.setCondition(
+                isCajaFuerte.not().or(usingLlave.not()),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_OPEN_INVALIDE_USE
+        );
+
         command.setCondition(
                 builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_SAFEBOX_CAN_BE_SEEN, VALUE_PROPERTY_CAN_NOT_BE_SEEN),
                 builder.createActionNull(),
@@ -423,12 +489,6 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 builder.createActionNull(),
                 RESPONSE_COMMAND_OPEN_NOT_KEY
         );
-                
-        command.setCondition(
-                builder.createConditionPropertyEquals(CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
-                builder.createActionNull(),
-                RESPONSE_COMMAND_OPEN_WAS_OPEN
-        );
 
         command.setCondition(
                 builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SALON1).not(),
@@ -437,12 +497,18 @@ public class GameBuilderElEscape2 implements GameBuilder {
         );
 
         command.setCondition(
+                builder.createConditionPropertyEquals(CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
+                builder.createActionNull(),
+                RESPONSE_COMMAND_OPEN_WAS_OPEN
+        );
+
+        command.setCondition(
                 builder.createConditionAlwaysTrue(),
                 builder.createActionContainer(
                         builder.createActionSetProperty(CAJA_FUERTE, PROPERTY_FUE_ABIERTA, VALUE_FUE_ABIERTA_SI),
-                        builder.createActionSetProperty(OBJECT_CREDENCIAL, PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI),
-                        builder.createActionSetProperty(OBJECT_CREDENCIAL, PROPERTY_ROOM, ROOM_SALON1),
-                        builder.createActionAddObject(ROOM_SALON1, OBJECT_CREDENCIAL)
+                        builder.createActionSetProperty(CREDENCIAL, PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI),
+                        builder.createActionAddObject(ROOM_SALON1, CREDENCIAL),
+                        builder.createActionRemoveObject(CAJA_FUERTE, CREDENCIAL)
                 ),
                 RESPONSE_COMMAND_OPEN_OK
         );
@@ -531,12 +597,23 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private void createCommandBreak() {
         Command command = builder.createCommandConcreteRegex(COMMAND_BREAK);
 
+        Condition isVentana =
+                builder.createConditionSameObject(BREAK_OBJECT, VENTANA);
+        Condition isMartillo =
+                builder.createConditionSameObject(BREAK_OBJECT_WITH, MARTILLO);
+
         Condition conditionThereIsVentana =
                 builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_ROOM, ROOM_SOTANO_ABAJO);
 
         Condition conditionPlayerHasMartillo =
                 builder.createConditionHasItem(CURRENT_PLAYER, MARTILLO);
 
+        command.setCondition(
+                isVentana.not().or(isMartillo.not()), 
+                builder.createActionNull(),
+                RESPONSE_BREAK_INCORRECT_USE
+        );
+        
         command.setCondition(
                 conditionPlayerHasMartillo.not(),
                 builder.createActionNull(),
@@ -683,9 +760,9 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
         //salon 1
         ObjectInterface table = builder.createObject(MESA);
-        ObjectInterface bottle = builder.createObject(BOTELLA);
-        ObjectInterface glass1 = builder.createObject(VASO1);
-        ObjectInterface glass2 = builder.createObject(VASO2);
+        ObjectInterface bottle = builder.createObject(BOTELLA); bottle.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface glass1 = builder.createObject(VASO1); glass1.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface glass2 = builder.createObject(VASO2); glass2.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
         ObjectInterface chair1 = builder.createObject(SILLA1);
         ObjectInterface chair2 = builder.createObject(SILLA2);
         ObjectInterface trainPicture = builder.createObject(CUADRO_TREN);
@@ -697,22 +774,19 @@ public class GameBuilderElEscape2 implements GameBuilder {
         room1.add(trainPicture); room1.add(boatPicture); room1.add(safeBox);
 
         //salon 2
-        ObjectInterface hammer = builder.createObject(MARTILLO);
-        ObjectInterface screwdriver1 = builder.createObject(DESTORNILLADOR1);
-        ObjectInterface screwdriver2 = builder.createObject(DESTORNILLADOR2);
+        ObjectInterface hammer = builder.createObject(MARTILLO); hammer.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface screwdriver1 = builder.createObject(DESTORNILLADOR1); screwdriver1.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface screwdriver2 = builder.createObject(DESTORNILLADOR2); screwdriver2.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
         ObjectInterface room2 = builder.createObject(ROOM_SALON2);
         room2.add(hammer); room2.add(screwdriver1); room2.add(screwdriver2);
 
         //salon 3
         ObjectInterface room3 = builder.createObject(ROOM_SALON3);
-        ObjectInterface key = builder.createObject(LLAVE);
+        ObjectInterface key = builder.createObject(LLAVE); key.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
         room3.add(key);
 
         //pasillo
         ObjectInterface hall = builder.createObject(ROOM_PASILLO);
-        ObjectInterface pen = builder.createObject(LAPICERA);
-        ObjectInterface picture = builder.createObject(FOTO);
-        hall.add(pen); hall.add(picture);
 
         //acceso biblioteca
         ObjectInterface libraryAccess = builder.createObject(ROOM_BIBLIOTECA_ACCESO);
@@ -720,15 +794,15 @@ public class GameBuilderElEscape2 implements GameBuilder {
         //biblioteca
         ObjectInterface library = builder.createObject(ROOM_BIBLIOTECA);
         ObjectInterface oldBook = builder.createObject(LIBRO_VIEJO);
-        ObjectInterface book1 = builder.createObject(LIBRO1);
-        ObjectInterface book2 = builder.createObject(LIBRO2);
-        ObjectInterface book3 = builder.createObject(LIBRO3);
-        ObjectInterface book4 = builder.createObject(LIBRO4);
-        ObjectInterface book5 = builder.createObject(LIBRO5);
-        ObjectInterface book6 = builder.createObject(LIBRO6);
-        ObjectInterface book7 = builder.createObject(LIBRO7);
-        ObjectInterface book8 = builder.createObject(LIBRO8);
-        ObjectInterface book9 = builder.createObject(LIBRO9);
+        ObjectInterface book1 = builder.createObject(LIBRO1); book1.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book2 = builder.createObject(LIBRO2); book2.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book3 = builder.createObject(LIBRO3); book3.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book4 = builder.createObject(LIBRO4); book4.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book5 = builder.createObject(LIBRO5); book5.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book6 = builder.createObject(LIBRO6); book6.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book7 = builder.createObject(LIBRO7); book7.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book8 = builder.createObject(LIBRO8); book8.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
+        ObjectInterface book9 = builder.createObject(LIBRO9); book9.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
         ObjectInterface bookCase = builder.createObject(ESTANTE);
         library.add(oldBook);library.add(book1);library.add(book2);library.add(book3);library.add(book4);
         library.add(book5);library.add(book6);library.add(book7);library.add(book8);library.add(book9);
