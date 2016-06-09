@@ -168,6 +168,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_YOU_CAN_GO = "You can go to the library, there is no-one here.";
     private static final String RESPONSE_AUTENTICATION_FAIL = "Fail the autentication.";
     private static final String RESPONSE_THERE_IS_NO_ONE = "You cant show that to him.";
+    private static final String RESPONSE_IS_SAFE_TO_GO = "authenticated";
 
     // Break
     private static final String COMMAND_BREAK = "break (object) using (with)";
@@ -822,7 +823,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private void createCommandShow() {
         Command command = builder.createCommandConcreteRegex(COMMAND_SHOW);
 
-        Condition conditionInAccessLibrary = builder.createConditionPropertyEquals(CURRENT_OBJECT,PROPERTY_ROOM,ROOM_BIBLIOTECA_ACCESO);
+        Condition conditionInAccessLibrary = builder.createConditionPropertyEquals(CURRENT_PLAYER,PROPERTY_ROOM,ROOM_BIBLIOTECA_ACCESO);
 
 
         Condition conditionShowToLibrarian = builder.createConditionSameObject(NPC_BIBLIOTECARIO,SHOW_PERSONAJE);
@@ -874,7 +875,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         command.setCondition(
                 conditionThereIsLibrarian.and(conditionHasShowItem.and(conditionCredentialHasPhoto)),
                 builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_AUTENTICADO,VALUE_AUTENTICADO_SI),///
-                RESPONSE_YOU_CAN_GO
+                RESPONSE_IS_SAFE_TO_GO
         );
     }
     
