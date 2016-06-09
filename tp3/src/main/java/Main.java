@@ -3,6 +3,7 @@ public class Main {
 
 }
 
+
 /*
 import ar.fiuba.tdd.tp.Game;
 import ar.fiuba.tdd.tp.Sender;
@@ -14,7 +15,7 @@ public class Main implements Sender {
 
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Game game = new GameBuilderHanoi().build();
+        Game game = new GameBuilderElEscape2().build();
         game.setSender(this);
         game.startLoop();
         String playerID = game.getPlayerIDAvailable();
