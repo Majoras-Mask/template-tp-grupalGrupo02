@@ -1,10 +1,12 @@
 
 import ar.fiuba.tdd.tp.*;
-import ar.fiuba.tdd.tp.actions.*;
+import ar.fiuba.tdd.tp.actions.ActionAddObject;
+import ar.fiuba.tdd.tp.actions.ActionContainer;
+import ar.fiuba.tdd.tp.actions.ActionRandom;
+import ar.fiuba.tdd.tp.actions.ActionRemoveObject;
 import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
-import ar.fiuba.tdd.tp.conditions.ConditionOr;
 import ar.fiuba.tdd.tp.timer.Timer;
 import ar.fiuba.tdd.tp.values.ValueConstant;
 import ar.fiuba.tdd.tp.values.ValueFromProperty;
@@ -737,7 +739,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
         createConditionCambioDePosicion(timer, ROOM_SALON2, ROOM_PASILLO);
         createConditionCambioDePosicion(timer, ROOM_SALON3, ROOM_PASILLO);
         createConditionCambioDePosicion(timer, ROOM_PASILLO, ROOM_SALON1, ROOM_SALON2, ROOM_SALON3, ROOM_BIBLIOTECA_ACCESO);
-        createConditionCambioDePosicion(timer, ROOM_BIBLIOTECA_ACCESO, ROOM_PASILLO, ROOM_BIBLIOTECA);
+//        createConditionCambioDePosicion(timer, ROOM_BIBLIOTECA_ACCESO, ROOM_PASILLO, ROOM_BIBLIOTECA);
+        createConditionCambioDePosicion(timer, ROOM_BIBLIOTECA_ACCESO, ROOM_BIBLIOTECA);
         createConditionCambioDePosicion(timer, ROOM_BIBLIOTECA, ROOM_BIBLIOTECA_ACCESO, ROOM_SOTANO);
         createConditionCambioDePosicion(timer, ROOM_SOTANO, ROOM_BIBLIOTECA, ROOM_SOTANO_ABAJO);
         createConditionCambioDePosicion(timer, ROOM_SOTANO_ABAJO, ROOM_SOTANO, ROOM_AFUERA);

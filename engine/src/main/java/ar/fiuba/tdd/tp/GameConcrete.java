@@ -234,6 +234,11 @@ public class GameConcrete implements Game, Context {
     }
 
     @Override
+    public Boolean playerLose(String playerId) {
+        return this.playerIDSHaveLost.contains(playerId);
+    }
+
+    @Override
     public synchronized ObjectInterface getObject(String name) {
         if (map.containsKey(name)) {
             name = map.get(name);

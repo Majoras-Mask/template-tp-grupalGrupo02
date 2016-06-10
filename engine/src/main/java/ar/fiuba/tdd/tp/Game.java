@@ -1,7 +1,6 @@
 package ar.fiuba.tdd.tp;
 
 import ar.fiuba.tdd.tp.commands.Command;
-import ar.fiuba.tdd.tp.conditionelements.ConditionElement;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.timer.Timer;
 
@@ -37,4 +36,6 @@ public interface Game {
     void setSender(Sender sender);
 
     void startLoop();
+
+    Boolean playerLose(String playerId);
 }
