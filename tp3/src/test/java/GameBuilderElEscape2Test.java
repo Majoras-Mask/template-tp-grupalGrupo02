@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("CPD-START")
 public class GameBuilderElEscape2Test implements Sender {
 
     private Game game;
