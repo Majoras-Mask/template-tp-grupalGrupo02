@@ -12,6 +12,8 @@ public interface Timer {
 
     void update(Context context, Sender sender);
 
+    void update(Context context, Sender sender, long milisecondsForward);
+
     void setCondition(Condition condition, Element toExecute, String response);
 
     boolean isFinished();

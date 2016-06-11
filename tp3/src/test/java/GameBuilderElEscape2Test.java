@@ -11,6 +11,7 @@ public class GameBuilderElEscape2Test implements Sender {
     private GameConcrete game;
     private String playerId1;
     private String playerId2;
+    private static final long TIME_NEEDED_TO_WAKE_UP_LIBRARIAN_MILISECONDS = 120000;
     private static final String NOMBRE_BIBLIOTECARIO = "bibliotecario";
     private static final String PROPERTY_ROOM = "room";
     private static final String ROOM_BIBLIOTECA = "biblioteca";
@@ -28,6 +29,7 @@ public class GameBuilderElEscape2Test implements Sender {
 
     @Test
     public void test1() {
+
         this.game.executeCommand(this.playerId1, "goto Salon1");
         this.game.executeCommand(this.playerId1, "pick botella-licor");
         this.game.executeCommand(this.playerId1, "goto pasillo");
@@ -36,9 +38,9 @@ public class GameBuilderElEscape2Test implements Sender {
         this.game.executeCommand(this.playerId1, "goto biblioteca");
         this.game.executeCommand(this.playerId1, "goto biblioteca-acceso");
 
-        for (int i = 0; i < 120; i++) {
-            this.game.update();
-        }
+
+        this.game.update(TIME_NEEDED_TO_WAKE_UP_LIBRARIAN_MILISECONDS);
+
 
         Assert.assertTrue(this.game.playerLose(this.playerId1));
     }
@@ -58,9 +60,7 @@ public class GameBuilderElEscape2Test implements Sender {
         this.game.executeCommand(this.playerId2, "goto biblioteca-acceso");
         this.game.executeCommand(this.playerId2, "goto pasillo");
 
-        for (int i = 0; i < 120; i++) {
-            this.game.update();
-        }
+        this.game.update(TIME_NEEDED_TO_WAKE_UP_LIBRARIAN_MILISECONDS);
 
         //Avoid the RNGesus and make the library man go directly to the room library
         this.game.getObject(NOMBRE_BIBLIOTECARIO).setProperty(PROPERTY_ROOM, ROOM_BIBLIOTECA);

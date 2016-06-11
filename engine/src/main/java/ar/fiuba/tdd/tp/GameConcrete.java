@@ -171,6 +171,23 @@ public class GameConcrete implements Game, Context {
         checkGameConditions();
     }
 
+    //testing purposes
+    public synchronized void update(long milisecondsForward) {
+        if (checkIfGameIsFinished()) {
+            return;
+        }
+
+        List<Timer> timersCopy = new ArrayList<>(timers);
+
+        for (Timer timer:timersCopy) {
+            timer.update(this, sender, milisecondsForward);
+        }
+
+        clearFinishedTimers();
+
+        checkGameConditions();
+    }
+
     @Override
     public synchronized void setGameState(GameState gameState) {
         this.gameState = gameState;

@@ -26,6 +26,8 @@ public class TimerConcreteTest implements Sender{
     private Condition condition;
     private Action action;
     private String responseRequired;
+    private static final long SECOND = 1;
+    private static final long SECOND_TO_MILISECOND = 1000;
 
     @Before
     public void setUp() throws Exception {
@@ -46,11 +48,11 @@ public class TimerConcreteTest implements Sender{
 
     @Test
     public void testTimerConcrete() {
-        TimerConcrete timer = new TimerConcrete(1);
+        TimerConcrete timer = new TimerConcrete(SECOND);
         timer.setCondition(condition, action, responseRequired);
         game.addTimer(timer);
 
-        game.update(); // Un tick solo.
+        game.update(SECOND_TO_MILISECOND); // Un tick solo.
         testTimerExpireAction();
 
         assertTrue(timer.isFinished());
@@ -58,17 +60,17 @@ public class TimerConcreteTest implements Sender{
 
     @Test
     public void testPeriodicTimer() {
-        TimerConcrete timer = new PeriodicTimer(1);
+        TimerConcrete timer = new PeriodicTimer(SECOND);
         timer.setCondition(condition, action, responseRequired);
         game.addTimer(timer);
 
-        game.update(); // Un tick solo.
+        game.update(SECOND_TO_MILISECOND);
         testTimerExpireAction();
         assertFalse(timer.isFinished());
 
         objeto.setProperty("estado", "ninguno");
         message = "";
-        game.update();
+        game.update(SECOND_TO_MILISECOND);
         testTimerExpireAction();
     }
 

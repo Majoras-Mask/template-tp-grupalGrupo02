@@ -190,7 +190,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String COMMAND_WHERE = "where";
     private static final String COMMAND_DRUG = "drug Bibliotecario";
     private static final int TICKS_DORMIDO = 120;
-    private static final int TICKS_CAMBIO_POSICION = 60*4;
+    private static final int TICKS_CAMBIO_POSICION = 60 * 4;
     private static final String RESPONSE_NOTIFICATION_BIBLIOTECARIO_DESPIERTO = "Se desperto el bibliotecario!!!";
     private static final String RESPONSE_DRUG_OK = "El bibliotecario está dormido.";
     private static final String RESPONSE_DRUG_NO_BIBLIOTECARIO = "No está el bibliotecario para drogarlo.";
@@ -271,22 +271,26 @@ public class GameBuilderElEscape2 implements GameBuilder {
         ObjectInterface player1 = createPlayer(PLAYER1);
         ObjectInterface foto1 = builder.createObject(FOTO1);
         foto1.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player1.add(foto1);player1.add(builder.createObject(LAPICERA1));
+        player1.add(foto1);
+        player1.add(builder.createObject(LAPICERA1));
 
         ObjectInterface player2 = createPlayer(PLAYER2);
         ObjectInterface foto2 = builder.createObject(FOTO2);
         foto2.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player2.add(foto2);player2.add(builder.createObject(LAPICERA2));
+        player2.add(foto2);
+        player2.add(builder.createObject(LAPICERA2));
 
         ObjectInterface player3 = createPlayer(PLAYER3);
         ObjectInterface foto3 = builder.createObject(FOTO3);
         foto3.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player3.add(foto3);player3.add(builder.createObject(LAPICERA3));
+        player3.add(foto3);
+        player3.add(builder.createObject(LAPICERA3));
 
         ObjectInterface player4 = createPlayer(PLAYER4);
         ObjectInterface foto4 = builder.createObject(FOTO4);
         foto4.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
-        player4.add(foto4);player4.add(builder.createObject(LAPICERA4));
+        player4.add(foto4);
+        player4.add(builder.createObject(LAPICERA4));
     }
 
     private void createCommandPick() {
@@ -833,8 +837,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 RESPONSE_YOU_PUT_PHOTO
         );
 
-
     }
+
     private void createCommandShow() {
         Command command = builder.createCommandConcreteRegex(COMMAND_SHOW);
 
@@ -928,9 +932,15 @@ public class GameBuilderElEscape2 implements GameBuilder {
         credential.setProperty(PROPERTY_CRED_FOTO,VALUE_CRED_FOTO_NO);
         safeBox.add(credential);
         ObjectInterface room1 = builder.createObject(ROOM_SALON1);
-        room1.add(table); room1.add(bottle); room1.add(glass1);
-        room1.add(glass2); room1.add(chair1); room1.add(chair2);
-        room1.add(trainPicture); room1.add(boatPicture); room1.add(safeBox);
+        room1.add(table);
+        room1.add(bottle);
+        room1.add(glass1);
+        room1.add(glass2);
+        room1.add(chair1);
+        room1.add(chair2);
+        room1.add(trainPicture);
+        room1.add(boatPicture);
+        room1.add(safeBox);
 
         //salon 2
         ObjectInterface hammer = builder.createObject(MARTILLO);
@@ -940,7 +950,9 @@ public class GameBuilderElEscape2 implements GameBuilder {
         ObjectInterface screwdriver2 = builder.createObject(DESTORNILLADOR2);
         screwdriver2.setProperty(PROPERTY_PICKEABLE, VALUE_PICKEABLE_SI);
         ObjectInterface room2 = builder.createObject(ROOM_SALON2);
-        room2.add(hammer); room2.add(screwdriver1); room2.add(screwdriver2);
+        room2.add(hammer);
+        room2.add(screwdriver1);
+        room2.add(screwdriver2);
 
         //salon 3
         ObjectInterface room3 = builder.createObject(ROOM_SALON3);

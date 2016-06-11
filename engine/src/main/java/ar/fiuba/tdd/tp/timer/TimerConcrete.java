@@ -11,15 +11,22 @@ import java.util.HashMap;
  * Created by kevin on 05/06/16.
  */
 public class TimerConcrete implements Timer {
-    protected int ticksRequired;
-    protected int currentTicks;
+    private static final long SECOND_TO_MILISECOND_CONVERTER = 1000;
+
+    protected long miliSecondsRequired;
+    protected long currentMiliSeconds;
     protected HashMap<Condition, String> responses = new HashMap<>();
     protected HashMap<Condition,Element> actions = new HashMap<>();
 
 
-    public TimerConcrete(int ticks) {
-        this.ticksRequired = ticks;
-        this.currentTicks = 0;
+    public TimerConcrete(long seconds) {
+        long auxiliaryVariable = System.currentTimeMillis();
+        this.miliSecondsRequired = auxiliaryVariable + secondToMiliSecond(seconds);
+        this.currentMiliSeconds = auxiliaryVariable;
+    }
+
+    private long secondToMiliSecond(long second) {
+        return second * SECOND_TO_MILISECOND_CONVERTER;
     }
 
     @Override
@@ -45,12 +52,17 @@ public class TimerConcrete implements Timer {
 
     @Override
     public void update(Context context, Sender sender) {
+        update(context, sender, 0);
+    }
+
+    @Override
+    public void update(Context context, Sender sender, long milisecondsForward) {
         if (isFinished()) {
             return;
         }
 
-        this.currentTicks += 1;
-        if (this.currentTicks == ticksRequired) {
+        this.currentMiliSeconds = System.currentTimeMillis() + milisecondsForward;
+        if (this.currentMiliSeconds >= miliSecondsRequired) {
             // Expiro el timer
             timeExpiredAction(context, sender);
             timerExpiredHook(context, sender);
@@ -59,6 +71,6 @@ public class TimerConcrete implements Timer {
 
     @Override
     public boolean isFinished() {
-        return (this.currentTicks == ticksRequired);
+        return (this.currentMiliSeconds >= miliSecondsRequired);
     }
 }
