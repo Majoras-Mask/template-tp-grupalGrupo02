@@ -23,7 +23,7 @@ public class GameConcrete implements Game, Context {
     private List<String> playerIDSHaveLost = new ArrayList<>();
     private List<String> playerIDS = new ArrayList<>();
     private List<String> playerIDSAvailable = new ArrayList<>();
-    private Sender sender;
+    private Sender sender = new SenderNull();
 
     @Override
     public synchronized void addObject(ObjectInterface object) {
