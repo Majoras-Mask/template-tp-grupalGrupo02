@@ -207,6 +207,9 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_MOSTRASTE_CREDENCIAL_INVALIDA = "You are banned!!!";
 
     private static final String COMMAND_LOOK_AROUND = "look around";
+    private static final String COMMAND_WHAT_CAN_I_DO_WITH = "what can i do with (object)";
+    private static final String OBJECT_WHAT_CAN_I_DO = "(object)";
+    private static final String PROPERTY_WHAT_CAN_I_DO = "property-what-can-i-do";
 
     private GameConcrete gameConcrete = new GameConcrete();
     private Builder builder = new Builder(gameConcrete);
@@ -297,7 +300,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
         player4.add(builder.createObject(LAPICERA4));
     }
 
-    private void createLookAround() {
+    private void createCommandLookAround() {
         Command command = builder.createCommandConcreteRegex(COMMAND_LOOK_AROUND);
 
         Value response = new ValuePrintItems(
@@ -311,6 +314,22 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 builder.createActionNull(),
                 response
         );
+    }
+
+    private void createCommandWhatCanIDoWith() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_WHAT_CAN_I_DO_WITH);
+        
+        Value response = new ValueFromProperty(
+                new ValueConstant(OBJECT_WHAT_CAN_I_DO),
+                new ValueConstant(PROPERTY_WHAT_CAN_I_DO)
+        );
+
+        command.setCondition(
+                builder.createConditionAlwaysTrue(),
+                builder.createActionNull(),
+                response
+        );
+
     }
 
     private void createCommandPick() {
