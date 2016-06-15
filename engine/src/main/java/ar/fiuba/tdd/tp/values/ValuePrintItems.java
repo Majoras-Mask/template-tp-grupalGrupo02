@@ -18,6 +18,11 @@ public class ValuePrintItems implements Value {
 
     private String getAllItemsMessage(ObjectInterface objectInterface) {
         List<ObjectInterface> objects = objectInterface.getObjects();
+
+        if (objects.isEmpty()) {
+            return "Empty.";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0 ; i < objects.size() - 1; i++) {
             stringBuilder.append(objects.get(i).getDescription());
