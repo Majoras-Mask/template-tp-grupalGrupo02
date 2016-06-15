@@ -3,6 +3,8 @@ package ar.fiuba.tdd.tp.commands;
 import ar.fiuba.tdd.tp.Context;
 import ar.fiuba.tdd.tp.Element;
 import ar.fiuba.tdd.tp.conditions.Condition;
+import ar.fiuba.tdd.tp.values.Value;
+import ar.fiuba.tdd.tp.values.ValueConstant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ public class CommandConcrete implements Command {
 
     protected String command;
     protected List<Condition> conditions = new ArrayList<>();
-    protected HashMap<Condition, String> responses = new HashMap<>();
+    protected HashMap<Condition, Value> responses = new HashMap<>();
     protected HashMap<Condition,Element> actions = new HashMap<>();
 
     public CommandConcrete(String command) {
@@ -35,7 +37,7 @@ public class CommandConcrete implements Command {
         for (Condition condition : conditions) {
             if (condition.check(context)) {
                 actions.get(condition).execute(context);
-                return responses.get(condition);
+                return responses.get(condition).getValue(context);
             }
         }
 
@@ -44,6 +46,11 @@ public class CommandConcrete implements Command {
 
     @Override
     public void setCondition(Condition condition, Element toExecute, String response) {
+        setCondition(condition, toExecute, new ValueConstant(response));
+    }
+
+    @Override
+    public void setCondition(Condition condition, Element toExecute, Value response) {
         conditions.add(condition);
         this.actions.put(condition, toExecute);
         this.responses.put(condition, response);
