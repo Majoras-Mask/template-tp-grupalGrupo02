@@ -8,8 +8,10 @@ import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
 import ar.fiuba.tdd.tp.timer.Timer;
+import ar.fiuba.tdd.tp.values.Value;
 import ar.fiuba.tdd.tp.values.ValueConstant;
 import ar.fiuba.tdd.tp.values.ValueFromProperty;
+import ar.fiuba.tdd.tp.values.ValuePrintItems;
 
 
 @SuppressWarnings("CPD-START")
@@ -204,6 +206,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
     private static final String RESPONSE_COMMAND_DROP_SUCCESFUL = "Dropped";
     private static final String RESPONSE_MOSTRASTE_CREDENCIAL_INVALIDA = "You are banned!!!";
 
+    private static final String COMMAND_LOOK_AROUND = "look around";
+
     private GameConcrete gameConcrete = new GameConcrete();
     private Builder builder = new Builder(gameConcrete);
 
@@ -291,6 +295,22 @@ public class GameBuilderElEscape2 implements GameBuilder {
         foto4.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
         player4.add(foto4);
         player4.add(builder.createObject(LAPICERA4));
+    }
+
+    private void createLookAround() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_LOOK_AROUND);
+
+        Value response = new ValuePrintItems(
+                new ValueFromProperty(
+                        new ValueConstant(CURRENT_PLAYER), new ValueConstant(PROPERTY_ROOM)
+                )
+        );
+
+        command.setCondition(
+                builder.createConditionAlwaysTrue(),
+                builder.createActionNull(),
+                response
+        );
     }
 
     private void createCommandPick() {
