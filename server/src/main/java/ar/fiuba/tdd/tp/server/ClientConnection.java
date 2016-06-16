@@ -24,25 +24,30 @@ public class ClientConnection extends Thread {
     private ObjectInputStream inputStream;
     private Request request;
     private Response response;
+    private Connection connection;
 
 
-    public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket, String playerID, ObjectOutputStream outputStream) {
+    public ClientConnection(Socket clientSocket, Game game, ServerSocket serverSocket, String playerID,
+                            ObjectOutputStream outputStream, Connection connection) {
         this.clientSocket = clientSocket;
         this.game = game;
         this.serverSocket = serverSocket;
         this.playerID = playerID;
         this.outputStream = outputStream;
+        this.connection = connection;
     }
 
     public void run() {
         try {
             getStream(clientSocket);
             speak();
-            clientSocket.close();
             game.leavePlayer(playerID);
+            connection.removePlayer(playerID);
+            clientSocket.close();
             ServerOutput.clientDisconnected(serverSocket.getLocalPort());
         } catch (ClassNotFoundException | IOException e)  {
             game.leavePlayer(playerID);
+            connection.removePlayer(playerID);
             ServerOutput.threadFinished();
         }
     }

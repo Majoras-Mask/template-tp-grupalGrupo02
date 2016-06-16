@@ -45,6 +45,15 @@ public class Connection extends Thread implements Sender {
         }
     }
 
+    public void removePlayer(String playerID) {
+        if (clientSockets.containsKey(playerID)) {
+            this.clientSockets.remove(playerID);
+        }
+        if (clientOutputs.containsKey(playerID)) {
+            this.clientOutputs.remove(playerID);
+        }
+    }
+
     public void run() {
         try {
             while (!serverSocket.isClosed()) {
@@ -52,7 +61,7 @@ public class Connection extends Thread implements Sender {
                 ServerOutput.clientConnected(serverSocket.getLocalPort());
                 String playerID = game.getPlayerIDAvailable();
                 ObjectOutputStream clientOutput = new ObjectOutputStream(clientSocket.getOutputStream());
-                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket, playerID, clientOutput);
+                ClientConnection client = new ClientConnection(clientSocket, game, serverSocket, playerID, clientOutput, this);
                 clientSockets.put(playerID, clientSocket);
                 clientOutputs.put(playerID, clientOutput);
                 client.start();
