@@ -5,13 +5,19 @@
 ## Modo de uso ##
 Primero debemos ejecutar el servidor.
 `> java -jar server.jar`
+
 Luego, procedemos a levantar el juego llamado tp3.jar
 `> load game`
+
 `> tp3.jar`
+
 Una vez realizado esto, ya se puede levantar los clientes para conectarse. El primer juego levantado se hace sobre el
 puerto 8000, por lo que los pasos para el cliente son:
+
 `> java -jar client.jar`
+
 `> connect 127.0.0.1:8000`
+
 Hecho esto, se puede empezar a jugar.
 
 ## Enunciado ##
