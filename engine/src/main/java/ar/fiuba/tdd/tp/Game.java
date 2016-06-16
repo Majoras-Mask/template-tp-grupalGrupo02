@@ -15,7 +15,7 @@ public interface Game {
 
     String executeCommand(String playerName, String commandString);
 
-    void update();
+    void update(long milliseconds);
 
     void setGameState(GameState gameState);
 
@@ -38,4 +38,8 @@ public interface Game {
     void startLoop();
 
     Boolean playerLose(String playerId);
+
+    RandomGenerator getRandomGenerator();
+
+    void setRandomGenerator(RandomGenerator randomGenerator);
 }

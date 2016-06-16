@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class GameConcrete implements Game, Context {
+public class GameConcrete implements Game, Context{
 
     private static final long TIME_TICK_MS = 1000; // 1 segundo.
     private List<ObjectInterface> objects = new ArrayList<>();
@@ -24,6 +24,7 @@ public class GameConcrete implements Game, Context {
     private List<String> playerIDS = new ArrayList<>();
     private List<String> playerIDSAvailable = new ArrayList<>();
     private Sender sender = new SenderNull();
+    private RandomGenerator randomGenerator = new RandomGeneratorDefault();
 
     @Override
     public synchronized void addObject(ObjectInterface object) {
@@ -154,8 +155,7 @@ public class GameConcrete implements Game, Context {
         checkLostConditions();
     }
 
-    @Override
-    public synchronized void update() {
+    public synchronized void update(long milliseconds) {
         if (checkIfGameIsFinished()) {
             return;
         }
@@ -163,24 +163,7 @@ public class GameConcrete implements Game, Context {
         List<Timer> timersCopy = new ArrayList<>(timers);
 
         for (Timer timer:timersCopy) {
-            timer.update(this, sender);
-        }
-
-        clearFinishedTimers();
-
-        checkGameConditions();
-    }
-
-    //testing purposes
-    public synchronized void update(long milisecondsForward) {
-        if (checkIfGameIsFinished()) {
-            return;
-        }
-
-        List<Timer> timersCopy = new ArrayList<>(timers);
-
-        for (Timer timer:timersCopy) {
-            timer.update(this, sender, milisecondsForward);
+            timer.update(this, sender, milliseconds);
         }
 
         clearFinishedTimers();
@@ -253,6 +236,16 @@ public class GameConcrete implements Game, Context {
     @Override
     public Boolean playerLose(String playerId) {
         return this.playerIDSHaveLost.contains(playerId);
+    }
+
+    @Override
+    public RandomGenerator getRandomGenerator() {
+        return randomGenerator;
+    }
+
+    @Override
+    public void setRandomGenerator(RandomGenerator randomGenerator) {
+        this.randomGenerator = randomGenerator;
     }
 
     @Override
