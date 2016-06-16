@@ -9,10 +9,7 @@ import ar.fiuba.tdd.tp.conditions.Condition;
  * Created by kevin on 29/05/16.
  */
 public interface Timer {
-
-    void update(Context context, Sender sender);
-
-    void update(Context context, Sender sender, long milisecondsForward);
+    void update(Context context, Sender sender, long milliseconds);
 
     void setCondition(Condition condition, Element toExecute, String response);
 

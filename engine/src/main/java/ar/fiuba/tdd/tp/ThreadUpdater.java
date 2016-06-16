@@ -17,16 +17,13 @@ public class ThreadUpdater extends Thread {
     public void run() {
         while (game.getGameState() == GameState.Running) {
             long startTime = System.currentTimeMillis();
-            game.update();
-            long timeElapsed = System.currentTimeMillis() - startTime;
-
-            if (timeElapsed < timeTick) {
-                try {
-                    sleep(timeTick - timeElapsed);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            try {
+                sleep(timeTick);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            long timeElapsed = System.currentTimeMillis() - startTime;
+            game.update(timeElapsed);
         }
     }
 }

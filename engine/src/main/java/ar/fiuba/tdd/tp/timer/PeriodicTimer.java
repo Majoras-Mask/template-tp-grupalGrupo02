@@ -9,14 +9,14 @@ import ar.fiuba.tdd.tp.Sender;
 public class PeriodicTimer extends TimerConcrete {
 
 
-    public PeriodicTimer(long seconds) {
-        super(seconds);
+    public PeriodicTimer(long milliseconds) {
+        super(milliseconds);
     }
 
     @Override
     protected void timerExpiredHook(Context context, Sender sender) {
         super.timerExpiredHook(context, sender);
-        this.currentMiliSeconds = System.currentTimeMillis();
+        this.currentMilliSeconds = 0;
     }
 
     @Override
