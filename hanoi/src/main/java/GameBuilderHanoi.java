@@ -34,6 +34,9 @@ public class GameBuilderHanoi implements GameBuilder {
     private static final String RESPONSE_MOVED = "Moved!";
     private static final String CANT_BE_MOVED = "Can't be moved.";
 
+    private static final String COMMAND_HELP = "help";
+    private static final String MESSAGE_HELP = "Commandos: check top stackI, move top stackI stackJ, what can i do with stack";
+
     private void createObjects(Builder builder) {
         ObjectInterface stack1 = builder.createObject(STACK1);
         builder.createObject(STACK2);
@@ -161,6 +164,15 @@ public class GameBuilderHanoi implements GameBuilder {
 
     }
 
+    private void createCommandHelp(Builder builder) {
+        Command command = builder.createCommandConcreteRegex(COMMAND_HELP);
+        command.setCondition(
+                builder.createConditionAlwaysTrue(),
+                builder.createActionNull(),
+                MESSAGE_HELP
+        );
+    }
+
     private void setWinCondition(GameConcrete game, Builder builder) {
         Condition condition = builder.createConditionSizeEqual(STACK3, 3);
         game.setWinCondition(PLAYER, condition);
@@ -176,11 +188,11 @@ public class GameBuilderHanoi implements GameBuilder {
         createCommandWhatCanIDo(builder);
         createCommandCheckTopStack(builder);
         createCommandMoveTopStack(builder);
+        createCommandHelp(builder);
 
         setWinCondition(gameConcrete, builder);
 
         return gameConcrete;
     }
-
 
 }

@@ -3,7 +3,9 @@ import ar.fiuba.tdd.tp.GameBuilder;
 import ar.fiuba.tdd.tp.GameConcrete;
 import ar.fiuba.tdd.tp.ObjectConcrete;
 import ar.fiuba.tdd.tp.actions.*;
+import ar.fiuba.tdd.tp.commands.Command;
 import ar.fiuba.tdd.tp.commands.CommandConcrete;
+import ar.fiuba.tdd.tp.commands.CommandConcreteRegex;
 import ar.fiuba.tdd.tp.conditions.Condition;
 import ar.fiuba.tdd.tp.conditions.ConditionAlwaysTrue;
 import ar.fiuba.tdd.tp.conditions.ConditionHasItem;
@@ -28,6 +30,9 @@ public class GameBuilderOpenDoorMultiplayer implements GameBuilder {
     private static final String PROPERTY_ROOM = "currentRoom";
     private static final String MESSAGE_OPEN_DOOR_OK = "You enter room2";
     private static final String MESSAGE_OPEN_DOOR_FAIL = "Ey! Where do you go?! Room 2 is locked.";
+
+    private static final String COMMAND_HELP = "help";
+    private static final String MESSAGE_HELP = "OpenDoor Multiplayer. Solo dos jugadores. Intenta salir de la habitacion.";
 
     private Game crearGame() {
         GameConcrete game = new GameConcrete();
@@ -99,6 +104,15 @@ public class GameBuilderOpenDoorMultiplayer implements GameBuilder {
 
         game.setWinCondition(PLAYER1_NAME, winConditionPlayer1);
         game.setWinCondition(PLAYER2_NAME, winConditionPlayer2);
+
+        Command command = new CommandConcreteRegex(COMMAND_HELP);
+        game.addCommand(command);
+        command.setCondition(
+                new ConditionAlwaysTrue(),
+                new ActionNull(),
+                MESSAGE_HELP
+        );
+
 
         return game;
     }

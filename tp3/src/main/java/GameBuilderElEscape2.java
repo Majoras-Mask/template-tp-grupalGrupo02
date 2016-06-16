@@ -213,6 +213,9 @@ public class GameBuilderElEscape2 implements GameBuilder {
     static final String CAN_OPEN = "You can open it";
     static final String CAN_PICK_DROP_PUT = "You can put a photo in it, pick/drop.";
 
+    private static final String COMMAND_HELP = "help";
+    private static final String MESSAGE_HELP = "El escape2. Tienes que ir hacia afuera de la habitacion. Buena suerte!!!";
+
     GameConcrete gameConcrete = new GameConcrete();
     Builder builder = new Builder(gameConcrete);
 
@@ -302,6 +305,15 @@ public class GameBuilderElEscape2 implements GameBuilder {
         foto4.setProperty(PROPERTY_ES_FOTO,VALUE_ES_FOTO_SI);
         player4.add(foto4);
         player4.add(builder.createObject(LAPICERA4));
+    }
+
+    private void createCommandHelp() {
+        Command command = builder.createCommandConcreteRegex(COMMAND_HELP);
+        command.setCondition(
+                builder.createConditionAlwaysTrue(),
+                builder.createActionNull(),
+                MESSAGE_HELP
+        );
     }
 
     private void createCommandLookAround() {
@@ -951,6 +963,7 @@ public class GameBuilderElEscape2 implements GameBuilder {
     }
     
     private void createCommands() {
+        createCommandHelp();
         createCommandLookAround();
         createCommandWhatCanIDoWith();
         createCommandPick();

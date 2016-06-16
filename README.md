@@ -4,6 +4,7 @@
 ![Build Status](https://travis-ci.org/Majoras-Mask/template-tp-grupalGrupo02.svg?branch=ejercicio-it3)
 ## Modo de uso ##
 Primero debemos ejecutar el servidor.
+
 `> java -jar server.jar`
 
 Luego, procedemos a levantar el juego llamado tp3.jar

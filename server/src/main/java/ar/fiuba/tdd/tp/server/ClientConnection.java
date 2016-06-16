@@ -52,10 +52,22 @@ public class ClientConnection extends Thread {
         }
     }
 
-    private void speak() throws IOException, ClassNotFoundException {
-        response = new Response("Welcome to the game, you are ".concat(playerID));
+    private void printWelcomeMessage() throws IOException {
+        if (playerID.isEmpty()) {
+            response = new Response("No player available. You can't play :(. Try again later. Bye bye.");
+            outputStream.writeObject(response);
+            outputStream.flush();
+            response = new Response("exit");
+        } else {
+            response = new Response("Welcome to the game, you are ".concat(playerID));
+        }
+
         outputStream.writeObject(response);
         outputStream.flush();
+    }
+
+    private void speak() throws IOException, ClassNotFoundException {
+        printWelcomeMessage();
         boolean exit = false;
         while (!exit && nonNull(request = (Request) inputStream.readObject())) {
             if (request.isExit()) {
@@ -65,6 +77,7 @@ public class ClientConnection extends Thread {
                 String message = request.getSomething();
                 response = new Response(game.executeCommand(playerID, message));
             }
+
             outputStream.writeObject(response);
             outputStream.flush();
         }
