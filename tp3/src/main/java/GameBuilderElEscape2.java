@@ -186,8 +186,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
     static final String COMMAND_WHERE = "where";
     static final String COMMAND_DRUG = "drug Bibliotecario";
-    static final int TICKS_DORMIDO = 120;
-    static final int TICKS_CAMBIO_POSICION = 60 * 4;
+    static final int TICKS_DORMIDO = 2 * 60 * 1000;
+    static final int TICKS_CAMBIO_POSICION = 4 * 60 * 1000;
     static final String RESPONSE_NOTIFICATION_BIBLIOTECARIO_DESPIERTO = "Se desperto el bibliotecario!!!";
     static final String RESPONSE_DRUG_OK = "El bibliotecario está dormido.";
     static final String RESPONSE_DRUG_NO_BIBLIOTECARIO = "No está el bibliotecario para drogarlo.";
@@ -914,10 +914,19 @@ public class GameBuilderElEscape2 implements GameBuilder {
                 RESPONSE_YOU_CAN_GO
         );
 
+        Condition conditionBanned =
+                builder.createConditionPropertyEquals(CURRENT_PLAYER, PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,
+                        VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI);
 
         command.setCondition(
-                conditionThereIsLibrarian.and(conditionShowCredential.not()),//esta el bibliotecario y no muestro cred
-                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),                                 //distinto que la credencial falla la autentificacion
+                conditionBanned,
+                builder.createActionNull(),
+                RESPONSE_MOSTRASTE_CREDENCIAL_INVALIDA
+        );
+
+        command.setCondition(
+                conditionThereIsLibrarian.and(conditionShowCredential.not()),
+                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),
                 RESPONSE_AUTENTICATION_FAIL
         );
 
@@ -929,7 +938,8 @@ public class GameBuilderElEscape2 implements GameBuilder {
 
         command.setCondition(
                 conditionThereIsLibrarian.and(conditionHasShowItem.and(conditionCredentialHasPhotoOk.not())),
-                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),                                                          //tengo el item que muerto y
+                builder.createActionSetProperty(CURRENT_PLAYER,PROPERTY_MOSTRO_CREDENCIAL_INVALIDA,
+                        VALUE_MOSTRO_CREDENCIAL_INVALIDA_SI),
                 RESPONSE_AUTENTICATION_FAIL
         );
 
