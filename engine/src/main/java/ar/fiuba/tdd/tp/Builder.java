@@ -56,7 +56,7 @@ public class Builder {
     }
 
     public Action createActionRandom(Action... actions) {
-        ActionRandom container = new ActionRandom();
+        ActionRandom container = new ActionRandom(game);
         loadContainer(container, actions);
         return container;
     }
