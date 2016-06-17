@@ -1,6 +1,4 @@
-package ar.fiuba.tdd.tp.server;
-
-import ar.fiuba.tdd.tp.GameBuilder;
+package ar.fiuba.tdd.tp;
 
 import java.io.File;
 import java.io.IOException;
