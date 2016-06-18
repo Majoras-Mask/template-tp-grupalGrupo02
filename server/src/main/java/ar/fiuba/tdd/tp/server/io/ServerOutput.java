@@ -30,6 +30,7 @@ public class ServerOutput {
 
     public static void unknownCommand() {
         print("Unknown command, try with 'help'");
+        help();
     }
 
     public static void unopenedConnection(Integer port) {

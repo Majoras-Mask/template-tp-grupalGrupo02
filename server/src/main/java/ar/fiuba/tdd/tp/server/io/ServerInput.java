@@ -9,12 +9,14 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ServerInput {
     private BufferedReader inputBuffer;
     private static Map<String, Command> commands;
+    private String inputTrail;
 
     static {
         commands = new HashMap<>();
@@ -40,9 +42,15 @@ public class ServerInput {
 
     public Command readCommand() {
         String input = readString();
-        if (commands.containsKey(input)) {
-            return commands.get(input);
+        for (String command : commands.keySet()) {
+            if (input.startsWith(command)) {
+                this.inputTrail = input.replace(command + " ", "");
+                return commands.get(command);
+            }
         }
+/*        if (commands.containsKey(input)) {
+            return commands.get(input);
+        }*/
         return Command.NONE;
     }
 
@@ -59,5 +67,9 @@ public class ServerInput {
 
     public String readGame() {
         return readString();
+    }
+
+    public String getInputTrail() {
+        return inputTrail;
     }
 }

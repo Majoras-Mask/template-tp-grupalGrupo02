@@ -28,7 +28,7 @@ public class GameBuilderSePierdeALos30Segs implements GameBuilder {
         ObjectConcrete player = new ObjectConcrete(PLAYER_NAME);
         game.addPlayer(player);
 
-        TimerConcrete timer = new TimerConcrete(30*1000);
+        TimerConcrete timer = new TimerConcrete(30 * 1000);
         timer.setCondition(
                 new ConditionAlwaysTrue(),
                 new ActionSetGameState(game, GameState.Lost),

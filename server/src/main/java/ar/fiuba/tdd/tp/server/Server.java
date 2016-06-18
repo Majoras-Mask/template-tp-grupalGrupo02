@@ -22,6 +22,7 @@ public class Server {
     private Map<Command,Process> commands;
     private static final int FIRST_PORT = 8000;
     private static final int LAST_PORT = 8100;
+    public String inputTrail;
 
     public Server() throws UnsupportedEncodingException {
         connections = new HashMap<>();
@@ -43,6 +44,7 @@ public class Server {
         Command command;
         ServerOutput.welcomeMessage();
         while ((command = serverInput.readCommand()) != Command.EXIT) {
+            this.inputTrail = serverInput.getInputTrail();
             commands.get(command).exec();
         }
         commands.get(Command.EXIT).exec();
@@ -61,8 +63,9 @@ public class Server {
         if (port == LAST_PORT) {
             ServerOutput.noPortsAvailable();
         } else {
-            ServerOutput.chooseGame();
-            String gamePath = serverInput.readGame();
+/*            ServerOutput.chooseGame();
+            String gamePath = serverInput.readGame();*/
+            String gamePath = inputTrail;
             try {
                 GameBuilder gameBuilder = BuilderLoader.load(gamePath);
                 Connection connection = new Connection(new ServerSocket(port), gameBuilder.build());
