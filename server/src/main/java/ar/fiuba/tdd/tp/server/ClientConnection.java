@@ -37,6 +37,26 @@ public class ClientConnection extends Thread {
         this.connection = connection;
     }
 
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
+
+    public ObjectOutputStream getObjectOutputStream() {
+        return outputStream;
+    }
+
+    public void close() throws IOException {
+        response = new Response("El server finalizo. Lo siento, intenta conectarse a otro servidor :(");
+        outputStream.writeObject(response);
+        outputStream.flush();
+        response = new Response("exit");
+        outputStream.writeObject(response);
+        outputStream.flush();
+        if (nonNull(clientSocket) && !clientSocket.isClosed()) {
+            clientSocket.close();
+        }
+    }
+
     public void run() {
         try {
             getStream(clientSocket);

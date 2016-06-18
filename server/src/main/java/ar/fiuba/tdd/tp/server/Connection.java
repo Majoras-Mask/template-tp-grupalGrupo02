@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Exchanger;
 
 import static java.util.Objects.nonNull;
@@ -22,8 +19,7 @@ import static java.util.Objects.requireNonNull;
 public class Connection extends Thread implements Sender {
     private final ServerSocket serverSocket;
     private final Game game;
-    private HashMap<String, Socket> clientSockets = new HashMap<>();
-    private HashMap<String, ObjectOutputStream> clientOutputs = new HashMap<>();
+    private HashMap<String, ClientConnection> clientConnections = new HashMap<>();
 
     public Connection(ServerSocket serverSocket, Game game) {
         this.serverSocket = requireNonNull(serverSocket);
@@ -34,11 +30,8 @@ public class Connection extends Thread implements Sender {
 
     public void closeConnection() {
         try {
-            for (Map.Entry<String,Socket> entry : clientSockets.entrySet()) {
-                Socket clientSocket = entry.getValue();
-                if (nonNull(clientSocket) && !clientSocket.isClosed()) {
-                    clientSocket.close();
-                }
+            for (ClientConnection clientConnection : clientConnections.values()) {
+                clientConnection.close();
             }
             game.setGameState(GameState.Lost);
             serverSocket.close();
@@ -48,11 +41,8 @@ public class Connection extends Thread implements Sender {
     }
 
     public void removePlayer(String playerID) {
-        if (clientSockets.containsKey(playerID)) {
-            this.clientSockets.remove(playerID);
-        }
-        if (clientOutputs.containsKey(playerID)) {
-            this.clientOutputs.remove(playerID);
+        if (clientConnections.containsKey(playerID)) {
+            clientConnections.remove(playerID);
         }
     }
 
@@ -64,8 +54,7 @@ public class Connection extends Thread implements Sender {
                 String playerID = game.getPlayerIDAvailable();
                 ObjectOutputStream clientOutput = new ObjectOutputStream(clientSocket.getOutputStream());
                 ClientConnection client = new ClientConnection(clientSocket, game, serverSocket, playerID, clientOutput, this);
-                clientSockets.put(playerID, clientSocket);
-                clientOutputs.put(playerID, clientOutput);
+                clientConnections.put(playerID, client);
                 client.start();
             }
         } catch (IOException e) {
@@ -75,7 +64,7 @@ public class Connection extends Thread implements Sender {
 
     @Override
     public void sendAll(String message) {
-        for (String playerID : clientSockets.keySet()) {
+        for (String playerID : clientConnections.keySet()) {
             send(playerID, message);
         }
     }
@@ -83,8 +72,8 @@ public class Connection extends Thread implements Sender {
     @Override
     public void send(String playerID, String message) {
         try {
-            if (clientSockets.containsKey(playerID) && !clientSockets.get(playerID).isClosed()) {
-                ObjectOutputStream outputStream = clientOutputs.get(playerID);
+            if (clientConnections.containsKey(playerID) && !clientConnections.get(playerID).getClientSocket().isClosed()) {
+                ObjectOutputStream outputStream = clientConnections.get(playerID).getObjectOutputStream();
                 Response response = new Response(message);
                 outputStream.writeObject(response);
                 outputStream.flush();
