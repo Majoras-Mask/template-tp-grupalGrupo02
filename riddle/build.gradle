@@ -1,4 +1,4 @@
-group 'ar.fiuba.tdd.tp-riddle'
+group 'ar.fiuba.tdd.tp-tp-grupal'
 version '1.0'
 
 dependencies {
