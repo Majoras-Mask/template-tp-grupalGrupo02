@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.tp.server;
 
 import ar.fiuba.tdd.tp.Game;
+import ar.fiuba.tdd.tp.GameState;
 import ar.fiuba.tdd.tp.Sender;
 import ar.fiuba.tdd.tp.server.communication.Response;
 import ar.fiuba.tdd.tp.server.io.ServerOutput;
@@ -39,6 +40,7 @@ public class Connection extends Thread implements Sender {
                     clientSocket.close();
                 }
             }
+            game.setGameState(GameState.Lost);
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
