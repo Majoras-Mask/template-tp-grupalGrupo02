@@ -70,6 +70,6 @@ public class ServerOutput {
     }
 
     public static void noClassFound() {
-        print("No class found with that name.");
+        print("Didn't provide a valid path to a jar file, or the jar file doesn't have a GameBuilder.");
     }
 }

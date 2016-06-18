@@ -1,7 +1,9 @@
 import ar.fiuba.tdd.tp.*;
 import ar.fiuba.tdd.tp.actions.*;
 import ar.fiuba.tdd.tp.commands.Command;
+import ar.fiuba.tdd.tp.commands.CommandConcreteRegex;
 import ar.fiuba.tdd.tp.conditions.Condition;
+import ar.fiuba.tdd.tp.conditions.ConditionAlwaysTrue;
 
 @SuppressWarnings("CPD-START")
 public class GameBuilderRiddle implements GameBuilder {
@@ -33,6 +35,8 @@ public class GameBuilderRiddle implements GameBuilder {
     private static final String RESPONSE_WOLF_SHEEP = "You can’t do that! The wolf will eat the sheep!";
     private static final String RESPONSE_SHEEP_CABBAGE = "You can’t do that! The sheep will eat the wolf!";
     private static final String RESPONSE_ALREADY_THERE = "You are there already.";
+    private static final String COMMAND_HELP = "help";
+    private static final String MESSAGE_HELP = "Your mission is to move the sheep, wolf and cabbage to the other side. Commands: <take><animal>; <leave><animal>; <cross><north-shore|south-shore>";
 
     private void createObjects(Builder builder) {
         ObjectInterface sheep = builder.createObject(SHEEP);
@@ -56,6 +60,14 @@ public class GameBuilderRiddle implements GameBuilder {
     public Game build() {
         GameConcrete gameConcrete = new GameConcrete();
         Builder builder = new Builder(gameConcrete);
+
+        Command command = new CommandConcreteRegex(COMMAND_HELP);
+        gameConcrete.addCommand(command);
+        command.setCondition(
+                new ConditionAlwaysTrue(),
+                new ActionNull(),
+                MESSAGE_HELP
+        );
 
         createObjects(builder);
         createPlayers(builder);

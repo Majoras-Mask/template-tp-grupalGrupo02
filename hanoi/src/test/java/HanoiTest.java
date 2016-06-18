@@ -16,15 +16,15 @@ public class HanoiTest {
         String player = gameDriver.joinPlayer();
 
         gameDriver.sendCommand(player, "move top stack1 stack3");
-        gameDriver.sendCommand(player,"move top stack1 stack2");
-        gameDriver.sendCommand(player,"move top stack3 stack2");
-        gameDriver.sendCommand(player,"move top stack1 stack3");
-        gameDriver.sendCommand(player,"move top stack2 stack1");
-        gameDriver.sendCommand(player,"move top stack2 stack3");
+        gameDriver.sendCommand(player, "move top stack1 stack2");
+        gameDriver.sendCommand(player, "move top stack3 stack2");
+        gameDriver.sendCommand(player, "move top stack1 stack3");
+        gameDriver.sendCommand(player, "move top stack2 stack1");
+        gameDriver.sendCommand(player, "move top stack2 stack3");
 
         assertTrue(gameDriver.getCurrentState() == GameState.Running);
 
-        gameDriver.sendCommand(player,"move top stack1 stack3");
+        gameDriver.sendCommand(player, "move top stack1 stack3");
 
         assertTrue(gameDriver.getCurrentState() == GameState.Win);
     }

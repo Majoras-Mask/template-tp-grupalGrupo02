@@ -63,8 +63,6 @@ public class Server {
         if (port == LAST_PORT) {
             ServerOutput.noPortsAvailable();
         } else {
-/*            ServerOutput.chooseGame();
-            String gamePath = serverInput.readGame();*/
             String gamePath = inputTrail;
             try {
                 GameBuilder gameBuilder = BuilderLoader.load(gamePath);

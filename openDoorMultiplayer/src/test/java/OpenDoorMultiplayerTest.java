@@ -17,9 +17,9 @@ public class OpenDoorMultiplayerTest {
         String player2 = gameDriver.joinPlayer();
 
 
-        gameDriver.sendCommand(player1,"look around");
+        gameDriver.sendCommand(player1, "look around");
         gameDriver.sendCommand(player1, "pick key");
-        gameDriver.sendCommand(player1,"look around");
+        gameDriver.sendCommand(player1, "look around");
 
         gameDriver.sendCommand(player2, "pick key");
         gameDriver.sendCommand(player2, "open door");
