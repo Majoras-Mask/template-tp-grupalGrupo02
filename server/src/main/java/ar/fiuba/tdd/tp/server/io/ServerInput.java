@@ -44,13 +44,10 @@ public class ServerInput {
         String input = readString();
         for (String command : commands.keySet()) {
             if (input.startsWith(command)) {
-                this.inputTrail = input.replace(command + " ", "");
+                this.inputTrail = input.replace(command + " ", "").trim();
                 return commands.get(command);
             }
         }
-/*        if (commands.containsKey(input)) {
-            return commands.get(input);
-        }*/
         return Command.NONE;
     }
 

@@ -60,14 +60,6 @@ public class ServerOutputTest {
         assertEquals("Server> No ports available" + '\n',outContent.toString());
     }
 
-/*    @Test
-    public void unknownCommandTest() {
-    //Need mockito to assert function was called
-        ServerOutput.unknownCommand();
-
-        assertEquals("Server> Unknown command, try with 'help'" + '\n',outContent.toString());
-    }*/
-
     @Test
     public void unopenedConnectionTest() {
         ServerOutput.unopenedConnection(port);
